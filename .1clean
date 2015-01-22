@@ -1,0 +1,5 @@
+rm -f *.aux
+rm -f *.bbl
+rm -f *.out
+rm -f *.blg
+rm -f *.log

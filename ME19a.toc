@@ -1,0 +1,18 @@
+\contentsline {chapter}{\numberline {1}Key Concepts}{2}{chapter.1}
+\contentsline {chapter}{\numberline {2}05/01/15 --- Introduction}{3}{chapter.2}
+\contentsline {section}{\numberline {2.1}What is a fluid?}{3}{section.2.1}
+\contentsline {section}{\numberline {2.2}Viscosity}{3}{section.2.2}
+\contentsline {chapter}{\numberline {3}07/01/15 --- The continuum and more ways to characterize fluids}{5}{chapter.3}
+\contentsline {section}{\numberline {3.1}The Continuum approximation, the Knudsen number}{5}{section.3.1}
+\contentsline {section}{\numberline {3.2}Compressibility, the Mach number}{6}{section.3.2}
+\contentsline {section}{\numberline {3.3}Interfaces with fluids, surface tension}{6}{section.3.3}
+\contentsline {section}{\numberline {3.4}Fluid statics}{7}{section.3.4}
+\contentsline {chapter}{\numberline {4}13/01/15 --- Fluid Statics}{8}{chapter.4}
+\contentsline {chapter}{\numberline {5}15/01/15 --- More fluid statics}{10}{chapter.5}
+\contentsline {section}{\numberline {5.1}Immersed planes}{10}{section.5.1}
+\contentsline {section}{\numberline {5.2}Buoyancy}{11}{section.5.2}
+\contentsline {section}{\numberline {5.3}Rigid body motion of a fluid}{11}{section.5.3}
+\contentsline {chapter}{\numberline {6}20/01/15 --- Rigid fluid motion, surface tension}{13}{chapter.6}
+\contentsline {section}{\numberline {6.1}Linear acceleration}{13}{section.6.1}
+\contentsline {section}{\numberline {6.2}Surface Tension}{14}{section.6.2}
+\contentsline {section}{\numberline {6.3}Intro to fluid flow}{15}{section.6.3}

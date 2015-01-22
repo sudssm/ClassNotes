@@ -1,0 +1,239 @@
+\documentclass[10pt]{report}
+\usepackage{amsmath, amsthm, amssymb, tikz, mathtools, hyperref, enumerate}
+\usepackage[margin = 0.8in, top = 0.5in, bottom=0.5in]{geometry}
+\newcommand{\scinot}[2]{#1\times 10^{#2}}
+\newcommand{\bra}[1]{\left<#1\right|}
+\newcommand{\ket}[1]{\left|#1\right>}
+\newcommand{\dotp}[2]{\left<#1\left.\right|#2\right>}
+\newcommand{\rd}[2]{\frac{d#1}{d#2}}
+\newcommand{\pd}[2]{\frac{\partial #1}{\partial#2}}
+\newcommand{\norm}[1]{\left|\left|#1\right|\right|}
+\newcommand{\abs}[1]{\left|#1\right|}
+\newcommand{\expvalue}[1]{\left<#1\right>}
+\newcommand{\rtd}[2]{\frac{d^2#1}{d#2^2}}
+\newcommand{\pvec}[1]{\vec{#1}^{\,\prime}}
+\let\Re\undefined
+\let\Im\undefined
+\DeclareMathOperator{\Re}{Re}
+\DeclareMathOperator{\Tr}{Tr}
+\DeclareMathOperator{\Im}{Im}
+\newcommand{\ptd}[2]{\frac{\partial^2 #1}{\partial#2^2}}
+\usepackage[labelfont=bf, font=scriptsize]{caption}
+\everymath{\displaystyle}
+
+\begin{document}
+
+\title{Ma3 --- Probability and Statistics\\ Kim C Border}
+\author{Yubo Su}
+\date{}
+
+\maketitle
+\tableofcontents
+
+\chapter{05/01/15 --- Introduction}
+
+Time to go home and toss 128 coins! Apparently 51\% of the time coins land on the same side they started on, similar to the empirical probability of being born male.
+
+Types of probabilities: Empirical, observed frequencies in large samples; subjective, that probability exists only in the mind.
+
+Border claims the digits of $\pi$ are random; to justify this claim, we count the number of occurrences of $31415$ in the first billion (and one) digits of $\pi$. We count $10010$ in fact, very close to the theoretically expected value of $10000$. Moreover, the following $100$ possible two digit number combinations occur with equal frequency. Finally, if we examine the occurrences of the digits and apply the $\chi$-squared test, we find that a random $1$ billion sequence gets similar deviations about $25\%$ of the time. Conclusion, $\pi$ is random. Faskinating!
+
+Monte Carlo methods are all the rage nowadays given the existence of pseudorandom numbers.
+
+Finally administrative details! Website is \url{http://www.math.caltech.edu/~2014-15/2term/ma003/}, Border's email is \texttt{kcb@caltech.edu} while the lead TA, Marius Lemm, is \texttt{mlemm@caltech.edu}. 
+
+The set of outcomes of a random experiment is the sample space, $S$ or $\Omega$ usually. An event is a subset of the sample space, and the set of all events is denoted $\varepsilon$ or $\Sigma$. The set of all events is an algebra of sets, and we usually assume it is a \emph{$\sigma$-algebra}, which means
+\begin{itemize}
+    \item $\emptyset \in \Sigma, S \in \Sigma$
+    \item If $E \in \Sigma$ then $E^c \in \Sigma$
+    \item If $E$ and $F$ belong in $\Sigma$ then $E\cap F$ and $E \cup F$ belong to $\Sigma$.
+\end{itemize}
+
+A probability measure is a set function $P: \Sigma \to [0,1]$ that satisfies $P(\emptyset) = 0, P(S) = 1$.
+
+\chapter{07/01/15 --- Properties of Probability, Conditional Probability, Independence}
+
+Side note, the odds against an event $E$ is the ratio $\frac{P(E^c)}{P(E)}$ while the probability of an event $E$ is $P(E)$. Let's get a few more definitions in. 
+
+\begin{itemize}
+    \item Countable additivity --- Probability measure satisfying 
+        \begin{align}
+            P\left( \bigcup_{i=1}^{\infty}E_i \right) = \sum\limits_{i=1}^{\infty}P(E_i)
+        \end{align}
+    \item Probability space --- Triple $(S,\Sigma,P)$ where $S$ is the outcome space, $\Sigma$ is the set of events, and $P$ is a countably additive probability measure.
+    \item Random variable --- Real valued function on $S$ satisfying that for every interval $I \in X$, $I^c$ is also an event. Note that if $\Sigma$ comprises all subsets of $S$ then this requirement is automatically satisfied.
+\end{itemize}
+
+Some elementary identities
+\begin{itemize}
+    \item $P(A^c) = 1 - P(A)$
+    \item If $B \subset A$ then $P(A \backslash B) = P(A) - P(B)$.
+    \item If $\left\{ A_i \right\}$ are \emph{pairwise disjoint} then 
+        \begin{align}
+            P\left( \bigcup_{i=1}^n A_i \right) &= \sum\limits_{i=1}^{n}P(A_i)
+        \end{align}
+
+        If the events are not pairwise dispoint the above equality becomes $\leq$.
+    \item Let a sequence $\left\{ E_i \right\}$ be $E_n\uparrow$ if $E_i \subset E_{i+1}$ and vice versa for $E_n\downarrow$. Then $P$ is countably additive if and only if $E_{n} \downarrow$ implies
+        \begin{align}
+            P\left( \bigcap_n E_n \right) &= \lim_{n \to \infty}P(E_n)
+        \end{align}
+        and union instead of intersection for $E_n\uparrow$.
+\end{itemize}
+
+\section{Conditional probability, Inclusion-Exclusion}
+
+If $P(A) > 0$, the conditional probability of $B$ given $A$, written $P(B|A)$ is
+\begin{align}
+    P(B|A) = \frac{P(BA)}{P(A)}
+\end{align}
+
+Two events are considered \emph{independent} if $P(AB) = P(A) \cdot P(B)$. Note that if $A,B$ are independent, so are pairwise combinations of them and $A^c, B^c$. 
+
+We then arrive at the Principle of Inclusion-Exclusion, which states that in general
+\begin{align}
+    P\left( A \cup B \right) = P(A) + P(B) - P(AB)
+\end{align}
+and of course the generalisation.
+
+\section{Counting and probabilities}
+
+First, distinguish \emph{lists} from \emph{sets} because the first are ordered. For choosing subsets, we use binomial notation $\binom{n}{k}$. The very useful identity
+\begin{align}
+    \binom{n+1}{k+1} = \binom{n}{k+1} + \binom{n}{k}
+\end{align}
+is simply a restatement of Pascal's Triangle.
+
+\section{Matching balls and bins}
+
+A cool problem that we've seen frequently is that of numbered balls and bins; what is the probability that at least one ball matches its bin? Index the balls and bins $i$, and let $A_i$ be the probability that the $i$-th ball matches the $i$-th bin. We want $P\left( \bigcup_i A_i \right)$ which is a union of non-disjoint events! So we have to apply the principle of inclusion-exclusion,
+\begin{align}
+    P\left( \bigcup_i A_i \right) &= \sum_i p(A_i) - \sum_{i < j} P(A_iA_j) +\dots
+\end{align}
+
+For the $k$-th such term, there are $n-k$ balls unrestricted, which gives $(n-k)!$ arrangements for these remaining balls. Since there are $n!$ total arrangements, the $k$-th term simplifies to $\sum \frac{(n-k)!}{n!}$. Since there are $\binom{n}{k}$ ways to choose the $k$ balls that match, the summation must just be a product by this and so the $k$-th term is $\binom{n}{k}\frac{(n-k)!}{n!} = \frac{1}{k!}$. Finally, this gives our full answer
+\begin{align}
+    P\left( \bigcup_i A_i \right) &= \sum_i p(A_i) - \sum_{i < j} P(A_iA_j) +\dots = \sum\limits_{k} \left( -1 \right)^{k+1}\frac{1}{k!}\\
+    &= 1 - \frac{1}{e}
+\end{align}
+
+\chapter{12/01/15 --- Binomial Distribution, Independence}
+
+A \emph{Bernoulli trial} is a random experiment with only two outcomes; the mean is typically denoted $p$. The probability of $k$ successes in $n$ \emph{independent} Bernoulli trials is given by
+\begin{align}
+    P = \binom{n}{k}p^k \left( 1-p \right)^{n-k}
+\end{align}
+
+We can introduce an example of this in flipping a coin $2n$ times; what's the probability we get heads $n$ times? Clearly $\binom{2n}{n}\frac{1}{2^{2n}}$. To examine how this goes for large $n$ we need Stirling's formula
+\begin{align}
+    n! &\approx e^{-n}n^n \sqrt{2\pi n}
+\end{align}
+for $n \to \infty$. We can then apply it trivially to our problem above as $\binom{2n}{n} \approx \frac{2^{2n}}{\sqrt{\pi n}}$. Then we find that $P \propto n^{-1/2}$, which means this actually vanishes as we take the $n \to \infty$ limit. This shouldn't surprise us because it becomes harder and harder to have \emph{exactly} one half be heads/tails.
+
+\section{Multinomial distribution, ``Negative binomial distribution''}
+
+Straightforward generalization of binomial distribution,
+\begin{align}
+    P(k_i \text{ outcomes of type } i, i=1, \dots m) &= \frac{n!}{k_1! k_2! \dots k_m!} p_1^{k_1}p_2^{k_2}\dots p_m^{k_m}
+\end{align}
+
+Note also that if we want the $r$th success to occur on trial $t$, we need $t-r$ failures, $r-1$ successes (!) and a success on trial $t$. This gives a slightly different expression
+\begin{align}
+    P &=\binom{t-1}{r-1} p^r \left( 1-p \right)^{t-r}
+\end{align}
+
+\section{Independence, Bayes' Rule}
+
+We denote two events to be independent if $P\left( B|A \right) = P(B)$, or $P(AB) = P(B)P(A)$. Then the total sample space of the two random experiments is simply the Cartesian product plus enough sets to make a $\sigma$-algebra.
+
+We can rearrange some stuff in the definition of conditional probability to arrive at Bayes' Rule
+\begin{align}
+    P(B|A)P(A) = P(A|B)P(B)
+\end{align}
+
+Jkay, the full form for a more complicated sample space looks naturally like
+\begin{align}
+    P(B_i|A) &= \frac{P(A|B_i)P(B_i)}{\sum\limits_{j}^{}P(A|B_j)P(B_j)}\\
+    &= \frac{P(A|B)P(B)}{P(A|B)P(B) + P(A|B^c)P(B^c}
+\end{align}
+
+\chapter{14/01/15 --- More Bayes' Law, expectation of random variables}
+
+Bayes' Law is useful for dealing with two-stage experiments. Particularly, in multi-stage experiments conditional probabilities are much easier to work with than absolute probabilities; in such cases both Bayes' Law and tree diagrams can be helpful in solving the problem.
+
+\section{Random Variables}
+
+We define
+\begin{center}
+    A \emph{random varibale} on a probability space $(S,\Sigma,P)$ is a real-valued function on $S$ which has the property that for every interval $I$ the inverse image of $I$ is also an event. 
+\end{center}
+
+There is a distinction between two variables being equal and having the same distribution; the latter doesn't even require an identical sample space! Consider a coin vs. parity of a die roll. 
+
+We define $p_X(x)$ the probability the random variable $X=x$. Moreover, the cumulative distribution function $F_X(x)$ is just $p_X(-\infty,t]$. Interesting note, many respect authors and most of the French define the CDF with an open interval, but we will adhere to Ah-MUHR-ken way and use a closed upper bound.
+
+We define stochastic dominance such that $X$ \emph{stochastically dominates} $Y$ if $P(X \geq t) \geq P(Y \geq t)$ and for at least one $T$ this is a strict inequality. In other words, $X$ is at least as probable as $Y$ and is at least in one case strictly more probable.
+
+The expectation of a random variable is exactly what we expect, $\mathbf{E}(X) = \sum\limits_{}^{}x P(x)$. The expectation is also referred often as the \emph{first moment}. Note that we will eventually claim the Law of Large Numbers, that the expectation in the long run of $X$ is equal to $\mathbf{E}(X)$ provided the expected value is finite. 
+
+\chapter{16/01/15 --- Higher expectations, densities}
+
+Two variables are called \emph{independent and identically distributed}, abbreviated iid, if they have a common distribution function and are stochastically independent. Instead of typing out the definition of stochastically independent for the $n$th time, I will simply point out that pairwise independence doesn't imply independence of the ensemble as a whole: consider $X,Y$ independent and $Z$ their parity.
+
+\section{Continuous distributions}
+
+For continuous distributions, our cumulative distribution function definition doesn't change, but our probability mass function instead becomes a probability density function, such that 
+\begin{align}
+    P(X \in [a,b]) &= \int\limits_{a}^{b}f(x)\;dx
+\end{align}
+
+Note it doesn't make sense to talk about a probability mass function for a continuous distribution! The expectation also has a similarly simple form $\mathbf{E}(X) = \int\limits_{}^{}xf(x)\;dx$. 
+
+\section{Expectation Properties}
+
+\begin{itemize}
+    \item Expectation is linear! $\mathbf{E}(aX + bY) = a\mathbf{E}(X) + b\mathbf{E}(Y)$. 
+    \item Expectatiton is \emph{positive}, so if $X \geq 0$ then $\mathbf{E}(X) \geq 0$.
+\end{itemize}
+
+Expectation distributes simply for independent random variables $\mathbf{E}(XY) = \mathbf{E}(X)\mathbf{E}(Y)$.
+
+\section{Jensen's Inequality}
+
+Let $X$ be a random variable with finite expecation and let $f:\mathbf{R} \to \mathbf{R}$ over the range of $X$. Then
+\begin{align}
+    \mathbf{E}(f(X)) \geq f(\mathbf{E}(X))
+\end{align}
+
+\section{Variance and higher moments}
+
+The variance is defined to be $\mathbf{Var}(X) = \mathbf{E}(X - \mathbf{E}(X))^2 = \mathbf{E}(X^2) - (\mathbf{E}(X))^2$. Note that for independent random variables variances are additive $\mathbf{Var}(X + Y) = \mathbf{Var}(X) + \mathbf{Var}(Y)$. 
+
+In general, the $n$th central moment of $X$ is $\mathbf{E}\left( X - \mathbf{E}(X) \right)^n$. 
+
+\chapter{21/01/15 --- Normal Distribution}
+
+\section{Proving the Principle of Inclusion/Exclusion}
+
+To do this we must first introduce the multinomial identity
+\begin{align}
+    1 \pm x_1)(1 \pm x_2)\dots (1 \pm x_n) &= \sum\limits_{k=0}^{n}\sum\limits_{i_1 <\dots  <i_k}^{}\left( \pm 1 \right)^k x_{i_1}\dots x_{i_k}
+\end{align}
+and indicator functions
+\begin{align}
+    \mathbf{1}_{A}(s) &= 
+    \begin{cases}
+        1 &\mbox{if } s \in A\\
+        0 &\mbox{if } s \notin A
+    \end{cases}
+\end{align}
+which obey $\mathbf{E}\left( \mathbf{1}_A \right) = P(A)$. This also happens to obey $\mathbf{1}_{AB} = \mathbf{1}_A \cdot \mathbf{1}_B$ and $\mathbf{1}_{A^c} = 1 - \mathbf{1}_A$.
+
+\section{Inclusion/Exclusion Principle}
+
+We go about this by
+\begin{align}
+    P\left( \bigcup_{i=1}^n A_i \right) &= 1 - P\left( \left( \bigcup_{i=1}^n A_i \right)^c \right)\\
+    &= 1 - P\left( \bigcap_{i=1}^n A_i^c \right)
+\end{align}
+\end{document}

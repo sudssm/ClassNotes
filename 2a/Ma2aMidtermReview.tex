@@ -1,0 +1,110 @@
+\documentclass[10pt]{article}
+\usepackage{fancyhdr, amsmath, amsthm, amssymb, hyperref, paracol, graphicx, setspace}
+\usepackage[margin=1in]{geometry}
+\usepackage[version=3]{mhchem}
+\newcommand{\scinot}[2]{#1\times 10^{#2}}
+\newcommand{\bra}[1]{\left<#1\right|}
+\newcommand{\ket}[1]{\left|#1\right>}
+\newcommand{\dotp}[2]{\left<#1\left.\right|#2\right>}
+\newcommand{\rd}[2]{\frac{d#1}{d#2}}
+\newcommand{\pd}[2]{\frac{\partial #1}{\partial#2}}
+\newcommand{\rtd}[2]{\frac{d^2#1}{d#2^2}}
+\newcommand{\ptd}[2]{\frac{\partial^2 #1}{\partial#2^2}}
+\newcommand{\norm}[1]{\left|\left|#1\right|\right|}
+\newcommand{\abs}[1]{\left|#1\right|}
+\newcommand{\Log}[0]{\mathrm{Log}}
+\newcommand{\Arg}[0]{\mathrm{Arg}}
+\newcommand{\expvalue}[1]{\left<#1\right>}
+\usepackage[labelfont=bf, font=scriptsize]{caption}
+\everymath{\displaystyle}
+
+\begin{document}
+
+%\doublespace
+%\setlength{\headheight}{15pt}
+
+We'll cover three main topics at the review session
+\begin{itemize}
+	\item Overview of 1st order ODE
+	\item $n$-th order ODE
+	\item Difference equation
+\end{itemize}
+
+Things we should cover on our own or are in problem sets
+\begin{itemize}
+	\item Direction Fields
+	\item Linearization
+	\item Euler/Picard
+	\item Functional Equations
+\end{itemize}
+
+We will begin with 1st order ODEs. There are two heirarchies for techniques we've learned. First goes trivial > autonomous > separable > exact > integrating factors. On the other hand we have trivial > linear > Bernoulli. The base cases for ODEs are linear and separable equations.
+
+We start with trivial. $\dot{x} = f(t)$, which yields solution $x(t) = \int^t f(s) ds + C$. The IVP case is then $x(t) = x_0 + \int_{t_0}^t f(s) ds$ where $x(0) = x_0 = x(t_0)$.
+
+We then discuss linear ODEs. If we have some $\dot{x} + p(t)x = q(t)$, then we have the integrating factor $I(t) = e^{\int p(t) dt}$ which gives equation
+$$\rd{}{t} \left[ x(t)I(t) \right] = q(t)I(t)$$
+which is now a trivial ODE in $x(t)I(t)$ which integrates.
+
+There's then Bernoulli, which is of form $\dot{x} + p(t)x = q(t) x^{n}$. We make the substitution $u=x^{1-n}, du = (1-n)x^{-n}dx, \dot{x} = \dot{u}\frac{x^n}{1-n}$, where we obtain the last equation by dividing both sides by $dt$. This then produces a linear ODE in $u$. 
+
+We can then discuss autonomous equations $\dot{x} = f(x), x(0) = x_0$. We can draw our phase diagram by graphing $f(x)$ and determining the signs of $f(x)$ for sections in between zeroes of $f(x)$, otherwise called stationary points. We note that attracting means ``start near get nearer'' and stable means ``start near stay near.'' The attracting/stable points can be gauged in 1D by their phase diagrams. We proved on HW1 that attracting implies stable in 1D, but converse is false, i.e. $f(x) = 0$. Moreover, attracting discusses end behavior whereas stable is a continuous behavior (think about 2D point such that everywhere around some point $P$ points towards $P$ except for one other direction which loops back; this is attracting but not stable).
+
+We can then examine separable equations, $\dot{x} = f(x)g(t)$. We can write this as $\int \frac{dx}{f(x)} = \int g(t) dt$ then subject this to IVP. This requires that we treat the zeroes of $f(x)$ separately, but since the product vanishes then $\dot{x} = 0$ at these zeroes and we return to the same discussion as the autonomous case $x(t) = x^*$. 
+
+We can then examine homogenous ODEs, which are $\dot{x} = f\left( \frac{x}{t} \right)$. We can make the substitution $u(x/t), dx = t\; du + u\; dt, \dot{x} = t\dot{u} + u$. We then substitute back and obtain $t\dot{u} + u = f(u)$ which is separable.
+
+We then examine exact ODEs $M(x,y)dx + N(x,y) dy = 0$. The definition of an exact function is $\exists E(x,y): \pd{E}{x} = M, \pd{E}{y} = N$. Note that the problem isn't finished with finding $E(x,y)$, because we know that $E(x,y) = C$ is the actual solution, and we must find the $C$ that corresponds to our IVP. We then also need to check that the solution is defined on the whole contour line of $E$, which occurs where $\rd{y}{x} \to \pm \infty$. If there are points a which the solution is not defined, then the contour line is divided (since we can't bypass a point where the solution isn't defined), and which portion of the contour we're on tells us which portion we stay on. This knowledge is given to us by the initial value. 
+
+An alternative existence condition followms if we can define $M,N$ on some rectangle in $\mathbb{R}^2$, which is equivalence of partials $M_y = N_x$. If this condition is satisfied, then we can compute 
+$$E(x,y) = \int M(x,y) dx + C_1(y) = \int N(x,y) dy = C_2(x)$$
+at which point we can just mix and match $C_1,C_2$ and obtain $E(x,y)$ up to a constant $C_3$ dependent on neither $x,y$. 
+
+We then look into ``almost exact.'' This is the other way of saying $M(x,y) dx + N(x,y) dy = 0, M_y \neq N_x$. We then want to find an integrating factor to turn this equation exact. Suppose we seek an integrating factor $I(x)$ dependent only on $x$. We seek exactness, thus the condition
+\begin{align*}
+	I(x) M dx+ I(x)N dy &= 0\\
+	\pd{I(x)M}{y} &= \pd{I(x)N}{x}\\
+	I(x)\pd{M}{y} &= \pd{I}{x}N + I\pd{N}{x}\\
+	\pd{I}{x} &= \frac{\pd{M}{y} - \pd{N}{x}}{N}I(x)
+\end{align*}
+
+we then require that the coefficient of $I(x)$, the fraction above, depends only on $x$, which is the condition that we can solve this ODE. If it does only depend on $x$, then the equation is both separable and linear, so take your pick and solve for $I$. Then multiplying the original differential equation by $I$ we obtain an exact equation. Success!
+
+Note that if we have an integrating factor dependent only on $y$, then similar algebra to above produces that the term $\frac{N_x - M_y}{M}$ depends only on $y$. Also, what we proved on the homework, if we want an integrating factor to depend only on $xy$, then we require the term $\frac{M_y - N_x}{xM - yN}$ depends only on $xy$. If these conditions are satisfied, then we can compute the integrating factor and solve out, otherwise these equations are more than useless, they clutter up review session notes.
+
+This concludes the heirarchy of first-order ODE. We then discuss $n$-th order linear differential equation. We first discuss the general $n$-th order linear ODE, which is given by
+$$\sum_{i=0}^n p_i(t) x^{(i)} = g(t)$$
+where the exponent is a derivative and the $p_i$ are coefficients. We note that for an initial value problem, there must be initial values for $x^{(k)}, k \in [0,n-1]$, thus giving $n$ initial values. This is required for the problem to have solution.
+
+Without loss of generality, assume $n=2$ (all claims made here are easily generalizable). Then we have $a(t)\ddot{x} + b(t)\dot{x} + c(t)x = g(t)$. Let's then have some space of funtions that are twice differentiable $\mathbb{C}^2$ and some space of singly differentiable functions $\mathbb{C}$. Let us denote the diffeq as $L[x] = g(t)$. Then $L$ maps from $\mathbb{C}^2 \to \mathbb{C}$. Secondly, note that $L$ is a linear operator. This allows us to use linear algebra on this operator $L$, mostly the kernel of $L$. Suppose then that $x_1,x_2: L[x_{1,2}] = g(t)$ solve the solution. We can then subtract and invoke linearity to note that $L[x_1 - x_2] = 0$, which is then in the kernel/nullspace of $L$. This allows us to stipulate that $x_1 + x_2 - x_1$ solves $L$, or that the solution space can be spanned by $x = x' + \ker L$ where $x'$ is a single solution of the inhomogenous diffeq. This then gives us the solution to the general case, where if we find the kernel of $L$ (the homogenous case) and one solution (particular solution), then we can generate any solutions! Woopiee.
+
+We then have a theorem (for $n$-order ODE): If all coefficients and $g(t)$ are continuous on some interval $I$, then any IVP with $t_0 \in I$ has a unique solution that is defined for all $t \in I$. This is three statements: existence, uniqueness, ``wholeness'' (i.e. defined on all $I$). We then note that the kernel can be spanned by some $n$ number of linearly independent functions such that any superposition is also in the kernel of $L$; note that $n$ is the order of the ODE. The Wronskian gives a criterion to check this linear independence, but go learn this on your own.
+
+Let's now examine the case above where $p_i$ don't depend on $t$. In the two-dimension case above, we can write $a\ddot{x} + b\dot{x} + cx = 0$ the homogenous case. We always make the ansatz for the homogenous case $x=e^{kt}$ and we obtain a quadratic in $k$. This has three cases
+\begin{itemize}
+	\item Two distinct roots, general case is $e^{k_1t} + e^{k_2t}$.
+	\item One real root, multiplicity 2, general case is $e^{kt}+ te^{kt}$
+	\item Complex conjugate roots, general case is cosines and sines (or complex exponentials, trig is for the weak)
+\end{itemize}
+
+There are then two methods to discuss about the $n$-th order linear equations, reduction of order and variation of constants. We note that reduction of order can solve both for the particular solution and for an element of the kernel given another element of the kernel. Variation of constants can only generate particular solution given two elements of the kernel, though it's much easier if you can determine immediately two elements of the kernel.
+
+Let's first do reduction of order. Suppose we have some homogenous solution $x_1$ and we want to find a particular solution. Then we have $g(t) = L[x_1v] = a(\ddot{x_1v}) + b(\dot{x_1v} + cxv$ where we again focus on the second order case. We can then write this as
+$$g(t) = a\ddot{x}_1v + b\dot{x}_1 + cxv + L'\left[ \dot{v}, \ddot{v} \right]$$
+where $L'\neq L$ is some other linear operator that we don't write out for the sake of time
+
+We note that the first terms go to $0$ because it's just $vL[x_1] = v\cdot 0 = 0$. We thus solve the diffeq $g(t) = L'\left[ \dot{v},\ddot{v} \right]$ which is a first-order ODE in $\dot{v}$, which then integration gives us the $v$ and yields a particular solution $x_1v$. 
+
+Variation of constants is then all about making the ansatz $A(t)x_i(t) + B(t)x_j(t)$ as the particular solution. We then want to solve the linear equation $g(t) = L\left[ A(t)x_i(t) + B(t)x_j(t) \right]$ and we solve for the free parameters for $A(t),B(t)$. Note that since we have only one equation to compute two equations, we can impose an additional constraint to find a particular $A(t),B(t)$. Our additional constraint will help us through the algebra, and is that $\dot{A}x_i + \dot{B}x_j = 0$. Thus having two constraints, we can solve for $\dot{A}, \dot{B}$ and obtain the following explicit form expressions (up to a sign mistake of the TA):
+$$\dot{A} = \frac{-g x_j}{x_i\dot{x}_j - \dot{x}_i x_j}, \dot{B} = \frac{gx_1}{\dot{x}_1x_2 - x_1\dot{x}_2}$$
+
+which are trivial differential equations. We should also check the denominator, but in our case the denominator happens to be $\abs{W}$ the determinant of the Wronskian, which by definition only vanishes if $x_1, x_2$ are linearly dependent. So with proper choice of $x_1, x_2$, we don't need to worry about the denominator. Woohoo!
+
+We lastly examine difference equations. If we have a first order autonomous equation $x_{n+1} = f(x_n)$, then we solve this by drawing a cobweb diagram, subject to $x_0$ starting point. To do this, we graph $y=f(x),x$. If we then start from $x_0$, then we start by labeling the point $(x_0,f(x_0))$, then drawing the horizontal line $y=f(x_0)$ and noting the intersection of this horizontal line and $y=x$. The $x$ value at this point is then by definition $x_1$, because $x_1 = y = f(x_0)$. We then can analyze both asymptotic and exploding solutions depending on initial value. 
+
+The other thing to discuss is $ax_{n+2} + bx_{n+1} + cx_n = 0$ the difference equation (of course we can go up to higher order recursions). We then make the ansatz $x_n = k^n$, giving a quadratic and similar cases to the ODE case (note the degenerate case needs solution $k^n + nk^n$ as general solution). 
+
+Good luck on midterm!
+
+\end{document}
+

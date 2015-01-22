@@ -1,0 +1,22 @@
+\contentsline {section}{\numberline {1}Changelog}{1}
+\contentsline {section}{\numberline {2}Yubo --- Ahranov-Bohm, Dirac charge quantization}{2}
+\contentsline {subsection}{\numberline {2.1}Ahranov-Bohm effect derivation}{2}
+\contentsline {section}{\numberline {3}Cassidy --- Superconductors, confinement, Josephson junctions}{5}
+\contentsline {subsection}{\numberline {3.1}Superconductors}{5}
+\contentsline {subsection}{\numberline {3.2}Meissner effect, rederivation flux quantization condition}{5}
+\contentsline {subsection}{\numberline {3.3}Confinement}{6}
+\contentsline {subsection}{\numberline {3.4}Josephson Junctions}{6}
+\contentsline {section}{\numberline {4}Paul --- Quantum Hall effect, Crystals}{8}
+\contentsline {subsection}{\numberline {4.1}Quantum Hall Effect (missing punch line)}{8}
+\contentsline {subsection}{\numberline {4.2}Crystals}{9}
+\contentsline {section}{\numberline {5}Yubo --- Klein-Gordon Equation, Dirac Equation, Phonons, QFT}{10}
+\contentsline {subsection}{\numberline {5.1}Why the SE sucks}{10}
+\contentsline {subsection}{\numberline {5.2}Fixing the SE part 1: Klein-Gordon Equation}{10}
+\contentsline {subsection}{\numberline {5.3}Fixing the SE part 2: Dirac Equation}{11}
+\contentsline {subsection}{\numberline {5.4}Honeymoon with the Dirac Equation; electron magnetic moment}{12}
+\contentsline {subsection}{\numberline {5.5}The breakup with the Dirac Equation}{13}
+\contentsline {subsection}{\numberline {5.6}Optional: Alternative to Dirac Sea by Feynman, from Shankar}{14}
+\contentsline {subsection}{\numberline {5.7}Classical field theories}{14}
+\contentsline {subsection}{\numberline {5.8}Phonons}{15}
+\contentsline {subsection}{\numberline {5.9}Second quantization}{16}
+\contentsline {subsection}{\numberline {5.10}Optional: Time ordering and Causality in QFT}{18}

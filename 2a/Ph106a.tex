@@ -1,0 +1,1404 @@
+\documentclass[10pt]{report}
+\usepackage{fancyhdr, amsmath, amsthm, amssymb, hyperref, paracol, graphicx, setspace}
+\usepackage[margin=1in]{geometry}
+\usepackage[version=3]{mhchem}
+\newcommand{\scinot}[2]{#1\times 10^{#2}}
+\newcommand{\bra}[1]{\left<#1\right|}
+\newcommand{\ket}[1]{\left|#1\right>}
+\newcommand{\dotp}[2]{\left<#1\left.\right|#2\right>}
+\newcommand{\rd}[2]{\frac{d#1}{d#2}}
+\newcommand{\pd}[2]{\frac{\partial #1}{\partial#2}}
+\newcommand{\norm}[1]{\left|\left|#1\right|\right|}
+\newcommand{\rtd}[2]{\frac{d^2#1}{d#2^2}}
+\newcommand{\tensor}[1]{\overset{\leftrightarrow}{#1}}
+\newcommand{\ptd}[2]{\frac{\partial^2 #1}{\partial#2^2}}
+\newcommand{\abs}[1]{\left|#1\right|}
+\newcommand{\expvalue}[1]{\left<#1\right>}
+\usepackage[labelfont=bf, font=scriptsize]{caption}
+\everymath{\displaystyle}
+
+\begin{document}
+
+%\doublespace
+% \pagestyle{fancy}
+% \rhead{Yubo Su - Ph106}
+%\setlength{\headheight}{15pt}
+
+\title{Ph106 - Michael Cross - DWN107 TTh 1030-12}
+\author{Yubo Su}
+\date{ }
+
+\maketitle
+
+\tableofcontents
+
+\chapter{Key Concepts}
+
+\begin{itemize}
+    \item The \emph{Lagrangian} is defined $L\left( \left\{ q \right\},\left\{ \dot{q} \right\},t \right) = T-V(x)$ for classical systems and governs the dynamics of a system as below.
+    \item \emph{Principle of Least Action} Objects travel the path such that their path under \emph{action} $S=\int L\left( \left\{ q \right\},\left\{ \dot{q} \right\},t \right) dt$ is stationary. 
+    \item $L$ must be invariant under the metric it is defined. The above Lagrangian is invariant under the Galilean transform, and the relativistic Lagrangian must then be invariant under the Lorentz transform. This also implies that the Lagrangian in classical mechanics must be written in an inertial frame.
+    \item Some systems with non-inertial frames of reference will have fictitious forces arise in the equations of motion, e.g. centripetal force. The Lagrangian will correctly describe these forces just by correctly writing the Lagrangian; we needn't consider them separately like we would need in Newtonian mechanics. 
+    \item An \emph{quadratic form in the (generalized) velocities} example is the kinetic energy; we'll discuss this more once we arrive at Hamiltonians. 
+    \item The \emph{method of quadratures} is a method of solving one dimensional problems by using an integral to find the inverse of the equation of motion we wish to find. 
+    \item The \emph{momentum conjugate} to a particle is given $P=\pd{L}{\dot{q}}$, and if $\pd{L}{q} = 0$, then $P$ is constant, generalized \emph{conservation of momentum}
+    \item If $\pd{L}{t} = 0$, then the \emph{Hamiltonian} is an additional constant of motion given by $H=\sum_k P_k\dot{q}_q -L$. This reduces to $H=T+V$ the total energy if $T$ is a quadratic form in velocities and $V$ does not depend on velocities.
+    \item If $H$ is either not constant or not equal to $T+V$, energy is not conserved, so the constraint forces do work.
+    \item \emph{Degrees of freedom} are the number of coordinates that can be independently varied in a small displacement.
+    \item \emph{Holonomic constraints} are constraints that reduce the number of coordinates (i.e. not inequality or rolling). \emph{Schleronomic} constraints are time independent and \emph{rheonomic} constraints are time dependent. 
+    \item \emph{Virtual Displacements} are a set of displacements such that time/velocities are fixed and are consistent with constraints. 
+    \item \emph{d'Alembert's principle} is given below
+        $$\sum_i \vec{F}_i\cdot \delta\vec{r}_i = \sum_i \dot{\vec{p}}_i \cdot \delta\vec{r}_i$$
+        where the quantity $F \cdot \delta r$ is the \emph{virtual work}. Thus, $F_k = \frac{\delta W}{\delta k}$
+    \item \emph{Generalized equation of motion}:
+        $$\rd{}{t}\left( \pd{T}{\dot{q}_k} \right) - \pd{T}{q_k} = F_k$$
+    \item $F_k = \sum_j \lambda_j \pd{G_j}{q_k}$ where $F_k$ are the constraint forces while $\lambda$ are the Lagrange multipliers.
+    \item Equilibrium for time-independent Lagrangian is given by $\pd{L}{q} = 0$.
+    \item For $L = Dq^2 + F\dot{q}^2 + \dots$ after expanding about an equilibrium, $D > 0$ produces an unstable equilbrium and $D < 0$ produces a stable equilibrium.
+    \item General solution to inhomogeneus equation can be written as sum $q(t) = q_s(t) + q_t(t)$ a sum of the stable state (particular integral) for the inhomogenous solution and the general solution (complementary function) to the undriven solution.
+    \item Harmonic Oscillator see 10/17.
+    \item Noether's Theorem: Any continuous symmetry within a system that holds under Lagrangian dynamics yields a conservation law. 
+        $$I = \rd{}{t}\sum\left[ p_k \pd{q_k}{s} \right]$$
+    \item Planetary orbits/central potential problem, see 10/22, 10/27.
+    \item Hamiltonians also give an alternative formalism such that the Hamiltonian $H$ satisfies the constraints
+        $$\pd{H}{p_k} = \dot{q}_k, \pd{H}{q_k} = -\dot{p}_k, \rd{H}{t} = \pd{H}{t}$$
+    \item Hamiltonians are an example of the Legendre transform for changing independent variables; transforming $f(x) \to B(s)$ can be done by
+        $$B(s) = xs - f(x)$$
+        The Hamiltonian is powerful for qualitative analysis, and also lends better to ignorable coordinates, though the Routhian (below) is best for this.
+    \item The \emph{Routhian} is defined as below for the first $s$ ignorable coordinates:
+        $$R = \sum_{i=s+1}^N p_i \dot{q}_i - L$$
+        Note that this satisfies the Euler-Lagrange equations for the last $N-s$ non-ignorable coordinates but satisfies $\dot{q}_k = \pd{R}{p_k}$ for the first $s$ ignorable ones. 
+    \item Volumes in phase space are conserved under Hamiltonian dynamics 
+        $$\rd{\Delta A}{t} = \nabla \cdot \vec{v}_{ph}\Delta A$$
+        where $\vec{v}_{ph} = (\dot{q}, \dot{p}$ is the velocity in phase space. The divergence goes to $0$ under Hamiltonian dynamics, so volumes are conserved.
+    \item \emph{Liouville's Theorem} states that $\rd{\rho}{t} = 0$ under Hamiltonian's dynamics.
+    \item Canonical transformations are given below.
+        \begin{align*}
+            p &= \pd{F_1}{q}& P &= -\pd{F_1}{Q}\\
+            p &= \pd{F_2}{q}& Q &= \pd{F_2}{P}\\
+            q &= -\pd{F_3}{p}& P &= -\pd{F_3}{Q}\\
+            q &= -\pd{F_4}{p}& Q &= \pd{F_4}{P}     
+        \end{align*}
+        Transformations are canonical if the PB is $1$
+        $$\pd{Q}{q}\pd{P}{p} - \pd{Q}{p}\pd{P}{q} = 1$$
+    \item \emph{Angle-Action transformations} given by $(p,q) \to (\psi,I)$, has action an adiabatic invariant, and have key equations
+        \begin{align*}
+            I &= \frac{1}{2\pi}\oint p\; dq\\
+            &=\frac{1}{\pi}\int \sqrt{2m(E-V(q))}\; dq\\
+            \psi(q,I) = \omega t + C &= \pd{}{I}\displaystyle\int\limits_{0}^{q}p(q',I)\;dq'
+        \end{align*}
+    \item \emph{Hamilton-Jacobi} is a formalism that relates particle motion to wavefronts such that some $S$ generator satisfies PDE
+        $$H\left( q, \pd{S}{q},t \right) + \pd{S}{t} = 0$$
+        Note that $S$ is the classical action.
+    \item Active and passive transformations from an unrotated $\vec{a}'$ to a rotated $\vec{a}$ is given by $\vec{a}_i = U_{ij}\vec{a}'j$ and $\vec{a}_i' = U_{ij} \vec{a}_j$ respectively, the former transforming the vector and the latter being the components of the vector in a transformed basis.
+    \item Angular velocity about a single axis of rotation always points along that axis of rotation (recall rolling cone on surface).
+    \item Relatively rotating reference frames are governed by where $\vec{a}$ is an arbitrary vector
+        $$\rd{\vec{a}}{t}\Big|_s = \rd{\vec{a}}{t}\Big|_b + \vec{\omega}\times \vec{a}$$
+        Special case of accelerations below can be used to derive fictitious forces in rotating reference frames
+        $$\vec{a}_s =\vec{a}_b + 2\vec{\omega} \times \vec{v}_b + \vec{\omega}\times\left( \vec{\omega}\times \vec{r} \right) + m\dot{\vec{\omega}}\times \vec{r}$$
+    \item Moment of Inertia tensor 
+        $$I_{\alpha\beta} = \sum_i m_i \left( r_i^2\delta_{\alpha\beta} - r_{i,\alpha}r_{i\beta} \right) = \sum_i\begin{pmatrix}
+             m_i\left( y_i^2 + z_i^2 \right)& - m_i x_i y_i & -m_i x_i z_i\\
+            -m_i x_i y_i & m_i \left( z_i^2 + x_i^2 \right) & -m_i y_i z_i\\
+            -m_i x_i z_i & -m_i y_i z_i & m_i\left( x_i^2 + y_i^2 \right)
+        \end{pmatrix}$$
+    \item Displaced axis theorem: If we have some reference point shifted $\vec{a}$ from the center of mass, then we have $I_{\vec{a},\alpha\beta} = I_{cm,\alpha\beta} + M\left( a^2 \delta_{\alpha\beta} - a_\alpha a_\beta \right)$. 
+    \item Euler's equations
+        \begin{align*}
+            N_1 &= I_1 \rd{\omega_1}{t} - \omega_2 \omega_3 \left( I_2 - I_3 \right)\\
+            N_2 &= I_2 \rd{\omega_2}{t} - \omega_1 \omega_3 \left( I_3 - I_1 \right)\\
+            N_3 &= I_2 \rd{\omega_2}{t} - \omega_1 \omega_2 \left( I_1 - I_2 \right)
+        \end{align*}
+    \item Euler angles to angular velocity in both space (primed), body frame
+        \begin{align*}
+            \omega_1 &= \dot{\phi}\sin \psi\sin\theta + \dot{\theta}\cos\psi\\
+            \omega_2 &= \dot{\phi}\cos\psi\sin\theta - \dot{\theta}\sin\psi\\
+            \omega_3 &= \dot{\psi} + \dot{\phi}\cos \theta\\
+            \omega_{x'} &= \dot{\psi}\sin\theta\sin\phi + \dot{\theta}\cos\theta\\
+            \omega_{y'} &= -\dot{\psi}\cos\phi\sin\theta + \dot{\theta}\sin\phi\\
+            \omega_{z'} &= \dot{\psi}\cos \theta + \dot{\phi}\\
+        \end{align*}
+        We also have the kinetic energy of rotation about the axis, and the total Lagrangian with center of mass $(X,Y,Z)$
+        \begin{align*}
+            T &= \frac{1}{2}I_{\perp} \left( \dot{\theta}^2 + \dot{\phi}^2 \sin^2\theta \right) + \frac{1}{2}I_3 \left( \dot{\psi}^2 + \dot{\phi}\cos\theta \right)^2\\
+            L &= \frac{1}{2}I_{\perp} \left( \dot{\theta}^2 + \dot{\phi}^2 \sin^2\theta \right) + \frac{1}{2}I_3 \left( \dot{\psi}^2 + \dot{\phi}\cos\theta \right)^2 + \frac{1}{2}M(\dot{X}^2 + \dot{Y}^2 + \dot{Z}^2)- MgZ
+        \end{align*}
+\end{itemize}
+
+\chapter{10/1 - Introduction/Review classical mechanics}
+
+HW assignments will be due Fridays at 4PM in 149 Bridge (mail room), listed on the class website \url{http://pms.caltech.edu/~mcc/Ph106a}. Professor email is mcc@caltech.edu. There will be a total of six assignments, all posted on the website. 106a covers classical mechanics, and emag will be b/c. Grade will be 50\% homework, 20\% midterm, 30\% final. One silver bullet extension.
+
+Do not put a name on assignments; email the TA (Chan) a six-digit number and use that to label assignments.
+
+Conventionally we discuss the mechanics formulation of Newton, $\vec{F}=m\vec{a}$, but of course there is also the Lagrange formulation $\rd{}{t}\left(\pd{L}{\dot{q}_k} \right) - \pd{L}{q_k} = 0$, which can also be reformulated into the Hamiltonian formulation, which we will also discuss later. This draws the divide between vectorial mechanics and analytical mechanics. Today though we will only review Newtonian mechanics.
+
+Newton's Laws of Mechanics:
+
+\begin{itemize}
+    \item In the absence of forces, a particle moves in straight line with a constant velocity $\vec{v}$. 
+    \item For a particle of mass $m$, the \emph{acceleration} $\vec{a}$ for an imposed force $\vec{F}$ is given by $\vec{F} = m\vec{a}$, or $\vec{F} = \rd{\vec{p}}{t}$.
+    \item Each action has an equal and opposite reaction: If object 1 exerts a force $\vec{F}_{12}$ on object 2, then object 2 exerts a reaction force $\vec{F}_{21}$ on object 1 given by $\vec{F}_{21}=\vec{F}_{12}$. 
+\end{itemize}
+
+The third law is not quite as universal as one would think; construct two identical charges going along the positive $x,y$ axis. Computing magnetic forces we see that Newton's third law is violated. This is not a trick; Newton's Law is only an approximation in non-relativistic regimes. Performing the calculation, we see that the magnetic force is negligible in non-relativistic regimes, and so Newton's Law still forms a valid approximation. 
+
+There are some subtleties to the Newtonian framework. Newtonian physics assumes that there is some sense of absolute time, which is invalidated in special relativity. Reference frames must be inertial to observe the correct laws of motion. Vectors allow for equations to be written independent of coordinate basis, but a coordinate system is required to solve problems due to scalars being easier to manipulate. Galilean invariance guarantees that transformation to a different inertial frame doesn't change the laws of motion (as opposed to Lorentz transformation of special relativity). Newton's Laws are not true in non-inertial frames such as Earth's surface (e.g. hurricanes, TBD). 
+
+Newton's Laws fail in many extreme conditions. Small scales are dictated by quantum mechanics (requires use of potentials but not forces, action at a distance fails). Large scales are dictated by general relativity (curvature of space time). High speeds are governed by special relativity. Lagrangian/Hamiltonian are much more amenable to these defects. 
+
+We first examine a canonical mechanics problem. Under the influence of gravity, place a square block of mass $m$ on a wedge of angle $\alpha$ and mass $M$. Assuming everything is frictionless (more technically that only normal forces exist at interfaces), solve stuff! We can the solve this using $\vec{F}=m\vec{a}$ (I can't believe he's actually going to do this out, it's not very pleasant\dots). The actual solution is nothing exciting, though the steps are given below:
+
+\begin{itemize}
+    \item Draw FBD
+    \item Resolve vectors along set of coordinate axes (e.g. $\hat{x},\hat{y}$)
+    \item Measure coordinates in some inertial frame (i.e. cannot use distance from block to top of wedge b/c accelerates, must use absolute height above ground)
+    \item Note that there are four equations of motion (two per object) and five unknowns (two forces, two accelerations for the blockin either direction, and one acceleration for the wedge). 
+    \item The missing factor is the constraint that the block sits on the wedge.
+    \item After obtaining solution, check dimensions and then limits ($M \to 0,\infty, \alpha=0,\frac{\pi}{2}$).
+\end{itemize}
+
+We then summarize the insights obtained during our approach.
+
+\begin{itemize}
+    \item The intuitive coordinates we wanted to use were not the ones we had to use (Cartesian vs. arbitrary).
+    \item Constraints were introduced as explicit forces to eliminate forces. 
+    \item Due to the inappropriate coordinate choice, we have messy simultaneous equations and introduced constraints. 
+\end{itemize}
+
+Before, we formulated the laws in terms of point particles, but we can check out using a simple summation of momenta of all particles that composite objects are still subject to the same laws. 
+
+Moreover, angular momentum is also a convenient concept to keep in mind, namely $\vec{L}=\sum_i{\vec{r}_i\times\vec{p}_i}$. Taking a time derivative we can find conservation of angular momentum.
+
+We also find that energy-work theorem and conservative forces are pretty important. Under conservative forces total energy is conserved in dynamics. 
+
+\chapter{10/3 - Lagrangians, calculus of variations}
+
+We first investigate the world of science at Newton's time. Only six planets were known, assumed to have circular orbits, and the orbits were modelled by Kepler as nested solids (octahedron, icosahedron, dodecahedron, tetrahedron, cube) in that the radii could be predicted by nesting these figures inside one another. This was a picture of geometric perfection, but observations quickly discounted this; orbits were not circular, and the radii didn't match up. Enter dynamics. 
+
+Lagrange was next in line to attack the problem. Instead of optimising geometry, the approach of yore, why not try to optimise something else? In other words, let's take a single particle with a single degree of freedom and examine its dynamics from some time $t=0$ to some time $t=T$, in which time the particle travels from coordinate $q_i$ to $q_f$. Clearly this is not a geometry optimisation, and instead Lagrange tried to optimise some quality he called ``perfection'' $P$ of the trajectory. So let's define the perfection of a trajectory to be $P = \int_0^{t_f} p(q,\dot{q},t) dt$ where $p$ is considered the ``perfection density''. We then find we can reproduce Newtonian mechanics! $P$ is now called the action $S$, and $p$ is now called the Lagrangian $L$, but the principle is still the same; particles take the path of minimised action from one point to another in time. We restate this:
+
+\begin{center}
+    \textbf{Hamilton's Principle: } The dynamics of the system given by $\{q_k(t)\}$ are given such that the action $S = \int_{t_i}^{t_f} L(\{q\},\{\dot{q}\},t) dt$ is a stationary path leading between fixed endpoints.
+\end{center}
+
+$S$ is called a \emph{functional}, in that it is a function of a function. We then want to find the stationary points of this functional $S$; this is a simple problem for functions. The stationary point (``thing''??) of a functional is the path such that for any infinitesimal change $\delta q_k(t)$, $\delta S = 0 + O(\delta q_k^2)$, formally defined. Lastly, the Lagrangian is formed as $L=T-V$. 
+
+The minimization of such classes of functionals is called the \emph{calculus of variations}. A famous problem in calculus of variations is the brachistochrome problem (we know this one!). We will cover this in not-so-rigorous manner. Let us define some inital path $q(t)$ and then define a variation in this path given by $\delta q(t) = \epsilon f(t), \epsilon \to 0$ that modifies the path $q(t)$. We will constrain this $\delta q(t)$ to go to $0$ at the endpoints of the path $q(t)$, such that the endpoints of $q'(t)$ do not change. We then must compute how the functional changes: 
+\begin{align*}
+    \delta L &= \pd{L}{q}\delta q + \pd{L}{\dot{q}}\delta \dot{q}\\
+    \delta S &= \int_{t_i}^{t_f} \delta L dt\\
+    &= \int_{t_i}^{t_f} \left( \pd{L}{q}\delta q + \pd{L}{\dot{q}}\delta \dot{q} \right)dt\\
+    &= \int_{t_i}^{t_f} \left[  \pd{L}{q} - \rd{}{t}\pd{L}{\dot{q}}\right]\delta q dt + \left.\pd{L}{\dot{q}}\delta q \right|_{t_i}^{t_f}\\
+    &= \int_{t_i}^{t_f} \left[  \pd{L}{q} - \rd{}{t}\pd{L}{\dot{q}}\right]\delta q dt
+\end{align*}
+where we use integration by parts and then take advantage of the endpoints of $q$ going to zero (last step; don't quite see how, review). We then call the integrand above (absent $\delta q$) as the variational derivative $\frac{\delta L}{\delta q} = \pd{L}{q} - \rd{}{t}\left( \pd{L}{\dot{q}} \right)$, which is also equal to the functional deriative $\frac{\delta S[q(t)]}{\delta q}$. Thus, we then find that in order for the path $q$ to satisfy minimum conditions, it must hold true that 
+
+$$\rd{}{t}\left( \pd{L}{\dot{q}} \right) - \pd{L}{q} = 0$$
+
+This is called the \emph{Euler-Lagrange} equation of motion.
+
+We should also clarify what we mean by the time derivative. $\rd{}{t}$ is the variation along a path, such that $\rd{}{t}f(q,\dot{q},t) = \pd{f}{q}\dot{q} + \pd{f}{\dot{q}}\ddot{q} + \left( \pd{f}{t} \right)_{q,\dot{q}}$. 
+
+We then derive the Lagrangian, using a bit less guesswork than Newton had to use. We examine one particle in free space with position $\vec{r}$ and velocity $\vec{v}$. We know that space is isotropic, so the Lagrangian can only depend on $v^2 = \vec{v}\cdot\vec{v}$. Moreover, we know that the action must be invariant under the Galilean Transformation (same in all inertial frames), such that the dynamics of the system doesn't change. We can then show that $L(v^2) \propto v^2$, and then up to a constant we can specify the Lagrangian to be $L = \frac{1}{2}mv^2$. We can then check the action under the Galilean transformation ($\vec{v} \to \vec{v}' = \vec{v} + \vec{v}_T$.) :
+\begin{align*}
+    S &= \int \frac{1}{2}mv^2 dt\\
+    &= \int\frac{1}{2}(\vec{v}'-\vec{v}_T)^2 dt\\
+    &= \int\frac{1}{2}mv'^2 -m\vec{v}\cdot\vec{v_T} + \frac{1}{2}mv_T^2 dt\\
+    &= \int \frac{1}{2}mv'^2 dt - m\vec{v}_T\cdot(\vec{r}_f - \vec{r}_i) + \frac{1}{2}mv_T^2(t_f - t_i)
+\end{align*}
+The latter two terms are both constants that fall out with differences (as least action is only defined in terms of differences), and we see that the action remains constant under the Galilean transformation.
+
+We then want to add a term to describe particles under forces, and it turns out that $\frac{1}{2}mv^2 - V(\vec{r})$ is the correct expression for some conservative force with potential $V$. This checks out easily in one dimension; the proof is left as an exercise to the reader (jk, I'm too lazy to write it down). 
+
+We will now do some examples. First, let's try many interacting particles in Cartesian coordinates. The Lagrangian then becomes
+
+$$\sum_i \frac{1}{2}m_i\left( \dot{x}_i^2 + \dot{y}_i^2 + \dot{z}_i^2 \right)-V(\left\{ x_i,y_i,z_i \right\})$$
+
+Then setting up our Euler Lagrange equations, we find $m\ddot{x}_i=-\pd{V}{x_i}$, which gives Newtonian mechanics. Easy! 
+
+Let's retry the problem of the block on the wedge, but now using Lagrangians. Place the block of mass $m$ a distance $d$ from the top of the wedge of mass $M$ and define the position of the wedge to be $x$, again calling the incline of the wedge as $\alpha$. Note immediately that by using coordinates $d,x$, we don't need to constrain the position of the mass to staying on the wedge any more! The constraint force is no longer involved, though the particles are still interdependent by some constraint, just not a force.
+
+Recall then that $L=T-V$ in any inertial frame, so $T \neq \frac{1}{2}M\dot{x}^2 + \frac{1}{2}m\dot{d}^2$, as $d$ is in an accelerating frame of reference. We fix this by $T=\frac{1}{2}M\dot{x}^2 + \frac{1}{2}m\left[ \left( \dot{x} + \dot{d}\cos\alpha \right)^2 + \left( \dot{d}\sin \alpha \right)^2 \right]$, which is obtained by defining the coordinate of the little block $\vec{r} = \left( x + d\cos\alpha,h-d\sin\alpha \right)$. However, eventually a geometric argument will be sufficient rather than differentiating the coordinate. In any case, we take derivatives:
+\begin{align*}
+    \pd{L}{\dot{x}} &= M\dot{x} + m\left( \dot{x} + \dot{d}\cos\alpha \right)\\
+    \pd{L}{x} &= 0\\
+    \pd{L}{\dot{d}} &= m\cos\alpha\left( \dot{x}+\dot{d}\cos\alpha \right)+m\sin^2 \dot{d}\\
+    \pd{L}{d} = mg\sin\alpha
+\end{align*}
+We then simply plug into the Euler-Lagrange equations:
+\begin{align*}
+    \left( M+m \right)\ddot{x}+m\cos\alpha\ddot{d} &= 0\\
+    m\cos\alpha\ddot{x}+m\ddot{d} &= mg\sin\alpha
+\end{align*}
+This yields two equations and two unknowns, $\ddot{x},\ddot{d}$, compared to the five equations above. We then solve this straightforwardly to yield
+\begin{align*}
+    \ddot{d} &= \frac{\frac{M+m}{m}g\sin\alpha}{\frac{M}{m}+\sin^2\alpha}\\
+    \ddot{x} &= -\frac{g\sin\alpha\cos\alpha}{\frac{M}{m}\sin^2\alpha}
+\end{align*}
+We then check the limits as we always should, for $M \to \infty, \alpha \to \pi/2, \alpha \to 0$. We see that the Euler-Lagrange approach has taken a lot of the messy dynamics and turned it into a plug and chug. 
+
+We can then take a quick peek at quantum mechanics, the Feynman formulation. The wavefunction is then given by a summation over paths $\psi = \sum_{\text{paths}}e^{iS[q(t)]t/\hbar}$, and the probability is $\abs{\psi}^2$. Due to interference, we find classical mechanics recovered. For paths near the stationary path, the sum interferes constructively, and for paths far from the stationary path, the sum interferes destructively. The classical limit of the Feynman problem is when $\hbar \to 0$, and we find that in this case only the stationary path matters, and thus classical mechanics is recovered. 
+
+We can also examine relativistic physics, one particle case. We first can guess at the action being Lorentz invariant, just as the classical action was Galilean invariant. Since time differs in under Lorentz transformations, we use proper time $\tau$ to designate the action, to make it Lorentz invariant. This then forces $L$ to be Lorentz invariant, as $S,\tau$ are invariant in $S = \int L d\tau$. In a different frame, $d\tau = dt/\gamma$, where $\gamma =\sqrt{1-\frac{v^2}{c^2}}$, and so the Lagrangian in any other frame of reference $L'$ can simply be multiplied by $dt$ to recover Lorentz invariance $S=\int L'dt = \int L d\tau$.
+
+Spacetime is then the position 4-vector $\vec{x} = (ct,\vec{r})$. The velocity 4-vector is given by the derivative with respect to $\tau$. Recall the Lorentz invariant $c^2t^2 - x^2 - y^2 - z^2 = \norm{\vec{x}}^2$. We then postulate $L(\norm{\vec{v}}^2) \propto c^2$, which we can then find $L = -mc^2$, and $L'=-\gamma mc^2$. 
+
+If we try to include electromagnetism, we find the only Lorentz invariant we find is $\vec{v}\cdot\vec{a}$, where $\vec{A} = \vec{A}(\Phi/c,\vec{A})$ a function of both electricity and magnetism. The constant of proportionality to put into the Lagrangian turns out to be the charge! Curiosities, but nothing to learn right now. 
+
+\chapter{10/8 - Lagrangian examples/Hamiltonian}
+
+We note that the Lagrangian approach, in review, takes $n$ coordinates that move independently (hopefully) considering some constraints, and plugs it into the Euler-Lagrange equations of motion. We note that this reproduces Newtonian dynamics, which is sufficient proof of its accuracy. We will then do a bajillion example problems.
+
+We begin with some rail car moving at some prescribed $X(t)$ and some mass $m$ tied to some spring of spring constant $k$. We then want to find $x(t)$ describing the motion of the mass. Let us consider two cases $X(t) = \frac{\alpha}{2}t^2, X(t)=A\cos\omega t$. We wish to solve for $x(t)$, which we note is a non-inertial coordinate. We write down the Lagrangian, noting that we must write it in an inertial frame. We note that $T=\frac{1}{2}m\left( \dot{x}+\dot{X} \right)^2, V=\frac{1}{2}Kx^2$. Note that we don't need to include the kinetic energy of the car because it falls out with respect to differentiation by $x,\dot{x}$. We can then compute our Lagrangian:
+\begin{align*}
+    \rd{}{t}\left[ m\left( \dot{x}+\dot{X} \right) \right] + Kx &= 0\\
+    \ddot{x} &= \left( \frac{k}{m} \right)x -\ddot{X}
+\end{align*}
+
+We note that this is very close to a Newtonian equation for $F=m\ddot{x}$ with the addition of an effective force from the acceleration of the car. This effective force is sometimes also called a fictitious/inertial force. We can compute first for $\ddot{X}=\alpha$ a constant, and it is then easy to compute the equilibrium position of the mass on the spring $x_e=-\frac{m\alpha}{k}$, upon which we can then describe some harmonic motion about the displaced euilibrium, as once we substitute $x=x-x_e$ we note $\ddot{X}=0$ i.e. $(\ddot{x-x_0}) + \frac{k}{m}(x-x_e) = 0$. Easy enough.
+
+Next we work with $X(t)=A\cos\omega t$, which gives $\ddot{x}+\frac{k}{m}x = A\omega^2\cos\omega t$. Let's guess the solution $x=x_0\cos\omega t$. We can then compute that $x_0=-\frac{A\omega^2}{\omega^2-\omega_0^2}, \omega_0^2=\frac{k}{m}$. We thus recover the resonance phenomenon. 
+
+Another example we can choose to be the following case: A particle of mass $m$ sliding on the inside surface of a frictionless cone (a veritable nightmare to do in the Newtonian case if particle path isn't flat; hopefully we see that case here). Call the central angle of the cone $2\alpha$ such that $\alpha$ forms the angle between the center of the cone and the edge. We choose our two generalized coordinates to be $\phi$ the central angle and $q$ the distance of the particle from the base of the cone. 
+
+We can then compute $T=\frac{1}{2}m\dot{\vec{r}}^2$. The safest way to do this is to find the coordinate transform from $x,y,z$ to $q,\phi$, but there is a faster way. We examine geometrically, and note that one component of its velocity must be $\dot{q}$ and the other component must be due to $\dot{\phi}$, and a quick computation gives us $T=\frac{1}{2}m\left[ \dot{q}^2+\sin^2\alpha q^2 \dot{\phi}^2 \right]$. Note that this is a \emph{quadratic form in the generalized velocities}. We also note the gravitational potential energy $V=mgq\cos\alpha$, and thus we can compute the Euler-Lagrange equations for both variables:
+\begin{align*}
+    \rd{}{t}\left[ m\dot{q} \right] - m\sin^2\alpha q\dot{\phi}^2 + mg\cos\alpha &= 0\\
+    \rd{}{t}\left[ m\sin^2\alpha q^2\dot{\phi} \right] &= 0
+\end{align*}
+We note that the argument of the derivative in the second equation is conserved in time! A closer examination shows that this expression is indeed the angular momentum, or the generalized momentum $P_\phi=m\sin^2\alpha q^2 \dot{\phi}$. This then gives us that $\dot{\phi}=\frac{P_\phi(t_0)}{mq^2\sin^2\alpha}$, which we could then plug into our first equation. We can first cancel a factor of $m$ in our equation to write:
+\begin{align*}
+    \rd{}{t}\left[\dot{q} \right] - \sin^2\alpha q\dot{\phi}^2 + g\cos\alpha &= 0\\
+    \frac{P_\phi(t_0)^2}{mq^3\sin^2\alpha} - mg\cos\alpha &= \ddot{q}\\
+    -\rd{}{q}\left( \frac{p_\phi(t)^2}{2mq^2\sin^2\alpha} + mg\cos\alpha q \right) &=
+\end{align*}
+where we then note that our expression in the derivative at the end can be construed as an effective potential in $q$ as a function of $q$ and initial angular momentum $P_\phi(t_0)$. So indeed, if we plot this $V_{eff}$ we will find an oscillation (a calculation that would have been an abomination in Newtonian mechanics!). 
+
+A more ``pedestrian'' way of doing this would be to notice $\ddot{q}=\rd{}{q}\left( \frac{1}{2}\dot{q}^2 \right) = \dot{q}\rd{}{q}\dot{q} = \rd{}{t}\dot{q}$. Then, our effective energy $E_{eff}=V_eff+m\dot{q}^2/2$ can be written $\rd{}{q}E_{eff}=0$. We can then take our definition for $E_{eff}$ (also a constant by conservation of energy, so $E_0=E_{eff}$ is an initial condition), solve for $\dot{q}$, and then obtain $t(q)$, then invert to find $q(t)$. This method is called the ``method of quadratures.''
+
+We note that we solved our problem by reducing the two dimensional problem to a one dimensional problem using conservation of angular momentum, then we found a second simplification by finding a constant $E_{eff}$, which gave us the first integral of $\ddot{q}$ equation. This method of quadratures is defined by these two simplifications, resulting in the implicit integral. 
+
+We also note that we obtained conservation of $P_\phi$ because the potential $V$ did not depend on $\phi$. We call such a coordinate an ignorable (or cyclic) coordinate. We define the \emph{momentum conjugate} of a coordinate $q$ to be $P=\pd{L}{\dot{q}}$. If then the Lagrangian is independent of $q$, then the momentum conjugate $P_q$ is constant.
+
+If then $L$ is time independent to the first order (no time independence), then there is an additional constant of motion called the \emph{Hamiltonian}. (A lot of indicies of summations are missing from here on outwards\dots oops) We ask how $\rd{L}{t}$ evaluates if $|pd{L}{t}=0$. We recall $\rd{L}{t}=\sum\left( \pd{L}{q}\dot{q} + \pd{L}{\dot{q}}\ddot{q} \right) + \pd{L}{t}$. We make the substitution from the Euler-Lagrange equation $\pd{L}{q}=\rd{}{t}\pd{L}{\dot{q}}$ and then
+\begin{align*}
+    \rd{L}{t}&=\sum\left( \rd{}{t}\pd{L}{\dot{q}}\dot{q} + \pd{L}{\dot{q}}\ddot{q} \right) + \pd{L}{t}\\
+    &=\sum \rd{}{t}\left( \pd{L}{\dot{q}}\dot{q} \right)\\
+    &=\sum \rd{}{t}\left( P\dot{q} \right)
+\end{align*}
+We thus note that $\sum_k P_k\dot{q}_q -L$ is a constant of motion. Call this the Hamiltonian. This reduces to $H=T+V$ the total energy only if $T$ is quadratic in velocities and $V$ does not depend on velocities. We can see this by
+\begin{align*}
+    H&=\sum_n \pd{L}{\dot{q}_n}\dot{q}_n -L\\
+    &= \sum_n \pd{T}{\dot{q}_n}\dot{q}_n -L\\
+    &= 2T
+\end{align*}
+The last step arises because every term in $T$ will arise in the differentiation twice due to quadratic form, and multiplying by $\dot{q}_k$ after differentiation doubles it compared to the original value (think differentiating $x^2$ with respect to $x$ then multiplying by $x$), so the whole summation reduces. Thus, $H=T+V$ under these constraints.
+
+Then, there are two cases arising about the Hamiltonian:
+\begin{itemize}
+    \item Is $H$ constant? Only if $L$ has no time dependence.
+    \item Is $H=T+V$? Yes if$T$ is quadratic in velocities and $V$ is independent of velocities. Another way to call this is if we have ``time independent holonomic constraints.''
+\end{itemize}
+We have an example where $H$ is not constant in time i.e. energy is not conserved. Take a frictionless wire and put a bead on it and rotate the wire to trace out the shape of a cone at rotational frequency $\omega$. This is almost identical to the earlier cone problem, as we see by writing out the Lagrangian
+$$L=T-V=\frac{1}{2}m\left( \dot{q}^2 + \omega^2\sin^2\alpha q^2 \right) - mgq\cos\alpha$$
+We note that the $T$ in this case is not a quadratic form in the velocities! Examine the second term in parentheses above. We do note that $L$ is time independent, but $T$ is not quadratic in generalized velocities so $H$ is constant but $H\neq T+V$. In fact,
+\begin{align*}
+    H&= \dot{q}\pd{L}{\dot{q}} - L\\
+    &= m\dot{q}^2-\left( \frac{1}{2}m\dot{q}^2 + \frac{1}{2}m\omega^2\sin^2\alpha q^2 - mgq\cos\alpha \right)\\
+    &= \frac{1}{2}m\dot{q}^2 + mgq\cos\alpha - \frac{1}{2}m\omega^2\sin^2\alpha q^2
+\end{align*}
+We thus find that $H$ is constant, so we can solve using quadratures (recall this from earlier, integrating to find inverse etc.), but $H \neq T+V$, and $T+V$ is not constant. This clearly shows that our system as set up must require a driving amount of work. This arises because we drive the bead in a tangential direction, and we do work on the bead, so the total energy cannot be constant. In other words, the constraint forces do work.
+
+\chapter{10/10 - Virtual forces/displacements/work, rederive Lagrangian}
+
+We note that going from Newtonian to Lagrangian mechanics loses dissipative forces somewhere, so we will examine this later. We will retrace the derivation of the Lagrangian from Newtonian mechanics (rather than from Hamilton's principle as we've done already), and hopefully we'll find where we lose dissipative forces. 
+
+We begin with a primative description where we use Newtonian equations of motion for $M$ objects. Constraints reduce the numbers of \emph{degrees of freedom} down from $3M$; \emph{degrees of freedom} are the number of coordinates that can be independently varied in a small displacement. We can then express the configuration of the system in terms of $N$ generalzied coordinates where $N$ is the difference between $3M$ and the number of constraints only if the constraints are \emph{holonomic}. 
+
+Nonholonomic constraints are constraints such as inequalities, rolling constraints, and anything that doesn't generally reduce the number of degrees of freedom. A specific case of nonholonomic constraints is a velocity constraint or ``nonintegrable differential nononholonomic constraints'', which can still give us a bit to work with.
+
+Thus, we can express the position of all $M$ objects as $\vec{r}_i\left( \left\{ q_j \right\},t \right), i = 1\dots M, j = 1 \dots N$ when we are holonomically constrained. The $N$ coordinates can be varied independently. 
+
+We can return to our example of a block on a wedge. It is clear that the constraint (that the block remain on the wedge) is holonomic as it constrains the block's motion from two dimensions to one, namely along the wedge. This constraint is time independent and is also called \emph{schleronomic}.
+
+If we imagine a bead on an ellipse where the ellipse can be stretched and pushed together (so time dependent), the constraint is still holonomic because the position of the particle can be parameterized as a function of time alone, so one generalized coordinate. We can of course choose any generalized coordinate, so we could even choose $x$ and specify a $y(x)$ via our constraint. This is just usually harcder to solve.
+
+Another example is a penny rolling down a groove, where ``rolling'' is defined to mean that there is no sliding at contact point. In the one-dimensional case, the rolling constraint is holonomic, because the coordinate of the penny can be uniquely specified by some central angle $\alpha$. 
+
+We can then examine a rolling wheel on a table, where we assume the wheel is held constantly vertical (i.e. no tilting, only rolling or rotating about axis perpendicular to table). Define $\theta$ to be the angle of the center of mass of the wheel with respect to some origin and $\phi$ to be the central angle/rotation of the wheel. So then we see that $\delta \theta, \delta \phi$ yields $\delta x, \delta y$. We cannot integrate this with respect to time. Note that we see this is nonholonomic because $x,y$ don't depend on $\phi$, and we can't define $x,y$ as a function of $\theta$, so the constraint must be nonholonomic. Another illustration is if we roll the wheel in an arbitrary loop to return to its original position. Then $x,y,\theta$ are the same, but $\phi$ can change, so nonintegrable! One more trick. If we express our constraint differentially, we have $\delta x = R\sin\theta \delta\phi, \delta y = R\cos \theta \delta \phi$, so we obviously have some use, but further differentiation proves lack of equality of partials and so we can't integrate.
+
+This draws a conclusion to our discussion of constraints. We can define a \emph{virtual displacement} such that the time and velocities are held fixed and constraints are held consistent. We can then substitute into Newton's 2nd law of motion, $\sum_i \vec{F}_i\cdot \delta\vec{r}_i = \sum_i \dot{\vec{p}}_i \cdot \delta\vec{r}_i$, which is d'Alembert's principle. We know via our formulation that only external forces contribute to the virtual work, and constraint forces give no contribution. 
+
+We note that the setup of virtual displacements simplifies things considerably. Let's have a massive rope running over a frictionless wheel like a pulley. It is difficult to apply directly $F=ma$ to the rope because the mass has a length dependence! On the other hand, if we construe a virtual displacement such that each piece of the rope moves virtually along the rope, then it is easy to find the virtual work. The normal force of the pulley does no work because it is a constraint force, and then we see that gravity cancels out for parts of the rope that are symmetric. The calculation can proceed easily from there, since the only segment of the rope we have to treat is the asymmetric portion, but the powerful point is that the constraint forces fall out of the equation.
+
+Let's examine why the constraint forces don't contribute to the virtual work. Oftentimes, the constraint forces are perpendicular to the virtual displacement, i.e. normal forces/frictionless surfaces. Then, many virtual works contributions cancel. Then, many constraint forces are conservative. 
+
+Friction forces seem to be bad news much of the time, but if we examine the case of a rolling wheel, the friction force does no work because the virtual displacement at the point of contact is zero (point at the bottom of the wheel is at rest; it is the instantaneous axis of rotation). 
+
+Finally, we will continue with the derivation. Let's have holonomic constraints, so the virtual work becomes
+$$\delta W = \sum_i \vec{F}_i \cdot \left( \pd{\vec{r}_i}{q_k} \right)\delta q_k$$
+Then we have a generalized force
+$$ F_k = \frac{\delta W}{\delta q_k} = \sum_i \vec{F}_i \cdot \left( \pd{\vec{r}_i}{q_k} \right)$$
+For holonomic constraints d'Alembert's principle gives
+$$\sum_i \left( \vec{F}_i\cdot \pd{\vec{r}_i}{q_k}-\vec{p}_i\cdot \pd{\vec{r}_i}{q_k} \right)\delta q_k \Leftarrow \sum_i \vec{p}_i \cdot \pd{\vec{r}_i}{q_k} = F_k$$
+The left hand side of the latter equation can then be transformed for holonomic constraints very messily to yield
+$$\rd{}{t}\left( \pd{T}{\dot{q}_k} \right) - \pd{T}{q_k} = F_k$$
+where $F_k$ is the generalized force. This is the \emph{generalized equation of motion}.
+
+Conservative forces can then be derived from a potential ($F_r = -\partial V/\partial r$) as follows:
+$$F_k = \sum_i \vec{F}_i \cdot \left( \pd{\vec{r}_i}{q_k} \right) = -\sum_i \left( \pd{V}{\vec{r}_i} \right) \cdot \left( \pd{\vec{r}_i}{q_k} \right) = -\pd{V}{q_k}$$
+We then can move $-\pd{V}{q_k}$ to the left, and introduce $L=T-V$ to simplify to the Lagrangian formulation. 
+
+We then spend some time proving $\sum_i \vec{p}_i \cdot \pd{\vec{r}_i}{q_k} = F_k$, using a ``dot cancellation lemma'' that $\pd{\dot{\vec{r}}_i}{\dot{q}_k} = \pd{\vec{r}_i}{q_k}$ for holonomic constraints. Stupidly unintuitive stuff, great exercise in partial derivatives.
+
+We return to the concept of virtual work, because it seems to be a stumbling block of many in the past. We can examine again the block on the wedge, where $d$ is coordinate of the block on the wedge and $x$ is the position of the wedge. Let's look at the virtual displacement $\delta x$ and examine the virtual work done. The forces involved on the wedge are the normal force of the table, the force of gravity, and the constraint force of the block on the wedge. If we then examine the forces on the block, we find a constraint force and a gravity force.
+
+Let's then examine the virtual work $\delta W$. The virtual work on the block is given by $-F_c\sin \alpha\delta x$, and the virtual work on the block is $F_c\sin\alpha \delta x$, so the total virtual work with respect to $\delta x$ is zero. So $F_x = 0$.
+
+We then examine the virtual displacement $\delta d$. The virtual work on the block is given by $mg\sin \alpha \delta d$, and so $F_d = mg\sin\alpha$. 
+
+We can check our results algebraically by $F_x = \sum_i F_i \left( \pd{\vec{r_i}}{x} \right)$ and correspondingly for $F_d$. Given explicit expressions for the position of the wedge and block, we can differentiate and check our results above.
+
+Curiously, the generalized force being zero doesn't mean the acceleration is $0$! Recall that $\rd{}{t}\left( \pd{T}{x} \right) - \pd{T}{x} = F_x$, so that doesn't yield $\ddot{x} = 0$. Treating it specifically in the context of the block on wedge, we find $(m+M)\ddot{x} = -m\cos \alpha \ddot{d}$, which is very different!
+
+Lastly, we see why we need to use virtual displacements. Let's examine the case of the bead on the elliptical wire again. We recall that the constraint force is perpendicular to the wire at any point $t$ and the corresponding configuration. Thus, our virtual displacement is along the wire and so the virtual work is $0$. If we look at actual dynamics though, we find $\delta \vec{r} = \vec{r}(t + \delta t) - \vec{r}(t)$, which then since the wire itself is moving cannot be perfectly perpendicular to the wire. The virtual displacement is powerful due to the fixing of time. In the real dynamics of the system, we do give the particle energy (recall this), but the virtual work is still zero; note that virtual work doesn't correspond perfectly to energy!
+
+\chapter{10/15 - Makeup notes: Lagrange Multipliers}
+
+I went to career fair this day, so I'm just going to jot down some quick notes based on his released notes.
+
+This is literally like Lagrange multipliers from Ma1b. Let us denote our constraints $G_j = 0$. We construct a modified action equation
+$$\bar{S} = \int L+\sum \lambda_j(t) G_j dt$$
+
+We then have our Euler-Lagrange equations and our constraint equations $G_j = 0$. So if there were initially $M$ particles each with three degrees of freedom, then we now have $3M+C$ ($C$ being number of constraints) equations for as many variables, and we solve.
+
+We note $F_k = \sum_j \lambda_j \pd{G_j}{q_k}$ is the relation between constraint forces and the Lagrange multipliers.
+
+Note that if we examine the Euler-Lagrange equations in the context of the Lagrange multipliers, they look like $\frac{\delta L}{\delta q_k} + \sum \lambda_j(t) \pd{G_j}{q_k}$, where $\delta$ is taken to be the shorthand for the standard Euler-Lagrange expression. Note that only differential forms of the constraints are required! This allows us to implement nonholonomic nonintegrable differential constraints.
+
+Examples are given in his notes such as a mass $m$ confined to a vertical circle of radius $R$ and a wheel rolling down a slope. 
+\chapter{10/17 - Simple Harmonic Oscillators}
+
+Missed a lecture due to career fair; will scan through Hand and Finch to try and get an idea of what I missed.
+
+We will investigate the oscillator, starting from equilibrium states then investigating behavior near equilibrium (unstable/stable), then we will look to \emph{bifurcation theory} to study changes in behavior of equilibria as parameters change. 
+
+We begin by seeking an equilibrium, a time independent system in some generalized coordinate system. This implies that $\dot{q},\ddot{q} = 0$, so writing down our Euler Lagrange equations (omitting implied indicies)
+\begin{align*}
+    \rd{}{t}\left( \pd{L}{\dot{q}} \right) - \pd{L}{q} &= 0\\
+    \pd{}{t}\pd{L}{\dot{q}} + \pd{}{q}\pd{L}{\dot{q}}\dot{q} + \pd{}{\dot{q}}\pd{L}{\dot{q}}\ddot{q} - \pd{L}{q} &= 0
+\end{align*}
+
+We note that the first term only goes to zero if the Lagrangian is time independent: $\pd{}{q}\pd{L}{t} = 0$. Assuming so much, we see that the total time derivative must be $0$. Thus, the equilibrium condition is that
+$$\pd{L}{q} = 0$$
+
+Let's investigate time-independent holonomic constraints. We note that $T$ is quadratic in $\dot{q}$, and so $L = -V$ for the equilibrium case, and we recover our familiar $\pd{V}{q} = 0$. 
+
+Let's choose our coordinate system such that $q_e=0$ the equilibrium point. We can expand the Lagrangian near $q=0, \dot{q}=0$
+\begin{align*}
+    L = L_e + Bq + C\dot{q} + Dq^2 + Eq\dot{q} + F\dot{q}^2 + \dots
+\end{align*}
+We immediately see that this can simplify quite a bit. The first term is constant. so it falls out upon differentiation. Any term that is the derivative of a function of $q$ will fall out upon integrating to find the action, so $C,E$ fall out because they are derivatives of $q,\frac{1}{2}q^2$ respectively. Then, imposing the stationary point condition, we find $B = 0$, and we can rewrite (omitting higher order terms)
+$$L = Dq^2 + F\dot{q}^2$$
+We will assume $F$ is positive because positive kinetic energy. Then plugging into the Euler Lagrange equations, we obtain
+$$\frac{d^2q}{dt^2} - \frac{D}{F}q = 0$$
+This is a second order ODE, constant coefficients, linear in $q$, yields exponential solution. We then know that $q = q_0e^{\lambda t}, \lambda^2 = D/F$ is the solution, and the general solution must be
+$$q(t) = Ae^{\sqrt{D/F}t} + Be^{-\sqrt{D/F}t}$$
+where $A,B$ come from initial conditions $q(0),\dot{q}(0)$. 
+
+Whether then the $L$ we've found is a maximum or minimum depends on the sign of $D$, as $F > 0$ by assumption. If $D > 0$, then we have real exponentials in our solution and we see unstable growth or an unstable equilibrium (for small $q$, the regime over which our $L$ is an accurate expansion). For $D < 0$ we have complex exponentials and we have an oscillatory solution/stable equilibrium. 
+
+It is difficult then to investigate unstable equilibria over long time under our current framework because our approximation breaks down, but we can investigate the stable case i.e. harmonic oscillation. Let's define $\bar{t} = \sqrt{\abs{\frac{D}{F}}}t$ the scaled time. Then we can write $\frac{d^2q}{d\bar{t}^2} \mp q = 0$. This gives us a dimensionless time scale, so we take it from a physics problem to a math problem by using the natural units. Then, when we are investigating the SHO, we can just write $\ddot{q} + q = 0$ in terms of the scaled time. 
+
+We then examine the properties of this scaled SHO problem. The solution is obviously given by $q(t) = ae^{it} + be^{-it}$, where in general $a,b \in \mathbb{C}$. This complexity seems counterintuitive. One thing we can do is to forge ahead for the general solution in terms of the initial conditions, whereupon we obtain $q = q(0) \frac{1}{2}\left( e^{it} + e^{-it} \right) + \dot{q}(0) \frac{1}{2i}\left( e^{it} - e^{-it} \right)$. We identify the first and second terms with cosine and sine respectively. This wasn't too bad, and is probably usually the best way to solve problems.
+
+We can also claim that $q(t)$ must be real, so $ae^{it} = \left( be^{-it} \right)^*$, and we can write $q(t) = \Re \left[ Ae^{it} \right] = A\cos\left( t + \phi \right)$, where we again have two real constants $A,\phi$ fixed by initial conditions. 
+
+Lastly, we can solve out using complex numbers and take the real part at the end. For example, if we take the derivative of $q(t) = Ae^{it}$, then we obtain $\dot{q} = -A\sin (t + \phi$, which is what we expect. This is not okay for nonlinear operations!! Kinetic energy is one such ruinious example. 
+
+We will now examine the driven SHO, given by $\ddot{q} + q = F(t)$. This is an inhomogeneous equation, though still linear (superposition). We can thus work up to general $F(t)$ by superposing simple $F(t)$. Such simple forces can be sinusoids or delta functions (i.e. Dirac Delta), though engineers also like to use the Heaviside step function. If we use sinusoids, then it's Fourier theory. If we use the delta function, we have Green's function $G(t,t')$ which depends on the position of the delta function peaks and is the solution to the differential equation involvng delta functions. So the general solution looks like $q(t) = \int F(t') G(t-t') dt'$.
+
+We can return to our differential equation $\ddot{q} + q = F(t)$. We can write the general solution $q(t) = q_s(t) + q_t(t)$ where $q_s(t)$ is any solution to the inhomogeneus problem, the ``steady state'' solution and $q_t(t)$ is the general solution to the undriven case. In this current situation, we find $q = q_s(t) + A\cos t + B\sin t$. We will assume $q(0) = \dot{q}(0) = 0$. 
+
+We will first solve for the unit step $F(t) = \Theta(t)$ the step function. We examine for $t > 0$, at which point $\ddot{q} + q = 1$. This is clearly satisfied by a simple case $q=1$, which then yields general solution $q(t) = 1 - \cos t$. 
+
+We can next examine for the delta function. We must clarify our initial conditions. A careful analysis yields $\dot{q}(0^+) = 1, q(0^+) = 0$. Then, we know that the steady state is $q=0$ and thus the general solution is $q(t) = \sin t$. The Green's function solution then arises from a constant shift of the delta function by some $t'$, given by
+$$G(t,t') = \begin{cases} \sin (t-t') &\mbox{ if } t>t'\\0 \mbox{ if } t < t'\end{cases}$$
+
+The last one to examine is the sinusoid. We find our steady state/particular integral solution to be $q_s(t) = \frac{1}{1-\omega^2}\cos \omega t$, and checking against initial conditions we find our general case $q(t) = \frac{1}{1-\omega^2}\cos \omega t - \frac{1}{1-\omega^2}\cos t$. This then shows that the oscillator will show two oscillations, one at the natural frequency and one at the driven frequency. Of course, this fails $\omega = 1$. The explanation for this is that the particular integral solution has a different expression at $\omega = 1$. However, we can take this to be an exercise in using the Green's Function.
+
+Let us represent our driving force $F(t) = \int \cos t' \delta(t-t') dt'$ (all subsequent limits of integration are $0,\infty$, omitted for simplicity). This then gives solution $q(t) = \int G(t,t') \cos t' dt'$. We recall our Green's Function solution from earlier was $G(t,t') = \sin (t-t')$, and so we find (note bounds of integration change b/c function can't be affected by Green's functions $t' > t$, so we only integrate $t' \in [0,t]$)
+$$q(t) = \sin(t-t')\cos t' dt' = \frac{1}{2} \left( \sin t + \sin (t-2t') \right) dt' = \frac{1}{2} t \sin t$$
+This shows that the amplitude grows linearly with time when driving on resonance.
+
+This concludes our treatment of the SHO today. Cue the awesome Tacoma Narrows bridge video, resonance, whee! These effects are called secular forces. 
+
+\emph{Note that damped driven SHOs are given in the LN6 of his notes.}
+
+\chapter{10/22 - Planetary Orbits}
+
+General outline of lecture: symmetries/conserved quantities, reducing degrees of motion, Hamiltontians as first integral of Euler-Lagrange equations, special 1D problems, and special case of $1/r$.
+
+We first examine Kepler's laws:
+\begin{itemize}
+    \item Orbits are ellipses, Sun is at focus
+    \item Line joining sun/planets sweeps out equal areas in equal times
+    \item square of period is proportional to cube of mean distance
+\end{itemize}
+
+We thus have Noether's Theorem: Any continuous symmetry within a system that holds under Lagrangian dynamics yields a conservation law. We then examine what exactly a symmetry is; it's an operation $q_k \to q'_k(s), q'_k(s=0) = q_k$ that leaves the Lagrangian unchanged. For example, if we have a particle, we can operate on its coordinates by $\vec{r} = \vec{R}(\vec{d}) = \vec{r} + \vec{d}$, which doesn't change the potential nor kinetic energy and the Lagrangian is unchanged. We can then quantify the conservation principle:
+\begin{align*}
+    \rd{}{s} L\left( \left\{ q'_k \right\},\left\{ \dot{q}'_k \right\},t \right) &= 0\\
+    \rd{L}{s} &= \sum \left[ \pd{L}{q'_k}\pd{q'_k}{s} + \pd{L}{\dot{q}'_k}\pd{\dot{q}'_k}{s} \right]\\
+    &= \sum\left[ \rd{}{t}\left( \pd{L}{\dot{q}'_k} \right)\pd{q_k}{s} + \pd{L}{\dot{q}'_k}\pd{\dot{q}'_k}{s} \right]\\
+    &= \rd{}{t}\sum\left[ p_k \pd{q_k}{s} \right]
+\end{align*}
+(why does the second term go to zero? --- It doesn't go to $0$ but we identify a product rule expansion.)
+
+We can easily apply this to rotational (freak, missed this). We can also apply this to rotational symmetry. We will rotate about some axis $z$ by some angle $\phi$. This changes $X,Y$ by:
+$$x'(\phi) = x\cos\phi-y\sin\phi, y'(\phi) = x\sin\phi + y\cos\phi$$
+
+This then gives the invariant $\sum p_x \pd{X}{\phi}|_0 + p_y \pd{Y}{\phi}|_0 = \sum -yp_x + xp_y = \sum \vec{r}\times\vec{p}$. This is completely prescriptive! 
+
+We then examine our orbits problem: two point masses orbiting with six degrees of freedom; the Lagrangian is the sum of their kinetic energies minus the potential function of their difference $V(|\vec{r}_2 - \vec{r}_1|)$. We then examine symmetries. Translational symmetry gives conservation of total momentum. Let's introduce a center of mass coordinate $\vec{R} = \frac{M_1\vec{r}_1 + M_2\vec{r}_2}{M_1 + M_2}$ such that $\vec{P} = (M_1 + M_2) \vec{R}$. 
+
+The second coordinate we want should also be invariant under translation, so the separation coordinate is natural. A bit of algebra shows us
+$$L=\frac{1}{2}M\vec{R}^2 + \frac{1}{2}\mu \vec{r}^2 - V(\vec{r})$$
+where $M=M_1 + M_2, \mu = \frac{M_1M_2}{M_1+M_2}$. We note that the $\vec{R}$ coordinate is ignorable by definition, and so $\vec{P}=\pd{L}{\vec{R}}$ is indeed conserved. We can then choose to consider the relatvie motion by choice of reference frames $L = \frac{1}{2}\mu\vec{r}^2 - V(\vec{r}$. 
+
+We then see that the Lagrangian involves only scalars and is unchanged by rotation, so the angular momentum must be a constant of motion. In order for this angular momentum $\vec{l} = \vec{r} \times \vec{p}$, clearly $\vec{r},\vec{p}$ lie in the plane perpendicular to $\vec{l}$. We can then go to polar coordinates in this plane and the Lagrangian for the motion in this plane is $L=\frac{1}{2}\mu\left( \dot{r}^2 + r^2\dot{\phi}^2\right) - V(r)$. We note that $\dot{\phi}$ is ignorable, and so $l=\pd{L}{\dot{\phi}} = \mu r^2\dot{\phi}$ is a constant. This gives us Kepler's second law.
+
+We can then write the Euler-Lagrange equation for $r$ to be $\mu\ddot{r}-\mu r\dot{\phi}^2 + \rd{V}{r} = 0$. Taking constant $\phi$ we note $\mu\ddot{r} + \rd{V_{eff}}{r}=0$ where $V_{eff} = \frac{l^2}{2\mu r^2} + V(R)$ where $l$ is the angular momentum. It is wrong to make the substitution for $\dot{\phi}$ into the Lagrangian immediately.
+
+We have resolved this down from six dimensions to one dimensional diffeq. However, we can keep going. Since the Lagrangian is time independent and there are no time dependent constraints, $H=T+V$ is conserved. Thus, $E = \frac{1}{2} \mu \dot{r}^2 + V_{eff}$ is a constant. We furthermore substitute $V(r) = -k/r$, and $E=\frac{1}{2}\mu \dot{r}^2 + \frac{l^2}{2\mu r^2} - \frac{k}{r}$. We can thus plot our potential function and examine the possible orbits. If the total energy is less than zero, then we have a bound orbit. If we are located at the minimum of the potential function, $\rd{V}{r} = 0$ and we have circular motion. If $E$ is positive, then we have escape velocity. 
+
+Examining orbits, we can see some orbits are closed and some are open (open orbits don't came back onto themselves while closed ones are like loop). We find the condition for closed orbits is $V(r) \propto 1/r$. We will examine a solution for $r(\phi)$. We will use $p = l^2/\mu k, u=1/r$ (note that $p$ is the radius of the orbit with the prescribed energy), and noting that $\dot{\phi} = \frac{l}{\mu r^2}$ we find
+\begin{align*}
+    \dot{r}^2 &= \dot{\phi}^2 \left( \rd{r}{\phi} \right)^2 \\
+    &= \frac{l^2}{\mu^2} \left( \frac{1}{r^2}\rd{r}{\phi} \right)^2\\
+    &=\frac{l^2}{\mu^2}\left( \rd{u}{\phi} \right)^2\\
+    E &= \frac{l^2}{2\mu}\left[  \left( \rd{u}{\phi} \right)^2 + \left( u-\frac{1}{p} \right)^2 - \frac{1}{p^2}\right]
+\end{align*}
+
+We note that this is a simple harmonic oscillator! First two terms are the correct differential equation for $u(\phi)$. We note that $u(\phi)$ is centered on $u=1/p$ with period $2\pi$, so this orbit is closed. Betrand's theorem states that closed orbits only occur for $1/r$ and $r^2$ potentials. The explicit solution is given $u=\frac{1}{p} + \frac{\epsilon}{p}\cos \phi$ and $E = \frac{l^2}{2\mu p^2}(\epsilon^2 - 1)$ where $\epsilon$ is the eccentricity. This orbit is an ellipse for $\epsilon < 1$, parabola for $\epsilon = 1$, and hyperbola for $\epsilon > 1$ (the planet will fly away asymptotically about the hyperbola's diagonal asymptote; recall the focus of hyperbola is outside of the curve). This can be shown easily to be equivalent to the Cartesian coordinates. 
+
+We call the point in the orbit at maximum distance from the focus the aphelion and the closest point the perihelion. 
+
+We will now examine Kepler's third law. We know that the are of the ellipse is $A=\pi ab$ and we know that the rate at which area is swept out by the planet is $\dot{A} = l/2\mu$. This gives period $\tau = \frac{A}{\dot{A}} = 2\pi\sqrt{\frac{\mu}{k}}a^{3/2}$. We then note that for small masses of planets the period is then independent of the mass of the planet under which Kepler's law holds.
+
+We then want to examine the orbits of the sun/planets from the center of mass which is an inertial reference frame. We can write $\vec{r}_p = \vec{R} + \frac{M_s}{M_p + M_s} \vec{r}, \vec{r}_s = \vec{R} - + \frac{M_p}{M_p + M_s} \vec{r}$. 
+
+The corrected Kepler's Laws that fulfill all orbits are then as follows:
+\begin{itemize}
+    \item Planetary orbits are ellipses with the center of mass at the focus
+    \item Conservation of angular momentum: $\dot{A} = \frac{l}{2u}$
+    \item $\tau=\frac{2\pi}{\sqrt{G(M_s + M_p)}}a^{3/2}$. 
+\end{itemize}
+
+We can now discuss the Virial theorem. It relates the time average of total kinetic/potential energies for systems of bound particles interacting with potential $U(r) \propto r^\alpha$. The Virial theorem then states that $\expvalue{T} = \alpha\expvalue{V}/2$. For example, gravity yields $\expvalue{T}=-\expvalue{V}/2$, while for Hooke's Law gives $\expvalue{T}=\expvalue{V}$.
+
+We briefly prove this. Consider the quantity $G = \sum \vec{p} \cdot \vec{r}$. The time derivative can be computed to be $\rd{G}{t} = \sum \vec{F} \cdot \vec{r} + 2T$. We take the time average of this and find $\frac{G(\tau) - G(0)}{\tau}$ which is zero for either periodic motions (over one period) or for bound motion (which is taken over large $\tau$, and since$G(\tau) \ll \tau$, it vanishes). We note also that $2\expvalue{T} = G$. We then want to link this to power laws. The virial becomes under pairwise forces $G = \sum \vec{F}_{ij} \cdot \vec{r}_{ij}$, which then for pair potential we find $=-\alpha V$.
+
+\chapter{10/24 - Makeup: Scattering states}
+
+We know that scattering potentials produce equations of motion (as per the previous day's lecture) $\frac{1}{r} = \frac{1}{p}\left[\pm 1+\epsilon\cos \phi \right]$, where the plus case is the attractive case given before (note $p= l^2/\mu k$). 
+
+Let's consider the Rutherford electron scattering problem. We have a beam of electrons shooting at a hunk of gold. Assume that the nuclei stay at rest throughout the scattering. To simplify the problem, have the beam coming horizontally along the $x$ axis and place the nucleus at the origin. Then the scattering angle depends on some $b_{im}$ impact parameter, the distance from the nucleus the original path takes the particle. We are then interested in the particles that scatter at some angle $\theta$ within some $d\theta$. We know that these particles then have some impact parameter $b_{im} + db_{im}$, which means the particles hitting some area $d\sigma = 2\pi b_{im} db_{im}$. We then have the differential scattering cross section
+$$\rd{\sigma}{\Omega} = \frac{b_{im}}{\sin \theta} \abs{\rd{b_{im}}{\theta}}$$
+where $\Omega=2\pi \sin \theta d\theta$ is the ``solid angle'' (i.e. the angle after applying radial symmetry about the x-axis.
+
+We thus only need to find the equation of motion for a particle coming in at $b_{im}$. Details omitted, but result (from notes) is
+$$b_{im} = \frac{\abs{k}}{2E}\cot\left( \frac{\theta}{2} \right)$$
+
+This then yields for Rutherford scattering 
+$$\rd{\sigma}{\Omega} = \left( \frac{k}{4E} \right)^2 \frac{1}{\sin^4 \frac{\theta}{2}}$$
+
+We can solve this equivalently for the finite mass target particle case by transforming to the center of mass coordinates, under which the motion looks the same as the case. Then a simple transformation takes us into the lab frame, and we're finished.
+
+\chapter{10/29 - Makeup: Hamiltonian Formalism}
+
+We already know how the Hamiltonian is constructed, given before. The canonical differential equations are then
+$$\pd{H}{p_k} = \dot{q}_k, \pd{H}{q_k} = -\dot{p}_k, \rd{H}{t} = \pd{H}{t}$$
+
+where we then see that if the Lagrangian isn't an explicit function of time then the Hamiltonian is time-independent. The Hamiltonian is the Legendre transform of the Lagrangian.
+
+The Hamiltonian is particularly powerful for ignorable coordinates $-\pd{L}{q} = 0 = \pd{H}{q}$. The motion is then given by
+$$\dot{p}_k = -\pd{H}{q_k}, \dot{q}_k = \pd{H}{p_k}$$
+
+We can then construct the Routhian, defined as
+$$R = \sum_{i=s+1}^N p_i \dot{q}_i - L$$
+where the first $s$ coordinates are ignorable. This Routhian then serves as the effective Lagrangian for the remaining $N-s$ coordinates, whereas we can still use $\dot{q_k} = \pd{R}{p_k}$ for the first $s$ ignorable coordinates. An example of where the Routhian can be used is in Lecture 7, two lectures ago, where the $\dot{\phi}$ could not be eliminated; the correct method would be to construct the Routhian in terms of the conserved momentum and only then does the velocity fall out.
+\chapter{10/31 - Hamiltonian Dynamics II}
+
+Today we will connect Hamiltonian dynamics to StatMech and quantum. We will discuss Liouville's Theorem and the Schr\"odinger equation and time dependence.
+
+Volumes in phase space are preserved by Hamiltonian dynamics. Recall that phase space is $2N$ dimensions for $N$ degrees of freedom. We will discuss this for $1$ degree of freedom and draw 2D phase space. Suppose that we plot $p(q)$. Then given $(q_0,p_0)$, we know that initial conditions that start close will propagate closely and after some time $t$ will remain close. Thus, given an area $A$ in $(p,q)$, each point $P \in A$ will propogate in time $t$ to a new area $A'$ of equal area as $A$
+
+We can prove this by starting with some square $q+\Delta q, p + \Delta p$ with area $\Delta p \Delta q$. After then some time $\Delta t$, this square propogates to some area. We can compute the verticies of this area, which we know to be four sided. This points are then $q + \dot{q}|_q\Delta t, q+\Delta q + \dot{q}|_{q+\Delta q} \Delta t$, and similarly for the top edge. We can compute then the edges of the resulting parallelogram $\Delta q + \pd{\dot{q}}{q}\Delta q \Delta t, \Delta p + \pd{\dot{p}}{p}\Delta p \Delta t$, and if we take small $\Delta t$ the parellelogram is approximated by a square (lol). Computing then $\Delta A = \Delta p \Delta q$ the area, we find $\rd{A}{t} = \left( \pd{\dot{q}}{q} + \pd{\dot{p}}{p} \right)\Delta A$. Recall then that we discussed the velocity of a state in phase space, $\vec{v}_{ph} = (\dot{q}, \dot{p})$. Then we can rewrite
+$$\rd{\Delta A}{t} = \nabla \cdot \vec{v}_{ph}\Delta A$$
+
+We then note that this divergence goes to $0$ under Hamiltonian dynamics, so $\rd{A}{t} = 0$.
+
+We try a simple example, the pendulum. The Hamiltonian is $H = \frac{p^2}{2ml^2}-mgl\cos \theta$. We can compute $\dot{\theta} = \frac{p}{ml^2}, \dot{p} = -mgl\sin\theta$. We then can compute the divergence of the phase velocity which is $0$ and so areas are conserved. 
+
+Note that for a damped harmonic oscillator there is dissipation and Hamiltonian dynamics are not obeyed! (I think this is meant to say that the Hamiltonian is not the total energy?) So since everything dissipates we end up at the same final state and obviously energies are not conserved. Let's examine the algebra. We know our time derivatives are $\dot{p} = -mgl\sin\theta - \frac{\gamma}{m}p, \dot{\theta} = \frac{p}{ml^2}$. We then compute the divergence, and we know that $\pd{\dot{p}}{p} \neq 0$ and so we no longer have Hamiltonian dynamics. We note then that $\rd{A}{t} = -\frac{\gamma}{m}\Delta A$, and so areas decay by solving the differential equation. 
+
+Let's generalize to $N$ degrees of freedom with $2N$ degrees of freedom. We know that $2N$ volume is also preserved, the volume of the hypercube. We note that under Hamiltonian dynamics the expression of the divergence $\nabla \cdot \vec{v}_{ph} = \sum_k \pd{\dot{q}_k}{q_k} + \pd{\dot{p}_k}{p_k} = 0$ cancels term by term to $0$. 
+
+We can see this a different way. Suppose we project the $2N$ volume onto all $N$ coordinate-momentum planes. We know that not all of these projections are conserved individually, but that their sum $\sum_k \delta q_k(1) \delta p_k(2) - \delta q_k(2) \delta p_k(1)$ is constant.
+
+Suppose we examine in the limit of large particles, i.e. statistical mechanics. We are specified the probability that we find the system ``at'' $\left\{ q_k, p_k \right\}$, or that we find within some range $dq_k, dp_k$ (or just probability density). We can then express $p(\left\{ q_k, p_k \right\},t) dq_k\dots dp_k\dots dt$. where $p$ is the probability.
+
+We then discuss the notion of probability within the ensemble. Suppose that we have an ensemble of $N$ statistically identical systems. Probability is then given as the fraction of members of ensemble. We can then examine the time evolution of some volume of phase space containing some particles that satisfy these initial conditions. We know that each particle maps clearly (I don't know how to phrase this?), and so the whole volume must be conserved. We then know that $\rho$ is constant along the trajectory of evolution, or $\rd{\rho}{t} = 0$. Let's formally prove this.
+
+We examine some fixed volume in phase space, not restricting ourselves to following the particles inside. We thus know that the probability over this volume is given by $P = \int_V \rho dV$. We then realize that probability of the volume can only change if probabilities leave the volume, so we can write 
+\begin{align*}
+    \rd{}{t}\int_V \rho dV &= -\int_S d\vec{S} \cdot (\rho \vec{v}_{ph}) \\
+    &= \int_V \nabla \cdot (\rho \vec{v}_{ph}) dV\\
+    0 &= \int_V \pd{\rho}{t}+ \nabla \cdot (\rho \vec{v}_{ph}) dV\\
+    &= \pd{\rho}{t} + \nabla\cdot (\rho \vec{v}_{ph})\\
+    &= \pd{\rho}{t} + \vec{v}_{ph}\cdot \nabla \rho + \rho \nabla \cdot \vec{v}_{ph}
+\end{align*}
+
+We then recall that the divergence is $0$ above under Hamiltonian dynamics, and the remaining two terms are just the definition of $\rd{\rho}{t}$ which is equal to $0$. This is Liouville's Theorem.
+
+We know that at equilibrium, $\pd{\rho}{t} = 0$, and substituting back into Liouville's Theorem we find $\vec{v}_{ph} \cdot \nabla \rho = 0$. This tells us that $\rho$ is constant along a trajectory linking two points $\rho(1) = \rho(2)$.
+
+We then make the assumption \emph{ergodicity} that trajectories will eventually visit the vicinity of all points in phase space that have conserved quantities. We then can think that probability is constant for the hypersurface over conserved quantities. This is the motivation for statistical mechanics, though our work above is by no means rigorous enough to establish the foundation. We can then consider such a hypersurface. The entropy of the hypersurface is then given by $S = k_b \ln A$ where $A$ is the area of the hypersurface. This forms the basis of statmech. 
+
+Let's then look at QM. We have a single particle descriped [sic] (:D) by a complex wavefunction $\psi(\vec{r})$. We have a probability of finding the particle at $\vec{r} \propto \abs{\psi(\vec{r}}^2$. We then obtain our possible energies and wavefunctions by solving the SE $H\psi = E\psi$. That's our basic version of QM. Let's examine a slightly more complicated problem. Let's look at a charged particle in an electromagnetic field. The Lagrangian is given by
+$$L = \frac{mv^2}{2} - q \Phi (\vec{r}, t) + q\vec{v} \cdot \vec{A}(\vec{r},t)$$
+
+We then seek the momentum conjugate to $\vec{r}, \vec{p} = \pd{L}{\vec{v}} = m\vec{v} + q\vec{A}(\vec{r},t)$. The Hamiltonian is given by 
+$$H = \vec{p} \cdot \vec{v} - L = \frac{1}{2} mv^2 + q\Phi(\vec{r})$$
+
+It would seem we lost the magnetic field, but it's because $H$ needs to be in terms of $\vec{p}$! We substitute back in from the expression we derived earlier and we recover our vector potential and all is well. However, we're used to thinking of $\vec{A}$ as a computational convenience, due to gauge variance (or something)! It's okay though. Suppose we have some plane wave $\psi \propto e^{i\vec{k}\cdot \vec{r}}$ in QM. We can simply verify that $\vec{p}\psi = \hbar \vec{k} \psi$. We note then that $\vec{k} = \nabla \phi$ where $\phi$ is the phase of the plane wave. Then the additive constant in $\vec{A}$ just a phase change in the particle.
+
+Let's notate $\left[ O,H \right]$ \emph{Poisson bracket} to be $\left[ O,H \right] = \pd{O}{q_k}\dot{q}_k + \pd{O}{p_k}\dot{p}_k$ after using the Hamilton equations of motion. We can show then that $\pd{O}{t} = 0, \left[ O,H \right]$ yields constant of motion. What's also cool is that $\left[ A,B \right]$ is a constant of motion. 
+
+If we then do some careful work using Heisenberg mechanics, we can also find that Poisson brackets are $-i/\hbar$ times the commutator in equivalent expressions. This is then a good first guess for finding operators.
+
+\chapter{11/5 - Canonical transformations}
+
+We will try to use generating functions to yield equations of motion via canonical transformations. We will work with one degree of freedom. We then seek a transformation $Q = Q(q,p,t), P=P(p,q,t)$. We require that the dynamics remain Hamiltonian, so with this constraint we can express in terms of one function. This function is given by $F(o,N)$ where $o$ is an old variable either $p,q$ and $N$ is a new variable either $P,Q$.
+
+We then note that $o_c = \pm \pd{F}{o}$ the conjugate coordinate, and likewise $N_c = \pd{F}{N}$. Suppose we examine the generating function $F_1(q,Q,t)$. Then $p = \pd{F}{q}, P = \pd{F}{Q}$. We then note that using equality of mixed partials, we then have the constraint $\abs{dQdP} = \abs{dq dp}$, or that areas are conserved in phase space. 
+
+Then from here, any such function will satisfy canonical transformations, but it's a matter of finding the preferred one. Let's now make this one precise.
+
+We start with Hamilton's principle being valid in both coordinate systems. This then yields
+$$\delta S = \delta \int \left( p\; dq - H\; dt \right) = 0 = \delta \int \left( P \; dQ - \bar{H}\; dt \right)$$
+where $\bar{H}$ is the new Hamiltonian where for paths in both spaces yields $\delta q = \delta Q = 0$, so fixed endpoints.
+
+One possible condition is $P\; dQ - \bar{H} \;  dt = p\; dq - H\; dt - dF_1\left( q,Q,t \right)$. The $F_1$ falls out on integration due to fixed endpoints, so evaluates the same at end/beginning. Thus, we rearrange
+$$dF_1 = p\; dq - P\; dQ - (\bar{H} - H)\; dt$$
+
+We then note that $p=\pd{F_1}{q}, P= - \pd{F_1}{Q}, \bar{H} = H+ \pd{F_1}{t}$ if we recall our equations for generating functions. For a time independent $F$, $\bar{H} = H(q(Q,P),p(Q,P),t)$. We can thus find a class of transformations here, and we can have even more flexibility with time-dependent $F_1$. 
+
+We then want relations between old and new coordinates. If we examine $\pd{F_1}{q}$, we note that this is a function of $q,Q,t$ by definition. Then we can invert this derivative to obtain $Q(q,p)$ and substitute into $P=\pd{F_1}{Q}$ to obtain relations between old and new variables. Note that this requires our first derivative $\pd{F_1}{q}$ depend on $Q$.
+
+Let's do an example, $F_1 = qQ$ as the simplest nontrivial example. This then yields $p=\pd{F_1}{q} = Q, P = -\pd{F_1}{Q} = -q$. This confirms our intuition within the Hamiltonian formalism; there is no distinction between $p,q$! This contrasts with the Lagrangian approach where velocities and positions are very different.
+
+Let's try another example, SHO: $H = (\omega^2p^2 + x^2)/2$. We know that the motion of this in phase space is just a circle, so it would be cool to use a transformation that uses the angular position of the mass in phase space. Let's then choose $Q = \theta = \arctan\left( \frac{\omega q}{p} \right)$. We thus seek some generating function $F_1(q,Q)$ that can give us $P$. We first write $p=\omega q \cot Q$. We can recall $p = \pd{F_1}{q}$, and so we can integrate our given expression to find
+$$\omega q \cot Q = \pd{F_1}{q}, \frac{1}{2}\omega q^2\cot Q + f(Q)$$
+
+where $f(Q)$ is independent of $q$. Since we're just looking for any generating function, let's use $f(Q) = 0$. Then, we use $P = -\pd{F_1}{Q}$ and get 
+$$P = \frac{1}{2}\omega q^2 (1+\cot^2 Q) = \frac{1}{2\omega}(p^2 + \omega^2q^2) = \frac{H}{\omega}$$
+
+Since our transformation is independent of time, $\bar{H} = H = \omega P$. We then see that $\dot{Q} = \omega, \dot{P} = 0$. Then, $Q = \omega t + Q_0, P = P_0$. This confirms our intuition. 
+
+We call such transformations that transform the Hamiltonian to an exclusive function of $P$ the \emph{angle-action variables}. It turns out that $\omega = \pd{H}{P}$ under an angle-action transformation, so we don't even need to solve the equations of motion to find the period of motion!
+
+Let's examine the other transformations we glossed over. Suppose we want $F_2(q,P,t)$. We can simply do a Legendre transformation of $F_1(q,Q,t) \to F_2(q,P,t)$. We first write out our differential
+$$dF_1 = p\; dq - P \; dQ + \left( \bar{H} - H \right)dt$$
+
+We can then substitute $F_1 \to F_1 + PQ$ and obtain
+$$d(F_1 + PQ) = p\; dq + Q \; dP + (\bar{H} - H) dt$$
+
+which then gives us $p = \pd{F_2}{q}, Q = \pd{F}{P}, \bar{H} = H + \pd{F_2}{t}$. Similarly for $F_3(p,Q), F_4(p,P)$. Usually we will find that all of these transformations are equivalent, but due to degeneracies sometmes we will find one transformation to work and others will not. 
+
+The simplest example of $F_2$ is just $F_2 = qP$ which turns out to be the identity! This can be a very powerful technique in perturbed systems, where we take a simple transformation and add a perturbation term to account for perturbation. 
+
+Suppose we have a slightly anharmonic oscillator $H = \frac{1}{2}(p^2 + \omega^2 q^2) + \epsilon\beta q^4$. We look for a generating function with quadratic corrections, which turns out to be $F_2(q,P) = qP\left[ 1+\epsilon(aq^2 + bP^2) \right]$ (note that we put quadratic corrections to account for the fourth-order $q$ in the Hamiltonian). Computing $p,Q$ and plugging into our Hamiltonian produces
+$$H(Q,P) = \frac{1}{2}(P^2 + \omega^2Q^2) + \epsilon \frac{3\beta}{8\omega^4}(P^2 + \omega^2Q^2)^2 + O(\epsilon^2)$$
+
+upon which we can make another canonical transformation, ignoring the $O(\epsilon^2)$ term, to angle-action and we can obtain
+\begin{align*}
+    Q &= A\sin\left( \Omega t + \delta \right)\\
+    P &= \omega A \cos (\Omega t + \delta)\\
+    \Omega &= \omega +\frac{3\epsilon\beta A^2}{2\omega} 
+\end{align*}
+
+which gives our desired equations; the specific math is given in the notes.
+
+Time evolution is a canonical transformation! We wrrite $F_2(q,P) = qP + dt H(q,P)$, which gives us 
+\begin{align*}
+    Q &= q + dt \pd{H}{p} \approx q(t + dt)\\
+    p &= P + dt \pd{H}{q} \approx p(t + dt)
+\end{align*}
+which then shows that the Hamiltonian is the generator of time translations.
+
+We also note that angular momentum is the generator of rotations. Let's define $L_z = xp_y - yp_x$, and construct
+$$F_2(x,P_x, y, P_y) = xP_x + pP_y + d\theta(xP_y - yP_x)$$
+
+If we then compute $X,p_x, Y, p_y$ by taking derivatives, we find
+\begin{align*}
+    X&=x-d\theta y\\
+    P_x &= p_x - d\theta p_y\\
+    Y &= y + d\theta x\\
+    P_y &= p_y + d\theta p_y
+\end{align*}
+
+We can check whether a transformation is canonical by using Poisson brackets, which yields both a formal approach to Hamiltonian mechanics and gives the connection to quantum mechanics. Requiring area preservation of transformation (i.e. canonical) is equivalent to requiring the PB to be $1$. 
+
+We know that the area transformation is given by
+$$dq\; dp \to \abs{\abs{\frac{\partial (q,p)}{\pd{(QP}{}}}} dQ \; dP$$
+where the quantity is the Jacobian! Jacobians have an inverse rule, product rule, and simplification rule:
+\begin{align*}
+    \pd{(q,p)}{(Q,P)} &= \left(\pd{(Q,P)}{(q,p)}\right)^{-1}\\
+    \pd{(q,p)}{(Q,P)} &= \pd{(q,p)}{(a,b)}\pd{(a,b)}{(Q,P)}\\
+    \pd{(q,p)}{(Q,p)} &= \pd{q}{Q}
+\end{align*}
+
+We can easily compute the Jacobian under any canonical transform $F_i$ given above yields unity. The Poisson bracket expression is
+$$\pd{Q}{q}\pd{P}{p} - \pd{Q}{p}\pd{P}{q} = 1$$
+
+Let's examine as example again SHO, $H = \frac{1}{2m}(p^2 + m^2 \omega^2 q^2)$. We can factor
+$$H = \frac{1}{2m}\left( p + im\omega q \right)\left( p - im\omega q \right)$$
+
+We want to see whether we can have the two terms in parentheses above to be $Q,P$ such that $H\propto QP$. We will thus try
+\begin{align*}
+    Q &= p + im\omega q\\
+    P &= \lambda(p-im\omega q)
+\end{align*}
+
+up to some multiplicative constant $\lambda$. We thus test this by calculating the PB, which gives
+$$\left[ O,P \right]_{q,p} = 2\lambda im\omega$$
+
+which gives us our $\lambda = \frac{1}{2im\omega}$ that yields a canonical transformation, which then gives
+$$H = i\omega QP$$
+
+which gives exceedingly simple equations of motion
+$$Q=i\omega Q, P = -i\omega P$$
+
+This just turns the harmonic oscillator into a superposition of two plane waves in the complex plane. This factorization is also the basis for QM creation and annihilation operators. Since QM has a PDE rather than just Hamiltonians and Lagrangians, canonical transformations to simplify the Hamiltonian are very popular.
+
+\chapter{11/7 - Action-Angle, Hamilton-Jacobi}
+
+We first overview action-angle. We seek a transformation $q,p \to \psi, I$ such that $H = H(I)$. Then $\psi$ is ignorable, so $\dot{I} = 0$ and $\dot{\psi} = \pd{H}{I} = \Omega$.
+
+We then look for Hamilton-Jacobi theory. We seek time dependent transformation $q,p = \alpha, \beta$ such that $H = 0$. Then, $\dot{\alpha} = \dot{\beta} = 0$. This obviously is only possible for special cases. 
+
+These are both very special case theories, because the first case removes half of the degrees of freedom and the last all of them! This requires $N,2N$ DOF respectively, which is rare.
+
+For periodic motion, it is easy to find action-angle transformation. We can find the frequency without the full calculation of the orbit this way. We will now work through an example in one degree of freedom. Suppose we have a time independent $H$ such that $H=E$ is constant. We seek a mapping $(q,p) \to (\psi,I)$ when the original orbit is periodic. By action angle variables, 
+$$\dot{\psi} = \pd{H}{I}, \dot{I} = 0$$
+
+Thus, since $H$ is independent of time, we can write $\psi = \omega t + C$, $\psi \in \left[ 0,2\pi \right]$. If we then plot $(q,p)$ space versus $I,\psi$ space, we note that $I$ is constantt in $\psi$, so whatever area is traversed in phase space in the original coordinates must be equal to $2\pi I$. The area traversed in phase space is given simply, so we have
+$$I = \frac{1}{2\pi}\oint p\; dq$$
+
+Suppose we have a single particle in a potential $H = \frac{p^2}{2m} + V(q) = E$. We assume that the form of $V(q)$ is such that the particle is bounded and performs periodic motion. Then, since the integral in phase space is equal ot an integral over one period or from one endpoint $q$ to another and back, it's just twice the integral from one side to another in $E - V(q)$ thus giving
+$$I = \frac{1}{\pi}\int \sqrt{2m(E-V(q))}\; dq$$
+
+If we then examine a slight change in $\delta I$ and plot this in $(p,q)$ space and compare to the area produced in $(\psi,I)$ space namely $\psi \delta I$, we can find
+$$\psi(q,I) = \pd{}{I}\displaystyle\int\limits_{0}^{q}p(q',I)\;dq'$$
+
+where then since $\psi = \omega t + c, \omega = \pd{E}{I}$, we can thus find $q(t)$.
+
+We can also construct the generator of the transformation $F_2(q_I) = \displaystyle\int\limits_{0}^{q}p(q',I)\;dq'$. This easily produces $\psi = \pd{F_2}{I}, p = \pd{F_2}{q}$, which is what we expect. We moreover can generate other forms of generating functions via Legendre transforms.
+
+We examine a simple pendulum in gravity $g$ with length $l$, mass $m$, and angle $q$. The Hamiltonian is then given by $H = \frac{p^2}{2ml^2} + mgl(1-\cos q)$. We want ideally Hamiltonian of form $H = \bar{P}^2/2$. We thus want $\bar{P} = \frac{p}{\sqrt{ml^2}}$. The transformation to generate this can be given $F_3(P,Q) = -\frac{pQ}{\sqrt{ml^2}}$. This then gives us $q = \frac{Q}{\sqrt{ml^2}}$, or $Q = q\sqrt{ml^2}$. This then gives our Hamiltonian for small $q$ to be 
+$$H = \frac{1}{2}(\bar{P}^2 + \omega^2Q^2), \omega = \sqrt{\frac{g}{l}}$$
+
+We can then examine the angle action variables. Since we have new variables that are easier to work with and have areas preserved, we can just compute the area in phase space, which is
+\begin{align*}
+    I &= \frac{1}{\pi}\displaystyle\int\limits_{-Q_0}^{Q_0}\bar{P}\;dQ\\
+    &= \frac{1}{\pi}\displaystyle\int\limits_{-Q_0}^{Q_0}\sqrt{2(E-\frac{1}{2}\omega^2Q^2}\;dQ\\
+    &= \frac{E}{\omega}\underbrace{2\pi \displaystyle\int\limits_{-1}^{1}\sqrt{1-y^2}\;dy}_{1}\\
+    &= \frac{E}{\omega}
+\end{align*}
+where we substitute $y = Q/Q_0$.
+
+We then construct $E = I\omega$, which yields as expected $\dot{\psi} = \pd{E}{I}= \omega$. We can then compute 
+\begin{align*}
+    \psi(Q,I) &= \pd{}{I}\displaystyle\int\limits_{0}^{Q}\bar{P}(Q')\;dQ'\\
+    &= \underbrace{\pd{E}{I}}_{\omega}\pd{}{E}\displaystyle\int\limits_{0}^{Q}\bar{P}(Q')\;dQ'\\
+    &= \omega \displaystyle\int\limits_{0}^{Q}\frac{1}{\sqrt{2(E-\frac{1}{2}\omega^2 Q'^2}}\;dQ'\\
+    &= \arcsin \frac{Q}{Q_0}
+\end{align*}
+
+where then recalling that $\psi = \omega t + C$, we find $Q = Q_0\sin(\omega t + C)$. 
+
+We then examine the quality of $I$ being an adiabatic invariant. Suppose that we have some pendulum hanging on a string and we slowly raise this string of length $l$. The energy in this case is not constant because we raise the mass, but the action is certainly a constant! Let's examine $\dot{E}$. We intuitively expect $\dot{E} \propto \dot{l}$. If we examine then $\expvalue{\dot{I}}$ it turns out to be $\Delta \expvalue{I} \to 0$ as $\dot{l} \to 0$. We examine this argument more in detail now.
+
+We know that $E = I\omega$ where $\omega = \sqrt{g/l}$. Then, seeing that $I$ is constant we find $E \propto l^{-1/2}$. We recall that in an SHO $T=V$, so $E=lq_0^2$, and we quickly find that $q_0 \propto l^{-3/4}$. This is curious but correct for pendulum with changing length.
+
+We can compute in a bashy proof $\expvalue{\dot{I}} \propto \dot{\alpha}^2, E \propto \dot{\alpha}$. That is all for now.
+
+We try now Hamilton-Jacobi theory. We seek a transformation $\tilde{H}(Q,P,t) = 0$, such that $\dot{Q},\dot{P} = 0$. We call these two coordinates $\alpha,\beta$. We can construct the type 2 generator $S(q,p,t)$ for this transformation by showing that it satisfies 
+$$H\left( q, \pd{S}{q},t \right) + \pd{S}{t} = 0$$
+
+We've then successfully reduced the mechanics problem to solving a nonlinear PDE. End sarcasm. PDEs are pretty notorious, so why is this useful? (I swear to God, this is the one time Cross has come even remotely close to passionate, trying to convince us that this is crazy).
+
+If we make some leaps of faith though, we can look to $S(q)$ as a wavefront, in which case the Hamilton-Jacobi equations take the form of a dispersion relation! $-F(q,\vec{k}qt) + \Omega = 0$. Moreover, since this draws a link between waves and particles, this seems to precede QM in the duality, and indeed, the SE in the classical ray approximation reduces to the Hamilton-Jacobi equation. 
+
+The reason we call $S$ is because it is indeed the minimum action, along the dynamical path. We find that this method does work in separable problems $S(q_k,t) = \sum W_k(q_k) +W_0(t)$. We choose the new constant momenta $\alpha$ to be the separation constants, of which there are $N$, which plus the Hamilton Jacobi equation is adequate to describe our system. We can then find the new coordinates via $\beta_k = \pd{S}{\alpha_k}$. These are then fixed by initial conditions, and we can solve the problem.
+
+Let's use a super simple example, the cannonball! The Hamiltonian is given by $H = \frac{1}{2}(p_x^2 + p_z^2) + z$. We then have Hamilton Jacobi equation
+$$\frac{1}{2}\left( \pd{S}{x} \right)^2 + \left[ \frac{1}{2}\left( \pd{S}{z} \right)^2 + z \right] + \pd{S}{t} = 0$$
+
+We find separability $S = W_1(x) + W_3(z) - Et$. We then note that separability implies all three are constant, thus
+\begin{align*}
+    \frac{1}{2}\left( \rd{W_1}{x} \right)^2 &= \alpha_1\\
+    \frac{1}{2}\left( \rd{W_3}{z} \right)^2 + z &= \alpha_3\\
+    \alpha_1 + \alpha_3 &= E
+\end{align*}
+
+We can then solve these and plug into $S$, giving
+$$S = \pm \sqrt{2\alpha_1}x \pm\sqrt{\frac{8}{9}}(\alpha_3 - z)^{3/2} - (\alpha_1 + \alpha_3)t$$
+
+We then choose $\alpha_1, \alpha_3$ to be our new constant momenta. This then yields coordinates
+\begin{align*}
+    \beta_1 &= \pd{S}{\alpha_1} = \pm \frac{1}{\sqrt{2\alpha_1}}x - t\\
+    \beta_3 &= \pd{S}{\alpha_3} = \pm \sqrt{2(\alpha_3 - z} - t\\
+    p_x &= \pd{S}{x} = \sqrt{2\alpha_1}\\
+    p_z &= \mp \sqrt{2(\alpha_3 - z)}
+\end{align*}
+
+Then suppose we start from $x=z=t=0$ and fire at $45^\circ$ with speed $2$. We then know that $p_x = p_z = \sqrt{2}$ which gives $\alpha_1 = \alpha_3 = 1$, yielding $\beta_1 = 0, \beta_3 = -\sqrt{2}$. The problem then solves itself.
+
+Then we can examine again our $S$. We note that the particle trajectory is normal to lines of constant $S$. If we insetad think of the wavefront as moving, we find the phase group velocity and everything else. Marvelous!
+
+We can also seek a time independent canonical transformation to give constant rather than zero Hamiltonian, just another flavor we can nomnomnomnom. We note that this is possible due to the $S = \dots + Et$ term, so we just ignore the $E$ rather than actually work with it. 
+
+Connection with QM! Well, we know the SE is
+$$i\hbar \pd{\psi}{t} = -\frac{\hbar^2}{2m}\nabla^2 \psi + V\psi$$
+
+The semiclassical limit is given by looking for $\hbar \to 0$ and solution of form 
+$$\psi =\sqrt{\rho}e^{iS(\vec{r},t)/\hbar} \approx \sqrt{\rho}e^{i\vec{p}\cdot \vec{r}/\hbar}$$
+where $S$ is an ansatz inspired by the plane wave equation, given on right.
+
+More precisely, if we have $\rho$ the scale on which the problem varies, we seek de Broglie wavelength $\lambda \ll \rho$. If we substitute into the SE and take $\hbar \to 0$, e find
+$$\frac{1}{2m}(\nabla S)^2 + V + \pd{S}{t} = 0$$
+
+We thus have the Hamilton-Jacobi equation for Hamiltonian $H$. Can you hear the whoosh of this flying over my head? Bet you ten bucks you can.
+
+Goldstein Chapter 10.5-10.8 may help with next week problems\dots
+\chapter{11/12 - Rotations}
+
+List of key concepts
+\begin{table}[!h]
+    \centering
+    \begin{tabular}{l|l|l}
+        Rotational symmetry & rotated system & vectors, tensors, rotation matricies (group structure)\\\hline
+        Dynamics in rotating frame & rotating system & fictitious forces\\\hline
+        Dynamics of rotating bodies & rotating axes tied to dynamics & Euler angles, moment of inertia, angular momentum
+    \end{tabular}
+\end{table}
+
+Let's first examine rotational symmetry. We can first admit rotational symmetry analysis by writing Newton's second law in vector form $\vec{F}=m\vec{a}$ to allow for different basis vectors. What are then vectors? Intuitively, we say vectors are physical objects with magnitude and direction. To concretize this, suppose we have some displacement from $O$ to $P$, then the vector is the straight line that points from $O$ to $P$ and has magnitude their distance. 
+
+The magnitude of a vector is the length of the vector, and oftentimes will discuss the magnitude squared $\abs{\vec{r}}^2 = r^2$. Magnitude is preserved under rotations. Rotations also preserve relative angles. We then discuss vector addition, and this is just head-to-tail, the vector joining the endpoint. Scalar multiplication just multiplies the vector magnitude and preserves the direction. In our vector space, we can also define a dot product to be 
+$$\vec{r}_1 \cdot \vec{r}_2 = \frac{1}{2}\left[ \left( \vec{r}_1 + \vec{r}_2 \right)^2 - \vec{r}_1^2 - \vec{r}_2^2 \right]$$
+
+We can furthermore define the velocity and and acceleration to be the vector derivatives of $\vec{r}$ which is straightforward. Forces are naturally vectors, so are accelerations, so we're good.
+
+We then discuss components in terms of an orthonormal basis, i.e. self dot product is 1, dot product with others is 0, Kronecker delta. General vector can be written in orthonormal basis using its components $\vec{r} = \sum a_i\hat{i}$, where $a_i = \vec{r} \cdot \hat{i}$ due to orthogonality. 
+
+Suppose we then have some $\hat{i}'$ unrotated basis and $\hat{i}$ rotated basis (where I Yubo mean multiple basis vector), then $\vec{a} = a_i' \hat{i}' = a_i \hat{i}$. So then using orthonormality we find $a_i' = a_i\hat{i'}\cdot \hat{i}$, or the transformation matrix defined by
+$$U_{ij} = a_i'\cdot a_j$$
+
+$U$ is called the rotation matrix. $U$ is orthogonal, i.e. $UU^T = U^TU = I$. Moreover, the rows and columns are orthonormal $\sum_k U_{ik}U_{jk} = \delta_{ij}$. These conditions only give us six constraints though, so we need three more numbers to specify $U$. The most intuitive choice for these three parameters is the direction of the axis of rotation $\hat{n}$, the angle of rotation $\phi$. This then yields ever so difficult rotation matrix
+$$U_{ij} = (1-\cos \phi)\hat{n}_i\hat{n}_j + \cos \phi \delta_{ij} - \sin\phi\epsilon_{ijk}\hat{n}_k$$
+
+As an example, let's rotate the axes by $\phi$ about the $z$ direction, then we can easily analyze components and find rotation matrix
+$$U = \begin{pmatrix}\cos \phi & -\sin \phi & 0\\\sin \phi & \cos \phi & 0\\0 & 0 & 1\end{pmatrix}$$
+
+Let's then want to rotate through the same angle $\phi$ but rotate about some new axis $\hat{n}'$, then this is given by $U_{\hat{R}'}' = UR_{\hat{R}}U^{-1}$ for $\hat{n}' = U\hat{n}$. The trace is invariant under this transformation, and so we find that the rotation angle can be found from any rotation matrix and thus $\mathrm{Tr} U = 1+2\cos \phi$. We note that the rotation axis is left unchanged by $U$, and so the rotation axis is an eigenvector of the rotation matrix! Improper rotations yield eigenvalue $-1$, but most rotations we work with are proper rotations yielding $1$.
+
+We have thusfar discussed passive rotations, where we rotate our coordinate axes and leave the vector. We can also perform in reverse, rotating the vector rather than the axis! Suppose vector $\vec{a}' \to \vec{a}$ under the rotation. Proceeding very carefully (I want to avoid the morass of messy notation here), we can quite easily demonstrate that $\vec{a}_i = U_{ij}\vec{a}'j$. Recall our result for rotated axes to have yielded $\vec{a}_i' = U_{ij} \vec{a}_j$, or a changing of primes! This is a subtle difference for active and passive transformations. 
+
+``To whet your appetite for group properties of rotation,'' a gorup is a collection of elements with the properties multiplication, associativity, identity, inverse all within the collection. Note that commutativity is not a requirement, and indeed rotations are not in general commutative. 
+
+We then examine infinitisemal rotations $\delta \phi$ about an axis $\hat{n}$. We then observe a rotation of some vector $\vec{a}$ and note that this $\delta \vec{a}$ is perpendicular to both $\vec{a},\hat{n}$, and we can compute more carefully $\delta \vec{a} = \delta\phi \times \vec{a}$ and so the rotated vector is $\vec{a} + \delta\vec{\phi} \times \vec{a}$.
+
+For successive infinitisemal rotations we will find that in the limit infinitisemal rotations commute regardless of axis, $\vec{a} = \vec{a}'' + (\delta \vec{\phi}_1 + \delta\vec{\phi}_2) \times \vec{a}''$. The angular velocity is also defined $\vec{\omega} = \rd{\vec{\phi}}{t}$.
+
+We might then ask what the infinitisemal rotation matrix is, and that is given $\delta U = I + \delta\vec{\phi} \cdot \vec{M}$ where $\vec{M}$ is a vector of matricies with components
+$$M_1 = \begin{pmatrix}0&0&0\\0&0&-1\\0&1&0\end{pmatrix}, M_2 = \begin{pmatrix}0&0&1\\0&0&0\\-1&0&0\end{pmatrix}, M_3 = \begin{pmatrix}0 & -1 & 0\\1 & 0 & 0\\0 & 0 & 0\end{pmatrix}$$
+
+We can build up a finite rotation $\phi$ about $\hat{n}$ as $N$ rotations $\delta \phi = \phi/N$ as
+$$U = \lim_{N \to \infty} \left( I + \frac{\phi}{N}\hat{n}\cdot\vec{M} \right)^N = e^{\phi \hat{n} \cdot \vec{M}}$$
+
+For a rigid body the velocity of the $i$-th point is given $\vec{v}_i = \vec{V} + \vec{\omega}\times \vec{r}_i$ with $\vec{r}_i$ the displacement relative to $\vec{R}$. If we then examine changing the reference point, we note that the angular velocity relative to the original reference point is unchanged (didn't jot down the algebra). Doing this then separates all motion into a rotation about a fixed axis and motion along that axis. Note that axis is arbitrary and doesn't have to lie in the object!
+
+We can then examine the rolling case. The contact point is instantaneously at rest because it cannot be translating with respect to the ground, otherwise sliding. Rolling is then a pure rotation about a time-varying contact point. This is the point rolling case however, what about the line contact case?
+
+Suppose we have some cone rotating on the $xy$ plane with its vertex at the origin with rate of rotation about the $z$ axis with $\dot{\phi} = \Omega$. Since the contact axis is instantaneously at rest, we note that it is the rotation axis, and since a body's angular velocity necessarily points about its axis of rotation we see that the angular velocity is along this rotation axis! This is counterintuitive but correct. 
+\chapter{11/14 - Rotation of coordinate systems}
+
+Rotation of coordinate systems! Rotations don't obey commutations, but infinitisemal rotations commute because they are vectors $\delta \vec{ \phi} = \delta\phi\hat{n}$. 
+
+Let's discuss tensors. A second rank tensor relates vectors linearly to other vectors. For example, conductivity, usually $\vec{j} = \sigma\vec{E}$. However, in anisotropic materials, $\sigma$ varies locally and is better represented by a second rank tensor, namely a matrix i.e. $\vec{j} = \mathbb{\sigma} \cdot \vec{E}$. A second example is angular momentum $\vec{L} = \mathbb{I}\cdot \vec{\omega}$.
+
+Note that while the objects themselves are anisotropic, space itself is isotropic so performing a rotation of space also rotates the vectors and tensors. We investigate the passive rotation of our coordinate basis. We note that a second rank tensor in component form is like a matrix, so we represent it as such. Each element of a tensor/matrix then transforms like indicies of a vector. 
+
+In general an $n$-th rank tensor is a linear vector function of $n-1$ vectors. An example of a higher rank tensor is the relationship between strain and stress, both second rank tensors. The tensor to relate these then must be of fourth rank.
+
+We can then examine relatively rotating frames. Rotation can be defined relatively without reference to coordinate axes, and we can bypass component notation for most of the discussion. Consider a space frame and a body frame. Since the body framme rotates at velocity $\vec{\omega}$ relative to space frame, we see that they must be related by
+$$\rd{\vec{a}}{t}\Big|_s = \rd{\vec{a}}{t}\Big|_b + \vec{\omega}\times \vec{a}$$
+
+We can examine more carefully our $\omega \times \vec{a}$ term. Suppose we have $\vec{a}$ rotating about some axis with angular velocity $\vec{\omega}$. It is stationary in the body frame, then the infinitisemal rotation is $\delta a|_\omega = \delta\vec{\phi} \times \vec{a}$. We can then write including the body frame motion, since vectors add, to write
+\begin{align*}
+    \delta \vec{a}|_s &= \delta \vec{a}|_b + \delta \vec{\phi} \times \vec{a}\\
+    \rd{\vec{a}}{t}\Big|_s &= \rd{\vec{a}}{t}\Big|_b + \vec{\omega}\times \vec{a}
+    \rd{\vec{a}}{t}\Big|_b &= \rd{\vec{a}}{t}\Big|_s - \vec{\omega}\times \vec{a}
+\end{align*}
+
+We can then identify that some vectors are the same in the relatively rotating reference frames i.e. $\vec{r}$ the position vector, while others are different such as $\vec{v}$ the velocity vector. This is governed by plugging in; we find $\vec{v}_s = \vec{v}_b + \vec{\omega} \times \vec{r}$. We can then investigate acceleration by differentiating this expression
+\begin{align*}
+    \vec{a}_s &= \rd{\vec{v}_s}{t}\Big|_s\\
+    &= \rd{\vec{v}_b}{t}\Big|_s + \vec{\omega}\times \rd{\vec{r}}{t}\Big|_s\\
+    \rd{\vec{v}_b}{t}\Big|_s = \rd{\vec{v}_b}{t}\Big|_b + \vec{\omega}\times \vec{v}_b\\
+    \vec{a}_s &=\vec{a}_b + 2\vec{\omega} \times \vec{v}_b + \vec{\omega}\times\left( \vec{\omega}\times \vec{r} \right)
+\end{align*}
+
+For a time-varying $\omega$ we have
+$$\vec{a}_s =\vec{a}_b + 2\vec{\omega} \times \vec{v}_b + \vec{\omega}\times\left( \vec{\omega}\times \vec{r} \right) + m\dot{\vec{\omega}}\times \vec{r}$$
+
+Suppose then that the space frame is inertial, and thus the body frame noninertial. We can then plug into Newton's second Law and we obtain
+$$\vec{a}_b =\vec{a}_s - 2\vec{\omega} \times \vec{v}_b - \vec{\omega}\times\left( \vec{\omega}\times \vec{r} \right) - m\dot{\vec{\omega}}\times \vec{r}$$
+
+The forces are the fictitious/inertial forces, Coriolis, centrifugal, and Euler respectively above. If we want to solve the Newtonian problem in rotating frames, then we have to include these forces.
+
+We see these forces' impact on everyday life through weather patterns. Suppose there's a region of low air pressure, then air is attracted towards the center of the formation. However, we note that these motions will be subject to the Coriolis force, which deflects the currents around the formation and produces a circular motion. This is confirmed by random weather maps of low pressure zones, an extreme example of which is hurricanes. 
+
+We then discuss the Foucault pendulum. It's the easiest way of demonstrating the lack of an inertial reference frame on Earth. Suppose we have a pendulum at the North Pole and we observe it. Then, since the pendulum doesn't rotate with the earth but we do, the pendulum appears to rotate at rate $-\Omega$ the opposite of the rotation rate of the Earth.
+
+Suppose now the pendulum is not at the pole but is instead at some altitude given by $\lambda$. We will first only examine Coriolis effects. The pendulum in the nonrotating frame we know to be $\ddot{x} + \omega_0^2 x = 0$, and to transform to rotating frame we will write 
+\begin{align*}
+    \ddot{x} + \omega_0^2 x &= 2\Omega \sin \lambda \dot{y}\\ 
+    \ddot{y} + \omega_0^2 y &= -2\Omega \sin \lambda \dot{x}
+\end{align*}
+
+If we examine the small angle motion, the pendulum has no motion in the $z$ (perpendicular to the ground). We note that taking $\lambda \to \pi/2$ reproduces the pole equation of motion.
+
+Let's solve these. We expect solutions of form $x=x_0e^{i\omega t}, y=y_0e^{i\omega t}$. Our equations then become
+\begin{align*}
+    \left( -\omega^2 + \omega_0^2 \right)x_0 &= -2i\omega\Omega\sin\lambda y_0\\
+    \left( -\omega^2 + \omega_0^2 \right)y_0 &= -2i\omega\Omega\sin\lambda x_0
+\end{align*}
+We can then take their product and take square root
+\begin{align*}
+    \omega^2 - \omega_0^2 &= \pm 2\omega\Omega \sin\lambda\\
+    \Omega \ll \omega,\omega_0\\
+    \omega \approx \omega_0 \pm \Omega \sin \lambda
+\end{align*}
+
+We note that the Coriolis effect breaks the degeneracy of the $x,y$ solutions because there is now a $\pm$ term. We can substitute back through and find that $y_0 = \mp ix_0$. This finally gives our solution
+\begin{align*}
+    x &= e^{i\omega_0 t}\left( Ae^{-i\Omega\sin\lambda t} + Be^{-i\Omega\sin\lambda t} \right)\\
+    y &= ie^{i\omega_0 t}\left( -Ae^{-i\Omega\sin\lambda t} + Be^{-i\Omega\sin\lambda t} \right)
+\end{align*}
+
+Of course we must also take real parts. We can then compute $A,B$ via initial conditions. For example, $x(0) = \dot{y}(0) = y(0) = 0$, and we find $\Im A = \Im B = 0, \frac{\Re A}{\Re B} = \frac{\omega_0 - \Omega \sin \lambda}{\omega_0 + \Omega\sin\lambda} \approx 1$, so we find $A=B=C$ is real, and our solutions finally become
+\begin{align*}
+    x &= 2C\cos \omega_0 t \cos \Omega \sin \lambda t\\
+    y &= 2C \cos \omega_0 t (-\sin \Omega \sin \lambda t)
+\end{align*}
+
+Why can we neglect the centrifugal force then, from the very beginning? Hand and Finch gives the argument that the Coriolis force is $\propto \Omega$ while the Centrifugal force is $\propto\Omega^2$. Noting that $\Omega = \scinot{7.3}{-5}$, this would seem small. Cross gets extraordinarily cross and calls out Hand and Finch for having a poor argument. We only want to compare dimensionles qunatities, we cannot compare with different dimensions! Let's see how he does this
+
+The coriolis force is given by $2m\vec{v}\times \vec{\Omega}$ while the centrifugal force is given by $m\Omega \times \left( \Omega \times \vec{r} \right)$, which then if we then compute out we see that the quantities we wish to compare are $v$ and $\Omega R$, which actually shows that the centrifugal force is as powerful as the coriolis when $v \sim 400$m/s! Clearly this should be nonnegligible.
+
+We first write the centrifugal force $\vec{F}_{cen} = m\left[ \vec{r}\omega^2 - \left( \vec{r}\cdot \vec{\Omega} \right)\vec{\Omega} \right]$. We note that the actual reason that we can neglect the centrifugal force is that the force is mostly radial, representing a correction to $g$, and if we compute the centrifugal force $F_{c} = mR\Omega^2 \left( 1-\sin^2 \lambda \right) \ll g$. Thus, this is a correction term to $\omega_0$ in our above calculations, and we note that indeed it is negligible. 
+
+The centrifugal force does have a component in the $y$ direction, computed to be $-mR\Omega^2 \sin \lambda \cos \lambda + m\Omega^2 \cos^2\lambda y$. We note that one component only affects the equilibrium position and again not dynamics, and if we compare the position-dependent force to the Coriolis force we are actually making the comparison $\Omega v$ compared to $\Omega^2 y$. We note that $v \sim \omega_0 y$, and we note that $\omega_0 \gg \Omega$, which makes the centrifugal force negligible. Much more careful arguments! This is why Coriolis forces are so much harder to see, because they're so much smaller.
+
+We then note that we don't need to do any of the work above. OTL. Let's do the Lagrangian approach $L = T-V$ writing with respect to the inertial frame but in coordinates with respect to the noninertial frame. We then obtain (in cylindrical coordinates $(r, \phi, z)$)
+$$T = \frac{m}{2}\left[ \dot{r}^2 + r^2\left( \dot{\phi} + \omega \right)^2 + \dot{z}^2 \right]$$
+
+We then compute out our Euler-Lagrange equation and find all of our required forces (didn't take this down). Moral of story though, fictitious forces don't belong in th Euler-Lagrange formulation because they fall out with differentiation!
+
+In the Hamiltonian approach
+$$H = p_r \dot{r} + p_\phi\dot{\phi} + p_z \dot{z} - L = \frac{p_r^2 + p_z^2}{2m} + \frac{p_\phi^2}{2mr^2} + V - \omega p_\phi$$
+
+The extra term is the only change to the Hamiltonian. More generally, the only change to a rotating Hamiltonian is $-\vec{\omega} \cdot \vec{l}$. We note then that this new Hamiltonian can be used normally to compute everything we want, including the canonical equations of motion.
+
+One nice application of this is to the motion of a charge in magnetic field. 
+
+\chapter{11/18 - Rotational dynamics of rigid bodies}
+
+We examine rotation of rigid bodies. First, we will examine when the rotation is a pure rotation about a stationary point, particularly in the rotation about the center of mass case. Notate $\vec{L} = I \cdot \omega$. ($I$ is a tensor, figure out how to notate).
+
+We begin with $\rd{\vec{L}}{t} = \vec{N}$ with $\vec{L} = \sum_i m_i \vec{r}_{s,i} \times \vec{v}_{s,i}$. We can then just feed in our angular velocity $\vec{v}_{s,i} = \vec{\omega} \times \vec{r}_{s,i}$ and we obtain
+$$\vec{L} = \sum_i m_i \vec{r}_{s,i} \times \left( \vec{\omega} \times \vec{r}_{s,i} \right) = I \cdot \vec{\omega}$$
+
+where $I = \sum_i m_i \left( r_{s,i}^2 \delta_{\alpha,\beta} - r_{s,i,\alpha}r_{s,i,\beta} \right)$. 
+
+We then examine the center of mass case, $\vec{r}_{s,i} = \vec{R} + \vec{r}_i$ and $\vec{v}_{s,i} = \vec{V} + \vec{\omega} \times \vec{r}_i$. We have \begin{align*}
+    \vec{L} &= \sum_i m_i \vec{r}_{s,i} \cdot \vec{v}_{s,i} \\
+    &= m_i\left( \vec{R} + \vec{r}_i \right) \times \left( \vec{V} + \vec{\omega}\times \vec{r}_i \right)\\
+    \vec{L}_0 &= m_i \vec{r}_i \times \left( \vec{\omega}\times \vec{r}_i \right)\\
+    &= I \cdot \vec{\omega}
+\end{align*}
+
+where we choose reference point at the center of mass such that $\sum_i m_i \vec{r}_i = 0$, or $\vec{L} = \vec{R}\times \vec{P} + \vec{L}_0$ where we call $\vec{L}_0$ the \emph{intrinsic angular momentum} and I missed $I$ dangit. We can then examine the equation of motion
+\begin{align*}
+    \rd{\left( \vec{R}_{cm} \times \vec{P} + \vec{L}_0 \right)}{t} &= \sum_i \left( \vec{R}_{cm} + \vec{r}_i \right)\times \vec{F}_i
+\end{align*}
+
+which finally leaves $\rd{\vec{L}_0}{t} = \sum_i \vec{r}_i \times \vec{F}$. This is the Newtonian approach. Let's examine this in Lagrangian dynamics.
+
+We have $T = \frac{1}{2}\sum_i m_i v_{s,i}^2$ with $v_{s,i} = \vec{V} + \vec{\omega}\times \vec{r}_i$. Again, this simplifies for two choices of reference point, stationary point 
+$$T = \frac{1}{2}\sum_i m_i\left( \vec{\omega} \times \vec{r}_{s,i} \right)^2$$
+or center of mass
+$$T = \frac{1}{2}M\vec{V}_{cm}^2 + \frac{1}{2}\sum_i m_i\left( \vec{\omega}\times \vec{r}_i \right)^2$$
+
+The rotational kinetic energy then becomes $T = \frac{1}{2}I_{\alpha\beta}\omega_\alpha \omega_\beta$. 
+
+Let's look at the moment of inertia tensor. It is given by
+$$I_{\alpha\beta} = \sum_i m_i \left( r_i^2\delta_{\alpha\beta} - r_{i,\alpha}r_{i\beta} \right) = \sum_i\begin{pmatrix}
+     m_i\left( y_i^2 + z_i^2 \right)& - m_i x_i y_i & -m_i x_i z_i\\
+    -m_i x_i y_i & m_i \left( z_i^2 + x_i^2 \right) & -m_i y_i z_i\\
+    -m_i x_i z_i & -m_i y_i z_i & m_i\left( x_i^2 + y_i^2 \right)
+\end{pmatrix}$$
+
+We know that this has properties $I_{uv} = U_{u\alpha}U_{v\beta}I_{\alpha\beta}$. We then note that $I$ is symmetric so it can be diagonalized in some particular basis called the \emph{principal axes} of the body. We know that symmetric objects have principal axes about its axes of symmetry, but all objects have these principal axes! We note that this is just the eigenvector problem, since $I$ is diagonalized in its eigenbasis.
+
+We then have the ``displaced axis theorem.'' If we have some reference point shifted $\vec{a}$ from the center of mass, then we have $I_{\vec{a},\alpha\beta} = I_{cm,\alpha\beta} + M\left( a^2 \delta_{\alpha\beta} - a_\alpha a_\beta \right)$. This is the generalization of parallel axis theorem.
+
+Phew! Let's sit down for a second. Our new moment of inertias are about a point rather than a line and are tensors rather than scalars (compare to Ph1 or AP Physics). Why do we need to be so complicated? We used to talk about moment of inertia about an axis. When is this good? 
+
+This is great when we force rotation about a single axis. And indeed, if we only want the angular momentum about a single axis, we can pull it out from our tensor and find indeed a scalar term, i.e. $\vec{L}\cdot \hat{k}, L_3 = I_{33}\omega$.
+
+Let's look at the simplest interesting motion we can imagine. Let's examine the case of the symmetric top. We go to the principal axis, and we find $I_1 = I_2 \neq I_3$ the diagonal elements. The simplest case of the symmetric top is a single sheet in the $xy$ plane. We note that principal axes are the axes, and $I_x = I_y \neq I_z$. 
+
+Today we examine torque-free motion. This then implies $\vec{L} = I \cdot \omega = C$ with $C$ constant. We note that that since the principal axes rotate as well, we have to figure out a way to force two variables produce a constant. 
+
+Let's think of our top as a football, with symmetry axis $\hat{k}$. Let's start by choosing at each time $\hat{i}$ lying in the $\hat{k},\vec{L}$ plane (where the two are not generally parallel) and choosing $\hat{j} \perp \hat{k},\vec{L}$. We know that the angular velocity vector is also then in the plane of $\hat{k},\vec{L}$ which gives that $\rd{\hat{k}}{t}\perp \hat{k},\vec{L}$. At each instant in time then we choose $\hat{i},\hat{j}$ to constantly satisfy our desired properties.
+
+The overall picture is then of the entire object rotating about the $\vec{L}$, called uniform precession. We note then that $\rd{\hat{k}}{t} = \vec{\omega}\times \hat{k}$, and if we notate $\vec{\omega} = \omega_1 \hat{i} + \omega_3 \hat{k}$, then we note $\rd{\hat{k}}{t} = \omega_i \hat{i}\times \hat{k}$. We can then write $\vec{L} = L\sin \theta\hat{i} + L\cos \theta\hat{k}$ and then $\omega_1 = \frac{L\sin\theta}{I_1}$ to finally write $\rd{\hat{k}}{t} = \frac{\vec{L}}{I}\times \hat{k}$. This then gives the expression for the steady precession about $\vec{L}$, since it is a constant. Thus, the tumbling motion is because the angular velocity is not alingned with the angular momentum! 
+
+We then want to examine equations of motion in the body frame. We then have $\vec{N} = \rd{\vec{L}}{t}\Big|_s = \rd{\vec{L}}{t} \Big|_b + \vec{\omega}\times \vec{L}$. With respect then to the fixed principal axes of the body, we have $\vec{L} = \sum_i I_i\omega_i\hat{i}$ ($\hat{1} = \hat{i}$ sorry I'm lazy). Plugging in, we obtain
+\begin{align*}
+    N_1 &= I_1 \rd{\omega_1}{t} - \omega_2 \omega_3 \left( I_2 - I_3 \right)\\
+    N_2 &= I_2 \rd{\omega_2}{t} - \omega_1 \omega_3 \left( I_3 - I_1 \right)\\
+    N_3 &= I_2 \rd{\omega_2}{t} - \omega_1 \omega_2 \left( I_1 - I_2 \right)
+\end{align*}
+
+These are then the Euler equations. We can then apply this to our beloved football! Moreover, we are sitting on the Earth, which is oblong and tumbles in space, so we can just use this example instead, called the Chandler wobble. We will thus examine the symmetric top from the body perspective. For our case, $\vec{N} = 0, I_1 = I_2 = I_{\perp}$ (zero torque) yields $\omega_3 = $ constant. We can then rearrange the first Euler equation
+\begin{align*}
+    \rd{\omega_1}{t} &= -\left[ \left( \frac{I_3}{I_\perp} - 1 \right)\omega_3 \right]\omega_2\\
+    \rd{\omega_2}{t} &= \left[ \left( \frac{I_3}{I_\perp} - 1 \right)\omega_3 \right]\omega_1
+\end{align*}
+
+which solving out gives $\omega_1 = A\cos\left( \Omega_p t + \phi \right), \omega_2 = A\sin\left( \Omega_p t + \phi \right)$ with $\Omega_p = \left( \frac{I_3}{I_\perp}  - 1\right)\omega_3$. Thus, the motion is uniform precession. This then gives that $\vec{\omega}$ is uniform precession at rate $\Omega_p$ about $\hat{k}$. For our Earth, $I_3 > I_\perp$ so $\Omega_p > 0$, whereas $\Omega_p < 0$ for the football.
+
+For the earth, $\frac{I_3}{I_\perp} - 1 \approx 0.0033$, and that gives us a precession period $\frac{2\pi}{\Omega_p} \approx 306$ days. This matches observations, but one might ask how this is observed, since $\Omega_p$ is measured in the space frame. We can see this by checking the stars at night and seeing the point about which the stars rotate, which is where $\omega$ obviously passes through Earth's surface, and we can track the movement of this point over the year. The measured $\Omega_p$ is $435$ days, due to the nonrigidity of Earth.
+
+We note that this is a pretty drastically different expression from $\omega_p$ from the football. We note that this difference arises partly because one is in the body frame and one is in the space frame, related by $\vec{\omega}_p = \vec{\Omega}_p + \vec{\omega}$. Refer to Hand and Finch 8.7 for a pretty confusingyet enlightening picture of the difference. 
+
+Next lecture we discuss torque-driven motion and Euler angles! (not Euler angels)
+
+\chapter{11/21 - Euler angles, Torque-driven rotation}
+
+Euler angles are much more convenient than rotation matricies, so we will start from there. We begin with some set of axes $x', y', z'$. We begin by rotating about an arbitrary initial axis, say, the $z$ axis, by some angle $\phi$. This corresponds to rotation matrix
+$$U_1 = \begin{bmatrix}\cos \phi & -\sin \phi & 0\\\sin \phi & \cos \phi & 0\\0&0&1\end{bmatrix}$$
+
+$\phi$ is then considered the first Euler angle. Label the new axes $x \to \xi, y \to \eta, z \to \zeta$. We then rotate about one of the new axes, say, the $\xi$ axis. This is then
+$$U_2 = \begin{bmatrix}1&0&0\\0&\cos \theta & -\sin \theta\\0 & \sin \theta & \cos \theta\end{bmatrix}$$
+
+$\theta$ is then the second Euler angle. Let's label the new axes $\xi', \eta', \zeta'$. Lastly, we make a third rotation about $\eta$ by angle $\psi$ and
+$$U_3 = \begin{bmatrix}\cos \theta&0&-\sin \theta\\0&1 & 0\\\sin \theta & 0 & \cos \theta\end{bmatrix}$$
+
+We are finally finished. Consider these new axes $x,y,z$, then $U_3 U_2 U_1$ is the transformation to go from $x',y',z'$ to $x,y,z$.
+
+We can then examine how to determine these angles intuitively. First, let's consider a time dependent $\dot{\phi}$, such that we're rotating. This is an angular velocity about the $z'$ axis. We can then project this onto our new axes
+$$\left( \omega_x, \omega_y, \omega_z \right) = \dot{\phi}\left( \sin \theta\sin \psi, \sin \theta \cos \psi, \cos \theta \right)$$
+
+Of course we can do this for the other rotations in $\dot{\theta}, \dot{\phi}$, namely
+\begin{align*}
+    \left( \omega_x, \omega_y, \omega_z \right) &= \dot{\theta}\left( \cos \psi, -\sin \psi, 0 \right)\\
+    \left( \omega_x, \omega_y, \omega_z \right) &= \dot{\psi}(0,0,1)
+\end{align*}
+
+Rewriting these with respect to principal axes
+\begin{align*}
+    \omega_1 = \omega_x &= \dot{\phi}\sin \psi \sin \theta + \dot{\theta}\cos \psi\\
+    \omega_2 = \omega_y &= \dot{\phi}\cos \psi\sin \theta - \dot{\theta}\sin \psi\\
+    \omega_3 = \omega_z &= \dot{\psi} + \dot{\phi}\cos \theta
+\end{align*}
+
+The kinetic energy is then given by $T = \frac{1}{2}I_1\omega_1 + I_2 \omega_2^2 + I_3 \omega_3^2$. An example if $I_1 = I_2$ is
+$$T = \frac{1}{2}I_{\perp} \left( \dot{\theta}^2 + \dot{\phi}^2\sin^2\theta \right) + \frac{1}{2}I_3\left( \dot{\psi} + \dot{\phi}\cos \theta \right)^2$$
+
+If we ever want to use Newtonian approach, the angular momentum vector is then $\vec{L} = \left( I_1 \omega_1, I_2 \omega_2, I_3 \omega_3 \right)$ and thus we can easily plug this into our differential equation relating space and body frames of angular momentum.
+
+Let's examine the heavy symmetric top. Place a heavy rotating disc at the end of a stick and put the stick on a support at some point. Since there is a force $mg$ on the top, clearly the force produces a net torque (sorry, he has the apparatus set up and I can't picture). There are then the three Euler angles are then $\theta$ the angle between the axis of the top and the vertical ($mg$) axis, $\phi$ the displacement about the ground, and $\psi$ the rotation of the top. We can go ahead and talk about the earth about this too.
+
+We note that the potential energy depends only on $V(\theta) = mgl\cos \theta$ for the top. The Earth has a precession period (wtf why he doing two problems at once) of about $25000$ years, so we will consider the Earth at the center and consider the sun/moon orbiting around as continuous rings of mass. Computing carefully as in Hand and Finch, $V(\theta) = \frac{1}{2}\left( \frac{GM}{R^3}\Big|_{\text{moon}} + \frac{GM}{R^3}\Big|_{\text{sun}} \right)(I_3 - I_\perp)\frac{1-3\cos^2\theta}{2}$, where the moments of inertia and the $\theta$ dependence arise from the quadrupole moment. We can write the $GM/R^3$ terms as an $\Omega_e$ term, as it is a frequency of the Earth's rotation basically from the sun component. Plugging in numbers, we know the contribution due to the moon is twice that of the sun which is $\Omega_e$, so we can write $\Omega = `1.77 \Omega_e$ and finally $V(\theta) = \frac{1}{2}I_\perp \Omega^2 \epsilon \frac{1}{2}\left( 1-3\cos^2\theta \right)$ with $\epsilon = \frac{I_3 - I_\perp}{I_\perp} \approx 0.0034$.
+
+We can write out the Lagrangian for the top as 
+$$L = \frac{1}{2}I_\perp \left( \dot{\theta}^2 + \dot{\phi}^2\sin^2\theta \right) + \frac{1}{2}I_3\left( \dot{\psi} + \dot{\phi}\cos \theta \right)^2 - V(\theta)$$
+
+We compute angular momenta for ignorable quantities
+\begin{align*}
+    P_\psi &= I_3\left( \dot{\psi} + \dot{\phi}\cos \theta \right) = I_3\omega_3\\
+    P_\phi &= I_\perp \dot{\phi}\sin^2\theta + I_3\left( \dot{\psi}+\dot{\phi}\cos \theta \right)\cos \theta\\
+    \dot{\phi} &= \frac{p_\phi - p_\psi\cos \theta}{I_{\perp}\sin^2\theta}
+\end{align*}
+
+At this point we could just use the Euler-Lagrange equations, but we must be careful not to make our substitution to eliminate $\dot{\phi}$ immediately! Recall this. We can still do this though, and we obtain
+\begin{align*}
+    I_\perp \ddot{\theta} - I_\perp\dot{\phi}^2 \sin \theta \cos \theta + I_3\left( \dot{\psi} + \dot{\phi}\cos \theta \right)\sin \theta \dot{\phi} + \pd{V}{\theta} &= 0
+\end{align*}
+
+Now we can eliminate $\dot{\phi}$ and solve.
+
+The second path we can take is the Routhian approach, to eliminate the two ignorable coordinates. This produces
+$$-R = \frac{1}{2}I_\perp \dot{\theta}^2 - \left[ V(\theta) + \frac{p_\psi^2}{2I_3} + \frac{(p_\phi - p_\psi\cos \theta)^2}{2I_\perp \sin^2\theta} \right]$$
+
+Let's next look at the simplest case, the steady precession case back in the Lagrangian solution. We have in this case that $\theta$ is constant, $\dot{\phi} = \omega_p$ the precession frequency. In this limit our Lagrangian becomes
+\begin{align*}
+    - I_\perp\omega_p^2 \sin \theta \cos \theta - I_3\omega_3\sin \theta \omega_p - \pd{V}{\theta} &= 0
+\end{align*}
+
+which is just a quadratic in $\omega_p$. Suppose we have a rapidly spinning top, then the relevant physical explanation is $\frac{1}{2}I_3\omega_3^2 \gg \pd{V}{\theta}$. In this limit are a small and large $\omega_p$, which means we can either ignore the first or third term (lol)
+\begin{align*}
+    \omega_p &\approx -\frac{1}{I_3\omega_3\sin\theta}\pd{V}{\theta}\\
+    \omega_p &\approx \frac{I_3\omega_3}{I_\perp \cos \theta}
+\end{align*}
+
+The first solution is the torque driven slow precession, and the second is just the Chandler wobble in another form! This is evident because the torque is absent so it must be not-torque-driven. The Chandler wobble is only uniform motion when $\vec{L}$ is aligned along the axis of rotation, otherwise there's the distinctive non-uniform motion.
+
+Let's look at the torque driven case. Then $\omega_p = \frac{Mgl}{I_3 \omega_3}$. Interestingly it is independent of $\theta$. This is the rate of precession about the vertical. The freshman way to do this is then $\omega_p = \rd{\phi}{t} = \frac{1}{L_\perp}\rd{L_\perp}{t} = \frac{Mgl\sin \theta}{I_3 \omega_3 \sin \theta}$ which recovers our expression, though this assumes $L_{\perp}$ is dominated by $I_3 \omega_3$.
+
+Let's go back to look at the Earth. Nothing changes but our $V(\theta)$, so we take a derivative and plug in
+\begin{align*}
+    \pd{V}{\theta} &= \frac{3}{2}I_\perp \Omega^2 \epsilon \cos \theta\sin\theta\\
+    \omega_p &= -\frac{3}{2}\frac{I_{\perp}}{I_3} \frac{\epsilon\Omega^2}{\omega_3}\cos \theta\\
+    \frac{\omega_p}{\Omega_e} &= -\frac{3}{2}\epsilon\left( \frac{\Omega_e}{\omega_3} \right)\left( \frac{\Omega}{\Omega_e} \right)^2\cos \theta
+\end{align*}
+
+Plugging in some numbers, we compute $24900$ as our ratio, so we precess with a ratio of $24900$ years. This means that the axis of rotation precesses half a circle every $12000$ years, so in that much time summer will come for northern hemisphere in December instead.
+
+We try the top again, and we note that initial conditions result in some pretty hectic motion. How do we find these solutions given initial conditions? We can first note that the Hamiltonian is the energy is constant is $T+V$ by examining the Lagrangian. We can write this out
+$$E=\frac{p_\psi^2}{2I_3} + \frac{1}{2}I_\perp \dot{\theta}^2 + \frac{(p_\phi - p_\psi\cos \theta)^2}{2I_\perp \sin^2 \theta} + V(\theta)$$
+
+We note that $\frac{p_\psi^2}{2I_3}$ is also a constant, so we can define $E' = E-\frac{p_\psi^2}{2I_3}$ and then group the latter two terms remaining (in the above expression for $E$) as an effective potential.
+
+We solve this using our usual methods, by graphing the effective potential (FML, both because I can't draw this and because I never knew this was the usual method\dots it's Week 7 OTL). We can plot this, and due to the exploding $\sin$ potential there must be at least one minimum. At the minimum, we note that the we are stationary in $\theta$ and so this is the steady precession solution. If we are not at the minimum, we observe an oscillation in $\theta$ namely the ``nutation.''
+
+Once we know $\theta$, we can then compute $\dot{\phi}$ from an equation way back (when we computed conjugate momenta), $\dot{\phi} = \frac{p_\phi - p_\psi\cos \theta}{I_{\perp}\sin^2\theta}$. We note that initial conditions means that the sign can flip over the range of $\cos \theta$ and so jerkier! If we want a more quantitative solution we make the substitution $u = \cos \theta, v(u)$ is then cubic. Look at Goldstein for more of this.
+
+Let's look at the small oscillations about the steady solution, so small nutation. This means we can expand $E'$ about $\theta_m$ the minimum, and we obtain simple harmonic motion! The frequency is then given $\omega = \sqrt{\frac{V_{eff}''}{I_\perp}}$, the Chandler wobble motion. Goldstein gives a few more general solutions.
+
+We can look at some more interesting phenomena in these equations. Let's examine the case of the sleeping top, which is just spinning the top straight vertically (think childhood tops!), corresponding to $\theta = 0$. We computed before $p_\phi = I_\perp \dot{\phi}\sin^2\theta + p_\psi\cos \theta$, and in $\theta = 0$ we find $p_\psi = p_\phi$. We then find $V_{eff}(\theta) = \frac{p_\psi^2}{2I_{\perp}}\frac{(1-\cos\theta)^2}{\sin^2\theta} + Mgl\cos \theta$ reduces in small $\theta$ to
+$$V_{eff}(\theta) = Mgl + \frac{\theta^2}{2}\left( \frac{p_\psi^2}{4I_\perp} - Mgl \right) +\dots$$
+
+We then want to compare the ratio of the two terms contributing to the sign on the $\theta^2$ term. We see that for $\frac{p_\psi^2}{4I_\perp} > Mgl$ the solution is stable, but once $p_\psi$ decays much to the dismay of children worldwide to $< Mgl$ then the equilibrium becomes unstable and the top falls. 
+
+We note that this is the principle behind gyrocompasses (Assignment 7 fml), and the rotational north pole is where it points due to an equilibrium being available due to Coriolis force. 
+
+\chapter{11/26 - Rigid body rotation examples}
+
+We will examine hopefully the following problems
+\begin{itemize}
+    \item Rotating rectangle (Hand and Finch 8.15)
+    \item Euler's disk
+    \item Ball on rotating turntable
+    \item top on frictionless table
+\end{itemize}
+
+Suppose we have a thin rectangular sheet of dimensions $a\times b$ rotating about some diagonal with a fixed angular velocity $\vec{\omega}$. What is the torque required to maintain this motion? Two solutions, Euler's equations or Newton's equations in space frame. Recall Euler equations
+\begin{align*}
+    N_1 &= I_1 \rd{\omega_1}{t} - \omega_2 \omega_3 \left( I_2 - I_3 \right)\\
+    N_2 &= I_2 \rd{\omega_2}{t} - \omega_1 \omega_3 \left( I_3 - I_1 \right)\\
+    N_3 &= I_2 \rd{\omega_2}{t} - \omega_1 \omega_2 \left( I_1 - I_2 \right)
+\end{align*}
+
+We might wonder whether the fixed $\vec{\omega}$ is in the space or body frame. Recall that we have the equation
+$$\rd{}{t}\vec{e}\Big|_s = \rd{}{t}\vec{e}\Big|_b + \omega \times \vec{e}$$
+
+then when $\vec{e} = \vec{\omega}$, then the cross product vanishes and so it is the same in both frames!
+
+We then seek the principal axes, which is easily doable without diagonalizing the moment of inertia matrix, it's cleary just along the lines through the center of the rectangle (two in the plane, one perpendicular, obviously). To then compute the moment of inertia, we recall that a rod has moment of inertia $\frac{1}{12}Ml^2$. We note then that $I_1 = \frac{M}{12}a^2, I_2 = \frac{M}{12}b^2$. 
+We then note that, calling angle $\theta$ the angle $\vec{\omega}$ makes with an axis, we have $\vec{\omega} = (\omega\cos \theta, \omega\sin \theta, 0)$. We thus have enough information to plug through the Euler equations
+\begin{align*}
+    N_3 &= -\omega^2 \cos \theta\sin\theta \frac{M}{12}\left( a^2 - b^2 \right)\\
+    \vec{N} &= \frac{Mab}{12}\omega^2\frac{a^2-b^2}{a^2+b^2}\hat{k}
+\end{align*}
+and we see that the required torque rotates with the body.
+
+We then solve directly in the space frame. Let's compute $\rd{\vec{L}}{t} = \vec{N} = \vec{\omega}\times \vec{L}$. We can write
+\begin{align*}
+    \vec{L} &= \frac{M\omega}{12}\left[ a^2\cos\theta \hat{i} + b^2\sin\theta\hat{j} \right]\\
+    \vec{\omega} &= \omega\left[ \cos \theta\hat{i} + \sin\theta\hat{j} \right]\\
+    \rd{\vec{L}}{t} &= \frac{M}{12}M\omega^2 \sin\theta\left[ b^2\hat{i}\times\hat{j} + a^2\hat{j}\times\hat{i} \right]
+\end{align*}
+which is the same solution. as above.
+
+We then examine Euler's disc, which ys basically the wobbly motion one sees at the end of a spinning coin's motion as it settles down. Cue pretty awesome demonstration, can Youtube this. This is basically the coin rotating with a single point in contact with the surface. There's two ways to solve the problem, one again using Newtonian thinking very carefully and another plugging and chugging with the Euler equations. 
+
+First, what is the direction of the angular velocity vector? Instantaneously, the point of contact is fixed and is the axis about which the disc rotates. Another stationary point is the center of mass, which stays stationary, which clues us that the angular velocity should rotate about the diameter of the disc (going through the center to the point of contact). The simplified problem (that of no spindown) will be used in the Newtonian approach.
+
+Suppose we have the coin currently at some angle $\theta$ with a radius $R$, point of contact $O$, normal-to-coin axis $\hat{k}$ and angular velocity $\vec{\omega}$. We note that the force exerted is $Mg$ at the center of the disc.
+
+We know the moment of inertia perpendicular to a disc, namely $I_3 = \frac{1}{2}MR^2$, and a pretty powerful result for sheets is that $I_1 + I_2 = I_3$, so we know that $I_1 = I_2 = I_\perp = \frac{1}{4}MR^2$. Note then that since the disc rotates about a principal axis, $\vec{\omega} \parallel \vec{L}$. Note that there is also a normal force of magnitude $Mg$ pointing upwards at $O$ point of contact, and so there is a net torque in the plane of the coin. We can then write for $\Omega$ the rotation of the disc about the vertical direction
+\begin{align*}
+    \Omega &= \frac{N}{L_\perp}\\
+    &= \frac{MgR\cos \theta}{\frac{1}{4}MR^2\omega \cos \theta}\\
+    &= \frac{4g}{R\omega}\\
+\end{align*}
+
+We know neither $\omega$ or $\Omega$ yet though, but we note an additional constraint that the disc is rolling on the table. We can then write $\vec{\omega} = \omega_d \hat{k} + \Omega \hat{k}'$ where $\hat{k}'$ is the vertical in space coordinates, $\omega_d$ is the rotation of the plate about its center, and $\hat{k}$ is the rotation of the disc itself. It is like the cone problem where there are two parts (not components!) to the angular momentum.
+
+However, we note that since the angular velocity must be purely along the diameter of the plate, $\vec{\omega}\cdot \hat{k} = 0$! This is the rolling constraint. Thinking carefully by going to the disc reference frame, we can find velocities both for the speed of the point on the edge $v = \omega_d R$ and the speed of the table beneath $v = -R\cos \theta \Omega$ and equate these, which reproduces our result. We then find in the parallel direction $\omega = \Omega \sin \theta$, and plugging this back into the earlier $\Omega = \frac{4g}{R\omega}$ we can obtain
+$$\Omega = \sqrt{\frac{4g}{R\sin \theta}}$$
+
+This is a very reasonable result! As $\theta \to 0, \Omega \to \infty$ which is consistent with observations. Moreover, note that it is notably not a function of $\omega$ the spin speed.
+
+We then recall that we observed the head on the coin rotating! How do we find this? Intuitively, perhaps one would have expected this to be $\vec{\omega}\cdot \hat{k}$, but note that this is zero! The answer is actually $\vec{\omega}\cdot \hat{k}'$, which is just $\omega\sin \theta = \sqrt{\frac{\gamma}{R}}\sin^{3/2}\theta$, which vanishes as $\theta \to 0$. This is the Newtonian approach, and we are done (I feel like you can compute something like radius of disc vs. radius of path traced out by point of contact and compute the difference to find the spinning head as well\dots I think it's the same result but a bit more intuitive. His is obviously better though).
+
+Let's try Euler angles now! Much less thinking, much uglier algebra. We start with the plate in the primed coordinates, then we rotate about $z'$ by angle $\phi$, then we rotate about the new $y'$ axis by $\theta$ and finally we rotate around the normal axis by angle $\psi$. Recall then the expressions we had for the symmetric top, which the Euler disc is one of
+\begin{align*}
+    \omega_1 &= \dot{\phi}\sin \psi\sin\theta + \dot{\theta}\cos\psi\\
+    \omega_2 &= \dot{\phi}\cos\psi\sin\theta - \dot{\theta}\sin\psi\\
+    \omega_3 &= \dot{\psi} + \dot{\phi}\cos \theta\\
+    \omega_{x'} &= \dot{\psi}\sin\theta\sin\phi + \dot{\theta}\cos\theta\\
+    \omega_{y'} &= -\dot{\psi}\cos\phi\sin\theta + \dot{\theta}\sin\phi\\
+    \omega_{z'} &= \dot{\psi}\cos \theta + \dot{\phi}\\
+    L &= \frac{1}{2}I_{\perp} \left( \dot{\theta}^2 + \dot{\phi}^2 \sin^2\theta \right) + \frac{1}{2}I_3 \left( \dot{\psi}^2 + \dot{\phi}\cos\theta \right)^2 + \frac{1}{2}M(\dot{X}^2 + \dot{Y}^2 + \dot{Z}^2)- MgZ
+\end{align*}
+
+We then have the rolling constraint, call $\vec{R}$ the center of mass, then $\dot{\vec{R}} = \vec{\omega} \times (\vec{R} - \vec{R}_c)$ where $\vec{R}_c$ is the contact point. Let's write this explicitly $\vec{R} - \vec{R}_c = R\left( -\cos \theta\sin\phi, \cos\theta\cos\phi, \sin \theta \right)$. We then also have $\vec{\omega}$ from the Euler equations above, in primed coordinates (since we seek center of mass), which plugging and chugging into the cross product gives
+\begin{align*}
+    \dot{ \vec{R}} &= \vec{\omega}\times (\vec{R} - \vec{R}_c)\\
+    \dot{X} &= -R\omega_3\cos \phi + R\sin \theta\sin \phi \dot{\theta}\\
+    \dot{Y} &= -R\omega_3 \sin \phi - R\sin \theta\cos\phi \dot{\theta}\\
+    \dot{Z} &= R\sin \theta
+\end{align*}
+
+The first two constraints are then nonholonomic while the third is holonomic. The first two nonholonomic constraints produce differential constraints
+\begin{align*}
+    \delta X + R\cos \phi\left( \cos\theta \delta \phi + \delta\psi \right) - R\sin \theta\sin \phi\delta\theta &= 0\\
+    \delta Y + R\sin\theta \left( \cos \theta\delta\phi + \delta\psi \right) + R\sin \theta\cos \phi \delta\theta &= 0
+\end{align*}
+
+Let's now assume that the center of mass is stationary $\dot{X} = \dot{Y} = \dot{\theta} = 0$, giving Lagrangian
+$$L = \frac{1}{2}I_\perp \sin^2\theta \dot{\phi}^2 + \frac{1}{2}I_3\left( \dot{\psi} + \dot{\phi}\cos \theta \right)^2 - MgR\sin\theta$$
+
+We then have ignorable corodinates $\psi,\phi$ which give conjugate momenta
+\begin{align*}
+    P_\psi &= I_3\left( \dot{\psi} + \dot{\phi}\cos\theta \right) = I_3 \omega_3\\
+    P_\phi &= I_{\perp}\sin^2\theta\dot{\phi} + I_3\omega_3\cos\theta
+\end{align*}
+
+The rolling constraint then gives us that $\omega_3 = 0$, so $\dot{\psi} + \dot{\phi}\cos\theta = 0$, and the second equation gives that $\theta, \dot{\phi}$ are constants, so we can finally compute
+$$\pd{L}{\theta} = 0 = I_{\perp}\sin\theta\cos\theta\Omega^2 + 0 - MgR\cos\theta$$
+upon which we plug in $I_{\perp}$ and we find that $\Omega = \sqrt{\frac{4g}{R\sin\theta}}$. 
+
+We then want to compute the rotation of the head $\omega_{z'}$, which is just $\dot{\psi}\cos\theta + \dot{\phi}$. We note earlier though through $\omega_3 = 0$ that we found $\dot{\psi} + \dot{\phi}\cos\theta = 0$, and so we can do a bit of elimination to botain
+$$\dot{\psi}\cos\theta + \dot{\phi} = \dot{\phi}\left( `-\cos^2\theta \right) = \Omega\sin^2\theta$$
+which when plugging in $\Omega$ gives the correct answer.
+
+We note that we made quite a few assumptions to recover our earlier computations in the Newtonian approach, such as stationary center of mass to eliminate the need for our nonholonomic constraints. Instead, we could have just plugged in $Z = R\sin\theta$ and added our differential equations using Lagrange multipliers to produce some stupidly big Euler-Lagrange equations which are covered in lecture slides. This gives us five equations in five variables (two Lagrange multipliers for the two nonholonomic constraints), which theoretically can solve out to give us the general solution, and in principle these equations yield the correct dynamics for the full solution (i.e. when the top is moving around on the disc). 
+
+This shows the power of the Euler angle approach; it's very messy, but very mechanical once we start. We compute the kinetic energy that was given in the Euler angle coordinates, then we implemented the rolling constraint, made our assumptions, and we fleshed everything out in a complete nightmare.
+
+Let's now place a ball on a turntable and have the turntable rotate without the ball slipping. What's the motion of the ball? Mindblowingly, the motion is circular in the space frame! Videos show this, and we will now demonstrate this using some equations! Moreover, the period is $\frac{7}{2}$ that of the turntable, regardless of initial conditions. There are many analogies with a charged particle in a magnetic field. (More details can be found in a paper by J.A. Burns, Am. J. Phys. 49, 56 (1981)).
+
+Let's work this problem now. We have a turntable rotating at some fixed rate $\Omega$ about the $z$ direction, and we have some vector $\vec{r}$ giving us the position of the ball of radius $a$. The ball has some angular velocity $\vec{\omega}$ (Yubo: The ball is spherically symmetric, so the ball indeed rotates about the angular velocity!). We note that since the point of contact is moving in the space frame we know that the ball can't be rotating about the point of contact. We note that there are three forces, a gravity force, a normal force, and a friction force. This is all in an inertial frame, so we don't worry about the fictitious forces for now. 
+
+In our inertial frame, $\vec{v} = \dot{\vec{r}}$. Newton tells us that friction force $\vec{F} = m\dot{\vec{v}}$. We then have (since the other two forces cancel yet again) the torque equation $\left( -a\hat{z} \times\vec{F} \right) = I\rd{\vec{\omega}}{t}$. We then have a rolling constraint, that the velocity of the point of contact is at the same velocity as the turntable, so equating we have $(\Omega \hat{z} \times \vec{r}) = \vec{v} + \vec{\omega}\times(a\hat{z})$, or $\vec{v} = \underbrace{\Omega \hat{z}\times \vec{r}}_{\text{moving}} + \underbrace{\vec{\omega}\times(-a\hat{z})}_{\text{spinning}}$. Taking time derivative, we find
+$$\vec{F} = \rd{\vec{v}}{t} = \Omega\hat{z} \times\vec{v} - \frac{a^2}{I}\underbrace{\left( \hat{z}\times \vec{F} \right)\times\hat{z}}_{\vec{F}}$$
+
+Solving for $\vec{F}$, we find
+$$\vec{F} = \frac{m}{1+\frac{ma^2}{I}}\Omega \hat{z} \times \vec{v}$$
+
+We find then that the friction force $\perp \vec{v}$. We then recall that $I = \frac{2}{5}Ma^2$ for our solid sphere, and so we see our factor of $\frac{7}{2}$. Moreover, since the force is always perpendicular to the velocity, we see that this produces circular motion with constant speed. We can compute the radius of the motion by equating our force to the centripetal force
+$$\frac{mv^2}{r} = \frac{2M}{7}\Omega v$$
+which produces $\omega = \frac{2}{7}\Omega$. This is distinctly different from the hockey puck question on HW6, because the puck slides on a frictionless surface rather than rolling under friction. If the ice rink at the north pole (for the hockey puck) question is a bowl shape, we observe circular motion, otherwise we'd observe straight line in inertial frame.
+
+We note that in the Lagrangian, we cannot use Noether's theorem to constrain $\dot{X}, \dot{Y}$ for conserved quantities because the other quantities are not independent of $X,Y$. We will skip the last example, D: Until next time!
+
+\chapter{12/3 - Normal modes}
+
+Normal modes are cool! Even with two coupled pendula the general motion isn't straightforward, but particular initial conditions produce simple motion. With weak coupling the two normal modes are very close in frequency and will produce beats for any arbitrary initial conditions. Note superposition generates general solutions. Chladni plates awesome example of resonance. 
+
+Let's discuss this generally. We will have $N$ degrees of freedom and a conservative system. We will assume time-independent Lagrangian (holonomic constraints). The generalized coordinates are then just the displacements of one of our degrees of freedom. If we then expand about a stable equilibrium ($q_1 = 0, V = 0$). 
+
+In general then our potential is given by $V = \frac{1}{2}\sum_{ij}V_{ij}q_iq_j$ in quadratic form. It is then natural to use a matrix notation $\tilde{q}$ being the column vector of the coordinates. Our potential is then $V = \frac{1}{2}\tilde{q}\cdot V \cdot q$. We can then set up our kinetic energy as $T = \frac{1}{2}\sum_{ij}T_{ij}\dot{q}_i\dot{q}_j = \frac{1}{2}\tilde{q}\cdot V \cdot q$. We then of course have Lagrangian $T-V$ which gives $N$ Euler-lagrange equations for each $q_i$. These equations are
+\begin{align*}
+    \rd{}{t}\pd{L}{\dot{q}_i} - \pd{L}{q_i} &= 0\\
+    \sum_j T_ij \ddot{q}_j + V_ij q_j &= 0\\
+    T \cdot \ddot{q} + V\cdot q &= 0
+\end{align*}
+where we rewrite in matrix notation. Usually then, the kinetic energy only dependends on the individual motion of the masses so $T = \frac{1}{2}\sum_jm\dot{q}_j^2$ and so $T$ is diagonal (but not always! For example double pendulum). 
+
+We then seek to our matrix problem the sinusoidal solution $q(t) = \Phi e^{i\omega t}$ (each component oscillates with the same frequency but perhaps variable amplitudes encapsulated in $\Phi$) which then produces matrix equation $V\cdot \Phi - \omega^2 T \cdot \Phi = 0$. This then implies that $\det(V - \omega^2 T) = 0$, a generalized eigenvalue problem. There are then $N$ solutions (admitting degeneracies) for $\omega^2$ the normal mode frequencies. The eigenvectors $\Phi$ are then the normal modes, where the components give the relative amplitudes of each normal mode.
+
+We note that normal modes are just the solutions to this linear algebra problem then. We note that the matricies are symmetric, and so we know that the eigenvalues are real and that the eigenvectors may be chosen to be real. Since $T$ is positive definite (kinetic energy is positive!), and if we assume $V$ is positive definite, i.e. stable equilibrium, $\omega^2 > 0$ and the mode frequencies are real. A symmetry may yield a zero solution, i.e. a \emph{zero frequency mode}. Note most importantly that the eigenvectors can be chosen orthonormal with respect to $T$, so that $\tilde{\Phi}_i\cdot T \cdot \Phi_j = \delta_{ij}$. The eigenvectors then form a basis, which means any displacement can be projected.
+
+We prove the weird orthogonality condition. Suppose we have two eigenvectors $\Phi_i, \Phi_j$. They then satisfy
+\begin{align*}
+    V \cdot \Phi_i &= \omega_i^2 T \Phi_i\\
+    V \cdot \Phi_j &= \omega_j^2 T \Phi_j
+\end{align*}
+
+We multiply the first equation by $\tilde{\Phi}_j$ and the transpose of the second equation by $\Phi_i$ and subtract to produce
+$$0 = \left( \omega_i^2 - \omega_j^2 \right)\tilde{\Phi}_i\cdot T \cdot \Phi_j$$
+which gives our orthonormality condition $\tilde{\Phi}_i \cdot T \cdot \Phi_j = \delta_{ij}$. 
+
+A general set of displacements can then be projected onto the normal mode basis $q(t) = \sum_i \rho_i(t) \Phi_i$ where $\rho_i$ are the noraml mode coordinates. Substituting into the EOM $T\cdot \ddot{q} + V\cdot q = 0$ we find
+$$0 = \sum_i \left( \ddot{\rho}_i + \omega_i^2\rho_i \right)T\cdot \Phi$$
+which means that each $\rho_i$ satisfies independent SHO equations, starting from completely general displacements. To compute the coordinates we use $\rho_i = \tilde{\Phi}_i \cdot T \cdot q$ to take advantage of orthonormality in our redefined sense. 
+
+We then examine the driven problem, the equations of motion become $T \cdot \ddot{q} + V\cdot q = F(t)$. Expanding the solution in normal modes and plugging into our EOM, we find
+\begin{align*}
+    \sum_i \left( \ddot{\rho}_i + \omega_i^2 \rho_i \right)T\cdot \Phi &= F\\
+    \ddot{\rho}_i + \omega_i^2 \rho_i &= F_i
+\end{align*}
+wih $F_i$ the components of $F$ in the $\Phi$ basis, i.e. $F_i = \Phi_i\cdot F$.
+
+It is often convenient to use complex notation for the normal mode oscillations $\rho_i(t) = \Re\left[ A_i e^{i\omega_i t} \right]$, under which the general solution becomes
+\begin{align*}
+    q(t) &= \sum_i \Re[A_ie^{i\omega_i t}]\Phi\\
+    \dot{q}(t) &= \sum_i \Re[i\omega_i A_ie^{i\omega_i t}]\Phi\\
+\end{align*}
+
+This then gives under orthonormality conditions
+\begin{align*}
+    \Re A_i &= \tilde{\Phi}\cdot T \cdot q(0)\\
+    \omega_i \Im A_i &= -\tilde{\phi}\cdot t \cdot \dot{q}(0)
+\end{align*}
+
+Let's do an example problem now, two coupled pendula (Hand and Finch section 9.1). We have two pendula with displacement angles $\theta_1, \theta_2$ and they are connected by some spring of spring constant $k$ and are of length $l$. We then have potential energy
+$$V = \frac{1}{2}mgl\left( \theta_1^2 + \theta_2^2 \right)  + \frac{1}{2}k(fl)^2(\theta_2 - \theta_1)$$
+where $fl$ is the point at which the spring is attached. The kinetic energy is simple $T = \frac{1}{2}ml^2(\theta_1^2 + \theta_2^2)$. We thus write out our matricies
+\begin{align*}
+    T &= ml^2\begin{pmatrix} 1&0\\0&1 \end{pmatrix} \\
+    V &= ml^2\omega_0^2 \begin{pmatrix} 1+m & -m \\ -m & 1+m \end{pmatrix} 
+\end{align*}
+where we define $\omega_0 = \sqrt{\frac{g}{l}}$. We then seek some solution vector $\theta(t) = \Theta e^{i\omega t}$ which then gives linear algebra problem
+$$(V - \omega^2 T) \cdot \Theta = 0$$
+
+Defining $\lambda = \frac{\omega^2}{\omega_0^2}$, we then write the linear algebra problem
+$$\begin{bmatrix} 1+m-\lambda & -m \\ -m & 1+m-\lambda \end{bmatrix} \begin{bmatrix} \Theta_1\\ \Theta_2 \end{bmatrix}  = 0$$
+and we want the determinant equal to zero, so $\left( 1+m-\lambda \right)^2 - m^2 = 0$. The solutions are then $\lambda = 1, \omega = \omega_0, \Theta_1 = \Theta_2$, giving solution vector
+$$\Theta = \frac{1}{\sqrt{ml^2}}\frac{1}{\sqrt{2}}\begin{pmatrix} 1\\1 \end{pmatrix} $$
+
+The other solution is then $\lambda = 1+2m, \omega = \sqrt{1+2m}\omega_0, \Theta_1 = -\Theta_2$ and the solution coordinates are then
+$$\Theta = \frac{1}{\sqrt{2ml^2}}\begin{pmatrix} 1\\-1 \end{pmatrix} $$
+
+The entire normal modes problem is then just eigensolutions of $T,V$. We can then introduce the $R$ matrix the transformation matrix, with columns given by $\Phi_i$. Then $q(t) = R\cdot \rho(t)$ with inverse condition $\rho(t) = \tilde{R}\cdot T \cdot q(t)$. The orthonormality of the normal mode vectors can also be expressed as $\tilde{R}\cdot T \cdot R = I$. We note that $R$ diagonalizes $V$ with $\tilde{R}\cdot V \cdot R = \Omega$ where $\Omega$ is the diagonal matrix with entries $\omega_i^2$. We then note that $R$ diagonalizes both $T,V$. 
+
+This should surprise any quantum mechanics. We just diagonalized $T,V$ simultaneously! There exists then no uncertainty relation between the two? The catch is that $R$ is not an orthogonal matrix, and that by relaxing this constraint we have a transformation that diagonalizes both $T,V$ without being orthogonal. Another way of thinking of it is that we define orthogonality via dot products with $T$, so our diagonalization of both matricies is just diagonalizing $V$ under the metric of multiplication under $T$, if that makes any sense. So sense is recovered, and we haven't broken physics yet.
+
+Let's now discuss some molecular examples. Let's first examine a linear triatomic molecule, e.g. \ce{CO2}. We have a mass $M$ in the middle connected to two masses $m$ on either side with spring of length $l$ and spring constant $k$ and the coordinates of each mass are denoted by $u_i$. We then have our potential energy $V = \frac{1}{2}k\left[ (u_2 - u_1)^2 + (u_3 - u_2)^2 \right]$ and our matricies
+\begin{align*}
+    T &= \begin{bmatrix} m & 0 & 0\\0 & M & 0\\0 & 0 & m \end{bmatrix} \\
+    V &= k\begin{bmatrix} 1 & -1 & 0 \\ -1 & 2 & -1 \\ 0 & -1 & 1 \end{bmatrix} 
+\end{align*}
+
+We then have eigenvalue problem $V\cdot \Phi = \omega^2 T\Phi$ which yields $\det\left[ V - \omega^2 T \right] = 0$. For large numbers of degrees of freedom, computing the determinant is a stupid way of solving the problem, and usually we can just solve the eigenvalue problem straight up. But this is a prime example of symmetry/intuition to simplify the problem, and for more complicated problems group/symmetry theory can help us a lot.
+
+The way we use symmetries to do this is by intuiting the $\Phi$ up to a proportionality constant and then solving for $\omega$. If we apply translational symmetry, we know that $\Phi \propto \begin{pmatrix} 1\\1\\1 \end{pmatrix} $ should give $\omega = 0$ because it is a symmetry and not an actual normal mode. Indeed, $V\cdot \Phi = 0$. It is an interesting question to compute the normal mode coordinates of this motion, which are given by $\rho(t) = \tilde{\Phi}\cdot T \cdot u$ which plugging stuff in gives $\rho(t) \propto u_{cm}$.
+
+We note also a reflection symmetry, so we expect an antisymmetric mode $\Phi = \begin{pmatrix} 1\\0\\-1 \end{pmatrix} $. We can check orthogonality with the first solution by computing the dot product to be zero. Plugging in the eigenvector to $V\cdot \Phi$, we find
+$$V\cdot \Phi = k\begin{bmatrix} 1\\0\\-1 \end{bmatrix} =\frac{k}{m}T\begin{bmatrix} 1\\0\\-1 \end{bmatrix} $$
+where we simply note the form in the last part to be equal to the $T$ matrix. Comparing forms, we find $\omega^2 = \frac{k}{m}$. We can compute the normal mode coordinate again to be $u = u_1 - u_3$.
+
+The third mode comes as yet another inspired guess, both little masses move unit length and the center mass moves by some unknown length $a$. Using orthogonality with the other vectors, we can easily compute out 
+$$\Phi \propto \begin{bmatrix} 1\\-\frac{2m}{M}\\1 \end{bmatrix}$$
+
+Plugging back into the matrix EOM, we find $\omega^2 = \frac{k(M+2m)}{mM}$. We then see $\rho = (u_1 - u_2) + (u_3 - u_2)$. 
+
+Suppose we exmaine a more complex system, ozone, a triangular molecule of oxygens. The potential and kinetir energies are obviously pretty complicated, since total six degrees of freedom (two per molecule!). Diagonalizing $V$ is possible, and ``Mathematica does this happily'' - Cross. But we won't be happy trying to do this, and we should use symmetries instead. There are three symmetries: x,y translations and rotation. The vibrational modes are dialation and two degenerate groups where group theory could point out the degeneracy. This is the way we'd want to solve the problem rather than diagonalizing (poor Mathematica).
+
+\chapter{12/5 - Continuum Mechanics a.k.a. Ph12a in a single lecture}
+
+We will look into continuum mechanics by extending our discussion of normal modes into atomic regions etc.
+
+We recall that congruence transformation $R$ diagonalizes both $T,V$ by definition $\tilde{R}\cdot T \cdot R = I, \tilde{R}\cdot V \cdot R = \Omega$. But this intuitively solves the Lagrangian problem as well! Substituting $q = R\cdot \rho$ into the Lagrangian gives $T = \frac{1}{2}\tilde{\dot{\rho}}\cdot \dot{\rho}, V = \frac{1}{2}\tilde{\rho}\cdot \Omega \cdot \rho$ which gives Lagrangian
+$$L = \frac{1}{2}\sum_\alpha\left( \dot{\rho}_\alpha^2 - \omega_\alpha^2\rho_\alpha^2 \right)$$
+
+Then defining the momentum conjugate $p = \pd{L}{\dot{\rho}\alpha} = \dot{\rho}_\alpha$ we obtain Hamiltonian
+$$H = \frac{1}{2}\sum_\alpha\left( \dot{\rho}_\alpha^2 + \omega_\alpha^2\rho_\alpha^2 \right)$$
+
+Let's look at a simple case for now, vibration modes in a 1D crystal. This is then just a linear system of coupled harmonic oscillators. Let each mass $m$ be separated by distance $a$ at equilibrium with spring constant $k$ and displacements $u_j(t)$. This then gives $T = \sum_j \frac{m\dot{u}_j^2}{2}, V = \frac{1}{2}\sum_j k\left( u_{j+1} - u_j \right)^2$ (he's missing the other coupling, but we know what he means). 
+
+Suppose then that we have only $N$ mobile atoms with a stationary atom at either end (not counted in $N$). Then in the transformed i.e. diagonal basis of kinetic energy we have
+$$T = mI_N, V = k\begin{bmatrix}2&1&\cdots&\\-1 & 2 & -1 &\vdots \\ \vdots  &&\ddots&\ \end{bmatrix} $$
+
+We then assume sinusoidal solutions $\vec{u}(t) = \vec{\upsilon} e^{i\omega t}$ and plug through $V\cdot \upsilon - \omega^2 T \cdot \upsilon = 0$ to find
+$$k(2\upsilon_j - \upsilon_{j+1} -\upsilon_{j-1}) - m\omega^2\upsilon_j = 0$$
+
+This is a system of difference equations with constant coefficients. We will guess oscillating solutions of form $\upsilon_j = e^{i\gamma j}$ which then produces
+$$k(2-e^{i\gamma} - e^{-i\gamma}) - m\omega^2$$
+
+which then gives our solutions of form $\omega^2 = \frac{4k}{m}\sin^2 \frac{\gamma}{2}$. We note that given our boundary conditions we then require our ansatz to be the linear combination of the $\pm \gamma$ solutions to be $\upsilon_j = \sin \gamma j$ and $\gamma = \frac{n\pi}{N+1}$ (boundary conditions at $j=0,j=N+1$). This then gives our normal modes
+$$\omega_n^2 = \frac{4k}{m}\sin^2\frac{n\pi}{2(N+1)}$$
+
+The normal mode vectors then are then just the amplitudes $\upsilon_j \propto \sin \gamma j = \sin \left[ \frac{n\pi}{N+1}j \right]$. The normalization convention is then chosen such that $T$ is diagonal, and this produces
+$$\upsilon_j = \sqrt{\frac{2}{m(N+1)}}\sin \frac{n\pi}{N+1}j$$
+
+We expect $n$ normal modes which is confirmed. Note that $n\geq N+1$ doesn't give independent modes when compared to $2N+2-n$. So we have all our nondegenerate normal modes indexed over $[1,n]$. The key argument is that $n > N+1$ is degenerate compared to $2N+2-n$, and for $n=N+1$ we find that none of the particles actually displace and so it's not a mode (the wavelength is exactly twice the distance between particles which means that the spring oscillates between the particles but the particles themselves don't move.
+
+In the continuum limit we note that the wavelength of the normal modes must be small compared to the total length of the crystal $Na$ which corresponds to small $n$ aand therefore the dispersion relation should be linear.
+
+We then examine different boundary conditions. In many applications of this theory such as statmech, periodic boundary conditions are much more common than fixed ends. The modes are still given by $e^{i\gamma j}$ and the boundary condition $\gamma_n = n\frac{2\pi}{N}$ quantify this boundary (compare to $\gamma_n = \frac{n\pi}{N+1}$).
+
+Examining the expressions, we note that the spacing of the $\gamma_n$ in the fixed boundary conditions is given $\frac{\pi}{N+1}$ while the spacing in the periodic case is given by $\frac{2\pi}{N}$. The modes under periodic boundary conditions with $-\frac{N}{2}<n\leq\frac{N}{2}$ is called the first Brillouin zone.
+
+In terms then of the wave vector $k$ rather than $\gamma$ (modes are $e^{ik_nx_j} = e^{i\gamma}$ and $k_n = \gamma_n/a$) we then have the bounds are $k_n \in \left( -\frac{\pi}{a},\frac{\pi}{a} \right]$.
+
+Let's then take the continuum limit. We get this limit by taking $a \to 0, N \to \infty$ while holding the length $L = (N+1)a$ fixed. Then $u_j \to u(x = ja)$. We then want to examine our Lagrangian $\mathbb{L}$ ($L$ is already taken) in the continuum limit. We can write
+\begin{align*}
+    \mathbb{L} &= \frac{1}{2}\sum_j\left[m\dot{u}_j^2 - k\left( u_{j+1} - u_j \right)^2\right]\\
+    &= \frac{1}{2}\sum_j a\left[\frac{m}{a}\dot{u}_j^2 - ka\left( \frac{u_{j+1} - u_j}{a} \right)^2\right]\\
+    &= \frac{1}{2}\int dx \left[ \rho \dot{u}^2(x) - E\left( \rd{u}{x} \right)^2 \right]
+\end{align*}
+with $\rho = \frac{m}{a} E = Ka$ the Young's modulus. We also have relations under continuum limit
+\begin{align*}
+    \upsilon^{(n)} &\propto \sin \frac{n\pi x}{L} = \sin k_nx\\
+    \omega^{(n)} &= \sqrt{\frac{E}{\rho}}k_n
+\end{align*}
+where we define $k_n = \frac{n\pi}{L}$ and we have $\upsilon$ up to a normalization constant. We obtain the linear dispersion relation we expected, and we unexpectedly (well, surprising at least to this idiot) get the speed of the wave $\sqrt{\frac{E}{\rho}}$. We could have taken the continuum limit directly in the difference equation for $\upsilon$, obtaining derivatives instead.
+
+Let's look at the continuum limit directly, a stretched string. Let a string of length $d$ be subjected to some displacement $u(x)$ along the string with a tension $T$. We note then that the kinetic energy is just $\int dx \frac{1}{2}\rho \dot{u}^2$. To compute the potential energy, examine a small portion along the string of length $\delta x$. The vertical displacement is then $u'(x) \delta x$ which gives diagonal $\delta x \sqrt{1 + u'(x)^2} \approx \delta x\left(1+ \frac{u'(x)^2}{2}\right)$ and so the potential energy is given by $\int dx \frac{1}{2}Tu'(x)^2$. We then note that the Lagrangian is given
+$$L = \displaystyle\int\limits_{0}^{d}\underbrace{\frac{1}{2}\rho \dot{u}^2 - \frac{1}{2}Tu'^2}_{\mathbb{L}}\;dx$$
+
+where $\mathbb{L}$ is the Lagnangian density of sorts. We then can construct the action and do some variational calculus
+\begin{align*}
+    S &= \int_0^{t_f} dt \int_0^d dx \mathbb{L}(u,u',\dot{u})\\
+    \delta S = 0 &= \int_0^{t_f} dt \int_0^d dx \left[ \pd{\mathbb{L}}{u}\delta u + \pd{\mathbb{L}}{u'}\delta u' + \pd{\mathbb{L}}{\dot{u}}\delta\dot{u} \right]\\
+    0&= \left[ \pd{\mathbb{L}}{u} - \rd{}{x}\pd{\mathbb{L}}{u'} - \rd{}{t}\pd{\mathbb{L}}{\dot{u}} \right]\delta u\\
+    &= \rho \ptd{u}{t} - T\ptd{u}{x}
+\end{align*}
+where we plug $\mathbb{L}$ in. Wave equation! Amazing. Note that the step above where we pull out the $\delta u$ is just another integration by parts and knowing that $\delta u$ vanishes at the endpoints.
+
+We know the solutions to the wave equation are traveling waves of form $e^{\pm ik(x \pm vt)}$ with $v = \sqrt{\frac{T}{f}}$. We then note that one solution with the correct dispersion relation and giving our boundary conditions (fixed endpoints on the string, recall) is $\sin kx \sin kvt$ with $k_n = \frac{n\pi}{d}$ as usual. 
+
+Generalizing to 2D, 3D isn't bad. The biggest difference is that the Lagrangian density $\mathbb{L}$ is now given
+$$\mathbb{L} = \frac{1}{2}\rho \dot{u}^2 \pm \frac{1}{2}k\left( \nabla u \right)^2$$
+
+We then have Euler-Lagrange equations with a similar procedure (variational calculus or Euler-Lagrange? Can we directly apply E-L?) and we find $\ptd{u}{t} - v^2 \nabla^2 u = 0$ with $v^2 = \frac{k}{\rho}$. Then suppose we have a square drum of side length $d$ we note that the solution subject to boundary conditions is just $\sin\left( \frac{m\pi x}{d} \right) \sin \left( \frac{n\pi}{d}y \right)e^{i\omega t}$ with $\omega_m,n = v\frac{\pi}{d}\sqrt{m^2+n^2}$.
+
+Note that the normal modes we find here are not those of the Chladni plates because the plates have free boundary conditions rather than the fixed that we've used. We'd have to understand elasticity better before we can tackle this problem, because it involves a fourth gradient of $u$. 
+
+We can then examine the general formulation of elasticity. We will discuss this very roughly, and I'm too stoopid to jot it all down. We can define a strain tensor $e_{ij} = \frac{1}{2}\left( \pd{u_i}{x_j} + \pd{u_j}{x_i} \right)$ (note that the antisymmetric combination is the curl which corresponds to a rotation which doesn't contribute to the potential, so we only care about the symmetric combination) with $\vec{u}$ the displacements at any point relative to coordinate axes $\vec{x}$. Then the diagonal components $\sum_i e_{ii} = \nabla \cdot \vec{u}$ correspond to dialation. We note that another ``basis'' of sorts is the tensor $e_{ij} - \frac{1}{3}e_{kk}\delta_{ij}$ which is traceless and corresponds to the shear matrix.
+
+The potential energy of these distortions is then given by $V = \frac{1}{2}e\cdot \Lambda \cdot e$ and then $\mathbb{L} = \frac{1}{2}\rho \dot{u}^2 - e\cdot \Lambda \cdot e$ with $\Lambda_{ijkl}$ the fourth-rank elasticity tensor. We note that this is a super complicated matrix, so we look for symmetries. Since $e$ is symmetric, we find that $\Lambda$ is symmetric under $i \leftrightarrow j, k \leftrightarrow l, ij \leftrightarrow kl$ where the last one is just swapping the identical $e$'s. The stress required to produce some some strain is then given by $\sigma_{ij} = \Lambda_{ijkl}e_{kl}$.
+
+If we then examine isotropic solids, we note that the elasticity tensor must be invariant under rotation. We note that all tensors with the correct invariances can be spanned by combinations of Kronecker deltas, and we can write $\Lambda_{ijkl} = \lambda \delta_{ij}\delta_{kl} + \mu\left( \delta_{ik}\delta_{jl} + \delta_{il}\delta_{jk} \right)$, the most general elasticity tensor for isotropic solids. We can then substitute this back into the potential energy expression and we obtain $V = \frac{1}{2}\lambda e_{ii}^2 + \mu e_{ij}^2$. The elastic coefficientss are called the Lam\'e coefficients. We can define in terms of the dialation and shear to write $V = \frac{1}{2}Ke^{2}_{ii} + \mu\left( e_{ij} - \frac{1}{3}\delta_{ij}e_{kk} \right)^2$ with $K = \lambda + \frac{2}{3}\mu$ the bulk modulus and $\mu$ the shear modulus. 
+
+Another set of coefficients is Young's modulus $E = \frac{9K\mu}{3K+\mu}$ and Poisson ratio $\sigma = \frac{3K-2\mu}{2(3K+\mu)}$. We note the Poisson ratio is the ratio of area change with respect to stretching (think stretching a rod and its thinning not due to volume conservation but to maintain forces via Poisson ratio!).
+
+We finally end up with a $\mathbb{L} = \frac{1}{2}\rho \dot{u}^2 - \frac{1}{2}\left[ Ke_{ii}^2 + \mu(e_{ij} - \frac{1}{3}\delta_{ij}e_{kk})^2 \right]$. Euler-Lagrange equations then give transverse waves ($\nabla \cdot \vec{u} = 0$) with speed $\sqrt{\frac{\mu}{\rho}}$ and longitudinal waves ($\nabla \times \vec{u} = 0$) with speed $\sqrt{\frac{\lambda + 2\mu}{\rho}}$. Landau and Lifshitz is a good reference for further calculation, though it will not be on the exam :)
+
+Final will be posted tomorrow, will cover everything prior to today's lecture (i.e. normal modes). First half of 106b will be relativity, nonlinear, and chaotic dynamics. Woohoo!
+
+\end{document}

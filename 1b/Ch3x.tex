@@ -1,0 +1,81 @@
+\documentclass{report}
+\usepackage{amssymb, amsmath, amsthm, hyperref, paracol}
+\usepackage{fullpage}
+\usepackage[version=3]{mhchem}
+
+\begin{document}
+
+\title{Ch3x - Notes}
+\author{Yubo Su}
+\date{ }
+
+\maketitle
+
+\tableofcontents
+
+\chapter{Chem 3x lectures}
+
+\section{Photochemistry Fundamentals - January 11}
+
+We discuss Beer's Law (Beer's Labert Law). Let there be a cuvette with length $l$ perpendicular to the propogation of some light ray. Let the light before hitting the cuvette be $I_0$ and the transmitted light be $I_t$. Transmittance is thus defined as $T = \frac{I_T}{I_0} = 10^{-\epsilon l C}$, where $\epsilon$ is the extinction coefficient and $C$ is the molarity/concentration of the solution. We then define absorbance $A = -log[T] = \epsilon l C$. Because elements absorb dfferently at different wavelengths, we can construct a plot of $A(\lambda)$ (this is due to resonance frequencies at the subatomic level), which will be our method of analyzing these compounds. We will in our first lab calculate extinction coefficients for various species at various wavelengths. Note that the absorption spectra are actually a sum of Gaussians at the peaks of the spectra; each peak follows a Gaussian. 
+
+How do we calculate $\epsilon$? We know $A = \epsilon lC$, where $l = 1$cm because we are using a cuvette. Thus, because $\epsilon$ is roughly constant, we vary $C$ and measure $A$, and the slope of $A(C)$ is $\epsilon$. For us, we will measure absorption spectra at many concentrations and simply measure ratios of absorptions at height of peaks. Note that extinction coefficients will vary with wavelength, as one would expect, and we will calculate extinction coefficients at every peak. Note also that, given a colored solution, we expect the color of the solution to be the opposite of the absorption peaks.
+
+We use AvaSoft for our spectrophotometer measurements. The spectrophotometer comprises two boxes, in the first of which is just the cuvette and a light beam, and in the second there is a series of prisms and sensors to separate and detect the intensities/photon count at various wavelengths. We must begin by ``File >> Start New Experiment'' and then click ``Start'', which will begin data collection. We want to amplify the signal as much as possible without saturating the sensors (which occurs at $16,000$ count). The way to amplify is to click ``stop'' and then increase the integration time. Note that any electronics will have some slight leakage (in our case, called dark noise), so to calibrate our sensor we click the black box next to the ``Start/Stop'' button after setting the spectrophotometer to ``TTL.'' The parameters at the top, ``Integration Time'' and ``Average'', refer to the amount of time per trial and the number of trials to average over. If we finish calibrating for dark noise (and calibrating for the presence of a cuvette, of course), then we can click the white box next to the earlier black one, which will save ``reference data'', or $I_0$. Note finally, just to be sure, that spectrophotometers measure transmittance rather than absorbance. 
+
+The emission spectrum of the sun peaks rather significantly at blue-green, so our goal is to absorb blue-green light and thus our best chromophore for solar collectors should look red-orange. 
+
+When we do the lab, we will use a pipette bulb. Open the valve labelled A, so that can be opened to empty the bulb. If we then open the S valve, which is the one attached to the pipette, then the liquid will be drawn up towards the pipette. If the valve labelled E is then opened, then the pipette will empty. For both pipettes and volumetric flasks, the bottom of the meniscus should be aligned with the etching. The proper procedure to dilute is to draw out some amount into the flask, empty out a small portion via pipetting, and then pipette the same amount back in. 
+
+When we put the data into Excel, we will use the command ``=linest(ydata, xdata, true, true)'' and then hit CTRL+ENTER. The highlighted blocks will then fill with data, but the key is to note that $m$ and $b$ are the first two blocks. The great part is that these calculations are linked to the data! Before we leave lab, we must input data and print both calculations and graph into lab notebook.
+
+\section{Luminescence - January 18}
+
+We discuss energy wells today. Recall that a well (like a parabola) in a potential is a relative minimium. When an excited electron goes back to the ground state, the photon released is a function of the energy gap between the energy state, which is a function of atomic radius. Our upcoming task will be to judge from the released light what the size of the atom is (or at least the radius of the targeted electron orbital).
+
+If we think about having an atom approach another atom like in bonding, there will be a potential well (too far and electron repulsion, too near and nucleic repulsion). The well itself is quantized, like normal modes. We now examine our quintissential favorite compound, \ce{Ru(bpy)3Cl2}. Recall that bipyramidine consists of bonded nitrogenated benzene rings (like napthalene, but with nitrogen substituted in). The lone pair on the nitrogen is the bonding pair of electrons, so there is a positive partial charge on the nitrogens, which ends up balanced by the two chlorine atoms.
+
+We now examine the five $d$ orbitals. $d_{z^2}$ is a big $p$ orbital with a ring, $d_{x^2-y^2}$ is along the $x$ and $y$ axes, and the other three are located in between the axes. Recall then that the ligands, which approach along the axes, produces an interference with the $z^2$ and $x^2-y^2$ orbitals, and we no longer have a degenerate sets of $5$ but instead those two are higher in energy (recall that this was covered in 1a!). In \ce{Ru2+}, we have six electrons which must occupy the $x^2, y^2, z^2$ orbitals because the energy gap is tremendously large. In fact, the gap is so large that no amount of light can make the electron jump this energy gap. There is a lower orbital in energy between the two though, namely the $\pi^*$ orbital. This, because the $\pi^*$ orbital is in the ligands, means that shining the correct light can actually make electrons jump from the Ru to the ligands. This is called electron transfer. 
+
+Examine now benzene. $sp_2$ hybridization and leftover $\pi$ orbitals, which are delocalized to create the ring. These orbitals all have their eigenfunctions, and we can examine the superpositions to evaluate the possible energy states of this delocalized orbital (if all the eigenfunctions are same sign, then we have the lowest energy, if alternating, then highest energy, etc.). The higher energy superpositions are considred anti-bonding orbitals, the $\pi^*$ orbital. Remembering that bipyramidine has benzene rings, this is the $\pi^*$ orbital we mentioned earlier, the target of the charge transfer. The wavelength of the light to accomplish this charge transfer is $410$nm. The electron, upon being excited, will reemit a photon of slightly lower energy due to vibrational losses. This reemission is called fluorescence, a subset of luminescence. Note that this excitation process never changes the spin of the electron. There is actually a neighboring $\pi^*$ orbital that accepts an electron of opposite spin from the former one (the former is called a singlet orbital while the latter a triplet). For Ru(bpy), it turns out that this is the transition that we will try to excite. This process of changing spins is called intersystem crossing. But notice that when the electron tries to fall back down, it violates Pauli Exclusion; we must wait for it to flip spins again. The transition from the singlet orbital is on the order of a picosecond, but the waiting for the flip spin takes the time scale up to around a microsecond. The delayed reaction is called phosphorescence rather than fluorescence. We will see that while we shine blue light, the reemitted light is a red-orange light of around $650$nm. This shift is called the Stokes shift, or more precisely, a positive Stokes shift for us, because the wavelength shifts up. 
+
+The laser we will be using in lab will be a pulse laser; each pulse lasts one microsecond, while the distance between pulses is one millisecond. We will have a synchronized sensor, and it will measure the phosphorescence of the sample. Cool stuff. The sensor will release an increasing waveform over the laser time and a decreasing one once the laser shuts off.
+
+However, since we're in a solar class, we want to capture this energy. So we will add a quencher molecule. The goal of this quencher is to capture the electron from the excited state. One that we will use is methyl pyradine (missed the IUPAC name), which captures perfectly because it's also a pyradine. We will also use \ce{K4Fe(CN)6}, which captures well because the complex is also six ligands and Fe is similar to Ru. We will now try to model the phosphorescence process.
+
+We start by trying to find the rate of excitation. Consider a Beer's Law setup. The rate of excitation is the rate of absorption, which is simply $I_0 - I_t = I_0(1-T)$ where $T$ is transmittance. We then look for the decay rate, which is:
+
+\begin{align*}
+\Delta Ru^* &= -k[Ru^*]\Delta t\\
+\frac{dRu^*}{dt} &= -k[Ru^*]
+\end{align*}
+
+We then want to combine the two effects, which is done by:
+
+\begin{align*}
+\frac{dRu^*}{dt} &= I_0(1-T) - k[Ru^*]\\
+\frac{dRu^*}{dt} + k[Ru^*] &= I_0(1-T)
+\end{align*}
+
+This is the differential equation of form $\frac{dy}{dt} + \alpha y = C$, which has solution $y = Ae^{\alpha t} + C/\alpha$, which gives us $[Ru^*] = Ae^{-kt} + \frac{I_0(1-T)}{k}$. We can then solve the initial value problem for $A$, because we know the initial conditions means that initial concentration is $0$. The final solution is $[Ru^*] = \frac{I_0(1-T)}{k}(1-e^{-kt})$. If we recall earlier that the photon absorption increased then decreased during the laser pulse, the $1-exp$ is the increasing part and the $exp$ is the decreasing part. This is the graph we aim to capture (before we add a quencher). The addition of the quencher produces a term $k_q[Ru^*][Q]$ in the differential equation, where $Q$ is the concentration of the quencher. Note that we can set up $[Q] \gg [Ru^*]$, and thus we can call $[Q]$ a constant. Thus, we have:
+
+\begin{align*}
+\frac{d[Ru^*]}{dt} &= I_0(1-T) - k[Ru^*] - k_q[Ru^*][Q]\\
+&= I_0(1-T) - \underbrace{(k + k_q[Q])}_{\text{observed k}}[Ru^*]
+\end{align*}
+
+This is a problem that we already know how to solve, the same differential equation as earlier. If we plot this, we will find that increasing $Q$ will make the graph smaller. If we then calculate the observed $k$, we have a linear function in $[Q]$ and thus we can measure our way through to finding $k_q$ by fitting stuff. 
+
+\section{Electrochemistry - February 1, 2013}
+
+We begin with the equations $q = nF$, $W = \phi \cdot q$, giving $W = -\phi n F$. We then recall $\Delta G = -W = -\phi n F$, or $-\Delta G = -nF\phi$ for spontaneous reactions. We then look at the Nernst equation $\Delta G = \Delta G^\circ + RT \ln\left(\frac{\text{Products}}{\text{Reactants}}$, or alternatively $\Delta E = \Delta E^\circ + \frac{RT}{nF}\ln\left(\frac{\text{Products}}{\text{Reactants}} = \Delta E^\circ - \frac{0.059\mathrm{V}}{n}\log\left(\frac{\text{products}}{\text{Reactants}}\right)$. Thus, we see that we can vary the concentration of products and reactants and measure the resulting change in potential. 
+
+We examine the reaction \ce{Cr2+ + Fe3+ <-> Fe2+ + Cr3+}. This has two partial reactions: \ce{Cr3+ + e- -> Cr2+} corresponding to a reduction potential of $E^\circ_{\ce{Cr^{3/2}}}$, and \ce{Fe3+ + e- -> Fe2+}, corresponding to a different standard reduction potential. We can then apply the Nernst equation for non-standard concentrations and then sum the two equations to find the resulting voltage of the reaction. This is how batteries are produced, or at least the general principle. Such batteries existed in ancient Mesopotamia. Noting also tht there is no zero-point voltage defined, we arbitrarily define \ce{2H+ + 2e- -> H2} to be $E^\circ = 0$V. 
+
+Recall also that simply putting the anode and cathode into the solution will not generate a very noticable reaction; we need first to separate the solutions into different cells and connect an ion bridge, in this class called a salt bridge; we usually use nitrates or chlorides. Recall the shorthand for a reaction such as \ce{Ag+ + Cd -> Ag + Cd2+} looks like \ce{Cd|CdNO3||AgNO3|Ag}, so the anode comes first.
+
+We can construct variations on the standard electrochemical cell, where we can attach a metal salt to one of the plates and then leave a pile of a soluble metal salt at the bottom of the solution, leaving the concentrations constant. Such an apparatus has been constructed into a miniature working standard. We will be using one of these working standards for Ag, and will place it into a solution of \ce{Ce3/4} with a platinum wire to measure the potential of this reaction. Our reaction will thus look like \ce{Ag|AgCl||Ce3|Ce4}, where Ag|AgCl has V$=0.197$V. 
+
+We will be examining water electrolysis, for which the reaction rate depends on the pH. While batteries are called Galvanic cells because $\Delta G < 0$, water electrolysis is called an electrolytic cell for whiche $\Delta G > 0$. 
+
+\end{document}

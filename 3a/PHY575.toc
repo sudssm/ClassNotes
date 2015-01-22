@@ -1,0 +1,56 @@
+\contentsline {chapter}{\numberline {1}Les notes du livre}{3}{chapter.1}
+\contentsline {section}{\numberline {1.1}Petites d\'emonstrations}{3}{section.1.1}
+\contentsline {section}{\numberline {1.2}Groupes, Actions de groupe, repr\'esentations}{4}{section.1.2}
+\contentsline {subsection}{\numberline {1.2.1}Les groupes et les actions de groupe}{4}{subsection.1.2.1}
+\contentsline {subsection}{\numberline {1.2.2}Les repr\'esentations}{4}{subsection.1.2.2}
+\contentsline {subsection}{\numberline {1.2.3}Les groupes topologiques}{4}{subsection.1.2.3}
+\contentsline {section}{\numberline {1.3}Groupes lin\'eaire et leurs alg\`ebre de Lie}{4}{section.1.3}
+\contentsline {subsection}{\numberline {1.3.1}Alg\`ebre de Lie}{5}{subsection.1.3.1}
+\contentsline {subsection}{\numberline {1.3.2}Rev\^etements et repr\'esentations projectives}{5}{subsection.1.3.2}
+\contentsline {section}{\numberline {1.4}$\mathfrak {sl}(2,\mathbb {C}),\mathbf {SU}(2), \mathbf {SO}(3)$ }{5}{section.1.4}
+\contentsline {subsection}{\numberline {1.4.1}$\mathbf {SU}(2)$ comme rev\^etement de $\mathbf {SO}(3)$}{5}{subsection.1.4.1}
+\contentsline {subsection}{\numberline {1.4.2}Repr\'esentation de $\mathfrak {sl}(2,\mathbb {C})$}{5}{subsection.1.4.2}
+\contentsline {subsection}{\numberline {1.4.3}Les harmoniques sph\'eriques, l'op\'erateur de Casimir}{6}{subsection.1.4.3}
+\contentsline {section}{\numberline {1.5}Sym\'etries en mecanique quantique}{6}{section.1.5}
+\contentsline {subsection}{\numberline {1.5.1}Les translations et rotations}{6}{subsection.1.5.1}
+\contentsline {subsection}{\numberline {1.5.2}Repr\'esentations proj\'ectives}{6}{subsection.1.5.2}
+\contentsline {subsection}{\numberline {1.5.3}Les sym\'etries dans les dynamiques}{7}{subsection.1.5.3}
+\contentsline {section}{\numberline {1.6}Les groupes de Lorentz, de Poincar\`e, et l'\'equation de Dirac}{7}{section.1.6}
+\contentsline {subsection}{\numberline {1.6.1}Le groupe et la transformation de Lorentz}{7}{subsection.1.6.1}
+\contentsline {subsection}{\numberline {1.6.2}$\mathbf {SL}(2,\mathbb {C})$ comme rev\^etement de $\mathbf {SO}(1,3)$}{7}{subsection.1.6.2}
+\contentsline {subsection}{\numberline {1.6.3}Le groupe de Poincar\'e}{8}{subsection.1.6.3}
+\contentsline {subsection}{\numberline {1.6.4}Les repr\'esentations du groupe de Poincar\'e}{8}{subsection.1.6.4}
+\contentsline {subsection}{\numberline {1.6.5}L'\'equation de Dirac}{8}{subsection.1.6.5}
+\contentsline {subsection}{\numberline {1.6.6}Les repr\'esentations du groupe de Poincar\'e}{9}{subsection.1.6.6}
+\contentsline {section}{\numberline {1.7}Invariance Conforme en Physique}{9}{section.1.7}
+\contentsline {subsection}{\numberline {1.7.1}Les transformations conformes en physique classique en 2D}{9}{subsection.1.7.1}
+\contentsline {subsection}{\numberline {1.7.2}En $d$ dimension}{9}{subsection.1.7.2}
+\contentsline {subsection}{\numberline {1.7.3}Diff\'eomorphisme $\mathbb {S}_1$ et son extension centrale}{9}{subsection.1.7.3}
+\contentsline {section}{\numberline {1.8}L'espace de Fock, les champs quantiques}{10}{section.1.8}
+\contentsline {subsection}{\numberline {1.8.1}L'espace de Fock}{10}{subsection.1.8.1}
+\contentsline {subsection}{\numberline {1.8.2}Les Fermions}{10}{subsection.1.8.2}
+\contentsline {subsection}{\numberline {1.8.3}Les champs Quantiques}{10}{subsection.1.8.3}
+\contentsline {chapter}{\numberline {2}16/09/14 --- Introduction, la commence de ma mort}{11}{chapter.2}
+\contentsline {chapter}{\numberline {3}07/10/14 --- Repr\'esentations des groupes en MQ}{13}{chapter.3}
+\contentsline {section}{\numberline {3.1}$\mathbf {SO}(2)$ et $\mathbf {U}(1)$}{13}{section.3.1}
+\contentsline {section}{\numberline {3.2}$\mathbf {SO}(3) \to \mathbf {SU}(2)$}{14}{section.3.2}
+\contentsline {section}{\numberline {3.3}Dynamiques \`a cause des symmetries, lois de conservation}{14}{section.3.3}
+\contentsline {section}{\numberline {3.4}Groupes de Lorenttz et de Poincar\'e}{15}{section.3.4}
+\contentsline {chapter}{\numberline {4}14/10/14 --- Plus de Groupes de Lorentz et Poincar\`e}{16}{chapter.4}
+\contentsline {section}{\numberline {4.1}$\mathfrak {so}(1,3)$}{16}{section.4.1}
+\contentsline {section}{\numberline {4.2}Action sur les fonctions}{16}{section.4.2}
+\contentsline {section}{\numberline {4.3}Repr\'esentations de dimension finie}{17}{section.4.3}
+\contentsline {section}{\numberline {4.4}Exemples de repr\'esentations}{17}{section.4.4}
+\contentsline {section}{\numberline {4.5}Equation de Dirac}{18}{section.4.5}
+\contentsline {section}{\numberline {4.6}Groupe de Poincar\'e}{18}{section.4.6}
+\contentsline {chapter}{\numberline {5}04/11/14 --- Espaces de Fock et leur lien avec les groupes $SU(D), SO(D), Sp(2D)$}{20}{chapter.5}
+\contentsline {section}{\numberline {5.1}Espace de Fock bosonique}{20}{section.5.1}
+\contentsline {subsection}{\numberline {5.1.1}L'oscillateur Harmonique}{20}{subsection.5.1.1}
+\contentsline {subsection}{\numberline {5.1.2}Espace de Fock sur $\mathbb {C}^D$}{20}{subsection.5.1.2}
+\contentsline {subsection}{\numberline {5.1.3}Fonction de partition, fonction g\'en\'eratrice}{21}{subsection.5.1.3}
+\contentsline {subsection}{\numberline {5.1.4}Lien avec les groupes classiques}{21}{subsection.5.1.4}
+\contentsline {section}{\numberline {5.2}Espace de Fock fermionique}{21}{section.5.2}
+\contentsline {subsection}{\numberline {5.2.1}Op\'erateur cr\'eation-annihilation}{21}{subsection.5.2.1}
+\contentsline {subsection}{\numberline {5.2.2}Fonction de Partition, fonction g\'en\'eratrice}{21}{subsection.5.2.2}
+\contentsline {subsection}{\numberline {5.2.3}Le Groupe}{22}{subsection.5.2.3}
+\contentsline {section}{\numberline {5.3}Exemple de quantification d'un champ bosonique}{22}{section.5.3}

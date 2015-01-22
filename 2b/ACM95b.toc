@@ -1,0 +1,28 @@
+\contentsline {chapter}{\numberline {1}Key Concepts}{3}
+\contentsline {chapter}{\numberline {2}1/6/14 - Review ODEs}{6}
+\contentsline {chapter}{\numberline {3}1/8/14 - First-order ODE}{8}
+\contentsline {chapter}{\numberline {4}1/10/14 - 2nd order ODE}{10}
+\contentsline {chapter}{\numberline {5}1/13/14 - More 2nd order ODEs, ODEs as systems}{11}
+\contentsline {chapter}{\numberline {6}1/15/14 - 1st order linear systems}{12}
+\contentsline {chapter}{\numberline {7}1/17/14 - System reduction of order, adjoint systems}{13}
+\contentsline {chapter}{\numberline {8}1/22/14 - Variation of parameters for series, Series solutions}{15}
+\contentsline {chapter}{\numberline {9}1/24/14 - Frobenius Theory}{16}
+\contentsline {chapter}{\numberline {10}1/27/14 - Singular points}{17}
+\contentsline {chapter}{\numberline {11}1/29/14 - Frobenius examples}{19}
+\contentsline {chapter}{\numberline {12}1/31/14 - Finishing Frobenius theory, irregular singular points}{21}
+\contentsline {chapter}{\numberline {13}2/3/14 - Laplace transform}{23}
+\contentsline {chapter}{\numberline {14}2/5/14 - Makeup:Laplace continued}{25}
+\contentsline {chapter}{\numberline {15}2/6/14 - Midterm Review!}{26}
+\contentsline {chapter}{\numberline {16}2/7/14 - Poles of Laplace transform, system transforms}{30}
+\contentsline {chapter}{\numberline {17}Skipped - Sturm-Liouville ODEs}{31}
+\contentsline {chapter}{\numberline {18}2/14/14 - Lagrange Identity, Sturm-Liouville as linear algebra}{33}
+\contentsline {chapter}{\numberline {19}Makeup: Expanding functions in S-L eigenfunctions}{35}
+\contentsline {chapter}{\numberline {20}2/24/14 - Fourier Series}{36}
+\contentsline {chapter}{\numberline {21}2/26/14 - Convergence of S-L eigenfunctions}{39}
+\contentsline {chapter}{\numberline {22}2/28/14 - Convergence of S-L coefficients}{41}
+\contentsline {chapter}{\numberline {23}3/3/14 - Solving BVP with S-L}{43}
+\contentsline {chapter}{\numberline {24}3/5/14 - Method of finite transforms, Greens Functions}{46}
+\contentsline {chapter}{\numberline {25}3/7/14 - Green Functions}{48}
+\contentsline {chapter}{\numberline {26}3/10/14 - Makeup: More Green Functions, Completeness}{50}
+\contentsline {chapter}{\numberline {27}3/12/14 - Fourier Transform at last!}{52}
+\contentsline {chapter}{\numberline {28}3/13 - Final Review}{55}

@@ -1,0 +1,19 @@
+\contentsline {chapter}{\numberline {1}Key Concepts}{2}
+\contentsline {chapter}{\numberline {2}1/7/14 - Intro to relativity!}{5}
+\contentsline {chapter}{\numberline {3}1/9/14 - Geometric approach to relativity}{8}
+\contentsline {chapter}{\numberline {4}1/14/14 - Relativistic Dynamics, 4-forces}{10}
+\contentsline {chapter}{\numberline {5}1/16/14 - Relativistic metric}{12}
+\contentsline {chapter}{\numberline {6}1/21/14 - Nonlinear oscillators}{14}
+\contentsline {chapter}{\numberline {7}1/23/14 - Parametric drive}{16}
+\contentsline {chapter}{\numberline {8}1/28/14 - Skipped: Introduction to chaos}{18}
+\contentsline {chapter}{\numberline {9}2/4/14 - Dissipative Dynamical systems}{19}
+\contentsline {chapter}{\numberline {10}2/11/14 - Electrostatics introduction}{22}
+\contentsline {chapter}{\numberline {11}2/13/14 - Makeup: Potential (energy), conductors}{24}
+\contentsline {chapter}{\numberline {12}2/18/14 - Boundary Conditions, Method of images}{26}
+\contentsline {chapter}{\numberline {13}2/20/14 - Makeup: Method of Green's Functions}{28}
+\contentsline {chapter}{\numberline {14}2/25/14 - Separation of Variables}{30}
+\contentsline {chapter}{\numberline {15}2/27/14 - Spherical separation of variables, azimuthal symmetry and not}{32}
+\contentsline {chapter}{\numberline {16}3/4/14 - Finsihing spherical Green Function, Multipole Expansion}{36}
+\contentsline {chapter}{\numberline {17}3/6/14 - Makeup: Polarization}{38}
+\contentsline {chapter}{\numberline {18}3/11/14 - BCs with dielectrics, energy of dielectrics}{39}
+\contentsline {chapter}{\numberline {19}3/13/14 - Final Review Session}{41}

@@ -1,0 +1,602 @@
+\documentclass{report}
+\usepackage{amsmath, amsthm, amssymb, hyperref}
+\usepackage[cm]{fullpage}
+\newcommand{\scinot}[1]{$\times 10^{#1}$}
+\begin{document}
+
+\title{Math 1a Notes - 253 Sloan}
+\author{Yubo n00bhax0r Su}
+\date{ }
+
+\maketitle
+
+\tableofcontents
+
+\chapter{October 1 - Intro, Sets, Induction, Well Ordering}
+Course Secretary is Kathy Carreon: 253 Sloan. Michael Van Garrell is the lead TA. Office hours for professor are Fridays at 1700, TAs will have their own times, can email professor with questions whenever. Try to ask TAs homework questions and ask professor conceptual questions.
+
+A "`set"' is a collection of objects sharing a common property (Math 6c will delve more into sets). 
+ 
+Let $X$ be a set. Define $|X|$ to be the "`cardinality"' of $X$, which is also the "`number of objects"' in $X$. $X$ can be either finite or infinite, and within infinite sets there are countably infinite and uncountably infinite sets (be sure to specify either countably finite or countably infinite; "`countable"' will usually refer to countable infinite).
+
+Sets of interest to us:
+
+\begin{itemize}
+\item $\mathbb{N} = \{1,2,3,4...\}$
+\item $\mathbb{Z} = \{0, \pm 1, \pm 2, \pm 3...\} = \{0\} \cup \{\mathbb{N}\} \cup \{-\mathbb{N}\}$
+\item $\mathbb{Q} = \{\frac{a}{b} \vert a,b \in \mathbb{Z}, b \neq 0\}$
+\end{itemize}
+
+Note that $\mathbb{Q}$ is the collection of \textbf{equivalence classes} of ordered pairs $(a,b)$ of integers, with $b \neq 0$. Equivalence exists as follows: $(a,b) \sim (c,d)$ iff $ad = bc$.
+
+$\sim$ is an equivalence relation iff $x\sim y$ implies that $x\sim x$, $x\sim y \rightarrow y\sim x$, and $x\sim y, y\sim z \rightarrow x\sim z$. 
+
+Note: $\mathbb{N} \subset \mathbb{Z} \subset \mathbb{Q} \subset \mathbb{R} \subset \mathbb{C}$. Main emphasis will be on $\mathbb{R}$. 
+
+\textbf{The Principle of Induction} Let $P(n)$ a "`property of integers"' (e.g. $1 + 2 + 3 + ... + n = \frac{n(n+1)}{2}$). Assume the following:
+
+\begin{itemize}
+\item $P(n_1)$ is true where $n_1$ is an integer.
+\item For every $n > n_1$, if $P(k)$ is true for all $k<n$, then $P(n)$ is also true.
+\end{itemize}
+
+then $P(n)$ is true for all $n \geq n_1$.
+
+Example of Principle of Induction: Let $P(n)$ be the binomial theorem:
+
+$$(x+y)^n = \displaystyle\sum\limits_{j=0}^n {\binom{n}{j} x^j y^{n-j}}; n \geq 0$$
+-
+Claim: The binomial theorem holds true for all $n \geq 0$. 
+
+Proof: Let $n = 0: (x + y)^n = (x + y) ^0  = 1$, and $\displaystyle\sum\limits_{j=0}^{n} {n \choose j} x^j y^{n-j} = 1$. 
+
+We then must show that for any $n > 0$, if $P(k)$ holds for all $k < n$, then $P(n)$ is also true. Rewrite:
+
+\begin{align*}
+(x+y)^n &= (x+y)(x+y)^{n-1}\\
+(x+y)^{n-1} &= \displaystyle\sum\limits_{j=0}^n {n-1 \choose j} x^j y^{n-1-j}\\
+\end{align*}
+
+So we then have (where $k = j+1$ in the first term and $k = j$ in the second term (\emph{why is this allowed...}))):
+
+\begin{align*}
+(x+y)^n &= x(\displaystyle\sum\limits_{j=0}^n {n-1 \choose j} x^j y^{n-1-j}) + y(\displaystyle\sum\limits_{j=0}^n {n-1 \choose j} x^j y^{n-j})\\
+&= \displaystyle\sum\limits_{j=0}^{n-1} {n-1 \choose j} x^{j+1} y^{n-1-j} + \displaystyle\sum\limits_{j=0}^{n-1} {n-1 \choose j} x^j y^{n-j}\\
+&= \displaystyle\sum\limits_{k=0}^n {n-1 \choose k-1} x^{k} y^{n-k} + \displaystyle\sum\limits_{k=0}^n {n-1 \choose k} x^k y^{n-k}\\
+&= x^n + y^n  \displaystyle\sum\limits_{k=1}^{n-1} ({n-1 \choose k-1} + {n-1 \choose k}) x^k y^{n-k}
+\end{align*}
+
+Note: Pascal's Identity
+
+$${n-1 \choose k-1} + {n-1 \choose k} = {n \choose k}$$
+
+We prove this:
+
+\begin{align*}
+{n-1 \choose k-1} &= \frac{(n-1)!}{(k-1)!(n-k)!}\\
+{n-1 \choose k} &= \frac{(n-1)!}{k!(n-1-k)!}\\
+{-n-1 \choose k-1} + {n-1 \choose k} &= \frac{(n-1)!}{(k-1)!(n-k)!} + \frac{(n-1)!}{k!(n-1-k)!}\\
+&= \frac{n!}{k!(n-k)!}
+\end{align*}
+
+This then proves binomial theorem. 
+
+\qed
+
+\textbf{The Principle of Well Ordering}: A non-empty set $X$ of positive or nonnegative integers has a smallest number $n_0$ for which $n_0 \leq n$ for all $n \in X$. In fact, the Principle of Well Ordering and the Principle of Induction are equivalent ($\Leftrightarrow$ means equivalence). The explanation, along with a few other examples and applicationss, is given in the online notes here: \url{http://www.math.caltech.edu/~2011-12/1term/ma001a/11Ma1aNotesWk1.pdf}.
+
+A useful formula is that $|X \cup Y| = |X| + |Y| - |X \cap Y|$, also known as "`Inclusion-Exclusion Principle"'. Generalizing, we have $|X \cup Y \cup Z| = |X| + |Y| + |Z| - |X \cap Y| - |Y \cap Z| - |X \cap Z| + |X \cap Y \cap Z|$. This can come from an understanding of binomial theorem and $(1-1)^n$.
+
+\chapter{October 3 - Various proofs}
+
+Induction is tricky and easy to do incorrectly. E.g.:
+
+Hypothesis: All people have the same color hair.
+
+Proof: $\forall n \geq 1$, define $P(n)$ = Given $n$ people, all have the same color hair. We do proof by induction:
+
+The base case is that $P(1)$ is the same color hair, which is trivially correct.
+
+The inductive step is to prove $P(n)$ given $P(k)$ for all $k<n$. We can then write the set of people as the union of sets $\{x_1, x_2...x_{n-1}\} \cup \{x_{n-1},x_n\}$. By induction, all people in the former set have the same color hair, and the same thing follows for the latter set, and because $x_{n_1}$ is in both sets, it is clear that they must all have the same color hair.
+
+\qed
+
+The erroneous part of this proof is assuming that the inductive step applies to the latter set as well, beacuse in the case of $n = 2$ the latter set is larger than the former set and therefore cannot be assumed to be the same color under induction. i.e. the former set has a single element while the latter has two, and induction at that point only allows you to claim that one set is the same color, not the set of two elements.
+
+Note: There are both strong and weak forms of induction. Assuming $P(k)$ where $k < n$ is strong while $P(n-1)$ is weak, but both are essentially equivalent.
+
+We now learn \textbf{Proof by Contradiction}: Suppose we are given a mathematical statement $S$. Assume that $S$ is false and then lead the proof to a contraction, which proves that the initial assumption is fales and that $S$ is true.
+
+\emph{Example:} We are given the claim that every non-zero real or rational number $x$ has a unique multiplicative inverse. 
+
+Proof: We prove by contradiction. Suppose that $y$ and $z$ are distinct multiplicative inverses of $x$ such that $xy = 1$, $xz = 1$ and $y \neq z$. If we multiply $y \neq z$ by $x$, which is possible because $x \neq 0$, we have $xy \neq xz$, or $1 \neq 1$. Because this is a contradiction and every intermediate step is rigorous, the initial assumption must be incorrect and thus $y$ and $z$ cannot be distinct.
+
+Protip: Note that this proof only applies for $\mathbb{Q}$ or $\mathbb{R}$ because numbers in $\mathbb{Z}$ may not have multiplicative inverses. 
+
+\emph{Example 2:} (This isn't contradiction...at least not if you know pigeonhole) Given four points on a circle $C$, then $\exists$ at least one \emph{closed} semicircle (in $C$) containing at least $3$ of the points. Call a semicircle closed if it contains its end points. 
+
+Proof: Given a $P_1$ on one point of the circle, draw a $P_1'$ across from the circle. There are three points remaining and two sides of the circle to place them on, so by pigeonhole there must exist one semicircle that contains at least three points.
+
+There is also \textbf{Proof by Contrapositive}: Suppose we want to prove $P \Rightarrow Q$. The contrapositive is then that $\neg Q \Rightarrow \neg P$, which is logically equivalent.
+
+\emph{Example:} Show that if $x+y$ is not an integer, then $x$ or $y$ is not an integer. 
+
+Proof: We proceed by assuming the contrapositive: If $x,y \in \mathbb{Z}$, then $(x+y) \in \mathbb{Z}$, which is clear because $\mathbb{Z}$ is closed under addition.
+
+\qed
+
+\emph{Example 2:} If a number $n$ leaves remainder of $2$ or $3$ when divided by $4$, then $n$ is not a perfect square.
+
+Proof: We prove by contrapositive. The contrapositive is that given $n$ is a perfect square, it will not leave remainder $2$ or $3$ when divided by $4$. Write $n = m^2$ where $m \in \mathbb{N}$. Write $m = 4a + b$ where $a,b \in \mathbb{Z}$ and $0 \leq b \leq 3$. Then $n = m^2 = 16 a^2 a + 8ab + b^2$. This when divided by $4$ leaves a remainder of $b^2$, and we can do simple casework to show that $b^2 = 0, 1, 4, 9$ and thus $b^2$ leaves only remainder $0$ or $1$ when divided by $4$, which is also therefore the remainder left by $n$.
+
+\qed
+
+\textbf{Proof by Counterexample} is also a valid form of proof.
+
+The \textbf{Pigeonhole Principle} (oops, mentioned it earlier...) is also very powerful for proofs involving integers. The basic idea behind this proof is that there are $n$ pigeonholes and $n+1$ pigeons, which means that at least one pigeonhole must have more than one pigeon. 
+
+A stronger variation is if there are $n$ pigeonholes and $k > n$ pigeons then there will be a pigeonhole that contains at least $\lceil \frac{k}{n} \rceil$ pigeons.
+
+A Look Forward: Let $0 \leq \alpha \leq 1$ be an irrational. Kronecker shows that: Any real in $[0,1]$ can be approximated by fractional parts as below:
+
+We compute $n \alpha - \lfloor n \alpha \rfloor$ where $n \in \mathbb{Z}$ over and over again to continuously approximate remainders. Roughly. We will discuss later!
+
+\chapter{October 4 - Notes from TA section (strictly non-overlapping)}
+
+Field axioms state that you can manipulate elements of a field just like real numbers, using arithmetic operations. Obviously, this isn't what they actually say, but they are a set of axioms that allow you to treat a field as such :)
+
+To prove that something is a field, one simply checks the axioms! ezpz
+
+\chapter{October 5 - Fields and Orders}
+
+$\mathbb{N} \in \mathbb{Z} \in \mathbb{Q} \in \mathbb{R} \in \mathbb{C}$ as we know. The transition from $\mathbb{N} = \{ 1,2,3,...\}$ to $\mathbb{Z} = \{0, \pm 1, \pm 2,...\}$ is the addition of negative numbers. We then go to $\mathbb{Q} = \{\frac{a}{b} | a,b \in \mathbb{Z}, b \neq 0$ by adding reciprocals and closing under addition as well. We then move to $\mathbb{R}$ upon discovery of triangles, Pythagorean Theorem, and square roots. 
+
+We prove $\sqrt{2} \notin \mathbb{Q}$ by contradiction:
+
+Assume $\sqrt{2} = \frac{a}{b}$ where $a,b \in \mathbb{Z}_{\neq 0}$. Without loss of generality, we assume $a$ and $b$ are relatively prime. We then continue:
+
+\begin{align*}
+2 &= \frac{a^2}{b^2}\\
+2b^2 &= a^2
+\end{align*}
+
+Because both $2b^2$ and $a^2$ are integers and have unique factorizations (which can be shown using well ordering! The proof is left as an exercise to the reader.), we can see that $2 | a^2$. This means $2|a$ because...use contradiction to prove, but it's fairly obvious. So let $a = 2a_1$ We then have:
+
+\begin{align*}
+2b^2 &= 4a_1^2 \\
+b^2 &= 2a_1^2
+\end{align*}
+
+Repeating the earlier step, we have:
+
+\begin{align*}
+b^2 &= 2a_1^2\\
+4b_1^2 = 2a_1^2\\
+2b_1^2 = a_1^2
+\end{align*}
+
+Because we earlier stipulated that $b$ and $a$ were to be relatively prime, this is a contradiction! Therefore, the original claim must be false, and $\sqrt{2}$ must be irrational.
+
+\qed
+
+Note that were the proof repeated with $\sqrt{6}$, it is necessary to use a prime to carry out one's arguments, i.e. $2|a^2$, not $6|a^2$, because...stuff happens when you use $6$. (Can one not just make use of $2|a^2$ and $3|a^2$ to prove that $6|a$? I can't think of counterexample, but I must listen to professor).
+
+More generally, we prove that $\sqrt{n}$ is irrational when $n$ is not a perfect square. We do this by choosing the smallest prime that divides $n$ and carry out the same old proof for the $n$th time.
+
+Theoretially, we could also interpose between $\mathbb{Q}$ and $\mathbb{R}$ a $\mathbb{Q} \sqrt{2} | x + y \sqrt{2}, x,y \in \mathbb{Q}$. 
+
+\textbf{Field Axioms} are what make the number systems important. Let $F$ be a field and $a, b,0,1 \in F$. The axioms then are:
+
+\begin{itemize}
+\item Commutativity: $a+b = b+a$, $a \cdot b = b \cdot a$.
+\item Associativity: $(a + b) + c = a + (b + c)$, $(a \cdot b) \cdot c = a \cdot (b \cdot c)$. 
+\item Distributivity: $a \cdot (b + c) = a \cdot b + a \cdot c$.
+\item Existence of Units: $a + 0 = a$, $a \cdot 1 = a$.
+\item Additive Inverses: $a + (-a) = 0$
+\item Multiplicative Inverses: $a \cdot a^{-1} = 1$ (note that $a = 0$ is an exception.)
+\end{itemize}
+
+Note that $\mathbb{N}$ satisfies conditions $1$ through $3$, $\mathbb{Z}$ satisfies $1$ through $5$, and $\mathbb{Q}$ satisfies all six.
+
+There are two kinds of fields in math, one that satisfies all six axioms and one called \emph{vector fields}. "`Field"' alone strictly refers to fields in number theory, though depending on discipline vector fields are often are referred to as fields.
+
+There are also \textbf{Order Axioms} that claims $\exists P \in F$ that satisfies the following:
+
+\begin{itemize}
+\item Closure under addition and multiplication: Given $x,y \in P$ then $x+y, x\cdot y \in P$.
+\item Exhaustion: $\forall x \in F$ either $x \in P$ or $-x \in P$.
+\item KILL \textbf{ALL} THE ZEROES: $0 \notin P$.
+\end{itemize}
+
+We can try an example: Let $F = \{0,1\}$ such that $0+1 = 1+0 = 1, 0+0 = 0, 1+1 = 0$. We see that $1+1=0$ is a new definition we create for this number system. We can then check that this is a field but that it does not satisfy the order axioms. We will further discuss this in class!
+
+\chapter{October 8 - Order axioms, Continuity, Supremums}
+
+We notice that the field axioms are satisfied by $\mathbb{Q}, \mathbb{R}, \mathbb{C}$, but not $\mathbb{Z}$. Another example of a field is $F = \{0, 1\}$ where $0 + x = x + 0 = x, 0 \cdot x = x \cdot 0 = 0, 1 \cdot x = x \cdot 1 = x, 1 + 1 = 0$.
+
+If there exists a subset of a given field of "`positive"' elements that satisfies the order axioms (refer to previous day's lecture), then...(we will find out) the set is well ordered! See below. (Note: axiom $8$ can be rewritten as $F = P \cup (-P) \cup \{0\}$ where $\cup$ is the disjoint union, also notated by an upside-down $\pi$ which I cannot find right now. The disjoint union is just a union of sets whose intersection is $0$, nothing fancy.)
+
+Note that $\mathbb{Q}$ and $\mathbb{R}$ satisfy the order axioms. Note that our field from the above example $F = \{0,1\}$ does not satisfy the order axioms, because our chosen subset (which must be $\{1\}$, is not closed under addition (axiom $7$). Confirmation that the field $F' = \{ 0,1,-1\}$ does not satisfy the order axioms is left as an exercise to the reader. In fact, you will note that no finite field can satisfy the order axioms.
+
+Consequences of the order axioms (where $P$ is the positive set in $F$):
+
+\begin{itemize}
+\item Can define for all $x,y \in F$ that $x < y \rightarrow y-x < P$. This allows us to compare elements of $F$ and allows us transitivity: $x < y < z$: $z - x = (z - y) + (y - x) \rightarrow x < y < z$.
+\item If $x < y$ and $t > 0$, then $tx < ty$: $y - x > 0, t > 0 \rightarrow ty-tx = t(y-x) > 0$ where the last step holds because it is the product of two positive numbers (this is only certain by axiom $7$! Note the power of the axioms)
+\end{itemize}
+
+Note that ordering is critical to comparing infinite sets, so the order axioms are incredibly important in this respect.
+
+\textbf{Continuity Axiom}: If a subset $S$ of a field $F$ is non-empty and bounded from above, then $S$ admits a \emph{least upper bound} (also called a supremum) $B$. A least upper bound is the smallest possible upper bound that still bounds the subset $S$. The rigorous definition is: $B = \sup(S)$ if and only if 1) $x \leq B \; \forall \, x \in S$ and 2) $B \leq V$ for all upper bounds $V$.
+
+Note that the continuity axiom is the tenth axiom in the set of axioms that define a continuous, well ordered field.
+
+Claim: The least upper bound $B$ of a non-zero set $S$ bounded from above is unique. 
+
+Proof: Let $B'$ be another supremum, then by the second criterion in the definition of supremum $B \leq B'$ and $B' \leq B$ so $B = B'$. 
+
+Note also that $\sup(S)$ need not be in $S$. We now assert non-trivially that $\mathbb{R}$ satisfies the continuity axiom. Examples
+
+\begin{itemize}
+\item $S = \{x \in \mathbb{R} | x < 1\}$ (note that the set need only be bounded above, not below). We know that $\sup(S) = 1$ but $1 \notin S$. 
+\item $S = (- \infty, 1]$. $\sup(S) = 1$ while $1 \in S$. 
+\item $S = \{x \in \mathbb{Q} | x^2 < 2\}$. If we think of $S$ as being in $\mathbb{R}$ then it is clear that $\sup(S = \sqrt{2} \in \mathbb{R} - \mathbb{Q})$.
+\end{itemize}
+
+We now disccuss the unboundedness of $\mathbb{N}$. We prove this by contradiction: Suppose $\mathbb{N}$ is bounded. Since $\mathbb{N} \neq 0 \rightarrow \exists B = \sup(\mathbb{N})$. Then $B - 1$ is not an upper bound for $\mathbb{N}$, so $\exists n \in \mathbb{N}, n > B-1$. Then, we know that $n+1 > B$ but $n+1 \in \mathbb{N}$ which contradicts the assumption that $B$ is an upper bound. Therefore, $\mathbb{N}$ is unbounded. 
+
+This gives two consequences:
+
+\begin{itemize}
+\item \emph{The Archimedean property}: Given $x_1 < x_2$ and $\lambda > 0$, $\exists n \in \mathbb{N}$ where $n\lambda > x_2 - x_1$.
+\item In every non-empty open interval $(a,b) \in \mathbb{R}$ there are infinitely many rational numbers. 
+\end{itemize}
+
+For example, we see that given a set $S = \{\frac{1}{n} | n \in \mathbb{N}\}$, then $\inf(S) = 0$.
+
+\chapter{October 10 - Sequences}
+
+We are given a sequence $a_n$ and the big question is the behavior of this sequence as $\displaystyle\lim\limits{n \to \infty} a_n$. There are three cases: 1) $a_n \to \pm \infty$ which is considered as having no limit, or 2) $a_n$ oscillates so there is no limit, or 3) $a_n$ approaches a fixed number, called its limit.
+
+Examples:
+
+\begin{itemize}
+\item $a_n = n$ - no limit because $a_n \to \infty$ as $n \to \infty$.
+\item $a_n = -n$ - no limit because $a_n \to -\infty$ as $n \to \infty$.
+\item $a_n = (-1)^{n+1}$ - no limit because $a_n$ oscillates between $1$ and $-1$ ad infinitum. 
+\item $a_n = \frac{1}{n}$ - We take the infimum of the sequence to find that the limit is $0$. 
+\end{itemize}
+
+Note that $\infty$ is not a number, and so a limit's approaching $\infty$ is not considered to exist. We define a limit as follows:
+
+\begin{center}
+A real sequence $\{a_n\}$ has a limit $L$ iff we can for every $\epsilon > 0$ find a positive integer $N$ such that $|L - a_n| < \epsilon$ for all $n > N$. 
+\end{center}
+
+To prove this, we assume any arbitrary $\epsilon$ and proceed with the proof. We try to prove the limit for $\{\frac{1}{n}\}$ to be $0$ as follows:
+
+Given any $\epsilon>0$, we must find an $N$ such that for all $n>N$, $|0 - \frac{1}{n}| < \epsilon$. Therefore, we want $\frac{1}{n} < \epsilon \Leftrightarrow \frac{1}{\epsilon} < n$. We then choose $N \geq \frac{1}{\epsilon}$, and thus for such an $N$ we will have $\frac{1}{n} < \epsilon$ for all $n > N$.
+
+\qed
+
+Consider the sequence $\{\frac{(-1)^{n+1}}{n}\}$, which is an example of an oscillating sequence with a limit. We can actually show this in the exact same way as the above proof, because the oscillating term falls out at the absolute value $|0 - \frac{(-1)^{n+1}}{n}| < \epsilon$.
+
+Let us now show that the sequence $1,-1,1,-1,1,-1, \cdots$ has no limit. We simply must show that $\exists \epsilon > 0, \forall N > 0, n > N, \Rightarrow |L - a_n| > \epsilon$. 
+In our present case, we prove most rigorously by saying that for any $L$ we can choose $\epsilon < \max(|L - (-1)|, |L - 1|)$ and it will work.
+
+When $\{a_n\}$ has a limit $L$ it is said that $a_n$ \emph{converges} to $L$. Properties of limits:
+
+\begin{itemize}
+\item Note that this means that the limit of a sequence depends only on the tail of the sequence.
+\item If $a_n \to L$ then for any $c$ it is true that $ca_n \to cL$. This is because of the triangle inequality (at the bottom of this list).
+\item If $a_n \to L$ and $b_n \to M$, then $a_nb_n \to LM$. Note that this is \textbf{NOT} a biconditional! Counterexample: $a_n = n$ and $b_n = \frac{1}{n}$.
+\item If $a_n \to L$ and $b_n \to M$, then $a_n + b_n \to L + M$. This will also use the triangle inequality.
+\item If $a_n \to L$ and $b_n \to M$ where $M \neq 0$, then $\frac{a_n}{b_n} \to \frac{L}{M}$. We can throw out any terms of $b_n$ that are $0$ because there are necessarily finitely many of these and they do not comprise the tail of the sequence (because $M \neq 0$). 
+\item \emph{The Squeeze Principle!} - Let $a_n \leq b_n \leq c_n$ and $lim_{n \to \infty} a_n = c_n = L$, then $lim_{n \to \infty} b_n = L$
+\end{itemize}
+
+Triangle inequality: We note that for absolute values $|xy| = |x| \cdot |y|$ and $|x + y| \leq |x| + |y|$.
+
+\chapter{October 12 - Sequence limits}
+
+We continue with the Squeeze theorem from the last lecture. It states that
+
+\begin{center}
+Suppose $a_n \leq b_n \leq c_n$ for the tails of the sequences $\{a_n,\} \{b_n\}, \{c_n\}$ (note that we only care about the tails). Then suppose that $\displaystyle\lim\limits_{n \to \infty} a_n = L = \displaystyle\lim\limits_{n \to \infty} c_n$. Then $\displaystyle\lim\limits_{n \to\infty}{b_n} = L$. 
+\end{center}
+
+We then have an example in $b_n = \frac{\sin(nt)}{n}$. We prove that this sequence converges to $0$ by noting that $-1 \leq \sin(nt) \leq 1$. Thus, using $a_n = -\frac{1}{n}$ and $c_n = \frac{1}{n}$ we see that $a_n \leq b_n \leq c_n$, and since we know the limits of $\{a_n\}$ and $\{c_n\}$ to be $0$, it is then clear that $\{b_n\}$ goes to zero. 
+
+We then examine power series: for any constant $t > 0$ consider the sequence $a_n = t^n$. There are then three cases:
+
+\begin{itemize}
+\item $t > 1$ makes $a_n$ tend to $\infty$
+\item $t = 1$ makes $a_n$ tend to $1$
+\item $t < 1$ makes $a_n$ tend to $0$
+\end{itemize}
+
+If we investigate the alternating power series, we see that $t < 1$ will still squeeze to zero (check with squeeze theorem), but $t = 1$ becomes a very famous sequence that has no limit.
+
+We can prove the $t > 1$ case by rewriting $t = 1 + \epsilon$ where $\epsilon > 0$ and then expanding. We will see that the term $1 + n\epsilon$ is sufficient, and we know that the rest of the expansion is positive. As we take $\displaystyle\lim\limits_{n \to \infty} 1+n\epsilon $ this tends to $\infty$ which shows that $t > 1$ diverges!
+
+For $t < 1$ we can do simply also by rewriting $t = \frac{1}{y}$. We then see that $t^n = \frac{1^n}{y^n}$. We then prove this in the rigorous limit definition:
+
+Given any $\epsilon > 0$ we show that for all but the first finite $n$ that $|t^n - \epsilon| < 0$. We then want to choose $\epsilon$ such that $y^n = \frac{1}{t^n} > \frac{1}{\epsilon}$. We know this will always hold because $y > 1$ so as $n \to \infty, y \to \infty$.
+
+We then define an infinite series to be $S = \displaystyle\sum_{n = 1}^\infty{a_n}$ where $\{a_n\}$ is a sequence. We define the sequence to converge to whatever the sequence of partial sums $S_1, S_2, S_3 \cdots$ converges. We define the partial sum $S_n = \displaystyle\sum_{i = 1}^i{a_i}$. (sorry, confusing indicicies forced me to switch variables.)
+
+The squeeze theorem can then be defined for series as follows: Suppose $a_n \leq b_n \leq c_n$ for all $n \geq 1$ and suppose that $\sum{a_n} = \sum{c_n} = S$. Then $\sum{b_n} = S$.
+
+Why does the squeeze theorem for sequences imply the squeeze theorem for summations? We can investigate the sums term-by-term to show that $a_n \leq b_n \leq c_n$ implies that the summations obey similar rules $\sum{a_n} \leq \sum{b_n} \leq \sum{c_n}$.
+
+A variant on the squeeze theorem for sequences is if $a_n \geq e_n$ and $\displaystyle\lim\limits_{n \to\infty}{e_n} = \infty$ then $\displaystyle\lim\limits_{n\to\infty}{a_n} = \infty$. The corrolary for series is if $a_n \geq e_n$ and $\displaystyle\lim\limits_{n \to\infty}{\sum{e_n}} = \infty$ then $\displaystyle\lim\limits_{n\to\infty}{\sum{a_n}} = \infty$
+
+$\{a_n\}$ converges means that $\{a_n\}$ is bounded. However, the inverse is not true. A theorem is: a bounded sequence that is monotone increasing is convergent (to its supremum).
+
+\chapter{October 15 - Sequence/series convergences, Cauchy Sequences}
+
+Theorem: A bounded squence $\{a_n\}$ which is monotone increasing has a limit $L$ which is simply the supremum of $a_n$. 
+
+Proof: We note that the monotonic behavior is only examining the tail. Suppose that $a_n$ is a bounded monotonic sequence. The claim is then that $\displaystyle\lim\limits_{n \to\infty}{a_n} = B$. We must then show that given any arbitrarily small $\epsilon$ all but finitely many $a_n$ lie in the interval $(B + \epsilon, B - \epsilon)$ (or $|a_n - B| < \epsilon$ for all but finitely many $a_n$). We know that $B$ is the supremum by the continuity axiom and it must exist. We then know that $B - \epsilon$ is not an upper bound, so there must be $a_N > B - \epsilon$, and because $\{a_n\}$ is monotonic increasing it is clear that for all $n > N$ that $a_n > B - \epsilon$ and therefore $\displaystyle\lim\limits_{n \to\infty}{a_n} = B$. QED.
+
+Note that the squeeze theorem for sequences implies that if $\{a_n\}$ is a nonnegative sequence in reals and we can find another sequence that is convergent to $0$ such that $a_n < b_n$ for all $n$ (or of course just the tails), then $a_n \to 0$. This can be thought of simply as being squeezed between $\{b_n\}$ and $0$. And of course, if we have a series $\sum{a_n}$ that is nonnegative and a series $\sum{b_n}$ that converges to $0$ for all $a_n < b_n$, then the former summation also converges to $0$. But this is obviously not useful because it is very hard for a nonnegative series to converge to $0$ :>
+
+$S = \sum{a_n}$ converges to a limit $L$ iff the sequence of partial sums converges. Therefore, it is also clear that $a_n$ must converge for the series to converge. We write a lemma as follows: If an infinite series $\sum{a_n}$ converges, then $a_n$ must converge to $0$. (note that the converse is not true; harmonic series). If we let $a_n$ converge to $L \neq 0$ instead, it is then clear that we have an infinite summation of $L$, which obviously means that the sum diverges; suppose that $S_n$ is a partial sum up through $a_n$. Then we see that $|L| = |S_{n+1} - S_n| = |(S_n+1 - S)-(S_n - S)| \leq |S_{n+1} - S| + |S_n - S|$ where $S$ is the limit of the series. We then see that the right hand side of the inequality is $0$, and we know that $L \neq 0$, so we find our contradiction. The part where we split our absolute value is called the triangle inequality.
+
+\textbf{Very Important: Cauchy Criterion: } A sequence $\{a_n\}$ of real numbers is a Cauchy sequence if and only if for all $\epsilon \geq 0$, we can find an $N > 0$ such that $|a_m - a_n| < \epsilon$ for all $m,n > N$. Intuitively, this means that a Cauchy sequence has terms that ``bunch up'' arbitrarily closely for large $N$. Cauchy then proved that every Cauchy sequence of real numbers converges in $\mathbb{R}$. The rough idea of the proof is that we can write the supremums and infinums for a Cauchy sequence and show that they will converge. 
+
+Example: We can see that $a_n = \frac{(-1)^{n+1}}{n}$ is a Cauchy sequence. But we will first examine the summation (wtf prof...) $\sum{\frac{1}{n!}}$. We can look at the sequence of partial sums and see that it is a Cauchy sequence (the difference between successive terms $S_{n+1} - S_n$ is $\frac{1}{(n+1)}$ which tends to $0$). But of course we have to show for all $m,n > N$, not just $n+1,n$ so we have to show that $\sum_n^m{\frac{1}{i}} \to 0$. We won't show this specifically, but we will see that this sequence is in fact convergent, and this limit will be $e-1$. We will also completely forget about the first example because we run out of time. As always. Sweet professor.
+
+\chapter{October 17 - Various Series}
+
+$S = \sum{a_n}$ converges to a limit $L$ iff $S_n \to L$, where $S_n$ is the sequence of partial sums. If $S$ converges, then $a_n \to 0$, while the converse is not true (harmonic series). 
+
+Let a telescoping series be defined as $S = \sum{a_n}$ where $a_n = b_n - b_{n-1}$, so that the summation cancels very nicely (telescopes) and results in $S_n = b_n - b_0$. Thus, a telescoping series only converges if $b_n$ converges. An example is $S = \sum{\frac{1}{n(n+1)}}$ where $a_n = \frac{1}{n} - \frac{1}{n-1}$, which telescopes nicely to show that $S_n = 1 - \frac{1}{n}$ and therefore the series must converge!
+
+But note that not all telescoping series converge! Let $S = \sum{\log\frac{n}{n+1}} = \sum{\log{n} - {n+1}}$. This again telescopes to $S = \log{1} - \log{n}$, which diverges. We can also see this because $\log\frac{n}{n+1}$ does not tend towards $0$, meaning that the series must diverge as well. 
+
+We can also see the geometric series $S = \sum{x^n}$. It is pretty clear that $x \geq 1$ produces divergence. We can note that $\sum{x^n} = \frac{1-x^{n+1}}{1-x}$. We can then quite easily see that the value of the summation is led by $x^{n+1}$. This makes it clear that $x < 1$ definitely converges as well. 
+
+Suppose also that $a_n \geq 0$ and $S = \sum{a_n}$. If the $S_n$ form a bounded monotonically decreasing/increasing sequence, then $S$ converges. We can use $S = \sum{\frac{1}{n!}}$ which clearly makes a monotonically increasing sum, which proves that it must converge. We can find this convergence also by direct comparison $n! \geq 2^{n-1}$, so $S \leq \sum{\frac{1}{2^{n-1}}}$. We know that the latter series converges to $2$, so we know that our former series must be $leq 2$. It turns out to be $e-1$ (we know this by Taylor series expansion, and because the stupid summation starts on $1$ rather than $0$ T\_T).
+
+Theorem $1$: Let $a_n \geq 0$ for all $n \geq 1$ and $S = \sum{a_n}$. Suppose $a_n^{1/n} \to R \geq 0$. If $R < 1$ then $S$ converges; if $R > 1$ then $S$ diverges; and if $R = 1$ then the test is inconclusive. 
+
+Proof: We can simply compare to a geometric series as follows. Suppose $R < 1$. We the know that the series is bounded by $S = \sum{a_n} \leq \sum{R^n}$. Now, because we know that the partial sums are bounded and the summation increases monotonically, the series must be bounded (\textbf{THIS LAST PART IS IMPORTANT!! KEY TO PROOF}). 
+
+Theorem $2$: $S = \sum{a_n}$ where $a_n \geq 0$. Let us say that $\frac{a_{n+1}}{a_n} \to L$. Same as above, $L < 1 \to $ convergence, $L > 1 \to $ diverges, and $L = 1$ is inconclusive. 
+
+\emph{``I want to give you some examples but I've run out of time''} - Professor Ramakrishnan.
+
+\chapter{October 22 - Relationships between sets}
+
+Let there be two sets $X$ and $Y$ and a function/correspondence $f$ that maps $f(x) \rightarrow y$. For example, we could use $x^2 + y^2 = 1$ as our correspondence (note that correspondence doesn't have to be a function). Functions are correspondences that map each $X$ to exactly one $Y$. We then define an injective or one-to-one function if for each $Y$ a unique $X$ maps to it. This latter criterion is also called surjectivity (a.k.a. onto), that each $Y$ has a unique $X$. We can also define a function $f$ to be bijective or a one-to-one correspondence if and only if $f$ is both injective and surjective.
+
+The \textbf{fibre/fiber} of $f(x) \to Y$ over $Y$ is $f^{-1}(y) = \{x \in X| f(x) = y\}$. 
+
+Nearness: Suppose that $X$ is a subset of $\in \mathbb{R}^n$. Given a point $P \in \mathbb{R}^n$, it is clear that $P$ can be one of three cases: interior point, exterior, or boundary:
+
+\begin{itemize}
+\item For interior points, we can construct an $n$-dimensional sphere of radius $r$ around $P$ such that the entirety of this sphere is within $X$.
+\item For exterior points, the aforementioned sphere can be made to lie entirely outside the boundary of $X$, or it lies entirely within $X^c$ where this is the complement of $X$.
+\item For boundary points, the sphere must lie in both $X$ and $X^c$ for all radii $r$. 
+\end{itemize}
+
+A subset of $\mathbb{R}^n$ is open if every point is an interior point. Open sets include $\mathbb{R}^n$ (because the entire space is included) and $0$, for which there are no conditions. A last example would be $(c,d)$, where this is the open interval. 
+
+A subset of $\mathbb{R}^n$ is closed if its complement is open. 
+
+A set $A$ is bounded if and only if we can surround it by some ball; i.e. the elements don't exceed...yeah, stuff.
+
+A set in $A$ is \textbf{compact} if and only if $A$ is closed and bounded.
+
+Example: Note that $[0,\infty)$ is closed! Its complement is open.
+
+\chapter{October 24/26 - Overslept/continuous functions}
+
+I overslept on the 24th. I don't think we did anything important on that day though.
+
+Three basic results about continuous functions are:
+
+\begin{itemize}
+\item Intermediate Value Theorem - A continuous function over interval $[a,b]$ will take on all values between $f(a)$ and $f(b)$.
+\item If $f$ is continuous on $[a,b]$, then its image is \emph{compact}, it is closed and bounded.
+\item A continuous $f$ has a maximum over $[a,b]$.
+\end{itemize}
+
+A basic lemma: If $f$ is a continuous function over $[a,b]$ and if $f(c) > 0$ for some $c \in (a,b)$, then $f$ is ``around'' $c$, such that, roughly, the function tends towards $f(c)$ as $x \to c$. 
+
+Bolzano's intermediate step: A continuous function $f$ that is negative at one point over an interval and positive at another point must pass through zero. Cool story bro.
+
+\chapter{October 29 - Derivatives! The first bit of calculus.}
+
+Differentiation was pioneered by Leibniz and Newton. The idea is again to determine the slope of a line tangent to a function at a single point, again made by increasingly small secant line approximations, the whole shabam learned in HS. The slope of the secant line is:
+
+$$\frac{f(b) - f(a)}{b-a}$$
+
+We can define the right slope and the left slope to denote the slopes as we approach from the right and the left, and the derivative can only exits if both the right and left limits exist and are equal to one another at the value of the derivative. 
+
+Leibniz's notation uses $b-a = h$ where $h$ is an ``infinitesimal'' being defined as the smallest positive number, or a number such that $h^2 \approx 0$. What he needed was the following to work:
+
+\begin{align*}
+(a+h)^n &= \displaystyle\sum\limits_{j=0}^n{{n \choose j} a^jh^{n-j}}\\
+&\approx a^n + nha^{n-1}
+\end{align*}
+
+So then we have the familiar differentiation definition:
+
+$$f'(a) = \displaystyle\lim\limits_{h \to 0} \frac{f(a + h) - f(a)}{h}$$
+
+$f$ is considered differentiable only on open intervals, and is considered differentiable over an open interval if it is differentiable for any element within the open interval. 
+
+Examples:
+
+\begin{itemize}
+\item $f(x) = C$, in which case $f(x + h) - f(x) = 0$ for all $x$ and thus the derivative is $0$. 
+\item $f(x) = Cx$, in which case $f(x + h) - f(x) = Ch$ and thus the derivative is $C$ for all $x$. 
+\item $f(x) = x^n$, in which case $f(x + h) - f(x) = nhx^{n-1} + O(h^2)$, so the derivative is $nx^{n-1} + O(h) \approx nx^{n-1}$. 
+\item $f(x) = \sin(1/x), 0 \mathrm{for} x=0$ is not continuous, but $f'(x) = x\sin(1/x), 0 \mathrm{for} x=0$ is continous! It is clearly not differentiable though, try it out.
+\item $f_2(x) = x^2\sin(1/x)$ is differentiable but the derivative is not continuous at $x=0$, it must be expliticly defined. 
+\item $f_3(x) = x^2\sin(1/x), x > 0, 0, x \leq 0$ is also always differentiable.
+\end{itemize}
+
+\chapter{October 31 - Hallowween math, differentiable functions}
+
+We define a function to be differentiable at $x = a$ if and only if $\displaystyle\lim\limits_{h \to 0} {\frac{f(a+h) - f(a)}{h}}$. $f$ is then differentiable over an interval if and only if it is differentiable at every point within the interval. There are some rules if $f,g$ are differentiable functions at $a$:
+
+\begin{itemize}
+\item $\alpha f + \beta g = \alpha f' + \beta g'$. (Linearity! Physics 12 fml)
+\item $(fg)' = f'g + g'f$.
+\item $(\frac{f}{g})$ = $\frac{gf' - fg'}{g^2}$
+\item $(f(g))' = (f \circ g)' = f'(g)g'$
+\end{itemize}
+
+Note that a function $f$ is $C^k$ near $a$ if and only if $f$ is successively differentiable $k$ times around $a$ and if $f$ is continuous around $a$.
+
+Proof of chain rule: Given $\phi = g \circ f$ and $b = f(a)$, consider $G(b) = \frac{g(b+t)-g(b)}{t} - g'(b), = 0 \{x=0\}$. We want to examine the behavior of $G$ as $t \to 0$, which is obviously $0$, which makes $G$ continuous at $0$. If we then let $t = f(a+h) - f(a)$, then as $h \to 0, t\to 0$, so as $h \to 0$ it is clear that $G(t) \to 0$. Then, for $t \neq 0$, it is clear that $g(b+t) - g(b) = tG(t) + tg'(b)$, which is powerful because it holds true at $t=0$. Since $g(b) = \phi(a)$ and $g(b+t) = g(f(a) + f(a+h) - f(a)) = g(f(a+h)) = \phi(a+h)$, which gives us that $g(b+t) - g(b) = \phi(a+h) - \phi(a) = t(a(t) + g'(b))$. We then need to take the limit $\displaystyle\lim\limits_{h \to 0}{\frac{\phi(a+h) - \phi(a)}{h}} = \displaystyle\lim\limits_{h \to 0}{\frac{t(a(t) + g'(b))}{h}}$. We note that $t(a(t)) \to 0$ and so makes to contribution, so we focus on $tg'(b)/h = g'(b) \lim{\frac{t}{h}}$. But we know that $t = f(a+h) - f(a)$, we have at long last $\displaystyle\lim\limits_{h \to 0}{\frac{\phi(a+h)-\phi(a)}{h}} = g'(b)\displaystyle\lim\limits_{h\to 0}{\frac{f(a + h) - f(a)}{h}}$, which completes our proof. 
+
+We then note that $f'(a) > 0$ means $f$ is increasing, $f' < 0$ means $f$ is decreasing, and if $f' = 0$ there is a critical point, which can be a local maximum, minimum, or neither (such as $f(x) = x^3, x=0$). 
+
+\chapter{November 5 - Integration!!}
+
+\emph{Rolle's Theorem} Given $f$ a function on $[a,b]$ which is continuous on $[a, b]$ and differentiable on $(a,b)$. Suppose that $f(a) = f(b)$, then at some point $c \in (a,b), f'(c) = 0$. Note that $f'(x)$ need not be continuous. 
+
+Recall the following: Let $f$ be continuous on $[a,b]$ and diffentiable on $(a,b)$. Then $f$ attaints absolute extrema within this interval. Furthermore, thes extremes take place at either the critical points or the endpoints.
+
+Suppose $f(a) = f(b)$ with $f$ being continuous and differentiable over interval $[a,b]$ but with there being no point $c$ such that $f'(c) = 0$. This implies thataaaaa there is no critical point $(a,b)$. Then the absolute maximum and minumum must occur at the end points. However, we know that $f(a) = f(b)$, so $f$ must be a constant and thus the derivative everywhere is $0$. Contradiction! There thus must be a $f'(c) = 0$. 
+
+We then discuss Riemann Integration (as opposed to Lebesgue integration, which we will not cover in this class; it is a generalized, more powerful form of integration). This is the formulation that integration calculates the signed area underneath a function $f(x)$. Take $f$ to be bounded on $[a, b]$ (we can treat unbounded functions via improper integration, but we will do this later). Actually, just know that the ideal function $f$ is continuous on interval $[a,b]$ and can \emph{always} be integrated. 
+
+In real life though, functions are rarely so pretty. We examine first the step function, which is partitioned over interval $[a, b]$ such that over each partition the interval is constant. Then, letting each partition occur at $t_i$ we see that the area is simply $\sum{f(t_{i+1}-t_i)}$, which we will call the integral of $f$ over $[a,b]$. Note that this defition can yield negative sums for $f < 0$, which is exactly our intent. Therefore, rewriting $t_{i+1} - t_i$ as infinitesmal $dt$, we then have $\int{f(t) dt}$. This is the ``signed'' area that we have from earlier.
+
+We can then consider another function $f$ that's bounded over $[a,b]$ that has a finite number of discontinuities. This can still be calculatd by segmenting the $f$ into continuous partitions and summing those integrals up, meaning that $f$ is still integrable.
+
+We then consider an infinitely discontinous function such as the Dirichlet function, which is the one with the $1 = \mathbb{Q}$ and $0 = \mathbb{C} - \mathbb{Q}$. Inegration is then obviously not defined for such a function.
+
+We then look at Riemann's definition of integration. To do this, we partition a function $f$ into many not-necessarily-equidistant partitions and we draw rectangles for each of these partitions such that the top of the rectangle is bounded by the minimum of $f$ over any given partition, then we by summing these arrive at the ``lower sum'' of $f$. This is equivalent to using the earlier definition for step functions $\sum{f(t_{i+1}-t_i)}$ where $f$ is no longer the value of the function but is the minimum over interval $[t_i, t_{i+1}]$. We can construct an upper sum by using the supremum instead of infinum over the interval. We can then define integrability to be when the lower sum is equal to the upper sum.
+
+\chapter{October 7 - Riemann Integration}
+
+We define Riemann integration over $[a,b]$ is integrable if and only if for $\epsilon > 0$, we can find a partition such that for upper sums $U$ and lower sums $L$ over all partitions $|U - L| < \epsilon$. We write the summation of these upper/lower sums (which are equivalent, by above) as the integral of the function $f(x)$. We define a refinement of partition $P$ as partition $P'$ such that $U(f,P') \leq U(f,P), L(f,P') \geq L(f,P)$. We can take the infinum of $U(f,P)$ as $\bar{I}(f)$ called the upper integral, and we can take the supremum of $L(f,P)$ as $\underline{I}(f)$ called the lower inttegral. Thus, if the upper and lower integral converge then the integral exists.
+
+In practice, we consider an infinite chain of partitions $\{P_n\} = \{a = t_0 < t_1 < t_2...< t_n = B\}$ such that $t_i = i\frac{b-a}{n}$. 
+
+If we then again examine Dirichlet's delta, we can see that the upper integral is always $1$ and the lower integral is always $0$. We see this because $U(f,P) = \sum{(t_{n+1} - t_n)\sup(f,P)} = \sum{t_{n+1} - t_n} = 1$ while $L(f,P) = \sum{(t_{n+1} - t_n)\inf(f,P)} = 0$. So for any $\epsilon$, such as $\epsilon = 1/2$, there is no partition $P$ such that $U(f,P) - L(f,P) < \epsilon$ and thus $f$ is not integrable.
+
+Integrals have some basic properties:
+
+\begin{itemize}
+\item Linearity: $\int{f + g} = \int{f} + \int{g}$ including constant multiples.
+\item Additivity of limits: $\int_a^b{f} + \int_b^c{f} = \int_a^c{f}$.
+\item Transation invariance: $\int_a^b{f(x)} = \int_{a+c}^{b+c}{f(x+c)}$.
+\end{itemize}
+
+We then have two theorems, but will only show one today. The first theorem is that all functions continuous over some interval are integrable over the same interval.
+
+The other theorem is that a bounded, monotonically in(de)creasing function can be integrated. Pick any partition $P$ and examine a subinterval $[t_i,t_{i+1}]$. We know that $\sup(f) = t_{i+1}$ while $\inf(f) = t_i$. Thus, $U(f,P) = \sum{(t_{i+1} - t_i)f(t+1)}$ while $L(f,P) = \sum{(t_{i+1} - t_i)i(t_i)}$. Taking $U - L$ we see that the series telescopes like crazy, and we end up seeing that...Ramakrishnan is very confused. We will omit what he writes for the sake of clarity, because I'm pretty sure choosing an equidistant partition does not screw up the proof while simplifying it tremendously. 
+
+We can then look at a case where a nonstandard partition can help: $f(x) = x^n$. We know that $\int_a^b{x^n dx} = \frac{b^{n+1}-a^{n+1}}{n+1}$. We want to prove this. We run out of time. Good luck, have fun! But we should use the partition $t_{j+1}/t_j = C$. 
+
+\chapter{November 12 - Fundamental Theorems of Calculus}
+
+We first disccuss the following theorem: If $f$ is a bounded function on $[a,b]$ such that the set of points where $f$ is discontinuous is negligible, then $f$ is integrable on $[a,b]$. In particular, if $f$ is continuous outsite a finite set of points, then it is integrable. To prove this, we make use of the small span theorem for continuous functions: The span of a function over some interval $[t_i, t_{i+1}]$ is defined as the difference between the maximum and minimum over that interval. Then for any $\epsilon > 0$ we can find a partition $P$ such that the span of each subinterval is less than $\epsilon$. This proof is left in the class notes and not proven here, but this obviously lets the upper sum approach arbitrarily close to the lower sum.
+
+Integration tends to make functions nicer, while differentiation makes things worse, in general. 
+
+The \textbf{First Fundamental Theorem of Calculus} Let $f$ be an integrable function on $[a,b]$. Suppose that $f$ is continuous at $c \in (a,b)$. Then $A(x) = \int_a^x{f(t)dt}$ is differentiable at $c$ and $A'(c) = f(c)$. This is clear because:
+
+(a) $A(x) = \displaystyle\int\limits_a^x f(t) dt = \displaystyle\int\limits_a^x f$ is continuous at $x$ means that $\displaystyle\lim\limits_{h \to 0} A(x+h) - A(x) = 0$. We can then examine $h > 0$, then $A(x+h) - A(x) = \displaystyle\int\limits_x^{x+h} f$, which tends to $0$ as $h$ tends to $0$, obviously.
+
+(b) $f$ is integrable on $[a,b]$ and $f$ is continuous at $c \in (a,b)$. We know that $A(x) = \displaystyle\int_a^x f$ is differentiable at $x = c$, so if we take $h > 0$ then we see that:
+
+$$\displaystyle\lim\limits_{h \to 0} \frac{A(c+h) - A(c)}{h} = \displaystyle\lim\limits_{h \to 0} \frac{1}{h}\displaystyle\int\limits_c^{c+h}f$$
+
+which, if we let $M$ be the maximum of $f$ and $m$ be the minimum over $[c,c+h]$, then we see that the integral is bounded by $mh \leq \text{integral} \leq Mh$, or $m \leq \frac{1}{h} \text{integral} \leq M$. But then, because $f$ is continuous, both $m = M = f(c)$ when $h \to 0$. Thus, by the squeeze theorem, $\displaystyle\lim\limits_{h \to 0} \frac{A(c+h) - A(c)}{h} = f(c)$. This thus says that $A(x)$ is differentiable at $x = c$ with $A'(c) = x(c)$. 
+
+The last theorem we will be covering today is the \textbf{Second Fundamental Theorem of Calulus}. Let $f$, $\phi$ be continuous and $\phi$ differentiable on $[a,b]$, with $\phi'(x) = f(x)$ on $(a,b)$. Then $\displaystyle\int_a^b f(x) dx = \phi(b) - \phi(a)$. Equivalently, $\displaystyle\int\limits_a^b \phi'(x) = \phi(b) - \phi(a)$. Note that this holds only when $\phi$ is both integrable and differentiable over $(a,b)$. 
+
+\section{November 19 - Derivatives of inverses}
+
+Given a bijective function $f(x) = y$ and inverse $g(y)=x$, then if $f$ is differentiable at $x=a$ with $f'(a) \neq 0$, then $g$ is differentiable at $b = f(a)$ and $g'(b) = 1/f'(a)$. A prime example is $f(x) = \ln(x)$, defined as $\ln(x) = \int_1^x\frac{1}{t}\;dt$. We know by the fundamental theorem of calculus that $\ln(x)$ is differentiable (over $x > 0$) by this definition, and that its derivative is $x^{-1}$. We moreover know that $1/x$ is positive for all $x > 0$ and thus $\ln(x)$ is monotonically increasing. We thus know that $\ln(x)$ is bijective! (where did this come from? wasn't paying attention, not written). If we call its inverse $\exp(y)$, we claim that the range of $\exp(y)$ is $y>0$ by definition of $\ln(x)$. However, we don't know the range so simply. We claim $R = \mathbb{R}$, and we need the following lemma to prove:
+
+Homomorphisms from one set to another respect the operators in each set, such as $\ln(xy) = \ln(x) + \ln(y)$, which is a homomorphism from $\ln(\mathbb{R})$, which obeys multiplicative properties, and $\mathbb{R}$, which upholds additive properties (in that it is closed under addition).
+
+If we then construct $g(x) = \ln(xz)$, we see that both $\ln(x)$ and $xz$ are both differentiable, so $g$ must also be differentiable. If we then take the derivative, we have $G(x) = \frac{1}{xz}z = \frac{1}{x} = (\ln(x))'$. When two functions have the same derivative, they must differ by a constant. Thus, $g(x) = \ln(x) + C_z$ where $C_z$ is constant but depends on $z$. We know that $\ln(1) = 0$ and thus $C_z = g(1) = \ln(z)$, and we must have $\ln(xz) = \ln(x) + \ln(z)$. 
+
+Thus, we can also conclude that $\ln(x^n) = n\ln(x)$. We furthermore choose $x_0 > 1$, and we see that $\ln(x_0) > 0$ (because $\ln(1) = 0$ and monotonically increasing) and thus $\ln(x_0^n)$ must be unbounded in the positive direction. If we instead choose $0 < x_1 < 1$. We then know that $\ln(x_1) < 0$ and thus $\ln(x_1^n)$ must decrease infinitely as well. This completes our proof of our claim, at long last.
+
+We learn now that inverses are simply reflections across the $y=x$ axis, and thus $\exp(y)$ never equals $0$. We know that $\ln(x)$ is differentiable at every $x > 0$. And so at every $a>0$ with $b = ln(a)$, $\exp(y)$ is differentiable at $b$. We can then calculate using our formula from the beginning of class that $y'(b) = 1/ln'(a) = a = \exp(b)$, and thus the derivative of the exponential is itself! This is very powerful in differential equations.
+
+So then, defining $\exp'(x) = \exp(x)$, we can further define $\exp(1) = e$. We show by a similar procedure to above that $\exp(x+y) = \exp(x)\exp(y)$. The proof is left as an exercise to the reader (it was shown in class, I just need to do French hw T\_T). 
+
+Another example is $f(x) = \sin(x)$, which can only be made bijective over the interval $[-\pi/2,\pi/2]$, the restricted domain. We can thus define $\arcsin(x)$ via the inverse derivatives definition from above and using the same procedure can define $\arccos(x), \arctan(x)$.  
+
+\chapter{November 26 - Taylor Polynomials}
+
+The objective of Taylor Polynomials: Find a polynomial $f(x)$ that is a close fit for some other function $\psi(x)$, at least around some central value $x = a$. The question is then how many powers are necessary to approximate to some arbitrary degree of accuracy? 
+
+We define a function $\phi(x)$ to admit a polynomial approximation $\psi(x)$ of degree $n$ around $x=a$ iff we have
+
+$$\lim_{x \to a} \frac{\phi(x) - \psi(x)}{(x-a)^n} = 0$$
+
+We then define a taylor polynomial of degree $n$ for an $n$-differentiable function $\phi(x)$ at $x = a$ to be:
+
+$$P_n(\phi(x);a) = \displaystyle\sum\limits_{j=0}^n{\frac{\phi^{(j)}(a)}{j!}(x-a)^j}$$
+
+We then see a lemma. Let $\phi(x) = \sum a_ix^i$ be a polynomial of degree $n$. Then its corresponding Taylor polynomial of degree $m$ is given by:
+
+$$P_m(\phi(x),0) = \begin{cases}\sum_{i=0}^m a_ix^i & \mbox{if } m < n\\\phi(x) & \mbox{if } m \geq n\end{cases}$$
+
+We don't prove this lemma, but it should be clear. We can then examine the Taylor Polynomial for $e^x$ at $x =0$, which is $\sum{\frac{x^j}{j!}}$. We then ask what the following limit is:
+
+$$\lim_{n\to 0}\frac{e^x - \displaystyle\sum\limits_{j=0}^n{\frac{x^j}{j!}}}{x^n}$$
+
+This limit evaluates to $0$, which makes sense because Taylor Polynomials should approximate the function, and with increasingly large numbers of terms should approximate better and better. We then have the following proposition: $P_n$ is the unique polynomial approximation of $\phi(x)$ of order $n$. ``Unique'' is very powerful here.
+
+Professor Ramakrishnan then works with $\phi(x) = \ln(x)$ but this is left as an exercise to the reader.
+
+Taking derivatives of Taylor Polynomials is simply taking derivatives term-by-term, which gives a very pretty explicit form. 
+
+There's also a very cute application for Taylor Polynomials. We know that the series expansion for $\frac{1}{1-x}$ is $1 + x + x^2 +...$. Then, if we evaluate $P_n$, then we have the leftover terms given by $x^{n+1} + x^{n+2}+...$ which is simply given by $x^{n+1}/(1-x)$. Then, $P_n = \frac{1}{1-x} - \frac{x^{n+1}}{1-x} = \frac{1-x^{n+1}}{1-x}$, which is yet another way of deriving a formula we already know!
+
+The thing that Ramakrishnan really wanted to show though, is that if we take $\phi(x) = \frac{1}{1-x}$ and substract from it $P_n$ we will find $x^{n+1} +...$. Thus, if we take $\frac{\phi(x) - P_n}{x^n}$, we will have a result that is $x(1+x+x^2+...)$, which is a product of $x$ and a series that converges for $x \to 0$, which is the limit we are trying to take. Thus, we see that the limit of the above expression must be $0$ and thus $P_n$ is a polynomial approximation and thus that it is THE unique polynomial approximation! Powerful.
+
+Note that integration also just works term by term, as we can see by $\int{\frac{1}{1-x}\;dx} = \ln(1-x)$. 
+
+We will cover Taylor's Theorem next class, which is the error bound! 
+
+\section{December 3 - Complex Functions}
+
+Sorry, skipped quite a few classes in between. That's okay! Next:
+
+Note that for any $z \in\mathbb{C}$ that $\sum{\frac{z^n}{n!}}$ converges absolutely: $\sum{\frac{|z|^n}{n!}}$ converges. This means that both the real and imaginary parts converge. If we examine for $z = i\theta$, we find the famous $e^{i\theta} = \cos \theta + i \sin \theta$.
+
+Note: For any complex $a + bi$ the real part is $a$ while the imaginary part is $b$, not $bi$. The imaginary part is real. Something that confused poor Ramakrishnan in his younger days.
+
+We often notate $z = re^{i\theta}$, where $\theta$ is called the \emph{argument} of $z$. So $z^n = r^ne^{in\theta}$, DeMoivre's formula. Note that the complex exponential function is not $1-1$, unlike the real exponential function. We can do the same thing we did for $\arcsin$ though and restrict the domain to create an inverse function. Under $z = x + iy$, we can restrict as $x \in \mathbb{R}$ and $0 \leq y < 2\pi$. This will give us a $1-1$ function.
+
+Under this restricted domain, we can then construct the complex natural logarithm. We note that $e^{x + iy} = e^xe^{iy} = re^{i\theta}$. Thus, because the range of the real exponential function is all positive reals, it is clear that the complex exponential ranges over all complex except $0$. Then, if we evaluate $\log(z)$ over complex $z$, we will define it to be $\log(re^i\theta) = \log(r) + i\theta = \log|z| + i\arg(z)$ where $\arg(z) \in [0,2\pi)$. 
+
+We then discuss the \textbf{Cauchy-Riemann Equations}: 
+
+Suppose $z_0$ is a fixed complex number. We say that a complex function $f(z)$ is differentiable at $z_0$ if and only if $\lim_{z\to z_0} \frac{f(z) - f(z_0)}{z - z_0}$ exists, where the limit is $f'(z_0)$. Note that this is a much stronger criterion because the limit must be approach in all directions in the complex plane, not just from the positive and negative like in reals.
+
+We note then that approaching in the real and imaginary direction produces 
+
+\begin{align*}
+f'(z_0) &= \lim_{h \to 0}\frac{f(x_0+h + iy_0) - f(x_0 + iy_0)}{h} = \frac{\partial f}{\partial x}(x_0)\\
+f'(z_0) = \lim_{h \to 0}\frac{f(x_0 + i(y_0+h)) - f(x_0 + iy_0)}{h} = \frac{\partial f}{\partial y}(x_0)
+\end{align*}
+
+The Cauchy-Riemann conditions are then as follows:
+
+$$\frac{\partial f}{\partial x}(z_0) = -i\frac{\partial f}{\partial y}(z_0)$$
+
+Remembering also that we can write $f(z) = u(x,y) + iv(x,y)$, where there is a complex and a real component to the complex function, we then have that $\partial_xf = \partial_x u + i\partial_xv, \partial_yf = \partial_yu + i\partial_yv$. The Cauchy-Riemann conditions then become:
+
+$$\frac{\partial u}{\partial x}(z_0) = \frac{\partial v}{\partial y}(z_0), \frac{\partial v}{\partial x}(z_0) = - \frac{\partial u}{\partial y}(z_0)$$
+
+Note that we have then for real functions we have the following hierarchy: $D \in D^2 \in C^\infty \in \mathrm{Real analytic functions}$. Note that $C^\infty$ means infinitely differentiable, while the last group is the group of functions that can be represented by their Taylor series. 
+
+It turns out that for complex functions all $C^{\infty}$ are analytic. 
+
+\end{document}

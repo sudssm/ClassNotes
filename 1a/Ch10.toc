@@ -1,0 +1,9 @@
+\contentsline {chapter}{\numberline {1}October 4 - Organizational Meeting}{2}
+\contentsline {chapter}{\numberline {2}October 11 - Sarah Reisman}{3}
+\contentsline {chapter}{\numberline {3}October 18 - Harry Gray}{4}
+\contentsline {chapter}{\numberline {4}October 25 - Greg Fu}{5}
+\contentsline {chapter}{\numberline {5}November 1 - David Tirrell}{6}
+\contentsline {chapter}{\numberline {6}November 8 - Jack Beauchamp}{7}
+\contentsline {chapter}{\numberline {7}November 15 - Bil Clemons}{8}
+\contentsline {chapter}{\numberline {8}November 29 - Thomas Miller}{9}
+\contentsline {chapter}{\numberline {9}December 6 - Rudy Marcus}{10}

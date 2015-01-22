@@ -1,0 +1,282 @@
+\documentclass[10pt,twocolumn]{article}
+\usepackage{fancyhdr, amsmath, amsthm, amssymb, mathtools, lastpage}
+\usepackage[margin=0.5in, top=0.8in,bottom=0.8in]{geometry}
+\newcommand{\scinot}[2]{#1\times10^{#2}}
+\newcommand{\bra}[1]{\left<#1\right|}
+\newcommand{\ket}[1]{\left|#1\right>}
+\newcommand{\dotp}[2]{\left<\left.#1\right|#2\right>}
+\newcommand{\rd}[2]{\frac{d#1}{d#2}}
+\newcommand{\pd}[2]{\frac{\partial#1}{\partial#2}}
+\newcommand{\rtd}[2]{\frac{d^2#1}{d#2^2}}
+\newcommand{\ptd}[2]{\frac{\partial^2 #1}{\partial#2^2}}
+\newcommand{\norm}[1]{\left|\left|#1\right|\right|}
+\newcommand{\abs}[1]{\left|#1\right|}
+\newcommand{\pvec}[1]{\vec{#1}^{\,\prime}}
+\newcommand{\tensor}[1]{\overleftrightarrow{#1}}
+\let\Re\undefined
+\let\Im\undefined
+\DeclareMathOperator{\Re}{Re}
+\DeclareMathOperator{\csch}{csch}
+\DeclareMathOperator{\Tr}{Tr}
+\DeclareMathOperator{\Im}{Im}
+\newcommand{\expvalue}[1]{\left<#1\right>}
+\usepackage[labelfont=bf, font=scriptsize]{caption}\usepackage{tikz}
+% \usepackage[version=3]{mhchem}
+% \usepackage{hyperref}
+\usepackage{enumerate}
+% \usepackage{graphicx}
+% \usepackage{setspace}
+\everymath{\displaystyle}
+
+\begin{document}
+
+\pagestyle{fancy}
+\rhead{Yubo Su --- Final Review Session}
+\cfoot{\thepage/\pageref{LastPage}}
+
+Welcome aboard the Ph12c final review session!
+\tableofcontents
+\newpage
+
+\section{Ch2 --- Entropy, temperature}
+
+The entropy is some measure of the number of states, and is defined
+\begin{align}
+    \sigma(N,U) = \log(g(N,U))\label{S1}
+\end{align}
+
+If we then take our system to be in thermal contact with another system, then we can define some temperature 
+\begin{align}
+    \frac{1}{\tau} = \pd{\sigma}{U}\Bigg|_N\label{T1}
+\end{align}
+to be some quantity that is constant between the two.
+
+\section{Ch3 --- Thermal Equilibrium}
+
+If we then put our system in contact with a reservoir that is large, then if we Taylor expand the entropy about the energy of the small system and take the infinite reservoir limit then we obtain
+\begin{align}
+    P(\epsilon) &= \frac{\exp(-\epsilon/\tau)}{Z}\label{BoltzP}\\
+    Z &= \sum\limits_{}^{}\exp(-\epsilon/\tau)\label{Z1}
+\end{align}
+
+Generally the expectation value of an observable $\expvalue{f} = \sum\limits_{}^{}f(\epsilon_s) \frac{\exp(-\epsilon_s/\tau)}{Z}$, but we can often find easier ways to do it, e.g. $U = \expvalue{\epsilon_s} = \tau^2 \pd{\log Z}{\tau}$
+
+We can also define the heat capacity at constant volume
+\begin{align}
+    C_v &= \pd{U}{\tau}\Bigg|_V\label{CV}\\
+    p &= -\pd{U}{V}\Bigg|_\sigma\label{p}
+\end{align}
+
+Note that $p$ can fall out of a similar derivation as temperature; indeed we can note the similarity $\frac{1}{\tau} = \pd{\sigma}{U}, p = -\pd{U}{V}$.
+
+\section{Ch4 --- Planck + Stefan-Boltzman stuff}
+
+\subsection{Photon distribution}
+
+Note that the quantum harmonic oscillator (which is as we all know the most powerful system on earth, HOs) exhibits $\epsilon_s = s\hbar \omega$ for an occupancy $s$ and a mode $\omega$. Then we can compute
+\begin{align}
+    \expvalue{s} &= \frac{1}{Z}\sum\limits_{s}^{}s\exp\left( -s\frac{\hbar \omega}{\tau} \right)\\
+    &= \frac{1}{\exp\left( \frac{\hbar \omega}{\tau} \right) - 1}
+\end{align}
+which is the expected occupancy of each mode $\omega$.
+
+Then we want to sum over all $\omega$ that photons exhibit which is $\omega^2 = \frac{c^2 \pi^2}{L^2}\left( n_x^@ + n_y^2 + n_z^2 \right)$ and so we want $U = \sum\limits_{n}^{}\expvalue{\epsilon_n} = \frac{1}{8} \times 2 \times\int d^3n\; \expvalue{\epsilon_n}$ with the $1/8$ coming from only positive $n$ and $2$ comes from polarizations. Then we can compute this by going to spherical coordinates
+\begin{align}
+    U &= \frac{1}{8} \times 2 \times 4\pi\int\limits_{0}^{\infty}n^2\left( \frac{1}{\exp\left( \frac{\hbar \omega}{\tau} \right) - 1} \right)\;dn\\
+    \frac{U}{V} &= \frac{\pi^2}{15 \hbar^3 c^3}\tau^4
+\end{align}
+which is the \emph{Boltzmann distribution}.
+
+\subsection{Blackbody radiation}
+
+For blackbody radiation, it's effectively like having a photon gas inside a box and puncturing a hole. We can compute this out and in the end we find that
+\begin{align}
+    J &= \frac{\pi^2 \tau^4}{60 \hbar^3 c^2} \equiv \sigma_B T^4
+\end{align}
+with $J$ the power per surface area of the blackbody per time.
+
+\subsection{Phonons}
+
+Phonons have $N$ particles in a 3D lattice, so a total of $3N$ D.O.F. We note that this imposes an upper constraint on the number $n$ of modes, compared to our photon example. So we enforce this constraint by requiring
+\begin{align}
+    3N &= \frac{3}{8}\int\limits_{0}^{N_D}4\pi n^2\;dn
+\end{align}
+with $N_D$ the maximum radius of the configuration space $n$ sphere such that we have $3N$ modes. Solving this out we find $n_D = \left( \frac{6N}{\pi} \right)^{1/3}$. Then
+\begin{align}
+    U &= \sum\limits_{n=1}^{N_D} \frac{\hbar \omega_n}{\exp\left( \frac{\hbar \omega_n}{\tau} \right) - 1}
+\end{align}
+and we can usually compute high and low temperature limits. Note that $\omega_n^2 = \frac{c^2 \pi^2}{L^2}\left( n_x^2 + n_y^2 + n_z^2 \right)$ as usual, with $c$ the speed of sound.
+
+\section{Ch5 --- Diffusive equilibrium, chemical potential}
+
+We define the chemical potential of two systems to be equal when the two systems are in diffusive equilibrium. The strict definition is given
+\begin{align}
+    \mu(\tau,V,N) &= \pd{F}{N}\Bigg|_{\tau,V}
+\end{align}
+
+Note that we will have a fancy pants way of computing this in a second\footnote{We can already see from above that $\mu$ will be part of a Legendre transform out of $F$ into another potential (the Gibbs) because it is computing the conjugate variable to $N$ under potential $F$}. Then the thermodynamic identity takes on its full form
+\begin{align}
+    dU &= \tau d\sigma - pdV + \mu dN
+\end{align}
+
+This then takes us to the Gibbs distribution. If we do a similar sort of thing to our derivation of the Boltzmann factor and expand the entropy against a large reservoir then we find the Gibbs factor
+\begin{align}
+    P(N,\epsilon) &= \frac{\exp\left[ \left( N\mu - \epsilon \right)/\tau \right]}{\mathcal{Z}}
+\end{align}
+with $\mathcal{Z}$ the \emph{grand partition function}
+\begin{align}
+    \mathcal{Z} &= \sum\limits_{n=0}^{\infty}\sum\limits_{s(N)}^{}\exp\left[ \left( N\mu - \epsilon_s \right)/\tau \right]
+\end{align}
+
+The best way to write down the grand sums is to write down a table to keep track of all available states. We won't be required to do anything too hard with grand partition functions.
+
+\section{Ch6/7 --- Bosons/Fermions}
+
+Bosons have symmetric wavefunctions, fermions have antisymmetric. Note that exclusion principle is because if we try to put two fermions in the same state the total wavefunction vanishes.
+
+\subsection{Fermi-Dirac distribution}
+
+If we consider a reservoir that can dump up to one fermion into a particular orbital of energy $\epsilon$, then we can construct the grand sum and take the appropriate derivative to find the expected occupancy
+\begin{align}
+    \expvalue{N(\epsilon)} = f(\epsilon) &= \frac{1}{\exp\left[ (\epsilon - \mu)/\tau \right] + 1}
+\end{align}
+the \emph{Fermi-Dirac distribution}. 
+
+\subsection{Bose-Einstein distribution}
+
+If we consider now a reservoir that can dump any number of bosons into a particular orbital of energy $\epsilon$ (no longer limited by exclusion principle) then we can construct the grand sum again (going to be an infinite sum, geometric series) and take derivatives to find occupancy
+\begin{align}
+    \expvalue{N(\epsilon)} = f(\epsilon) &= \frac{1}{\exp\left[ (\epsilon - \mu)/\tau \right] - 1}
+\end{align}
+the \emph{Bose-Einstein distribution}. Of course both the FD and the BE reduce to ideal gas in the $\tau \gg \epsilon$ limit. 
+\section{Ch 8 --- Thermo examples}
+
+\subsection{Example: Carnot engine with rocks}
+
+Two solid bodies have $U = NCT$ at initial temperatures $T_1, T_2$. We stick them into a Carnot (reversible) engine such that we extract work in bringing both bodies to $T_f$. Find $T_f$ and the work done.
+
+We note that $dU = dQ$ because $pdV = 0$ ($dV = 0$ because solid bodies). We can rewrite $dQ = \pd{U}{T}dT$. Note then that $dQ_1 = NCdT_1, dQ_2 = NCdT_2$, and since we operate reversibly $d\sigma = 0 = \frac{dQ_1}{T_1} + \frac{dQ_2}{T_2}$. This then gives us that
+\begin{align}
+    \frac{dT_1}{T_1} &= -\frac{dT_2}{T_2}\\
+    \int\limits_{T_1}^{T_f}\frac{dT_1}{T_1} &= \int\limits_{T_2}^{T_f}-\frac{dT_2}{T_2}\\
+    \ln \frac{T_f}{T_1} &= \ln \frac{T_2}{T_f}\\
+    T_f &= \sqrt{T_1T_2}
+\end{align}
+
+We can then compute the work that we can get out. Body 1 cools from $T_1 \to T_f$ so its change in internal energy is $NC\left( T_1 - T_f \right)$ and similarly for body 2 $NC\left( T_2 - T_f \right)$ so the total work that we can get out is $NC\left( T1 + T_2 - 2T_f \right)$. 
+
+\subsection{Reversible isobaric cycle}
+
+This cycle looks like Figure \ref{RIC}
+\begin{figure}[!h]
+    \centering
+    \begin{tikzpicture}[scale=0.2]
+        \draw[<->] (0,0) -- (10,0);
+        \node[right] at (10,0) {$V$};
+        \draw[<->] (0,0) -- (0,10);
+        \node[above] at (0,10) {$p$};
+        \node[left] at (0,3) { {\tiny $p_2$}};
+        \node[left]at  (0,7) { {\tiny $p_1$}};
+        \draw[domain=1:2] plot(\x, {8/\x - 1});
+        \draw (1,7) -- (6,7);
+        \draw[domain=6:7] plot(\x, {8/(\x - 5) - 1});
+        \draw (2,3) -- (7,3);
+        \node[left, above] at (1,7) { {\tiny a}};
+        \node[right, above] at (6,7) { {\tiny b}};
+        \node[right, below] at (7,3) { {\tiny c}};
+        \node[left, below] at (2,3) { {\tiny d}};
+    \end{tikzpicture}
+    \caption{Let the slanted ones be adiabats.}
+    \label{RIC}
+\end{figure}
+for some ideal gas. Find the efficiency $\eta = \frac{Q_h - Q_l}{Q_h} = 1 - \frac{Q_l}{Q_h}$ in terms of $p_1, p_2$ given $C_p = \frac{5}{2}N$.
+
+During the isobars we recall $dH = dQ$ so $\Delta Q = \Delta U + p\Delta V$. Computing at $p_1$ we find
+\begin{align}
+    \Delta Q_h &= \Delta U + p\Delta V\\
+    &= \frac{3}{2}N\left( T_b - T_a \right) + p_1\left( V_b - V_a \right)\\
+    &= C_p \left( T_b - T_a \right)
+\end{align}
+where we note that because of reversibility $p_1V = NT$. We note that over the other leg we find $\Delta Q_l = C_p\left( T_c - T_d \right)$ and so
+\begin{align}
+    \eta &= 1 - \frac{T_c - T_d}{T_b - T_a}\\
+    &= 1 - \frac{p_2V_c - p_2V_d}{p_1V_b - p_1V_a}
+\end{align}
+and then since we know that in adiabatic stuff $p_2V_d^\gamma = p_1V_a^\gamma$ because they're connected adiabatically, with $\gamma = \frac{C_p}{C_v} = \frac{5}{3}$. This kills the volumes and we find
+\begin{align}
+    \eta &= 1 - \left( \frac{p_2}{p_1} \right)^{\frac{\gamma-1}{\gamma}}
+\end{align}
+
+\section{Miscellaneous Stuff}
+
+\subsection{Thermodynamics Potentials}
+
+We're familiar with quite a few potentials, and these can yield some equations. For example
+\begin{itemize}
+    \item $U(\sigma,V)$ which has $dU = \tau d\sigma - p dV$, which we can see as the sum of the random internal energy and the mechanical energy.
+    \item $F(\tau,V)$ \emph{Helmholtz Free Energy} which is useful in constant $\tau$ process because it tells us the work done. We can then examine
+        \begin{align}
+            F &= U-\tau\sigma\\
+            dF &= dU - \tau d\sigma - \sigma d\tau\\
+            &= -pdV
+        \end{align}
+        so $F$ changes by the amount of work done if $d\tau = 0$. 
+    \item $H(\sigma,p)$ \emph{Enthalpy} for constant $p$ processes. We can see its utility by differentials and plugging in $dU$ from before
+        \begin{align}
+            H &= U + pV\\
+            dH &= \tau d\sigma - pdV + pdV = dQ
+        \end{align}
+        which shows that at constant pressure.
+\end{itemize}
+
+\subsection{Classical Statmech approach to ideal gas}
+
+Recall that the partition function for an ideal gas goes something like
+\begin{align}
+    Z &\propto \sum\limits_{n_{\{x,y,z\}}}^{} \exp\left( -\alpha^2(n_x^2 + n_y^2 + n_z^2) \right)\\
+    &\propto \left[\int\limits_{0}^{\infty}dn\;e^{-\alpha^2 n^2}\right]^3
+\end{align}
+where classically states are labelled by a continuum rather than a discretum like in QM.
+
+We can also construct the partition function up from an integral over classical phase space, which looks like
+\begin{align}
+    Z &= \int\limits_{}^{}dp\int\limits_{}^{}dx\;\exp\left[ -\frac{1}{\tau}\epsilon(p,x) \right]\label{Zclass}
+\end{align}
+with $\epsilon(p,x) = \frac{p^2}{2m} + V(x)$. 
+
+\subsection{Harmonic Oscillator, classical/quantum}
+
+Let's do a example problem of a classical and quantum harmonic oscillator. Exhibit $n$ non-interacting particles in 3D that each obey Hamiltonian $H_i = \frac{p_i^2}{2m} + \frac{1}{2}kx_i^2$. Find $C_v$.
+
+We do this classically, with \eqref{Zclass}. Then we note that the full partition function is given $Z = Z_1^N$ with
+\begin{align}
+    Z_1 &= \int\limits_{-\infty}^{\infty} d^3x\;d^3p \exp\left( -\frac{1}{\tau}\left[ \frac{p^2}{2m} + \frac{kx^2}{2} \right] \right)
+\end{align}
+the individual partition functions. Thankfully the integrand factors, so it actually looks like
+\begin{align}
+    Z_1 &= \left[ \int\limits_{-\infty}^{\infty}d^3p\;\exp\left( -\frac{p^2}{2m\tau} \right) \right]^3\left[ \int\limits_{-\infty}^{\infty}d^3x\;\exp\left( -\frac{kx^2}{2\tau} \right) \right]^3\\
+    Z &= \left[ 8\left( \frac{\pi^2 m\tau^2}{k} \right)^{3/2} \right]^N
+\end{align}
+
+This alone doesn't yield well to intuition, but if we compute $U = \tau^2 \pd{\ln Z}{\tau}$ then we get
+\begin{align}
+    U = \tau^2 \pd{\ln Z}{\tau} &= 3N\tau\\
+    C_v &= 3N
+\end{align}
+
+This is an example of the \emph{equipartition theorem}, which is that we get $\frac{N}{2}$ to $C_v$ for every D.O.F that appears quadratically in the Hamiltonian. Since we have $3p + 3x = 6$ degrees of freedom we do indeed get $C_v = 3N$.
+
+Let's now do this quantum mechanically. We know that quantum mechanically we have $E = \hbar \omega\left( n_x + n_y + n_z \right)$ up to a zero point energy. Then our partition function looks like
+\begin{align}
+    Z_1 &= \sum\limits_{n_{ \left\{ x,y,z \right\}}}^{} \exp\left[ -\frac{\hbar \omega}{\tau}(n_x + n_y + n_z) \right]\\
+    Z &= Z_1^N = \left[ \frac{1}{1 - \exp\left( -\frac{\hbar \omega}{\tau} \right)} \right]^{3N}
+\end{align}
+where we go to the integral and evaluate the integral using the same technique as in the Planck distribution. We then obtain
+\begin{align}
+    U &= \frac{3N\hbar \omega}{e^{\hbar \omega/\tau} - 1}\\
+    C_v &= 3N\frac{\hbar^2 \omega^2}{4\tau^2}\csch^2\frac{\hbar \omega}{2\tau}
+\end{align}
+and when we take $\hbar \to 0$ we have $C_v = 3N - O(\hbar^2)$. 
+
+\end{document}
+

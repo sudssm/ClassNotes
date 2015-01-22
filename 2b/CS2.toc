@@ -1,0 +1,14 @@
+\contentsline {section}{\numberline {1}1/6/14 - C++ introduction}{1}
+\contentsline {section}{\numberline {2}1/8/14 - C++ at velocity, P.2}{2}
+\contentsline {section}{\numberline {3}1/10/14 - Makeup: C++ at velocity, P.3}{3}
+\contentsline {section}{\numberline {4}1/13/14 - Sorting}{3}
+\contentsline {section}{\numberline {5}1/15/14 - Convex hull}{3}
+\contentsline {section}{\numberline {6}1/17/14 - \texttt {Vector}'s, IO, sorting}{4}
+\contentsline {section}{\numberline {7}1/22/14 - Graham scan}{4}
+\contentsline {section}{\numberline {8}1/24/14 - Data structures}{4}
+\contentsline {section}{\numberline {9}1/27/14 - Data Structures}{5}
+\contentsline {section}{\numberline {10}1/31/14 - Dypo!!}{5}
+\contentsline {section}{\numberline {11}2/3/14 - Graphs}{5}
+\contentsline {section}{\numberline {12}2/5/14 - Parallel processing!}{6}
+\contentsline {section}{\numberline {13}Big respite\dots }{6}
+\contentsline {section}{\numberline {14}2/23/14 - Makeup: FFT}{6}

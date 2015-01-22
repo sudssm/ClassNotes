@@ -1,0 +1,11 @@
+\contentsline {chapter}{\numberline {1}October 1 - Intro to Chem 1a, Atoms and the Bohr Model}{2}{chapter.1}
+\contentsline {chapter}{\numberline {2}October 2 - The Bohr Model}{4}{chapter.2}
+\contentsline {chapter}{\numberline {3}October 4 - First Supersection - Schr\"odinger equation}{6}{chapter.3}
+\contentsline {chapter}{\numberline {4}October 8 - Quantum view of Chemistry!}{8}{chapter.4}
+\contentsline {chapter}{\numberline {5}October 15 - }{9}{chapter.5}
+\contentsline {chapter}{\numberline {6}October 22 - Atomic Radius}{11}{chapter.6}
+\contentsline {chapter}{\numberline {7}October 29 - Lewis Dot Structures, Resonance}{12}{chapter.7}
+\contentsline {chapter}{\numberline {8}November 5 - VSEPR continued, Molecular Orbitals}{13}{chapter.8}
+\contentsline {chapter}{\numberline {9}November 12 - More MO theory}{14}{chapter.9}
+\contentsline {chapter}{\numberline {10}November 19 - Hybridization}{15}{chapter.10}
+\contentsline {section}{\numberline {10.1}November 26 - Crystals}{15}{section.10.1}

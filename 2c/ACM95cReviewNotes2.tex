@@ -1,0 +1,163 @@
+\documentclass[12pt]{article}
+\usepackage{fancyhdr, amsmath, amsthm, amssymb, mathtools, lastpage}
+\usepackage[margin=0.5in]{geometry}
+\newcommand{\scinot}[2]{#1\times10^{#2}}
+\newcommand{\bra}[1]{\left<#1\right|}
+\newcommand{\ket}[1]{\left|#1\right>}
+\newcommand{\dotp}[2]{\left<\left.#1\right|#2\right>}
+\newcommand{\rd}[2]{\frac{d#1}{d#2}}
+\newcommand{\pd}[2]{\frac{\partial#1}{\partial#2}}
+\newcommand{\rtd}[2]{\frac{d^2#1}{d#2^2}}
+\newcommand{\ptd}[2]{\frac{\partial^2 #1}{\partial#2^2}}
+\newcommand{\norm}[1]{\left|\left|#1\right|\right|}
+\newcommand{\abs}[1]{\left|#1\right|}
+\newcommand{\pvec}[1]{\vec{#1}^{\,\prime}}
+\newcommand{\tensor}[1]{\overleftrightarrow{#1}}
+\let\Re\undefined
+\let\Im\undefined
+\DeclareMathOperator{\Re}{Re}
+\DeclareMathOperator{\Res}{Res}
+\DeclareMathOperator{\Tr}{Tr}
+\DeclareMathOperator{\Im}{Im}
+\newcommand{\expvalue}[1]{\left<#1\right>}
+% \usepackage[labelfont=bf, font=scriptsize]{caption}
+% \usepackage{tikz}
+% \usepackage[version=3]{mhchem}
+% \usepackage{hyperref}
+\usepackage{enumerate}
+% \usepackage{graphicx}
+% \usepackage{setspace}
+\everymath{\displaystyle}
+
+\begin{document}
+
+\cfoot{\thepage/\pageref{LastPage}}
+
+\section{6/03/14 --- Final review!}
+
+Anything from this term can be on the final exam, including
+\begin{itemize}
+    \item Index Notation
+    \item Curvilinear coordinates
+    \item Series solutions to Laplace/Wave/Heat equation
+    \item Fourier/Laplace transforms
+    \item d'Alembert's solution
+    \item Helholtz equation
+    \item Greens Functions
+\end{itemize}
+
+Notation notes: $\hat{e}_1, \hat{e}_2, \hat{e}_3$ and $\hat{x}, \hat{y}, \hat{z}$ will be used interchangably.
+
+\subsection{Index notation}
+First, we'll speed through index notation from the beginning of term. Vectors go $v_i\hat{e}_i$. For example, exhibit a function $f(x_1, x_2, x_3) = x_ix_i$, then 
+\begin{align}
+    \left[ \vec{\nabla}f \right]_i &= \pd{}{x_j}\left( x_i x_i \right)\\
+    &= x_i\pd{x_i}{x_j} + \pd{x_i}{x_j}x_i\\
+    &= 2x_j
+\end{align}
+noting that $\pd{x_i}{x_j} = \delta_{ij}$ Kronecker delta.
+
+\subsection{Curvilinear Coordinates}
+Curvilinear coordinates are coordinates such as spherical or polar coordinates. In spherical coordinates we have $x = r\sin\theta\cos\phi, y = r\sin\theta\sin\phi, z = r\cos\theta$, and vectors go $\hat{r} \times \hat{\phi} = \hat{\theta}$ in terms of handedness.
+
+We can also express our $\vec{\nabla}$ in our curvilinear coordinates, e.g. $\vec{\nabla}f = \pd{f}{r}\hat{r} + \frac{1}{r}\pd{f}{\theta}\hat{\theta} + \frac{1}{r\sin\theta}\pd{f}{\phi}\hat{\phi}$. For example, using our same example from before $f(\vec{x}) = x_ix_i = r^2$, then we find that $\vec{\nabla}f = 2r\hat{r}$. But then we run into the ever-so-existential question \emph{what is $\hat{r}$}? We define it via the usual rule for change of basis (and normalization) to arrive at
+\begin{align}
+    \hat{r} &= \frac{\pd{}{r}\left( x_i\hat{e}_i \right)}{\abs{\pd{}{r}\left( x_i\hat{e}_i \right)}} \\
+    &= \sin\theta\cos\phi \hat{e}_1 + \sin\theta\sin\phi\hat{e}_2 + \cos\theta \hat{e}_3\\
+    2r\hat{r} &= 2x\hat{e}_1 + 2y\hat{e}_2 + 2z\hat{e}_3 = 2x_i\hat{e}_i
+\end{align}
+
+\subsection{Example problem: Green's function, Fourier transform}
+
+Let's solve Laplace's equation in the half-plane, so $\nabla^2 u = 0$ for $y > 0, -\infty < x < \infty$ subject to BC $u(x,0) = f(x)$ and implicit BC $u \to 0$ as $\abs{x}, \abs{y} \to \infty$ (constraint that solutions make physical sense).
+
+Let's start by solving using a Green's function. The free-space Green's function in 2D is given by (recall lecture notes)
+\begin{align}
+    G(\vec{x}, \vec{x}_0) = \frac{1}{2\pi}\ln \abs{\vec{x} - \vec{x}_0}
+\end{align}
+
+We then want to fudge this Green's function into a Green's function over just the half-plane (for Dirichlet BCs), and the correct way to do this is via the method of images. We arrive at
+\begin{align}
+    G(\vec{x}, \vec{x}_0) = \frac{1}{2\pi}\ln \abs{\frac{\vec{x} - \vec{x}_0}{\vec{x} - \vec{x}^*_0}}
+\end{align}
+where $\vec{x}_0^* = (x_0, -y_0)$. We can intuitively see this as placing an image source at $\vec{x}_0^*$ and combining its influence with $\vec{x}_0$ source, because the BC produces this ``image'' that is reflected across the boundary. We can use this sort of approach for any linear boundary.
+
+We then use the Green's function using Green's third theorem which produces
+\begin{align}
+    u(\vec{x}) &= \iint\limits_D G\nabla^2u\; d\vec{x}_0 + \int\limits_{\partial D}^{}\left( u\vec{\nabla}G - G\vec{\nabla}u \right)\cdot \hat{n}\;dS\\
+    &= \int\limits_{\partial D}^{}u\vec{\nabla}G \cdot \hat{n}\;dS
+\end{align}
+where we drop first term because $\nabla^2u = 0$ because Laplace's equation, and the second falls out because $G(\vec{x}, \vec{x}_0) = 0$ on the boundary (on the boundary, $x_0 = 0$ because we are evaluating when $\vec{x}_0 \in \partial D$ so $G$ vanishes). Then $\hat{n} = -\hat{y}$ we note, and so we obtain
+\begin{align}
+    u(\vec{x}) &= \int\limits_{-\infty}^{\infty}-u(x_0,0)\pd{G}{y_0}\;dx_0\\
+    G &= \frac{1}{2\pi}\ln\abs{\frac{(x-x_0)^2 + (y-y_0)^2}{(x-x_0)^2 + (y + y_0)^2}}^{1/2}\\
+    &= \frac{1}{4\pi}\ln\abs{\frac{(x-x_0)^2 + (y-y_0)^2}{(x-x_0)^2 + (y + y_0)^2}}\\
+    \pd{G}{y_0} &= \frac{1}{4\pi}\frac{(x-x_0)^2 + (y + y_0)^2}{(x-x_0)^2 + (y-y_0)^2} \cdot \frac{-2\left( y-y_0 \right)\left[ (x-x_0)^2 + (y+y_0)^2 \right] - 2(y+y_0)\left[ (x-x_0)^2 + (y-y_0)^2 \right]}{\left((x-x_0)^2 + (y + y_0)^2\right)^2}\\
+    &= -\frac{1}{2\pi}\left[ \frac{y-y_0}{(x-x_0)^2 + (y-y_0)^2} + \frac{y+y_0}{(x-x_0)^2 + (y+y_0)^2} \right]\\
+    u(\vec{x}) &= -\int\limits_{-\infty}^{\infty}f(x_0)\pd{G}{y_0}\Bigg|_{y_0 = 0}\;dx_0\\
+    &= \frac{1}{\pi}\int\limits_{-\infty}^{\infty}f(x_0)\left[ \frac{y}{\left( x-x_0 \right)^2 + y^2} \right]\;dx_0\label{Greensol}
+\end{align}
+
+Let's try this again using a Fourier transform. We obviously have to take the full Fourier transform (as opposed to sine/cosine) because we are looking at the domain $-\infty < x < \infty$. Let's define $\hat{u}$ the Fourier transform of $u$ then we obtain
+\begin{align}
+    u_{xx} + u_{yy} &= 0 &\Rightarrow&& -\lambda^2 \hat{u} + \hat{u}_{yy} &= 0\\
+    u(x,0) &= f(x) &\Rightarrow&& \hat{u}(\lambda,0) &= \hat{f}(\lambda)
+\end{align}
+
+We thus have to solve $\hat{u}_{yy} = \lambda^2 \hat{u}$ which gives general solution $\hat{u} = A(\lambda)e^{\lambda y} + B(\lambda) e^{-\lambda y}$. Then if we want to satisfy the implicit BC $\hat{u}(y \to \infty) \to 0$ then we find the only solution must have form $\hat{u} = C(\lambda)e^{-\abs{\lambda}y}$ (She really waved her hands hard here; you should think of it as having the freedom to choose $A(\lambda), B(\lambda)$ such that BCs are satisfied, so we can choose them to be like step functions, so we can get rid of the exploding solutions at either $\lambda = \pm \infty$ by using the step function correctly. In other words, $e^{-\abs{\lambda} y}$ is still a linear combination of the homogeneous solutions and so still satisfies the ODE). Then we impose our last BC $\hat{u}(\lambda,0) = c(\lambda) = \hat{f}(\lambda)$ and we find our solution for the transformed space to be
+\begin{align}
+    \hat{u} &= \hat{f}(\lambda)e^{-\abs{\lambda}y}
+\end{align}
+
+Then we must invert the Fourier transform. In practice this is easiest to do via convolution; recall the convolution theorem looks like $u = \frac{1}{\sqrt{2\pi}}\int\limits_{-\infty}^{\infty}f(x_0)g(x-x_0,y)\;dx_0$ with $g$ the inverse Fourier transform of $e^{-\abs{\lambda}y}$.
+
+We will check this against our previous answer by checking whether the Fourier transform of $e^{-\abs{\lambda }y}$ is actually $\sim \frac{y}{x^2 + y^2}$ as we found before in \eqref{Greensol} (we can set $x_0 = 0$). It's clear that we want to transform the latter function, because it's nice and analytic everywhere, rather than the former function. So we seek to find
+\begin{align}
+    \mathcal{F}\left( g(x,y) \right) = \frac{1}{\sqrt{2\pi}}\int\limits_{-\infty}^{\infty}\frac{y}{x^2 + y^2}e^{-i\lambda x}\;dx
+\end{align}
+
+We first examine for $\lambda > 0$, in which case we close the contour over the bottom half plane (in case it's not clear, this is easiest to evaluate using residues) which introduces a negative sign because the contour is \emph{clockwise}, and if $\lambda < 0$ we close in the top half plane. The choice of closure is done by seeing which way gets the contribution along the outside contribution to vanish. As an example, if $\lambda > 0$ then
+\begin{align}
+    \mathcal{F}\left( g(x,y) \right) &= 2\pi i\Res\left[ \dots \right](-1)\\
+    &= 2\pi i \frac{1}{\sqrt{2\pi}}\frac{2y}{2iy} \sim e^{-\lambda y}
+\end{align}
+and so we see that (sorry, I'm too lazy to figure out the factors of $2\pi$) this will work out correctly (use $p/q'$ rule to evaluate residue). If $\lambda < 0$ we can repeat the same procedure and we find $\sim e^{\lambda y}$ and so we find the full transform goes like $\sim e^{-\abs{\lambda}y}$ up to some factors that Gemma worked out correctly in class, and so the two solutions agree.
+
+\subsection{Example problem: Wave equation wih damping and source term on finite interval}
+
+Let's exhibit our wave equation $u_{tt} + \nu u_t = c^2u_{xx} + q(x,t)$ over $0<x<1$ with ICs $u(x,0) = f(x), u_t(x,0) = g(x)$ and BCs $u(0) = u(1) = 0$.
+
+We cannot do a Fourier transform because our domain in $x$ is finite; we could do a Laplace transform in time, but a series expansion seems the most intuitive way to solve this problem. We note because of BCs that sine expansion probably makes the most sense (satisfies the BCs), so let's write down the usual
+\begin{align}
+    u(x,t) &= \sum\limits_{n=1}^{\infty}a_n(t)\sin n\pi x&
+    q(x,t) &= \sum\limits_{n=1}^{\infty}q_n(t) \sin n\pi x&
+    f(x) &= \sum\limits_{n=1}^{\infty} f_n \sin n\pi x&
+    g(x) &= \sum\limits_{n=1}^{\infty}g_n \sin n\pi x
+\end{align}
+and substituting it into the PDE gives (let's just write one summation symbol and spare the typist)
+\begin{align}
+    \sum\limits_{n=1}^{\infty}\Bigg\{ a_n''(t) \sin n\pi x + \nu a_n'(t)\sin n\pi x = -c^2n^2\pi^2a_n(t)\sin n\pi x + q_n(t)\sin n\pi x \Bigg\}
+\end{align}
+
+We can then read off an ODE for the $a_n$ as below
+\begin{align}
+    a_n''(t) + \nu a_n'(t) + c^2n^2\pi^2a_n(t) &= q_n(t)\label{ezODE}
+\end{align}
+
+This is a second-order ODE with constant coefficients, so we will first solve the homogeneous case and then find a particular solution. The homogeneous case is solved with ansatz $a(t) = e^{mt}$ which produces $m = -\frac{\nu}{2}\pm \sqrt{\left( \frac{\nu}{2} \right)^2 - c^2n^2\pi^2}$ when plugged through \eqref{ezODE}. Let's assume the non-oscillatory case, so small $\nu$ (specifically, such that $m$ is complex). Then we obtain
+\begin{align}
+    a_n^{(1)}(t) &= e^{-\frac{\nu}{2}t}\cos \omega_\lambda t & a_n^{(2)}(t) &= e^{-\frac{\nu}{2}t}\sin \omega_\lambda t
+\end{align}
+with $\omega_\lambda = \sqrt{c^2n^2\pi^2 - \left( \frac{\nu}{2} \right)^2}$.
+
+These are our two homogeneous solutions, we will use variation of parameters to compute the the inhomogeneous solutions. The general formula is, recall,
+\begin{align}
+    y_p(t) &= -y_1(t)\int\limits_{0}^{t}\frac{y_2(t')q_n(t')}{W(y_1, y_2)}\;dt' + y_2(t)\int\limits_{0}^{t}\frac{y_1(t')q_n(t')}{W(y_1,y_2)}\;dt'\\
+    W(y_1,y_2) &= \begin{vmatrix} a_n^{(1)} & a_n^{(2)}\\ \rd{}{t}a_n^{(1)} & \rd{}{t}a_n^{(2)}\end{vmatrix} = \dots = \omega_\lambda e^{-\nu t}\\
+    a_n(t) &= -e^{-\frac{\nu}{2}t}\cos \omega_\lambda t \int\limits_{0}^{t}\frac{e^{\nu t_0}}{\omega_\lambda}q_n(t_0)e^{-\frac{\nu}{2}t_0}\sin \omega_\lambda t_0\;dt_0 + e^{-\frac{\nu}{2}t}\sin \omega_\lambda t \int\limits_{0}^{t}\frac{e^{\nu t_0}}{\omega_\lambda}q_n(t_0)e^{-\frac{\nu}{2}t_0}\cos \omega_\lambda t_0\;dt_0
+\end{align}
+
+Exercise to reader: solve out $a_n^{(p)}(t)$, and then subject the full general solution to BCs and we'll find something that looks like $a_n(t) =a_n^{(p)}(t) + f_n a_n^{(1)} + \xi(g_n)a_n^{(2)}$ with $\xi$ some big weird function.
+
+\end{document}
+

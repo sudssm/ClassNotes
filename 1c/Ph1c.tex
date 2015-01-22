@@ -1,0 +1,49 @@
+\documentclass[12pt]{article}
+\usepackage{fancyhdr, amsmath, amsthm, amssymb, hyperref, paracol, graphicx, setspace}
+\usepackage[margin=1in]{geometry}
+\usepackage[version=3]{mhchem}
+\newcommand{\scinot}[2]{#1\times 10^{#2}}
+\usepackage[labelfont=bf]{caption}
+\everymath{\displaystyle}
+
+\begin{document}
+
+\doublespace
+\pagestyle{fancy}
+\lhead{Yubo Su - Section 10}
+\setlength{\headheight}{15pt}
+
+\section{April 18 - First rec session OTL}
+
+Note that the Lorentz force is $\vec{F} = \frac{q\vec{v}}{c} \times \vec{B}$, so we find that the $p$ does not change in magnitude because the force is perpendicular to the momentum. This shows that it must be circular motion, where we can derive that $\omega = \frac{qB}{\gamma mc}$. Interestingly, this is independent of the radius of the circle and the velocity of the particle (note that $\omega = \frac{v}{r}$).
+
+If we have both electric and magnetic fields, we can obtain a helix. The pitch is defined $v_{par}T = \frac{2\pi v_{par}}{\omega}$ where $v_{par}$ is the parallel velocity. 
+
+We also note that charged particles that interact with their surroundings (i.e. slow down) will produce an inward spiral. If we adopt the $F=bv$ model of friction, we will find a roughly exponential decay of the radius, which is confrimed in experiments (handout was given in class). 
+
+We investigate the problem of a particle moving in crossed $E,B$ fields such that it forms a cycloid travelling in the positive $y$ in the $yz$ plane. We can then compute
+
+\begin{align*}
+	F &= m\ddot{y} \hat{j} + m\ddot{z}\hat{k}\\
+	&= \frac{qB}{c}\dot{z}\hat{j} + q(E - \frac{B}{c}\dot{y})\hat{k}\\
+	m\frac{d \ddot{y}}{dt} &= \frac{qB}{c}\ddot{z}\\
+	&= \frac{qB}{mc}\omega\left(\frac{cE}{B}-\dot{y}\right)\\
+	\frac{d \ddot{y}}{dt} &= \omega^2\left(\frac{cE}{B} - \dot{y}\right)\\
+\end{align*}
+
+We then invoke boundary conditions (and similar algebra for the $z$ case) to find that $\dot{y} = \frac{cE}{B}(1-\cos\omega t)$ from which the trajectories follow simply from boundary conditions and integration. We then note that $\ddot{y} \propto \dot{z}, \dot{y} \propto z$, so we can compute $z(t)$ easily. This forms a cycloid, which is defined as the curve formed by a point on a radius of a circle as the circle rotates.We can then compute $(z-r)^2 + (y-r\omega t)^2 = r^2$, which confirms that this is a cycloid (the center stays at coordinates $(0,r\omega t, r)$.
+
+We discuss Helmholtz coils. Consider two rings centered on the z-axis with radius $a$ and separation $b$. Denoting the origin to be midway between the rings, we find that
+
+$$B_z = \frac{2\pi a^2 I}{c}\left(\frac{1}{(a^2 + (z - \frac{L}{2})^2)^{3/2}} + \frac{1}{(a^2 + (z + \frac{L}{2})^2)^{3/2}}$$
+
+If we expand as a Taylor series in $z$, we find first that $z \to -z$ must leave the same $B$, so by symmetry the odd order terms must be $0$. We can then configure the ratio $\frac{b}{a}$ to make the second order term $0$, giving the deviations very small order. This is how to choose $\frac{b}{a}$ such that the field at $z=0 \approx$ uniform. 
+
+If we then construct a cylindrical Amperian surface in $z$, we can sum the fluxes $B_{z+}(\pi r^2) - B_{z-}(\pi r^2 = -B_r2\pi r dz$, where $B_r, B_{z+}, B_{z-}$ are all magnetic fields in their respective directions, and we know that these must sum to $0$ due to Gauss's law for magnetism, we can then compute a lot of stuff about the stuff at the origin that we won't consider here; this is just to show problem solving techniques. The full solution is on the handout.
+
+If we then draw a sheet of uniform current density, we can see that the fields on either side are parallel to the sheet. We can draw an Amperian loop to compute the magnitudes of the B field on eihter side, and we find that $B = \frac{4\pi}{c}J$, where $J$ is the current density. We find the energy density is $\rho = \frac{B^2}{2\pi}$, which has the shame units as pressure! Exactly. We can actually compute the pressure by constructing a strong strong superconducting coil and measure the pressure, which is really cool. 
+
+If we then consider two co-moving sheets, then we can simply Lorentz transform them (handout) to find the new charge density, which gives a transformed current and gives transformed electric and magnetic fields. The conclusion is that parallel components do not change, while perpendicular components cochange with respect to $\gamma$.
+
+\end{document}
+

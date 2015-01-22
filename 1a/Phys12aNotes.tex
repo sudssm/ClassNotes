@@ -1,0 +1,1094 @@
+\documentclass{report}
+\usepackage{amsmath, amssymb, amsthm, graphicx, fullpage}
+\usepackage[version=3]{mhchem}
+\newcommand{\unit}[1]{\ensuremath{\, \mathrm{#1}}}
+
+\begin{document}
+
+\title{Physics 12! :)}
+\author{Yubo Su}
+\date{ }
+
+\maketitle
+
+\tableofcontents
+
+\chapter{October 4 - Harmonic Oscillators and Superposition}
+
+\section{Simple Harmonic Oscillators}
+
+Recitations will be in Downs 107 Monday 1930 and Annenburg 243 Wednesday 1500. Next Friday (10/12) 3pm demos in 201 East Bridge.
+
+Simple Harmonic Oscillators (one degree of freedom):
+
+$$\ddot{x} = -\omega x^2$$
+
+where $\omega^2 = k/m$ 
+
+$$KE = \frac{1}{2} mv^2$$
+$$PE = \frac{1}{2} kx^2$$
+$$E = PE + KE$$
+
+$E$ is constant for all SHOs.
+
+Examples:
+
+\begin{itemize}
+\item mass on a spring = k, m
+\item pendulum (under small angle approximation) = l,g
+\item LC circuit = 1, LC
+\item Solids are springs too! See below
+\end{itemize}
+
+Derivation for LC Circuit:
+
+-\begin{align*}
+I &= \dot{Q}\\
+V &= \frac{Q}{C} = -\dot{I}L = -\ddot{Q}L\\
+\ddot{Q} &= -\frac{1}{LC}Q
+\end{align*}
+
+Therefore, SHO with $\omega^2 = \frac{1}{LC}$.
+
+We can also talk about solids as springs (continuum mechanics). Consider a mass $M$ suspended by a solid of cross-sectional area $A$ and a length $L$. The force per area on the solid is called the \emph{stress}, $\frac{F}{A}$. Of course, the suspension of the mass will pull the mass downward, and the change in length per initial length is called the \emph{strain}, $\frac{\Delta x}{x_0}$. We will then define Young's modulus to be the constant ratio between stress and strain, or $\frac{F}{A} = -y \frac{\Delta x}{x_0}$ where $y$ is Young's modulus.
+
+We note that $F = m\ddot{x} = m\ddot{\Delta x}$ (because $x = x_0 + \Delta x$ and $x_0$ is constant in time).
+
+\begin{align*}
+F &= m \ddot{\Delta x} = -y \frac{\Delta x}{x_0}\\
+\omega^2 &= \frac{YA}{mx_0}
+\end{align*}
+
+Young's modulus is a characteristic of materials (i.e. Aluminum is $6 \times 10^10 \frac{\unit{N}}{\unit{m^2}}$ and Steel is $20 \times 10^10 \frac{\unit{N}}{\unit{m^2}}$). Strain should stay less than $10^{-2}$ and to stay harmonic should stay less than $10^{-3}$. The \emph{strength} of materials is on the order of $10^8 \frac{\unit{N}}{\unit{m^2}}$, which is the point at which stuff breaks (strain $\times$ Young's modulus).
+
+Shear happens when a solid is shifted sideways rather than pulled (which is stress). There will be a restoring force against the shearing force and will be roughly linear again. $\frac{F}{A}$ is shear stress and $\alpha$ is the shear angle or strain (the angle the object is forced off of the normal line). The shear modulus is $n = \frac{-\frac{F}{A}}{\alpha}$, which corresponds to Young's modulus in stress forces.
+
+Bulk modulus is the third type, in the third dimension. The restorative force resists three dimensional compression, such as a sphere resisting compression. The Bulk Modulus $K = -\frac{\frac{F_{compression}}{A}}{\frac{\Delta V}{V_0}}$ where $V_0$ is the compressionless volume. This then yields $F = m \ddot{\Delta V} = -K \frac{\Delta V}{V}$. Note that the three types correspond to stresses in one, two, and three dimensions and all three will generate SHO because they all have a linearly proportional restorative force.
+
+\section{Linearity and Superposition}
+
+We have dealt often with differential equations of motion in some variable $x$ that is a function of time and its derivatives (in that its derivatives govern its motion). As a general example, we have:
+
+$$f(t) = a \frac{d^2}{dt^2}x + b\frac{d}{dt}x + cx$$
+
+where $f(t)$ corresponds to the driving force, $cx$ is to the restoring force, $b\frac{d}{dt}x$ to frictional force, and $a\frac{d^2}{dt^2}x$ is the $F=ma$ part. Let $L(x)$ be the right hand side of the equation, where $L$ is a differential operator $L = ad_t^2 + bd_t + c$. Conveniently, $L$ is a linear operator in that $L(x+y) = L(x) + L(y)$ and $L(Cx) = CL(x)$. 
+
+If $x_1(t), x_2$ are distinct solutions to $L$ such that $L(x_1) = L(x_2) = 0$ ($\leftarrow$ this is called the \emph{homogeneous equation} because it equals $0$), then $L(C_1 x_1 + C_2 x_2) = 0$, the principle of \textbf{superposition} in that the solutions can be superimposed.
+
+If $L(x) = f(t) = 0 + f(t)$, then this is the sum of a homogenous and inhomogenous equation ($f(t)$ being the inhomogenous/driven equation). If this $L(x)$ has some solution $x_1(t)$ and some other $L(x) = f_2(t)$ has some other solution $x_2(t)$, then $L(x) = Af_1(t) + Bf_2(t)$ has solutions $x = Ax_1(t) + Bx_2(t) + Cx_0(t)$ where $x_0(t)$ solves the homogenous equation (note that the coefficients for $x_1(t)$ and $x_2(t)$ depend on the strength of their corresponding driving forces).
+
+Then, if we can build an arbitrary $f(t)$ as a linear sum of components of $f_i(t)$ such that the solutions to $L(x) = f_i(t)$ are known $x_i(t)$, then we can solve the general $f(t)$ case! Powerful! This is the basis of Fourier decomposition ($f_i(t) = cos(\omega_i t)$) and Green's function (?) method for impulses $f(t)$. 
+
+Note though, we are making use of linearity of the system, which though quantum mechanics is linear classical mechanics is hardly linear, requiring enharmonic terms etc. Arbitrarily complicated solutions to diffeqs can be built up from superpositions of linear solutions, which is the technique of approximations. 
+
+\section{Harder Harmonic Motion!}
+
+We will try harmonic motion now with more than one degree of freedom, $n$ degrees of freedom mechanically coupled. We do so by assuming that each degree of freedom has the same frequency and phase but with different amplitudes. The frequencies we assume (which are the only ones that work) are called the \textbf{normal modes of oscillation}. These normal modes can then be linearly superimposed to consider arbitrary frequencies and oscillation patterns. We begin with two masses, such that there are two masses and three springs, two walls on either side. You know the setup, too lazy to geogebra.
+
+The two degrees of freedom are then $x_1(t)$ and $x_2(t)$. The equations of motion are (let $x_1$ be on the left and thus in the negative direction):
+
+\begin{align*}
+m \ddot{x_1} &= -kx_1 + k(x_2 - x_1)\\
+m \ddot{x_2} &= -k(x_2 - x_1) - kx_2
+\end{align*}
+
+We will search for normal modes such that $x_1(t) = A_1 \cos(\omega t + \phi)$ and $x_2(t) = A_2 \cos(\omega t + \phi)$. Note that $\omega$ and $\phi$ are the same between the two oscillators (which is what qualifies something as a normal mode). If we have normal modes, then:
+
+\begin{align*}
+\ddot{x_1} &= -\omega^2 x_1\\
+\ddot{x_2} &= -\omega^2 x_2\\
+(-\omega^2 + \frac{k}{m} + \frac{k}{m})x_1 - \frac{k}{m} x_2 &= 0\\
+-\frac{k}{m} x_1 + (-\omega^2 + \frac{k}{m} + \frac{k}{m}) x_2&= 0\\
+\begin{bmatrix}
+(-\omega^2 + \frac{k}{m} + \frac{k}{m}) &  - \frac{k}{m} x_2\\
+-\frac{k}{m} x_1 & (-\omega^2 + \frac{k}{m} + \frac{k}{m}) x_2
+\end{bmatrix}\begin{bmatrix} x_1\\
+x_2
+\end{bmatrix} &= 0
+\end{align*}
+
+We then know that solutions exist only if determinant is zero, so:
+
+\begin{align*}
+(\frac{2k}{m} - \omega^2)^2 - (\frac{-k}{m})^2 &= 0\\
+\frac{2k}{m} - \omega^2 &= \pm \frac{k}{m}\\
+\omega^2 &= \frac{k}{m}, \frac{3k}{m}
+\end{align*}
+
+\chapter{October 9 - Generalize ALL the Motion! $N$ degrees of freedom}
+
+Cool thing: elastic solids can be modeled as particles with springs in between.
+
+Let's return to the problem of earlier. Let's say that the initial condition is $x_2 = 0$ and $x_1 \neq 0$. We will find that as the time goes on $x_2 = x_1(0)$ while $x_1 = 0$ at some points. This is called mode sloshing, which basically consists of exchanges of energy between the two degrees of freedom. This is somewhat similar to beats in music.
+
+Explanation: When we displace only one degree of freedom, we are actualy exciting both modes such that by symmetry. This is best shown using complex exponentials as follows (Let $A_{mi} =$ amplitude of normal mode i (Note that when we displace only one degree of freedom we have $A_{m1} = A_{m2}$ because $x_1 = A_1$ and $x_2 = 0$)):
+
+\begin{align*}
+Z_{total} &= A_{m1}e^{i\omega_1 t} + A_{m2}e^{i\omega_2t}\\
+&= Ae^{\frac{i(\omega_1 + \omega_2)t}{2}}\left[ e^{\frac{-i(\omega_2 - \omega_1)t}{2}} + e^{\frac{i(\omega_2 - \omega_1)t}{2}}\right]\\
+&=  Ae^{\frac{i(\omega_1 + \omega_2)t}{2}} 2 \cos\left[\left(\frac{\omega_2 - \omega_1}{2}\right)t\right]\\
+X_{total} &= \mathrm{Re}[Z_{total}] = 2A\cos\left(\frac{\omega_1 + \omega_2}{2}t\right)\cos\left(\frac{\omega_2 - \omega_1}{2}t\right)\\
+\end{align*}
+
+Here, we note for frequencies $\omega_1 \approx \omega_2$ that the first term is a slow wave while the second is a fast wave. The beat frequency is then $\omega_2 - \omega_1$.
+
+We now move on to $N$ degrees of freedom T\_T. What we must notice is that the modes are uncoupled, even though the degrees of freedom are coupled. Actually, these modes are orthogonal. We then note that any general free/undriven motion can be written as linear superposition of normal modes (\emph{Completeness}). Now, given $N$ masses:
+
+\begin{align*}
+m_j \ddot{x_j} = F_j &= -\displaystyle\sum\limits_{i=1}^N k_{ij}x_j
+\end{align*}
+
+Note that because these $k_ij$ account for every coupling, many of these $k$'s will be $0$ (such as $k_{13}$). We will note that $k_{ij}$ is equivalent to the force on mass $i$ due to mass $j$'s position. Therefore, we will note (by some drawing stuff and other fun stuff) that $k_{11} = k_1 + k_2$ and $k_{12} = -k_2$ where $k_i$ is the spring constant of the $i$'th spring. We will also note that:
+
+\begin{align*}
+F_j &= -\frac{\partial V}{\partial x_j}\\
+k_{ij} &= \frac{\partial F_j}{\partial x_i} = - \frac{\partial^2 F_j}{\partial x_j \partial x_i}
+\end{align*}
+
+We will then note that this matrix ($N \times N$, symmetric) is eerily close to diagonal:
+
+$$\begin{pmatrix}
+k_{11} & k_{12} & 0 & \cdots & 0\\
+k_{21} & k_{22} & k_{23} & \cdots & 0\\
+0 & k_{32} & k_{33} & \cdots & 0\\
+\vdots &&& \ddots & \vdots\\
+0 & 0 & \cdots & k_{N(N-1)} & k_{NN}
+\end{pmatrix}$$
+
+We will then be able to use $X = \begin{pmatrix}x_1\\x_2\\x_3\\ \vdots \\ x_N\end{pmatrix}$. We also define:
+
+$$M = \begin{pmatrix}m_1 & 0 & \cdots & 0\\
+ 0 & m2 & \cdots & 0\\ 
+ \vdots && \ddots&\vdots \\ 
+ 0 &0&\cdots& m_N
+ \end{pmatrix}$$
+
+This means that from earlier $M \ddot{X} = -KX \Rightarrow \ddot{X} = -M^{-1}KX$ where each variable is the corresponding matrix. We then show normal modes (still using vector notation):
+
+\begin{align*}
+Z(t) &=Ae^{i(\omega t + \phi)}\\
+A &= \begin{pmatrix}a_1\\a_2\\a_3\\\vdots\\a_N\end{pmatrix}\\
+-\omega^2Z&= -M^{-1}XZ\\
+\omega^2A &= M^{-1}KA\\[12.0pt]
+(M^{-1}K - \omega^2I)A &= 0
+\end{align*}
+
+This is then clear that it is an eigenvalue equation, which means either $A = 0$ or the determinant of that huge thing on the left is $0$ (which is the nontrivial solution involving actual motions). We then obviously want:
+
+$$\det (M^{-1}K - \omega^2I) = 0$$
+
+This gives us the characteristic polynomial in $\omega^2$ which will have $N$ real roots (remembering that $N$ is the number of degrees of freedom). Note also that after calculating these $\omega$, we have to go back to calculate each eigenvector that corresponds to the various $A$ that correspond to normal modes. The general motion of $X$ is then a linear superposition of these eigenvectors. Given this, one writes the general solution as:
+
+$$X_j = \mathrm{Re}(Z_j) = \displaystyle\sum\limits_k^n C_{ij}A_ie^{i(\omega_n t + \phi_n)}$$
+
+Why must they be real? They just are. The proof is left as a 12-whiteboard exercise to the reader. Note that these roots are only real in the absence of damping. There will also be $N$ distinct normal modes. Then, by linearity and superposition, any arbitrary coupled motion of these $N$ degrees of freedom can be written as a superposition of uncoupled normal modes.
+
+THIS IS THE BASIS FOR FOURIER/SPECTRAL ANALYSIS! Linearity of couplings between $N$ degrees of freedom.
+
+We then move on to infinite degrees of freedom i.e. continuous systems such as strings. We model strings as an infinite nummber of masses separated by an infinite number tensile forces. Note that strings (tension) and springs are different: for strings, $F = T \rightarrow V = -Tx$ while for springs $F = -kx = \frac{1}{2}kx^2$.
+
+We are out of time, so we will point out that for strings we can simplify to some finite number of masses by lumping masses together. We can then recover from this standing waves! Try it! 
+
+\chapter{October 10 - TA Recitation}
+
+We will be talking about two equations:
+
+\begin{itemize}
+\item $\frac{d^2x}{dt^2} = -\omega^2x$
+\item Coupled case: \begin{itemize}
+\item $\frac{d^2x}{dt^2} = -a_{11}x - a_{12}y$
+\item $\frac{d^2y}{dt^2} = -a_{21}x - a_{22}y$
+\end{itemize}\end{itemize}
+
+We know that for any second order differential equations there are infinitely many solutions, but given any two boundary conditions there will be at most one $x(t)$ that satisfies the differential equation. The correspndong claim for the latter case (coupled) is that there need be four boundary conditions.
+
+The Uniqueness Therom states that if there is any solution that satisfies the necessary number of boundary conditions then it is also the unique solution. We investigate Newton's law:
+
+\begin{align*}
+F &= ma\\
+&= m\frac{d^2x}{dt^2}
+\end{align*}
+
+We know that at a stable point, $F(0) = 0$. We can then expand things by Taylor series:
+
+$$F(x) = F(0) + F'(0)x +...$$
+
+where we know that for small perturbations $F(x) = F'(0)x$ (because $F(0) = 0$). We know then that because it is stable, the force must be restorative, so $F(x) = -kx$. This then means that for any force field at a stable point $m\frac{d^2x}{dt^2} = -kx$.
+
+We can see a similar case for the coupled case, where by a Taylor expansion we have:
+
+\begin{align*}
+md_t^2x = -b_{11}x - b_{12}y\\
+md_t^2x = -b_{21}x - b_{22}y
+\end{align*}
+
+We now discuss the reason behind these equations. First, let us look at the first case, uncoupled. $\ddot{x} = \omega^2x$ where we can define boundary conditions $x(T)$ and $\dot{x}(T)$ for any $T$ and arrive at a unique solution.
+
+Let us use the uniqueness theorem and "`guess"' that $x = A\cos(\omega t + \phi)$ is a solution. We then see that $\ddot{x} = -\omega^2x$. We can also superimpose solutions, the superposition principle.
+
+What this then shows in the coupled case is that we can substitute $x(t) = A\cos(\omega t + \phi)$ and $y(t) = B \cos(\omega t + \phi)$ and solve for some certain normal frequencies $\omega$ that will depend on the coefficients in the equations of motion. These then allow us to find the normal modes, and by the uniqueness theorem we know that these are the unique normal modes, and then by superposition we have solved the coupling! Success!
+
+\chapter{October 11 - Frequency space}
+
+We look at plucking a guitar string and model it as the lumped masses from the end of the last lecture. We start with two groups of mass spaced at $\frac{L}{3}$ and $\frac{2L}{3}$ along the string respectively. We see simply that the simplest mode of motion is $y_1 = y_2$ for the two masses, so that the masses oscillate identically both in space and in frequency-space. We then have approximately a trapezoidal shape, with the masses and the endpoints comprising the verticies. Inspecting $y_1$, we can sum the forces as follows:
+
+\begin{align*}
+\sum{F_x} &= -T\cos\theta + T \approx 0\\
+\sum{F_y} &= -T\sin\theta = -T\tan\theta = -T\frac{y_1}{\frac{L}{3}}\\
+&= \frac{M}{2}\ddot{y_1}\\
+\ddot{y_1} &= -\frac{6T}{mL}y\\
+\omega &= \sqrt{\frac{6T}{mL}}
+\end{align*}
+
+This obviously holds for $y_2$ as well. We then investigate the other mode of motion. We see that the string crosses the horizontal axis at $\frac{L}{2}$ and we can work everything out similarly to above as follows:
+
+\begin{align*}
+\frac{m}{2}\ddot{y_1} &= -T\frac{y_1}{L/3} - T \frac{y_1}{L/6}\\
+\omega^2 &= \sqrt{\frac{18T}{mL}}
+\end{align*}
+
+We then go to continuous strings. Notice how the $T$ force will be exerted at a difference $d\theta$ over each $dL$ of string, which gives the differences in forces that we want to see. We then make some assumptions:
+
+\begin{itemize}
+\item small transverse oscillations
+\item Length $L$, mass $M$
+\item Mass per length $\lambda = \frac{M}{L}$
+\item Constant tension $T$
+\end{itemize}
+
+The equations of motion are then:
+
+\begin{align*}
+\sum{f_x} &= -T\cos\theta + T\cos(\theta - d\theta) \approx 0\\
+\sum{f_y} &= M \, dx \ddot{y} = -T\sin\theta + T\sin(\theta - d\theta) = -T \, d\theta\\
+\ddot{y} &= -\frac{T}{\lambda} \frac{d\theta}{dx}
+\end{align*}
+
+We note that since this is a continuous system, $y$ is no longer just a coordinate but a function $y(x,t)$, changing from discrete indicies to continuous indicies. Similary, we need $\theta(x,t)$. We then obviously must change everything to partial derivatives.
+
+\begin{align*}
+d \theta &= \frac{\partial y}{\partial x}(x_0) - \frac{\partial y}{\partial x}(x_0 + dx)\\
+-\frac{d\theta}{dx} &= \lim_{dx \to 0} \left[\frac{\frac{\partial y}{\partial x}(x_0 + dx) - \frac{\partial y}{\partial x}(x_0)}{dx}\right]\\
+&= \frac{\partial^2 y}{\partial x^2}(x_0)
+\end{align*}
+
+\textbf{This last equation is ridiculously important! It is the classical wave equation! Let's see it again:}
+
+$$\frac{\partial^2 y}{\partial t^2} = \frac{T}{\lambda} \frac{\partial^2 y}{\partial x^2}$$
+
+We see that $\frac{T}{\lambda}$ is in units of velocity$^2$, and indeed it is the square of the speed of the wave. We will then solve this wave equation using normal modes again, which have the following criteria:
+
+\begin{itemize}
+\item all bits in $dx$ are moving with same $\omega, \phi$.
+\item $y(x,t) = f(x)e^{i(\omega t + \phi)}$ (Note that this will always actually mean the real part, just convenience)
+\end{itemize}
+
+We will then have:
+
+\begin{align*}
+-\omega^2f(x) &= \frac{T}{\lambda}\frac{\partial^2 f}{\partial x^2}\\
+0 &= \frac{\partial^2}{\partial x^2}f + \left(\frac{\lambda}{T}\omega^2\right)f\\
+f(x) &= A \cos\left(\sqrt{\frac{\lambda}{T}\omega^2}x + \alpha\right)
+\end{align*}
+
+where $\alpha$ is the spacial phase and the coefficient of $x$ is the spacial frequency. We then apply our boundary conditions:
+
+\begin{align*}
+f(0) &= 0 \Rightarrow A\cos\alpha = 0 \Rightarrow \alpha = -\frac{\pi}{2}\\
+f(L) &= 0 \Rightarrow A\sin\left(\sqrt{\frac{\lambda}{T}\omega^2}L\right) = 0 \Rightarrow \sqrt{\frac{\lambda}{T}}\omega L = n\pi
+\end{align*}
+
+$n=0$ is then a trivial solution, leave it out! We also see that negative solutions are redundant because while they change the signs, this is accounted for in $A$ which is a boundary condition. So we leave those out too. We then see a family of $\omega_n$:
+
+$$\omega_n = \frac{n\pi}{L}\sqrt{\frac{T}{\lambda}}$$
+
+This is then an infinite family of $\omega$ that satisfy the equation and they form a spectrum in frequency. We then see that because $n$ must be integral we have some sort of quantization of $\omega$ (foreshadows quantum mechanics!).
+
+We then try to solve the spatial frequencies denoted by wavenumber $k$. We will see that $k_n = \sqrt{\frac{\lambda}{T}}$ and $\omega_n = \frac{n\pi}{L}$. We then have (plugging in $k_n$ for $\omega$ and noting that $\cos(\theta - \pi/2) = \sin(\theta)$):
+
+\begin{align*}
+f(x) &= A\sin(k_nx)\\
+y(x,t) &= A\sin(k_nx)\cos(\omega_nt + \phi)
+\end{align*}
+
+where we can find $A$ from initial conditions and $k_n$ and $\omega_n$ from boundary conditions. We will also note that $\omega_n = \sqrt{\frac{T}{\lambda}}k_n$, which is called the dispersion relation. For electromagneticwaves in a vacumn, we see:
+
+\begin{align*}
+\omega &= ck\\
+2\pi f &= c \frac{2\pi}{\lambda}\\
+f &= \frac{c}{\lambda}
+\end{align*}
+
+which we know! Cool stuff. 
+
+We then see that $\omega_1 = \frac{pi}{L}\sqrt{\frac{T}{\lambda}}$ where we can see that $k_1 = \frac{\pi}{L} = \frac{2\pi}{\lambda}$ so $\lambda = 2L$ which is as expected for the first mode. As for harmonics, we see that $k_n = \frac{n\pi}{L} = \frac{2\pi}{\lambda_n}$ so $\lambda_n = \frac{2L}{n}$ which shows the harmonic which we are accustomed to seeing. 
+
+Of course, we don't have to fix the ends down! We can use frictioness massless metal rings at either end to make free ends. How do we make boundary cases for free ends? We must notice that at the boundaries, the ring will move to cancel slopes such that the slope is always equal to zero:
+
+$$\frac{\partial f}{\partial x}(0) = \frac{\partial f}{\partial x}(L) = 0$$
+
+These are called the free boundary conditions.
+
+We see that the wavefunction (the proof is left as an exercise to the reader) is as follows:
+
+$$y(x,t) = A\cos(k_nx)cos(\omega_nt + \phi)$$
+
+where $\omega_n = \sqrt{\frac{T}{\lambda}}k_n$ where $k_n = \frac{n\pi}{L}$. Note that the cases for $n = -n$ are literally identical now, while $n=0$ just consists of a falling string. Nothing else of interest here, we can see the solutions graphically though by plugging stuff in.
+
+We can also have one end fixed and one end free, which would result in normal wavelengths of $\lambda = \frac{L}{4}, \frac{3L}{4}, \frac{5L}{4}$ etc. That is all T\_T
+
+Note also that because there are atoms, there is a cutoff frequency because there are only a certain finite number of atoms. You will also find that dispersion relation becomes much more complicated! T\_T
+
+We will now assert (demonstrable) that by linearity and superposition that the most general form of motion for free motion is:
+
+$$y(x,t) = \sum_n{A_n\sin\left(\frac{n\pi x}{L}\right) \cos\left(\omega_nt + \delta_n\right)}$$
+
+We can calculate the $A_n$ and $\delta n$ by initial conditions:
+
+$$t=0, y(x,0) = \sum{A_n\sin\left(\frac{n\pi x}{L}\right)\cos\delta_n} = \sum{a_n\sin\left(\frac{n\pi x}{L}\right)}$$
+
+This is then \text{Fourier's theorem}: Any piecewise continuous function defined between $0$ and $L$ can be expressed as a sum of sines and cosines of $\lambda_n = \frac{2l}{n}$.
+
+We will also note that while the simple classical wave equation $\frac{\partial^2 y}{\partial t^2} = C \frac{\partial^2 y}{\partial x^2}$ is solved with sines and cosines, more complicated equations are solved with different functions such as Legendre polynomials, Chebychev polynomials, Laguere, etc.
+
+We can also generalize to solutions of fixed or loose ends, so arbitrary boundary conditions, as follows:
+
+$$f(x) = \frac{b_0}{2} + \sum{a_n \sin\left(\frac{n\pi}{L}x\right)} + \sum{b_n \cos\left(\frac{n\pi}{L}x\right)}$$
+
+This is the statement of Fourier's theorem, and its power is in that we find an infinite summation over a discrete index rather than a continuous index, and we also know how these normal modes move, therefore, we are theoretically capable of solving all the things. We find the coefficients $a_n, b_n$ by using the facts:
+
+\begin{itemize}
+\item $\displaystyle\int\limits_0^{2L}{\sin\left(\frac{n\pi}{L}x\right)\cos\left(\frac{m\pi}{L}x\right)} dx = 0$
+\item $\displaystyle\int\limits_0^{2L}{\sin\left(\frac{n\pi}{L}x\right)\sin\left(\frac{m\pi}{L}x\right)} dx = L$ is true if $m = n$, $=0$ otherwise.
+\item $\displaystyle\int\limits_0^{2L}{\cos\left(\frac{n\pi}{L}x\right)\cos\left(\frac{m\pi}{L}x\right)} dx = L$ is true if $m = n$, $=0$ otherwise.
+\end{itemize}
+
+If we then multiply by $\sin\left(\frac{n\pi}{L}x\right)$ and integrate over $(0,2L)$, then we will find $a_n$. We can repeat for all $a_n$ and $b_n$. (I'm not going to type this out, but you get the gist).
+
+This gives us the Fourier decomposition of an arbitrary function $f(x)$. 
+
+\chapter{October 16 - Longitudinal waves and other stuff}
+
+Informal discussion of LIGO next Tuesday after class!
+
+Remember the wave equation: 
+
+$$\frac{\partial^2 y}{\partial t^2} = v^2 \frac{\partial^2 y}{\partial x^2}$$
+
+We can combine that with boundary/initial conditions ($y(0,t) = y(L,t) = 0$ for fixed boundary conditions and $\partial_xy(0,t) = \partial_xy(L,t) = 0$ for free ends). We then remember also that we wrote as follows (for normal modes):
+
+$$y(x,t) = f(x)\cos(\omega_nt + \phi)$$
+
+where $\omega_n = \sqrt{\frac{T}{\mu}} k_n$ and $k_n = \frac{n\pi}{L} = \frac{2\pi}{\lambda_n}$, $\lambda_n = \frac{2L}{n}$. We then wrote $f(x)$ as follows:
+
+$$f(x) = \frac{b_0}{2} + \sum{a_n \sin\left(\frac{n\pi}{L}x\right)} + \sum{b_n \cos\left(\frac{n\pi}{L}x\right)}$$
+
+This is the Fourier decomposition of initial conditions at $t=0$. It then becomes clear that for fixed boundary conditions $b_n = 0$ and for free boundary conditions $a_n = 0$. We accomplished this general solution by the orthagonality of $\sin$ and $\cos$. 
+
+We will try all this with an example now. We pluck a violin string (fixed ends) so it ends up being a triangle at $t=0$, let's just say isosceles. Thus we have $f(x) = ax$ for $0 \leq x \leq L/2$ and $f(x) = a(L-x)$ for $l/2 \leq x \leq L$. We then know from the Fourier decomposition that:
+
+\begin{align*}
+a_n &= \frac{2a}{L}\left(\displaystyle\int\limits_0^{L/2}{x\sin(\frac{n\pi x}{L})dx} + \displaystyle\int\limits_{L/2}^L{(L-x)\sin(\frac{n\pi x}{L})dx}\right)\\
+&= \frac{2a}{L}\left(\frac{2\sin(\frac{n\pi}{2})}{\left(\frac{n\pi}{L}\right)^2}\right)\\
+&= \frac{4a}{L}\frac{(-1)^{\frac{n-1}{2}}}{(\frac{n\pi}{L})^2}
+\end{align*}
+
+where the last expression is only for odd $n$. We then find that $a_n$ converges quickly so we have a good approximation of the wave with few terms and have roughly solved the problem.
+
+We can also try our usual approach towards a square wave, which is a piecewise continuous function. We define our square wave to jump upwards at $L/3$ and return at $2L/3$. Again, we see that we only worry about our $a_n$ and we split into three parts. Two are immediately zero, because the wave is zero at those points. We will find that the terms fall in amplitude $\propto \frac{1}{n}$ rather than $\propto \frac{1}{n^2}$ as it did earlier. This makes sense because of the discontinuity. 
+
+We can generalize this approach to three dimensions:
+
+$$\Psi(x,y,z,t) = \sum{A_{n_xn_yn_z}\sin\left(\frac{n_x\pi x}{L_X}\right)\sin\left(\frac{n_y\pi y}{L_y}\right)\sin\left(\frac{n_z \pi z}{L_z}\right)\cos(\omega_{n_xn_yn_z} t + \phi) +...}$$
+
+where we omit the $\cos$ terms for simplicity. The dispersion relation might then be something like $\omega_{n_xn_yn_z} = \sqrt{n_x^2 + n_y^2 + n_z^2}\frac{\pi}{L}V$.
+
+We can then discuss longitudinal oscillations. Let there be an elastic rod of length $L$ such that it is fixed to a wall, so one end is fixed and the other is free. We have our attributes length $L$, mass $M$, cross-sectional area $A$, density $\rho$, and Young's modulus $Y$. We can then examine two points on this rod, $x$ and $x + \Delta x$ where the wavefunctions are defined as $\psi$ and $\psi + \Delta Psi$ where $\psi(x)$ is the displacement from equilibrium. 
+
+The slice between these points is then subject to force $F_x = M \frac{\Delta x}{L}\ddot{\psi}$. We then recall that $\frac{F}{A} = -Y \frac{\Delta L}{L}$. We see that $\frac{\Delta L}{L} = \frac{\Delta \psi}{\psi}$. We then can see that:
+
+\begin{align*}
+F_x = F_2 - F_1 &= M\frac{\Delta x}{L}\ddot{\psi}\\
+\frac{F_2 - F_1}{A} &= Y \frac{\Delta \psi}{\Delta x}(x_2) - y \frac{\Delta \psi}{\Delta x}(x_1)\\
+&= Y \Delta x \frac{\partial^2 \psi}{\partial x^2}\\
+&= M \frac{\Delta x}{AL}\ddot{\psi}\\
+\ddot{\psi} &= \frac{Y}{\rho}\frac{\partial^2 \psi}{\partial x^2}
+\end{align*}
+
+We come back to our wave equation! $Y$ is similar to $T$ in strings as the restorative force while $\rho$ is the corollary of $\mu$ for inertialness. For example, in a steel rod, $v$ turns out to be $5000 \mathrm{km/s}$. Air works out through some complicated stuff to be $330 \mathrm{m/s}$.
+
+We can then find our normal modes of our rod, which are the same as those on a string with a free and a fixed end. We then of course have our $\lambda_n = \frac{4L}{2n+1}$, $k_n = \frac{2\pi}{\lambda_n}$, and $\omega_n = v k_n$.
+
+We will now want to consider viscous/damping forces. Let's see damped driven oscillations (setup only, we will solve on Thursday!):
+
+\begin{align*}
+m\ddot{x} &= -kx - m\gamma\dot{x} + f(t)\\
+\end{align*}
+
+where $f(t)$ is an arbitrary external driving force and $m \gamma \dot{x}$ is the damping force. Note that the damping term is an approximation and that it is usually nonlinear. We will assume $v$ is small so that the damping force is approximately linear. We will again use complex exponentials, which only work in linear differential equations (check the math, ezpz). We will begin in the absence of a driving force:
+
+$$\ddot{x} + \gamma \dot{x} + \omega_0^2x = 0$$
+
+We can then see that the normal modes are of form $Z(t) = Z_0 e^{\alpha t}$, for which we have
+
+$$(\alpha^2 + \gamma\alpha + \omega_0^2)Z(t) = 0$$
+
+So we then have a quadratic in $\alpha$, which is pretty simple (quadratic because we want $z(t) \neq 0$). That's it! Examine in depth next class.
+
+\chapter{October 18 - Damped driven oscillations and \textbf{REALLY IMPORTANT STUFF}}
+
+$$m\ddot{x} = -kx - m\gamma\dot{x} + f(t)$$
+
+is again the damped, driven motion of equation as talked about during last class. In the homogenous case, there is no driving force. We have:
+
+$$\ddot{x} + \gamma \dot{x} - \omega_0^2x = 0$$
+
+where $\omega_0^2 = \frac{k}{m}$. If we guesstimate normal modes $Z9t) = Z_0e^{\alpha t}$ where $\alpha \in \mathbb{C}$, then we have:
+
+$$(\alpha + \gamma\alpha -\omega^2)Z_0e^{\alpha t}$$
+
+We then have a quadratic in $\alpha$. Depending on the sign of the determinant (You've done this before in class Yubo :D yay! * never mind...), we then have three cases:
+
+\begin{itemize}
+\item Small damping: $\alpha = -\frac{\gamma}{2} \pm i\omega_1, \omega_1 = \sqrt{\omega_0^2 - (\gamma/2)^2}$. which gives $Z(t) = Z_0e^{-\gamma t/2}cos(\omega_1t + \delta)$. We can then find that $\tau = \gamma^{-1}$ is the decay time.
+\item Strong damping: $\alpha = -\frac{\gamma}{2} \pm \beta$, and we see that $x(t) = Ae^{-(\gamma/2 - \beta)t} + Be^{-(\gamma/2 + \beta)t}$. This gives just a simple exponential decay, with maybe overshoot. 
+\item Critical damping: $\alpha = -\frac{\gamma}{2}$, so $x(t) = Ae^{-\gamma t/2} + Bte^{-\gamma t/2}$. Note the second term! The math is somewhere important and telling of this. This will never overshoot! Decay time is also minimized. 
+\end{itemize}
+
+To solve driven oscillations, we Fourier decompose the driving force and use linear superposition. However, note that this requires our driving force be periodic, however else arbitrary:
+
+$$f(t) = \sum{A_n\cos(\omega_nt) + B_n\sin(\omega_nt)}$$
+
+where $\omega_n = \frac{2n\pi}{T}$. In the limit that $T \to \infty$, we can switch out the summation for an integral and obtain the continous fourier transform. We thus have:
+
+$$f(t) = \int{A(\omega)cos(\omega t)d\omega}$$
+
+If we can then solve the equations of motion for one $\cos(\omega t)$, then we can use superposition with the coefficients of $A(\omega)$ to solve for general $f(t)$. We will show how this works. We solve only for $f(t) = f_0\cos(\omega t)$, where $\omega$ is completely unrelated to $\omega_0,\omega_1$, the frequencies in the dampened oscillations cases. Let's work with complex $Z(t)$ so $f(t) = f_0e^{i\omega t}$ (the imaginary part will also solve for $f(t) = f_0\sin(\omega t)$). We then have for our equation of motion:
+
+$$\ddot{z} + \gamma\dot{z} + \omega_0^2z = \frac{f_0}{m}e^{i\omega t}$$
+
+If a driving force is exerted, then the system will oscillate (in normal modes only? idk) with the same frequency as driving force. We then have $z = Ae^{i\omega t}$. We note that $A$ is a complex coefficient that depends on $\omega$ such that $A(\omega) = |A(\omega)|e^{-i\delta(\omega)}$. We then have:
+
+\begin{align*}
+(-\omega^2 + i\omega\gamma + \omega_0^2)Ae^{i\omega t} &= \frac{f_0}{M}e^{i\omega t}\\
+A(w) &= \frac{f_0/m}{\omega_0^2 - \omega^2 + i\omega\gamma}\\
+&= \frac{f_0}{m}\frac{\omega_0^2 - \omega^2}{(\omega_0^2 - \omega^2)^2 - \omega^2\gamma^2} - i \frac{f_0}{m}\frac{\omega\gamma}{{(\omega_0^2 - \omega^2)^2 - \omega^2\gamma^2}}\\
+\tan{\delta(\omega)} &= \frac{\omega\gamma}{\omega_0^2 - \omega^2}
+\end{align*}
+
+Plotting this will show very importantly that resonant forces will actually be out of phase by $\pi/2$ with the position, such that it is with the velocity of the oscillator, not with the position. This is how input energy to an oscillator.  It is also of note that around $\omega_0$ a region of width $\gamma$ is where $\delta$ changes sharply. Note also that we call the two halves of our $A(\omega)$ the elastic (real) and absorbtive (imaginary) parts. These will both peak at $f/(m\omega_0\gamma)$. The graph of $A_{ab}$ will increase and then decrease sharply around $\omega_0 \pm \gamma/2$. The graph of $A_{el}$ will grow, fall sharply through $\omega_0$ into the negative, and then increase back to zero, so kind of like a sign-dependent version of $A_{ab}$. Key stuff:
+
+\begin{itemize}
+\item $\delta \to 0$ for $\frac{\omega_0 - \omega}{\gamma}>>1$. 
+\item $\delta \to \pi$ for $\frac{\omega-\omega_0}{\gamma} >> 1$.
+\item $\delta \to \pi/2$ for $\frac{\omega - \omega_0}{\gamma} \approx 1$. 
+\end{itemize}
+
+We then calculate the power delivered by the driving force and the power dissapated by damping. $P = d_tW, W = F \cdot x, P = F \cdot v$. We then see:
+
+\begin{align*}
+x(t) &= Re(z(t)) = Re[(A_{el} - iA_{ab})e^{i(\omega t - \delta)}]\\
+&= A_{el}\cos(\omega t) + A_{ab}\sin(\omega t)\\
+\dot{x}(t) &= -\omega A_{el}\sin(\omega t) + \omega A_{ab}\cos{\omega t}
+\end{align*}
+
+If we then average over an entire cycle, we see that:
+
+$$P(t) = F_0\cos(\omega t)[-A_{el}\omega \sin(\omega t) + A_{ab}\omega\cos(\omega t)]$$
+
+Note that this oscillates in time, meaning that power goes from the driver to the SHO and back to the driver! (what...) But then in resonant cases:
+
+$$P(t)_{avg} = \frac{1}{T}\displaystyle\int\limits_0^T{P(t)dt} = \frac{F_0^2}{2m\gamma}\frac{\omega^2\gamma}{(\omega_0^2 - \omega^2)^2 + \omega^2\gamma}$$
+
+where the integral of $\cos(\omega t)\sin(\omega t) = 0$ and $\cos^2(\omega t) = 1/2$ because that's the average value. Note that this means that the only part of the response that determines how much power is coming in is the $A_{ab}$ not $A_{el}$, which is the reason behind its name. We look at the expression for $P$ and call the first fraction power output, and if we graph the average power with respect to $\omega$ then we find a Lorentzion resonance curve whose FWHM (full width at half maximum) is $\gamma$. This means that the power is halved when $\omega_0^2 - \omega^2 = \pm\omega \gamma$. If we then stop driving the SHO then energy falls off as before, then we have $\tau = \gamma^{-1} = \Delta t$, which is the time it takes for the energy to decay to $1/e$ of its maximum. We will then find that $\Delta\omega\Delta t = 1$, which is the Heisenberg Uncertainty Principle for a single harmonic oscillator. 
+
+We can then measure how many oscillations the oscillator experiences before decaying away by some Quality factor $Q = \omega_0/\gamma = \omega_0\Delta t = 2\pi f_0 \Delta t$ where $f_0 \Delta t = Q/(2\pi)$ is the number of oscillations. If $Q >> 1$ thnn many oscillations before decaying but only at its resonant frequency, which implies a narrow response of $A(\omega)$ such that it is a ``good bell''. 
+
+\chapter{October 23 - Multiple damped degrees of freedom}
+
+For damped, driven oscillations, we decompose the driving force and analyze each Fourier component independently and by linearity/superposition. We can then write our $A$ as an elastic and absorbtive part (this is all review) Note that the FWHM for the resonance curve is the same as the damping constant! Also, note that the height of the resonance curve's height is proportional to the quality factor $Q \propto 1/\gamma$. We can then investigate the average power as follows:
+
+\begin{align*}
+<P> &= P_0 \frac{\omega^2\gamma^2}{(\omega_0^2 - \omega^2)^2 + \omega^2\gamma^2}\\
+\mbox{if: } &\gamma << \omega_0, \omega_0 \approx \omega\\
+<P> &\approx \frac{P_0}{1+\left(\frac{2(\omega_0 - \omega)}{r}\right)^2}
+\end{align*}
+
+Note that in the time domain, we can take $z(t) = e^{i\omega_0t}e^{-\gamma t/2}$ and square it to find $\gamma = 1/\tau$. So $\gamma$ is the FWHM in frequency domain, and in time domain it is the decay rate. In quantum mechanics, $\gamma$ will be the width of the mass distribution. 
+
+Solving multiple degrees of freedom gets extremely complicated analytically, but linearity ensures that the solution is straightforward way, however complicated. We look at a distributed system with lumped degrees of freedom. We start with a zero driving force, calculate the normal mode frequencies and analyze the patterns of motion of the lumps of the system under each normal mode. We will then drive with some sinusoidal force with frequency $\omega$, which will result in some complex response, which we can ``interrogate'' out of the system. If we write the output as a quotient of displacement and the input force as a function of $\omega$, then we will find the ``transfer function''. For a linear system, if you drive at some frequency $\omega$, homogenous solutions will die out because of damping while inhomogenous solutions will oscillate only at the driven frequency $\omega$ (due to linearity). Real systems are slightly nonlinear and have harmonics of the driven frequency, but we will neglect this for now. If the output is of form $Ae^{i(\omega t + \delta)} = A(\omega)e^{-i\delta(\omega)}e^{i\omega t}$ where the transfer function is $A(\omega)e^{-i\delta(\omega)}/f_0$. Let us investigate a system of springs-pendula, where there is a driving force $f(t)$ at one end. There will be a $\omega_{min}$, corresponding to the long wavelength motion, and a $\omega_{max}$, corresponding to the zigzag mode. We can then examine quantitatively that:
+
+\begin{itemize}
+\item when $\omega \approx \omega_n$, response will be large.
+\item when $\omega$ is far from every $\omega_n$, then response will be small.
+\end{itemize}
+
+This is called a mechanical band-pass filter. We will now address this in a rough quantitative manner; consider the force on the $p$-th bob (where the driving force is equal to zero)
+
+\begin{align*}
+F_p = m\ddot{\psi}_p &= \frac{-mg}{l}\psi_p - m \gamma \dot{\psi}_p + k(\psi_{p+1} - \psi_p) - k(\psi_p - \psi_{p-i}) + F_{driven}\\
+\psi_p(t) &= A_pe^{i\omega t}\\
+\mbox{Guided by continum limit, we guess at: } A_p &= A(pa) \approx A(x), x = pa\\
+&= A(\cos\left(\frac{n\pi x}{L})\right) = A\cos\left(\frac{n\pi}{N}P\right)\\
+\end{align*}
+
+where we note that $N$ is number of bobs, $p$ is the bob index (both are coordinate space), and $n$ is the normal mode index (frequency domain). Coordinate space and frequency space are considered ``conjugate spaces'' (note that position/momentum and energy/time in quantum mechanics are conjugate spaces as well). Now that we're finished with all this, we're going to put our ``guesses'' into the force equation. Good luck, have fun ($\omega_0^2 = g/l, \omega_1^2 = k/m, \alpha = n\pi/N$):
+
+\begin{align*}
+-m \omega^2 A_p &= \frac{-mg}{L}A_p - im\gamma\omega A_p + k(A_{p+1} - A_p) - k(A_p - A_{p-1})\\
+\frac{A_{p+1} + A_{p-1}}{A_p} &= \frac{\omega_0^2+ 2\omega_1^2 - \omega^2 + i\gamma\omega}{\omega_1^2}\\
+&= \frac{\cos(\alpha p + \alpha) + \cos(\alpha p - \alpha)}{\cos(\alpha p)}\\
+&= 2\cos\frac{n\pi}{N}\\
+\omega_n^2 - i\gamma\omega_n &= \omega_0^2 + 2\omega_1^2(1-\cos\alpha)\\
+&= \omega_0^2 + 4\omega_1^2\sin^2\frac{n\pi}{2N}\\
+A_p &= A\cos\left(\frac{n\pi}{N}p\right) \mathrm{(only if \gamma \approx 0)}\\
+\omega_n & \approx \sqrt{\frac{g}{l} + 4\frac{k}{m}\sin^2\frac{n\pi}{2N}} \mathrm{\gamma \approx 0}\\
+\omega_{min} &= \sqrt{\frac{g}{l}}, A_p = A, n=0, \omega = \omega_{min}\\
+\omega_{max}^2 &= \omega_0^2 + 4\omega_1^2, A_p = A(-1)^{p+1}, n = N \mathrm{(zig-zag mode)}\\
+k_n &= \mathrm{wavenumber} = \frac{2\pi}{\lambda_n} = \frac{n\pi}{L} = \frac{n\pi}{Na}
+\end{align*}
+
+We then have two cases: $n=0, \lambda = \infty, k_0 = 0$ and $n = N, \lambda_N = 2a, k_N = \frac{\pi}{a}$. We can then graph the dispersion relation as a function of $k$, which ends up being something like a population growth graph (with limiting factor, you know that graph...S-shaped), where we have as many points as we do degrees of freedom. As $N \to\infty$, we have $\omega_n$ is a continuum of modes between $\omega_{min}$ and $\omega_{max}$, which is the \emph{dispensive/dissipative regime}. We saw simple dispersion relations for continuous systems $\omega = vk$ where $v$ was a velocity dependent only on the physical properties of the system. If we then take the limit $N \to\infty$, $L$ is finite, $a$ small enough to use small angle, then we have $\omega_n^2 = 4\omega_1^2\left(\frac{n\pi}{2N}\right)^2 = \omega_1^2a^2k_n^2$, so $\omega_n = \omega_1ak$! Finally! This is interesting, because we finally recover the dispersion relation in the continum limit.
+
+\chapter{October 25 - GENERALIZED DAMPING! and Travelling Waves}
+
+Note that resonant frequencies have the equation:
+
+$$\omega_0^2 = \frac{g}{l} + 4 \frac{k}{m}\sin^2\left(\frac{n\pi}{2(N+1)}\right)$$
+
+Then, if $\omega < \omega_{min}$, then $k < 0$ and acts as an antispring. If $k^2$ is negative, then we replace $k^2 = -\kappa^2$ such that we then have the wavefunction of form:
+
+$$\psi_p = A_pe^{i\omega t}\cosh(kx)$$
+
+We then pose the general problem: Given $N$ degrees of freedom $X_n(t)$, they will move with the same $\omega_i$. We can then write as 
+
+$$x(t) = \begin{bmatrix}A_1\\A_2\\\vdots\\A_n\end{bmatrix}e^{i\omega t}$$
+
+driven by
+
+$$F(t) = \begin{bmatrix}F_1\\F_2\\\vdots\\F_n\end{bmatrix}e^{i\omega t}$$
+
+Note that while everything oscillates at the driving frequency, the $A_n$ are complex because there is a magnitude and a phase because each degree  of motion can move in its own phase. We note that $F(t)$ is just the Fourier Decomposition. Construct the mass matrix such that it is diagonal (you know it). For the spring matrix, there will be off-diagonal elements as the degrees of freedom are coupled. We then must construct the damping matrix (viscous damping), which in almost all cases is also diagonal (because each degree of freedom is only damped by its own motion). We then arrive at the matrix equation:
+
+$$M\ddot{X} = -M\gamma\dot{X} - KX + F$$
+
+Then, if $F(t) = F_0 e^{i\omega t}$, then $X = Ae^{i\omega t}$ such that $\dot{X}= i\omega X$ and $\ddot{X} = -\omega^2X$, and we have:
+
+$$A = [M^{-1}K - \omega^2 + i\gamma\omega]^{-1}M^{-1}F$$
+
+where the normal modes are obviously where the thing in brackets is degenerate. Done!...
+
+Travelling waves! We know our classical wave equation is:
+
+$$\partial_ty = \frac{T}{\mu}\partial_xy$$
+
+We then have our normal modes and boundary conditions to see that:
+
+$$y_n(x,t) = A_n\sin\left(\frac{n\pi x}{L}\right)\cos\omega_nt$$
+
+where $\frac{n\pi x}{L} = k_nx$. We then see that $\omega_n = \sqrt{\frac{T}{\mu}}k_n$ is the dispersion relation (obtained via classical wave equation, I think). Normal modes all have the same temporal frequencies and phases while satisfying boundary conditions. The boundary conditions are thus $y(0,t) = y(L,t) = 0$ for normal modes. There are other solutions that satisfy different boundary conditions! Note that we can rewrite:
+
+$$y_n(x,t) = \frac{1}{2}A_n\left[\sin(k_nx - \omega_nt) + \sin(k_nx + \omega_nt)\right]$$
+
+Call the first part $y_+$ and the second part $y_-$. Note that both of these satisfy the wave equation. But then note that these equations almost never satisfy the boundary conditions. If we plot $y_+$ and $y_-$, we will find that these are actually travelling waves, with the former moving in the positive direction and the latter to the negative. It then become clear that all standing waves are superpositions of travelling waves in the correct combination.
+
+Because there is constant phase $\pi/2$, we have that $\phi = kw \mp \omega t$ is constant, so $x = \pm \frac{\omega}{k}t + \frac{\phi}{k}$, which is then linear motion with $v_p = \pm \frac{\omega}{k}$, which is called the phase velocity.
+
+\chapter{October 30 - Traveling Waves}
+
+Next post-class talk is two weeks from today! (Note also: $d\Omega = d(\cos(\theta))d\phi$, so that $\int{d\Omega} = 4\pi$)
+
+The wave equation in 1D is $\partial_t^2 y = T/\mu \partial_x^2 y$. The solutions are either trigonometric or complex exponentials: $y(x,t) = Ae^{\pm ikx}e^{\pm i\omega t}$. In a standing wave, $A\frac{e^{ikx} + e{-ikx}}{2}e^{i\omega t}$, while for a travelling wave $A\cos(kx - \omega t)$ which travels with phase velocity $v = \frac{\omega}{k}$. We get a taste of solutions in 3D (we use cartesian coordinates): $\Psi(x,y,z,t) = Ae^{ik_xx + ik_yy + ik_zz - i\omega t} = e^{i(\vec{k} \cdot \hat{r} - \omega t)}$ where $\vec{k}$ is then the wave vector $<k_x, k_y, k_z> = k\hat{k}$ (where $k = 2\pi/\lambda$ and $\hat{k}$ is the direction of the wave). We would then have $y = A\sin[k(\hat{k}\cdot \hat{r}) - \omega t]$ which is a plane wave. This then propogates along $\hat{k}$ with velocity $\omega/|\vec{k}|$. We then note that for circular waves, the flux (power / length) around concentric circles falls off $\propto 1/r$, which means that because $P \propto A^2$ that $A \propto 1/r$. We will then find that for spherical waves that the flux falls off around concentric spheres $\propto 1/r^2$ and thus $A \propto 1/r$. 
+
+In general, a travelling wave is a linear superposition of sinusoids with a range of $\omega$ and $k$. The phase velocity for each sinosoid is then $\omega/k$. Note that if $\omega(k)$ is not a simple linear relation $\omega = vk$, then the different components of travelling waves will go at different velocities (the Fourier components will propogate separately and cause the travelling wave to disperse). Dispersion is caused when $\omega/k$ depends on $\omega$. Non-dispersive media follow $\omega/k = c, \sqrt{T/\mu}$, which are some special cases. All real media are dispersive. 
+
+The dispersion relation for sound in air is (where $y$ is Young's modulus and is roughly constant for all $\omega$ [assume!]):
+
+$$\omega = \sqrt{\frac{y}{\rho}}k$$
+
+We note that $v^2 = T/\mu, k/m, y/\rho$ (note that $ka^2/m$ and $ya^2/\rho$ makes the units work out, where $a$ is the distance between unit parts [like in the problem sets]), which shows that the trend is a restorative constant over an inertial constant. For sound in air, $y$ is the \emph{adiabatic compressibility} which in the case of air is $\gamma P_air$ where $\gamma = \frac{C_p}{C_v}$ is the adiabatic constant (gas laws!). More dispersion relations:
+
+\begin{itemize}
+\item Beaded String: $\omega = \sqrt{\frac{4T}{ma}}\sin(ka/2)$ where $k_max = 2\pi/2a$ is the zigzag normal mode.
+\item Masses on springs: $\omega = \sqrt{\frac{4k}{m}}\sin(ka/2)$ where we replace $2T/a = k$ which is the restoring force divided by the length.
+\item LC lumped transmission line: $\omega = \sqrt{\frac{4}{LC}}\sin(ka/2)$ where $k = (\frac{c}{a})^{-1}$. 
+\item Coupled pendula: $\omega^2 = \frac{g}{l} + 4\frac{k}{m}\sin^2(ka/2)$.
+\item Plasmas (Electric field polarizes a neutral gas that is hot and ionized, which creates traveling waves through plasma): $\omega^2 = \omega_p^2 + c^2k^2$ (this is very close to the dispersion relation for EM waves, but there is a cutoff due to a Coulombic restorative force in atoms (plasma frequency) $\omega_p^2 = \frac{4\pi N_ee^2}{m_e}$, where $N_e$ is the number of electrons per unit density) This shows that even non-lumped systems have cutoffs.
+\item Realistic strings (such as piano strings, which are uber-stiff): $\omega^2 = \frac{T}{\mu}k^2 + C_1k^4 + C_2k^6 +...$ which makes the string stiffer for smaller wavelengths and higher $k$. 
+\end{itemize}
+
+When inputting energy to a system, it can either absorb energy, reflect energy, or disperse/pass on energy. If we drive the system in its dispersive regime, then $\partial_x^2\psi = v^{-2}\partial_t^2 \psi = -k^2\psi$ and that creates solutions $\psi(x,t) = \sin(kx - \omega t)$ and $\omega^2 = \omega_0^2 + 4\frac{k}{m}\sin^2(ka/2)$. In cutoff regimes we then have $\partial_x^2\psi = v^{-2}\partial_t^2\psi = \kappa^2\psi$ which then yields exponential decay $\psi(x,t) = e^{-\kappa x}e^{i\omega t}$ and $\omega^2 = \omega_0^2 + 4\frac{\kappa}{m}\sin^2(ka/2)$ which means no travelling waves, no phase velocity, on energy propogation, just exponential attenuation. Above highest normal modes, $A(\omega) = \frac{1}{(\omega^2 - \omega_{max}^2)^2 + \omega^2\Gamma^2}$, so for $\omega >> \omega_{max}$ it is clear that $A(\omega) = \frac{1}{\omega^2} \to \infty$. Energy is then either absorbed or reflected.
+
+We then consider energy transport and impedence. Our example is a continuous tense string, where propogation is in the $z$ direction. We then have that the initial angle $\theta \approx \tan(\theta) = \partial_z\psi |_{z=0}$ (where the string's phase traces shape $\psi = \sin(z)$). The motor obviously does work on the string, which is propogated along the string, so we can calculate the power by multiplying the force exerted by the motor by the velocity of the string at $z=0$. The force on the string is then $F = T \partial_z\psi |_{z=0}$ and so the power is $P(t) = T (\partial_t\psi|_{z=0})(\partial_z\psi|_{z=0})$. The power travels down the string as $\psi(z,t) = Ae^{i(kz - \omega t)}$ where we take the real part. We know that $\partial_z\psi |_{z=0} = ik\psi(0,t)$ and $\partial_t\psi|_{z=0} = -i\omega\psi(0,t)$. We then have $\partial_z\psi = -\frac{k}{\omega}\partial_t\psi = -v^{-1}\partial_t\psi$. We can then write $P(t) = vT(\partial_z\psi)^2$. We then see some equations $v = \sqrt{\frac{T}{\mu}}, T/v = \sqrt{T\mu}, vT = \sqrt{T^2/\mu}$. We define \emph{impedance} as $Z = \sqrt{T\mu}$ such that $P(t) = Z\dot{\psi}^2 = \frac{T^2}{Z}(\partial_z\psi)^2$ so that the impedance is directly correlated with the amount of power necessary to drive the system.
+
+We then examine lumped transmission lines, where impedance is very very critical. We replace $T \to (C/a)^{-1}, \mu \to (L/a), v = \sqrt{T/\mu} = \frac{a}{\sqrt{LC}}, Z = \sqrt{\frac{L}{C}}$. In terms of voltages and currents, we will find that $Z$ has units of ohms, just like resistance. The difference is that transmission lines disperse energy rather than absorb it. In resistors, $I$ and $V$ are in phase while $LC$ lines have $I,V$ $\pi/2$ out of phase.
+
+To recover energy at the end of our string from the earlier example, we go back to $P(t) = Z(\partial_t\psi)^2$ for $\psi = A\cos(\omega t - kz)$ (we ignore the $-kz$ part later because we evaluate at $z=0$), where we then have $P(t) = Z\omega^2A^2\sin^2(\omega t)$, which then gives us $<P> = Z\omega^2A^2/2$. If there is some absorber on the other end then that absorbs the power at the other end, then the force on it is then $F = T\partial_t\psi |_{z = L} = -Z\partial_t\psi$. We thus want an absorber that applies an equal but opposite force on the string, which means it must exert a force proportional to the velocity of the string, a damping force. These are called dashpots, which oftentimes consist of a mass suspended in a viscous liquid. We want to have this proportionality constant match the impedence of the string exactly, but in the end some energy will inevitably be reflected because the impedence cannot be matched exactly. 
+
+\chapter{November 1 - Electromagnetic Waves}
+
+Next LIGO/Physics talk a week from today after class!
+
+Note that last talk we said that the $\omega^2 = \frac{k}{m} = \frac{T}{\mu} = \frac{y}{\rho}$, but the last two are actually $v^2$. For the first case, if we instead examine a system of lumped masses, we see that the dispersion relation is:
+
+$$\omega = \sqrt{\frac{4k}{m}}\sin\left(\frac{ka}{2}\right)$$
+
+But if we consider the long wavelength approximation where the lumping is negligible, the dispersion relation becomes:
+
+$$\omega = \sqrt{\frac{4k}{m}}\frac{ka}{2} = \sqrt{\frac{ka^2}{m}}k$$
+
+so the equivalent relation to $\frac{T}{\mu}, \frac{y}{\rho}$ is $\omega^2 = \frac{ka^2}{m}$ which makes all the units work out.
+
+Maxwell's Equations are then as follows (in cgs units where $\epsilon_0 = \mu_0 = 1$):
+
+\begin{itemize}
+\item $\vec{\nabla}\cdot \vec{E} = 4\pi\rho$
+\item $\vec{\nabla}\cdot \vec{B} = 0$ - No magnetic Monopoles
+\item $\vec{\nabla}\times \vec{E} = -\frac{1}{c} \frac{\partial \vec{B}}{\partial t}$
+\item $\vec{\nabla} \times \vec{B} = \frac{1}{c} \frac{\partial \vec{E}}{\partial t} + \frac{4\pi}{c}\vec{J}$
+\end{itemize}
+
+We will treat the laws with no free change (first equation $=$ 0) and no currents (last equation has no displacement current term). The rest remain the same. We will then note:
+
+\begin{align*}
+\vec{\nabla} \times (\vec{\nabla} \times \vec{E}) &= -\frac{1}{c} \frac{\partial}{\partial t}(\vec{\nabla} \times \vec{B})\\
+\vec{nabla}(\vec{\nabla}\cdot \vec{E}) - \nabla^2 \vec{E} &= -\frac{1}{c^2} \frac{\partial^2}{\partial t^2}\vec{E}\\
+\nabla^2\vec{E} &= \frac{1}{c^2}\frac{\partial^2 \vec{E}}{\partial t^2}
+\end{align*}
+
+If we then define some operator $\partial_mu = (\frac{1}{c}\frac{\partial}{\partial t}, \vec{\nabla})$, we will see that $\partial_\mu\partial^\mu\vec{E} = 0$ (in a vacumn). This is called the Manifestly Lorentz Invariant.
+
+Repeating the derivation in the other direction, we will also see the other wave equation, namely:
+
+$$\nabla^2\vec{B} = \frac{1}{c^2}\frac{\partial^2 \vec{B}}{\partial t^2}$$
+
+We then know that our solutions are of form $\vec{E}(\vec{r},t) = \vec{E}_0 e^{i(\vec{k}\cdot\vec{r} - \omega t)}$ where $\vec{k} = k\hat{k}, k = 2\pi/\lambda$. The important part to note is that this vector field is defined at every point in space and time, having a magnitude and direction, where the direction is the polarization. We've dealt with scalar fields such as temperature, density, pressure, etc. We've also dealt with tensor fields such as the stress-energy tensor. The last sort of field that we will deal with in other classes is a spinor field, which has a magnitude and orientation at all points, which is dealt with with electrons and protons and spin number. 
+
+Back on topic, we orient our coordinate system such that $\hat{k} = \hat{z}, \vec{k}\cdot\vec{r} = kz$. We thus have:
+
+\begin{align*}
+\vec{\nabla}\times \vec{E} &= c\vec{k} \times \vec{E}_0e^{i(kz - \omega t)}\\
+-\frac{1}{c}\frac{\partial \vec{B}}{\partial t} &= i\frac{\omega}{c}\vec{B}_0e^{i(kz - \omega t)}\\
+\hat{k} \times \hat{E}_0 &= \hat{B}_0\\
+|\vec{E}_0| &= |\vec{B}_0|
+\end{align*}
+
+We then see that $(\hat{k}, \hat{E}_0, \hat{B}_0)$ form a right-handed coordinate system. We thus pick $\hat{E}_0 = \hat{x}, \hat{B}_0 = \hat{y}$. We also assume that our plane waves are infinite (why necessary?) in the $(x,y)$ direction such that they are plane waves. We then define the \emph{Poynting flux} such that the Poynting vector is:
+
+$$\frac{c}{4\pi}\vec{E}\times\vec{B}$$
+
+which is also the flux and is the energy per time per area of the wave. And obviously, while these waves are defined in vacumn, it must have been given off by radiating electrons and will be absorbed by absorbers (we will discuss these later). We then have for our EM wave:
+
+\begin{align*}
+\vec{E}(\vec{r},t) &= E_0 e^{i(kz - \omega t)} \hat{x}\\
+\vec{B}(\vec{r},t) &= B_0e^{i(kz - \omega t)} \hat{y}
+\end{align*}
+
+The propogation of electromagnetic waves in matter will follow the following rules:
+
+\begin{itemize}
+\item Matter is electrically neutral, atoms consist of ions (nucleus and tightly bound electrons) and weakly bound electrons
+\item Motion of ions in response to $\vec{E}$ is small due to the large mass, so neglect it.
+\item If electron velocity is in phase with $\vec{E}$ then work is done on the electron, and energy is sapped from the field such that it attenuates rather than propogates. Note that this is why metals are good reflectors, because they have a lot of loosely bounded electrons.
+\item If electron displacement is in phase with $\vec{E}$, which means that velocity is out of phase, then no work is done, and the acceleration of the electron is ratiated right back into the EM wave, which results in propogation. These materials are called dielectrics.
+\end{itemize}
+
+Remember that our earlier derivation for electromagnetic waves is only at one frequency, or one Fourier component. It's easy enough to analyze for more than one, but just remember this!
+
+We then define $\epsilon$ to be the dielectric constant, which is $>1$ for any dielectric (don't change magnetism yet, $\mu = \mu_0 = 1$). We then have that the velocity of a wave in a medium is $v=c/n$ where $n$ is the index of refraction and $n^2 = \epsilon(\omega)$. So the speed of electromagnetic waves is $<c$, but note that $\omega$ doesn't change, only $k = \omega/v = n\omega/c = nk_{vacumn}$. So we thus see that $\lambda_{dielectric} = \frac{1}{n}\lambda_{vacumn}$, so only the spacial dependenec of the wave changes, not the temporal frequency. 
+
+We then see that for quasi-free electrons with density $N$ electrons per unit volume will move in response to the applied electric field and polarize the neutral atoms. We then have that the total electric field $E_{tot}(t) = E_{external}(t) - 4\pi P(t)$ where $P$ is the induced dipole moment per unit volume. We then have $P(t) = (N)ex(t)$, where $N$ is the electron density and $e$ is the charge of an electron while $x(t)$ is the displacement of electron from ion. The displaced electron is then a simple harmonic oscillator! The restoring force must be $m_e\omega_0^2x$ and there can be a damping force $m_e\Gamma\dot{x}$. We then have our final equation:
+
+\begin{align*}
+m_e\ddot{x} &= -m_e\omega_0^2x - m\Gamma\dot{x} + e\vec{E}_{ext}(t)\\
+x(t) = A_{el}\cos(\omega t) + A_{ab}\sin(\omega t)
+\end{align*}
+
+where we assume that $E_{ext} = E_0\cos(\omega t)$. We then see that if the velocity is in phase with the force ($\sin\omega t$ contributes heavily) that heavy absorption occurs. We then know that:
+
+\begin{align*}
+A_el(\omega) &= \frac{eE_{ext}}{m_e}\frac{\omega_0^2 - \omega^2}{(\omega_0^2 - \omega^2)^2 + \omega^2\Gamma^2}\\
+A_ab(\omega) &= \frac{eE_{ext}}{m_e} \frac{\omega\Gamma}{(\omega_0^2 - \omega^2)^2 + \omega^2\Gamma^2}\\
+\end{align*}
+
+So then when $\omega \approx \omega_0$, we have resonance which gives a lot of absorption and not propogation. If we're far from resonance, there is a transmission of energy because $A_{el} \gg A_{ab}$
+
+If we are far from resonance, we have $A_{el} = \frac{eE_{ext}}{m_e}\frac{1}{\omega_0^2 - \omega^2}$ and thus:
+
+\begin{align*}
+\epsilon(\omega) &= n^2(\omega) = 1 + \frac{4\pi P(t)}{E_{tot}} \approx 1 + \frac{4\pi P(t)}{E_tot(t)} = 1 + \frac{p\pi N e X(t)}{E_tot}\\
+&= 1 + \frac{4\pi Ne^2}{m_e}\frac{1}{\omega_0^2 - \omega^2}\\
+\end{align*}
+
+In real dielectrics, there are multiple resonant frequencies, and if we examine an example like glass, which is transparent to visible light, is is clear that $\omega_r > \omega_{visible} \Rightarrow \epsilon > 1$. We then have:
+
+$$\epsilon = 1 + \frac{4\pi Ne^2}{m_e}\frac{N_r}{\bar{\omega_0^2}}\left(1 + \frac{\omega^2}{\bar{\omega_r^2}} +...\right)$$
+
+where we leave out the other terms of the Taylor expansion. This then becomes clear that the dielectric constant grows with $\omega$ for all $\omega < \omega_r$. Taking glass as an example, we have that $n=1.5$ for near-infrared and $n=1.54$ for the near ultraviolet. We then consider plasmas, where the ionic restoring forces are weak, $\omega_r \ll \omega$, and we have:
+
+$$\epsilon = 1-\frac{4\pi Ne^2}{m_e\omega^2} = 1 - \frac{\omega_p^2}{\omega^2}$$
+
+We then see that $\omega = \frac{ck}{n} \Rightarrow \omega^2n^2 = \omega^2(\frac{ck}{\omega})^2 = \omega^2 - \omega_p^2$, so that the final dispersion relation is plasma is:
+
+$$\omega^2 = \omega_p^2 + c^2k^2$$
+
+for all $\omega > \omega_p$. This can hold true (in that $\omega > c$) because there is attenuation and no transmission of information. We then examine the case where radio waves bounce off the ionosphere, reflected instead of transmitted. Not quite yet, we examine simple dielectrics first. We know that $\omega_0^2$ is the restoring force/distance/pass $= \frac{e^2}{a^2}/a/m_e$. We also know that $a = 1 \text{\AA}, e=4.8\times 10^{-10} \mathrm{esu}, m_e = 9.1 \times 10^{-28} \mathrm{g}$. We then know that the associated wavelength is $\lambda_0 = \frac{2\pi c}{n\omega_0} = \frac{2\pi 3\times 10^{10}\mathrm{cm/s}}{(1) \omega_0} \approx 1200\text{\AA}$. Because visible light has wavelengths around $4000\text{\AA}-7000\text{\AA}$, it is clear that visible light propogates because $\lambda_{vis} \gg \lambda_0$, but everything with shorter wavelengths cannot propogate, such as UV, x-rays, gamma rays, etc. Note that when the frequency is higher that energy is not transmitted.
+
+We NOW talk about the ionosphere. It is ionized at $N=10^6 \mathrm{cm^{-3}}$. Doing all the calculations out, we have $\nu = 15 \mathrm{MHz}$ such that it is opaque to radio waves!
+
+\chapter{November 6 - Electromagnetic waves}
+
+Energy in an Electromagnetic wave propagates along the Poynting vector $\vec{S} = \frac{c}{4\pi}\vec{E}\times\vec{B}$ and we write $\vec{E}\times\vec{B} = k\hat{k}$ where $k = \frac{2\pi}{\lambda}$. This then leaves us with $\vec{E} = \vec{E}_0 e^{i(\vec{k}\cdot\vec{r} - \omega t)}$ and $\vec{B} = \vec{B}_0 = e^{i(\vec{k}\cdot\vec{r} - \omega t)}$. In a vacumn, $\omega = ck$ and $v_\phi = \frac{\omega}{k} = c$, while in a dielectric $\omega = \frac{c}{n}k$ and $v_\phi = \frac{c}{n}$ where $n = \sqrt{\epsilon}$. In a dielectric, matter is neutrally charged but electrons are loosely bounded, and thus there is some local polarization that slows propagation down. In plasma, matter is still neutral but electrons are quasi-free and results in a simpler system. We note that in a dielectric:
+
+$$\epsilon = 1 + \frac{4\pi Ne^2}{m_e}\sum{\frac{1}{\omega_r^2 - \omega^2}}$$
+
+where the factor $\frac{4\pi Ne^2}{m_e}$ is the plasma frequency $\omega_p^2$. The summation describes the rather complicated resonance frequenccy of ion electrons. In a plasma, $\omega_r^2 \to 0$, and we have:
+
+$$\epsilon = 1 - \frac{\omega_p^2}{\omega^2} < 1$$
+
+If we then graph $\epsilon(\omega)$, we will find it to look like a hyperbola. The positive side $\epsilon > 1$ is dielectric while the right side $\epsilon < 1$ is a plasma (note we will assume only one resonance frequency). This then yields the fairly simple dispersion relation $\omega = \frac{c}{n(\omega)}k$. Note that $\partial_\omega n(\omega) > 0$ for dielectric. Then, for a plasma, we can substitute some terms to find that $c^2k^2 + \omega_p^2 = \omega^2$ where there is now a minumum frequency for propagation! If the frequency is too low we again have attenuation coefficients $\kappa = -ik$.
+
+Note that the attenuation coefficient varies with density, $\kappa' = \kappa/\rho$ being called the attenuation coefficient which depends only on the type of material and not the density. The amplitude is then a function of $z$ such that $A \propto e^{-\kappa z} = e^{-\kappa' \rho z}$. For metals, $\omega_p \approx$ UV light, so visible light is reflected/attenuated. UV light and beyond can penetrate metals very well though (so obviously lead, which insulates from xrays, has a very high plasma frequency? I'm guessing that). If we then look at the ionosphere, $N_e \approx 3\times 10^6$ atoms/$m^3$ and so $\omega_p$ is in the radio waves, so it acts as a mirror for radio waves and transparent to all else.
+
+Note that our graph $\epsilon(\omega)$ does actually go to $0 < \epsilon < 1$ which gives $n < 1$, meaning that the phase velocity can exceed the speed of light, though because this is a steady state it doesn't carry information and thus doesn't violate relativity. Cool stuff.
+
+Refraction occurs at boundaries between layers of materials with different $n$. Incident rays are at angle $\theta_c$ with respect to the normal to the surface. Note that incident, transmitted, and reflected waves all oscillate with the same frequency, but $\vec{k}$ or the wavelength changes with different media. If $n_2 > n_1$, then $l_t < l_i$, and we can arrive at Snell's Law for refraction: $n_1\sin(\theta_i) = n_2\sin(\theta_t)$. If $n_2 > n_1$ then $\theta_t < \theta_i$ and if $n(w)$ depends on frequency then there will be a rainbow refraction such as in prisms! This is how to disperse light and measure spectrums. 
+
+Of course, single rainbows are too simple, any normal prism-wielder can do that. However, we can make a DOUBLE rainbow! Professor Weinstein shows us how. First, we must note that the transmittance/resonance of air is very complicated due to there being so many resonant frequencies. Looking at the absorption graph, it's fascinating that radio waves and a very narrow slice corresponding to the visible spectrum are transparent. The $\omega_r$ are very complicated and depend heavily on the humidity (the \% of \ce{H2O} in the atmosphere). They occur because of internal reflection sometimes inside water droplets, so there needs to be a range of water droplet sizes to create a double rainbow. 
+
+There is a critical angle $\theta_{Brewster} = \sin^{-1}(\frac{n_2}{n_1})$ for which there is total reflection and no transmission. In optical fiber cables, we have $\theta_c \approx 42^{\circ}$ and so there is total internal reflection for $\theta < \theta_c$ which is what allows us to transmit signals quickly over long distances.
+
+We then consider reflection and transmission at boundaries in three dimensions. Note that $\vec{E}_i = \vec{E}_{0i} = e^{i(\vec{k}\cdot\vec{r} - \omega t)}$ and the same expressions for $\vec{E}_r$ and $\vec{E}_t$ for incident, reflected, and transmitted waves respectively.. Not that the continuity of $\vec{E}$ at the boundary means that the phases much match at the point of incidence. We then see that $(\vec{k_k}\vec{r})_{z = 0} = (\vec{k_r}\vec{r})_{z = 0} = (\vec{k_t}\vec{r})_{z = 0}$ and thus all three wavevectors lie in a plane. We then see that $k_i\sin(\theta_i) = k_r\sin(\theta_r) = k_t\sin(\theta_t)$. But since we know that $k_i = k_t$ (because same wavelengths in same medium), we see that $\theta_i = \theta_r$. 
+
+We then go back to single-dimensional transmission/reflection. We consider a string of tension $T$ and density $\mu_1$ that is connected to a string of $\mu_2$. We then drive one end of string $1$ at amplitude $Ae^{i\omega t}$. The incident wave is then $\Psi_{inc} = Ae^{i(\omega t - k_1x)}$ and thus in region $1$ we have $\Psi_1 = \Psi_{inc} + \Psi_{ref} = Ae^{i(\omega t - k_ix)} + Be^{i(\omega t + k_2x)}$ which is the sum of the reflected wave and the incident wave. We then have in region $2$ that $\Psi_2 = \Psi_{trans} = Ce^{i(\omega t - k_2 x)}$ where $k_i = \frac{\omega}{v_i}, v_i = \sqrt{\frac{T}{\mu_i}}$ where $i = 1,2$. These wavefunctions must satisfy $\partial_t^2\Psi_i = v_i^2\partial_x^2\Psi$, the wave equation. We then apply boundary conditions: 
+
+\begin{enumerate}
+\item String is continuous, so $\Psi_1(x=0,t) = \Psi_2(x=0,t)$ where $x=0$ is the boundary. 
+\item We also know that the transverse velocity must be continuous: $\partial_t\Psi_1(0,t) = \partial_t\Psi_2(0,t)$.
+\item Transverse restoring force must also be continuous $T_1\partial_t\Psi_1(0,t) = T_2\partial_t\Psi_2(0,t)$. 
+\end{enumerate}
+
+Note that if there were a discontinuity in $T$ then there would have to be a compensating discontinuity in $\partial_x\Psi$ which results in a kink. Additionally, because the $\omega$ in both sections of the string are equivalent, the second boundary condition is equivalent to the first. We find from the first boundary condition that $A + B = C$. Lol. We then use the third boundarcy condition to find that $T_1k_1A - T_1k_1B = T_2k_2C$. Note that since we are given $A$ and want to find $B, C$, we have two equations and two unknowns and thus can solve now. We see that $k_1 = \frac{\omega}{v_1}, \frac{T_1k_1}{\omega} = \frac{T_1}{v_1} = \frac{T_1}{\sqrt{T_!/\mu_1}} = \sqrt{T_1\mu_1} = Z_1$ where $Z_1$ is the is the impedance. We then find that $\frac{B}{A} = \frac{Z_1 - Z_2}{Z_1 + Z_2} = r$ which is the amplitude reflection coefficient (note that $R$ denotes the power reflection coefficient). We also find that $\frac{C}{A} = \frac{2Z_1}{Z_1 + Z_2} = t$ which is the amplitude transmission coefficient (note that $T$ denotes the power transmission coefficient). Note that $1+r = t$ which is continuity, while $R + T = 1$ holds due to conservation of energy. 
+
+We then see that $Z_1, Z_2 \in \mathbb{R}$, $r,t$ are real as well and thus there is no complex phase except for $\pi$. If $Z_1 > Z_2$, then $r > 0$ and the reflected wave is in phase with incident wave. If $Z_1 < Z_2$, then $r < 0$ and the reflection is $\pi$ out of phase. If $Z_1 = Z_2$, then $r = 0$ and there is no reflection because there is no boundary lols. If $Z_2 = \infty$, then $r = -1, t=0$ and there is a fixed end just like standing waves. If $z_2 = 0$, then $r=1, t=2$ and there is essentially a free end. Note that the ``ring'' analogy we usually use that the ring actually displaces TWICE as much because of reflected amplitude. That's why whipped towels hurt so much.
+
+\chapter{November 13 - Localizing waves, Complex Fourier Transform}
+
+How do we localize waves? Note that sinusoidal waves are infinite, such as $\Psi(x,t) = A \cos(\omega t - kz + \phi)$. Note that this wave is infinite in extent and magnitude in the $x$ and $y$, called plane waves. They have characteristics of temporal frequency, spatial frequency, direction, and phase. These do not change in time, and so no information is sent, or at least minimal information is sent. To send information, we must modulate in time. To localize, we must modulate in space. In terms of modulation, we have some possible techniques:
+
+\begin{itemize}
+\item Amplitude modulation (AM) $\Rightarrow A(t)$
+\item Frequency modulation (FM) $\omega \Rightarrow \omega_0 + \delta\omega(t)$
+\item Phase modulation (PM) $\phi \Rightarrow \phi(t)$ (note that this is just an alternative to frequency modulation, due to their equivalence in the equation of motion (i.e. a change in $\phi$ is equivalent to a change in $\omega$))
+\end{itemize}
+
+We can first examine a digital AM pulse train in time, which looks like a square wave kind of. We can modulate by superimposing waves of different $\omega,k$. Define $u = z - v_\phi t$ for travelling waves. Then, let us do $\psi(z,t) = \sum{A_n \cos(\omega_nt-k_nt)} = \sum{\cos(k_nu)}$. If we start out with just two waves, we can find the following:
+
+\begin{align*}
+\phi &= A\cos\omega_1t + A\cos\omega_2t\\
+&= 2A\cos\left(\underbrace{\frac{\omega_1 - \omega_2}{2}}_{\mathrm{\omega_{mod}}}t\right)\cos\left(\underbrace{\frac{\omega_1 + \omega_2}{2}}_\mathrm{\omega_{avg}}t\right)\\
+\end{align*}
+
+which will graph beats. We typically look at $\omega_1 \approx \omega_2$ to see this. Then, we see that $T_{mod} = \frac{1}{2} \frac{2\pi}{\omega_{mod}}$ and $T_{periodicity} = T_{mod}$. Note that this still repeats, so our goal is to push $T_{per} \to \infty$ without pushing $T_{mod} \to\infty$. The goal is to modulate without repetition in time. We have seen that this is not possible with only two frequencies, so we will add infinite!
+
+Add more frequencies near $\omega_{avg}$ to shorten $T_{mod}$ but still make $T_{per} \to\infty$. How does this work? We can examine this graphically, but not reproduced in these notes. The idea is that the this will produce a lot of interference that destroys periodicity. Then, if we add many Fourier components, we find that $T_{per} \approx \frac{1}{2}\frac{2\pi}{\delta\omega}$ where $\delta\omega$ is the spacing of the most closely spaced frequencies (can be made arbitrarily small, obviosuly), while $T_{mod} \approx \frac{1}{2}\frac{2\pi}{\Delta\omega}$ where $\Delta\omega$ is the spacing between the highest frequency component and $\omega_{avg}$, which can be made arbitrarily large! We now cue the math.
+
+Remember that for a string in $z \in [0,L]$ with fixed ends. We then remember Fourier decomposition:
+
+\begin{align*}
+f(z) &= \frac{b_0}{2} + \sum{b_n \cos(k_nz)} + \sum{a_n\sin(k_nz)}\\
+\end{align*}
+
+If we then extend to $z \in (-\infty,\infty)$, then $f(z)$ repeats over each interval $L$, up to a sign change. We wish to make a single $f(z)$ which does not repeat, so we let $L \to\infty$. Note that this means that $k_n = n\frac{\pi}{L}$ becomes a continuum, which is fairly simple. Rewrite $dk = \frac{\pi}{L}dn$ and $\sum \rightarrow \int dn = \int \frac{L}{\pi}dk$. We can then rewrite as (where we include the $b_0$ term in the integral):
+
+$$f(z) = \displaystyle\int\limits_0^\infty{dk\left(\frac{L}{\pi}b_n\right)\cos(kz)} + \displaystyle\int\limits_0^\infty{dk\left(\frac{L}{\pi}a_n\right)\sin(kz)}$$
+
+We then note that as $L \to \infty$ makes the product $\frac{L}{\pi}$ finite, a product of an infinity and an infinitisemal (where's the infinitisemal?). Thus, we rewrite $b(k) = \frac{L}{\pi}b_n$ and $a(k) = \frac{L}{\pi}a_n$. If $z$ is defined over $(-\infty,\infty)$, then we can rewrite as:
+
+$$f(z) = \displaystyle\int\limits_{-\infty}^\infty{\left(b(k)\cos kz + a(k)\sin kz\right)dk}$$
+
+where we see that $b(k)$ and $a(k)$ are defined as follows:
+
+\begin{align*}
+b(k) = \frac{1}{2}\frac{L}{\pi}b_n &= \frac{1}{\pi}\displaystyle\int\limits_{-\infty}^{\infty}f(z)\cos(kz)dz\\
+a(k) = \frac{1}{2}\frac{L}{\pi}a_n &= \frac{1}{\pi}\displaystyle\int\limits_{-\infty}^{\infty}f(z)\sin(kz)dz
+\end{align*}
+
+which gives us our continuous Fourier transform. We note that each Fourier component satisfies $\partial_z^2 \psi = \frac{1}{v^2} \partial_t^2\psi$ where we see that the solutions are $\psi(z,t) = \psi(u = z - vt)$. Each fourier component is thet $A\cos(kz - \omega t) = A\cos(ku)$. We can then superimpose these components:
+
+$$\psi(z,t) = \displaystyle\int\limits_{-\infty}^{\infty}{dk\left(b(t)\cos(ku) + a(k)\sin(ku)\right)}$$
+
+We then see that if the function is even at $t=0$ then half of the components go one way and half go the other way, noting that the the components of $k$ and $-k$ have the same amplitude $b(k)$ as can be seen from the math. Note that we can show that these components $b(k)$ and $a(k)$ have correct form by:
+
+\begin{align*}
+\displaystyle\int\limits_{-\infty}^{\infty}{du\cos(ku)\cos(k'u)} &= \frac{1}{2} 2\pi \delta(k - k')\\
+\displaystyle\int\limits_{-\infty}^{\infty}{du\cos(ku)\sin(k'u)} &= 0\\
+\displaystyle\int\limits_{-\infty}^{\infty}{du\sin(ku)\sin(k'u)} &= \frac{1}{2} 2\pi \delta(k - k')
+\end{align*}
+
+where $\delta(k-k')$ is Dirac's Delta function! It is infinity if $k = k'$. It is infinity tall and infinitely narrow. The Dirac delta function is actually a functional because it's not well behaved. It is defined by its integral:
+
+$$\displaystyle\int\limits_{-\infty}^{\infty} f(k) \delta(k - k') dk = f(k')$$
+
+so its height is really just $1$ over integration. Note that were $k$ a discrete index such as $n$ rather than a continuuuous real number, we would write Kronecker delta instead, where $\delta_{kk'}$ is $1$ only when $k = k'$ and $0$ otherwise. Similar concept.
+
+Mathematicians consider delta functions to be the limits of more well behaved functions. This is a general rule for all poorly behaved functions. The ``tophat'' function, a square pulse, has width $a$ and height $1/a$, is more well behaved, and as we take $a \to 0$ we have the Dirac delta. Moreover, any even function localized around $k'$ with area equal to $1$ will approximate the Dirac delta when we take the limit as the width approaches $0$. This means that Gaussians, $sinc(x) = \sin(x)/x$, and Lorentzions also work very well to approximate delta functions. These are the common four approximations used to understand the behavior of delta functions.
+
+We now return to the continuous Fourier Transform:
+
+\begin{align*}
+f(u) &= \displaystyle\int\limits_{-\infty}^{\infty}{b(k)\cos(ku) + a(k)\sin(ku)dk}\\
+\int{du f(u)\cos(k'u)} &= \int{dk \displaystyle\int\limits_{-\infty}^{\infty}{b(k)\cos(ku)\cos(k'u) + a(k)\sin(ku)\cos(k'u)dk}}\\
+&= \int{dk b(k)\pi\delta(k-k')}\\
+&= \pi b(k')
+\end{align*}
+
+The algebra follows similarly for $\sin$ components, and we have our Fourier components that we have seen earlier in the notes. That's why delta functions are so beast!
+
+We can use $b(k)$ is a tophat function over $k_0 \pm \Delta k$. Or we can use $f(u) = \frac{\sin(k_0u)}{k_0u}$. Note that the sinc function is the Fourier transform of the tophat function, and vice versa. Fourier transforms come in pairs, and we will show this by defining the complex Fourier transforms because trig sucks balls. Noting that $\int{e^{i(k-k')u}du} = 2\pi \delta(k-k')$, we have:
+
+\begin{align*}
+\psi(u) &= \int{c(k) e^{iku} dk}\\
+\int{du \psi(u) e^{-iku}} &= \int{\int{C(k)e^{i(k-k')u}du}}dk\\
+&= \int{C(k)2\pi \delta(k-k')dk}\\
+&= 2\pi C(k')\\
+C(k) &= \frac{1}{2\pi} \int{\psi(u) e^{-iku} du}
+\end{align*}
+
+Note that this shows that $\psi(u)$ is the inverse fourier transform of $C(k)$! But there's a bit of assymmetry, so we resymmetrize by:
+
+\begin{align*}
+\psi(u) &= \frac{1}{\sqrt{2\pi}}\int{C(k)e^{iku}dk}\\
+C(k) &= \frac{1}{\sqrt{2\pi}}\int{\psi(u)e^{-iku}du}
+\end{align*}
+
+Note that if $\psi(u)$ and $C(k)$ are quantized, then the Fourier transforms become quantized as well, and is called the Fast Fourier Transform! Computers are beast at this, so glhf.
+
+\chapter{November 15 - }
+
+Shive Torsion wave machine: many rods connected to a spine that restores by angular displacement. Even though rods mean that it is lumped (which gives difference equations for lumped case), we will treat the continuum case. We thus can write:
+
+\begin{align*}
+F(t) &= I\ddot{\theta} + k a^2 \theta\\
+\omega^2 &= \omega_0^2 + 4\frac{ka^2}{I}\sin^2\left(\frac{ka}{2}\right)\\
+\omega &= vk = k\sqrt{\frac{ka^2}{I}}\\
+Z &= \sqrt{ka^2I}
+\end{align*}
+
+We then see for the following cases:
+
+\begin{itemize}
+\item Fixed End: $Z_2 = \infty, R = -1$, then $\psi_{inc} + \psi_{ref} = 0$ at the end.
+\item Free End: $Z_2 = 0, R = 1$, then $\psi_{inc} = \psi_{ref}$ and the free end is twice the amplitude.
+\item Perfect termination: $Z_2 = Z_1, R=0$. 
+\end{itemize}
+
+We have talked about three systems, mechanical, electrical, and acoustic. They have properties like such:
+
+\begin{itemize}
+\item Mechanical waves: Free ends will produce pulses of same sign, fixed ends will produce forces of opposite sign.
+\item Electrical: Free end will correspond to a short circuit, while a fixed end corresponds to a missing circuit.
+\item Acoustic: Free end will correspond to a sort of elastic membrane at the end of a tube, while a fixed end corresponds to a hard surface at the end (no longitudinal vibration)
+\end{itemize}
+
+We can then look at a system of lumped LC components with an internal resistance at a signal generator. We know that the impedance of lumped LC is $Z_{LC} = \frac{\sqrt{L/C}}{\sqrt{1-(\omega/\omega_c)^2}}$. If we graph this, we see that the reflected pulse will cancel the incident pulse, but only after some delay, which must be the speed of the pulse through the transmission line. Note that when we adjust the frequency of our signal generator, we can produce resonance; the signal will be $90^\circ$ out of phase! Now back to equations, because ``I see a lot of sleepy eyes'' DDDD:
+
+If we use our complex Fourier transform, we see that:
+
+\begin{align*}
+\psi(u=x-vt) &= \frac{1}{\sqrt{2\pi}}\int C(k) e^{iku} dk\\
+\underbrace{C(k)}_{\mathrm{``spectrum''}} &= \frac{1}{\sqrt{2\pi}}\int \psi(u) e^{-iku} du
+\end{align*}
+
+It is then clear that if $\psi$ is symmetric then the cosine terms are appropriate. Note also that $C^*(-k) = C(k)$ for this case. On the other hand, if $\psi$ is odd then we prefr sine terms, and $C^*(-k) = -C(k)$.
+
+The fourier transform basically shows that any wave in $(x,t)$ can also be described in terms of $(k,\omega)$ (note that $C(k)$ needs the dispersion relation to complete the description of $\psi$). In other words, these are dual spaces related by the fourier transform. We care about $(x,t)$ description when we want the specific information transmitted. If we want to build a system for \emph{any} kind of information, we care about the spectrum. Note that we write our Fourier transform in $k$ but we can write as $\omega$ too except for when it is three-dimensional, when we want to write in $k$ to capture directional dependances. In three dimensions:
+
+$$\psi(u = z-vt) = \int C(\vec{k})e^{i\vec{k}\cdot \vec{r}} d\vec{k}$$
+
+where for isotropic media, $\omega(\vec{k}) = \omega(|\vec{k}|) = \omega(k)$, but for anisotropic media $\omega(\vec{k})$ will depend on $\hat{k}$, or the direction. We MUST learn to think in frequency space. Let us do some examples, first with $b(k) = \delta(k-k_0)$, which is an even function obviously:
+
+\begin{align*}
+\psi(u) &= \int \delta(k-k_0)\cos(ku)\; du\\
+&= \cos(k_0u)\\
+&= \cos(k_0x - \omega t)
+\end{align*}
+
+which is a travelling wave at a single frequency. Our second example is a tophat function centered at $k_0$ with width $\Delta k$. Thus, $b(k) = \alpha$ within this width and $0$ otherwise. We then have:
+
+\begin{align*}
+\psi(u) &= \int{\alpha\cos(ku)\;dk}\\
+&= \frac{\alpha}{u}\sin(ku)\bigg|_{k_0 - \Delta k/2}^{k_0 + \Delta k/2}\\
+&= 2\alpha\Delta k \frac{\sin(\Delta k u/2)}{\Delta k u/2}\cos(k_0u)
+\end{align*}
+
+This corresponds to a sinc function that constitutes the boundaries for an oscillation of wavenumber $k_0$, so it's a localized wavepacket. Note that this means that the full width at half maximum is on the order of $\frac{1}{\Delta k}$ for $u$ and $\Delta k$ for $k$ and thus because the wave crosses $0$ at $\pi$ it is clear that $\Delta k \Delta u \approx \pi$. This is Heisenberg Uncertainty (WE NEED TO LOOK AT THIS AGAIN). In fact, this is the minimum for any Gaussian distribution, we can see:
+
+\begin{align*}
+\psi(x) &= e^{-(x-x_0)^2/2\sigma^2}\\
+<x> &= \frac{\int{x\psi(x)\;dx}}{\int{\psi(x)\;dx}}\\
+\Delta x_{rms} &= \sqrt{<(x-<x>)^2>}\\
+&= \sqrt{<x^2>-2<x><x> + <x>^2}\\
+&= \sqrt{<x^2> - <x>^2}\\
+<x^2> &= \frac{\int{x^2\psi(x)\;dx}}{\int{\psi(x)\;dx}}
+\end{align*}
+
+We can then define some stuff for Gaussians: $N = \mathrm{norm} = \int{\psi(x)\;dx}$, $<x> = x_0$, $<x^2> = \sqrt{<x^2> - <x>^2} = \sigma$. Using ``Ye olde Gaussian integral tricks'', we can find the norm $= \int_{-\infty}^\infty{e^{-(x-x_0)^2/2\sigma^2}\;dx}$.
+
+We can also find $<x^2> = \int{x^2e^{-x^2/2\sigma^2}\;dx}$ by evaluating the integral as a function of $a$: $I(a) = \int_{-\infty}^\infty{e^{-x^2a}\;dx}$ can be evaluated using the above trick, which will bring an $x^2$ out front, and then simply set $a = 1$.
+
+The last Gaussian trick is the Fourier transform:
+
+\begin{align*}
+\psi(u) &= \frac{1}{\sqrt{2\pi}}\int{b(k)e^{iku}\;du}\\
+b(k) &= \frac{1}{\sqrt{2\pi}\sigma} e^{-(k-k_0)^2/2\sigma_k^2}
+\end{align*}
+
+Note that when we plug into the first equation, we see that we have a term quadratic in $k$, linear in $k$, and then we can complete the square and again use trick number $1$ to evaluate. We will find that:
+
+$$\psi(u)=\frac{1}{\sqrt{2\pi/\sigma_k^2}}\underbrace{e^{-u^2\sigma_k^2/2}}_{slowly varying envelope}\underbrace{e^{ik_0u}}_{rapidly varying term}$$
+
+We will find that $\sigma_u = \sigma_k^{-1}$, and so for $|\psi|^2$ energy it is clear that $\Delta U \sim \sigma_u/\sqrt{2}$ and $\Delta k \sim \sigma_k/\sqrt{2}$, and thus $\Delta U \Delta k = 1/2$. Thus, the narrower a wavepacket is the wider the distribution over frequencies must be. Note also that the fourier transform of a gaussian is still a gaussian, but in wavepacket form.
+
+\chapter{November 20 - Wave packets and 3D waves}
+
+If we look at spectra $(k,\omega)$ and their corresponding waves $(z,t)$, we will see that delta functions correspond to sinusoids, tophats produce sincs, gaussians produce gaussians, and lorentzions produce....(I can't tell D:). For Gaussians, we know that $\sigma_u\sigma_k \approx 1$, which is minimal uncertainty. We then recall:
+
+\begin{align*}
+\psi(u=x-vt) &= \frac{1}{\sqrt{2\pi}}\displaystyle\int\limits_{-\infty}^\infty{b(k)e^{iku}\;dk}\\
+b(k) &= \frac{1}{\sqrt{2\pi\sigma_x^2}}e^{-(k-k_0)^2/2\sigma_k^2}\\
+\psi(u) &= e^{ik_0u}e^{-u^2\sigma_k^2/2}\\
+&= e^{ik_0u}e^{-u^2/2\sigma_u^2}
+\end{align*}
+
+If we then look at intensities and standard deviations, we see that $\Delta k = \frac{\sigma_k}{\sqrt{2}}$ while $\Delta u = \frac{1}{\sigma_k\sqrt{2}}$. This gives us $\Delta k \Delta u = 1/2$, which is the minimal uncertainty of a wavepacket. Note that $\Delta k$ is the bandwidth, and a larger bandwidth yields higher information transfer rate due to shorter pulses. However, either the electronics or medium will limit bandwidth from being infinite. 
+
+Any oscillation with exponential decay will have a Lorentzion spectrum. For example, atoms in a laser cavity will produce lasers, obviously. At $t=0$, flash tube will excite some atoms, and these atoms will emit light to de-excite. We can calculate some things:
+
+\begin{align*}
+\psi_{em}(t) &= Ae^{i\omega_0t}e^{-\Gamma t/2}
+\end{align*}
+
+where $\Gamma$ is the decay rate and $\tau = 1/\Gamma$ is the decay lifetime. Due to the damping, the spectrum is no longer just a delta function, but it is broadened due to the damping. If we simply take the Fourier transform, we can find this spectrum (where we integrate only from $0$ because we're only exciting the atoms....not traveling waves? I don't exactly know why):
+
+\begin{align*}
+C(\omega) &= \frac{1}{2\pi}\int{\psi(t)e^{-i\omega t}\;dt}\\
+&= \frac{A}{2\pi}\displaystyle\int\limits_0^\infty{e^{(-i\omega t + i\omega_0 - \Gamma/2)t}}\\
+&= \frac{A}{2\pi}\frac{1}{i(\omega - \omega_0) + \Gamma/2}\\
+I(\omega) &= C(\omega)^2 = \frac{1}{(\omega - \omega_0)^2 + \Gamma^2/4}
+\end{align*}
+
+Note that this last expression for intensity is very familiar from resonance, and in fact is equal at the peak to within a constant factor. This then graphs a Lorentzion, like claimed, and the FWHM is $\Gamma$ while the height is $1/\Gamma$. Thus, $\Gamma \propto 1/Q$ determines the width of the Lorentzion. 
+
+If $\Gamma$ is small, we have a narrow and tall resonance with a long $\tau$. Note that our wavepacket is a superposition of ``wavelets'' $e^{iku}$. If the medium is nondispersive, then the wavpacket will retain its shape, while if the medium is dispersive then the wavepacket will disperse due to the dependence of speed on wavelength. The peak of the wavepacket is then where all wavelets interfere constructively:
+
+\begin{align*}
+\psi(u) &= \int{\underbrace{a(k)}_{\text{peak @ $k_0$, width $\Delta k \ll k_0$}}e^{iku}\;dk}
+\end{align*}
+
+If $\phi = ku$ changes over $k \pm \Delta k$ on the order of $2\pi$ or more, then destructive interference, otherwise, constructive. If $\psi = ku$ doesn't change much, we call this the stationary phase approximation and thus
+
+\begin{align*}
+\partial_k (kx - \omega t)\bigg|_{k=0} &\approx 0\\
+x - \underbrace{\partial_k \omega \bigg|_{k=k_0}}_{\textrm{group velocity}}t &= 0
+\end{align*}
+
+We see that the peak is where $x = v_gt$ which means the peak travels at group velocity, not phase velocity! Finally!
+
+We can take an example in the top hat spectrum, with width $2\Delta k$, center $k_0$, and height $A$. Fourier Transform:
+
+\begin{align*}
+\omega(k) &= \omega(k_0) + \partial_k \times \omega(k-k_0)\\
+\psi(x,t) &= A\int{dk\;e^{i(kx - \omega_0t - v_g(k-k_0)t)}}\\
+&= 2Ae^{i\omega_0t}e^{ik_0x} \frac{\sin(\Delta k u)}{u}\\
+\mathrm{Re}(\psi) &= (2A\Delta k)\underbrace{\frac{\sin(\Delta k(x-v_g)t)}{\Delta k(x - v_gt)}}_{\text{sinc envelope @ $v_g$}} \underbrace{\cos(k_0x - \omega_0t)}_{\text{fast oscillation @ $v_\phi$}}
+\end{align*}
+
+If we look at waves in plasma in vacumn, we recall that $v_\phi > c$, but since $v_g = \frac{c}{\sqrt{1 + \omega_p^2/c^2k^2}} < c$, it is clear that relativity is still not violated. We remember these equations from earlier. Note that the phase velocities don't carry information or energy and thus do not violate relativity. We now start into three-dimensional waves. FML.
+
+Waves in 3D:
+
+\begin{itemize}
+\item water wavez on surfacez (2D)
+\item Standing waves in a Chladni plate (2D)
+\item Shallow seismic surface waves on Earth's crust(2D)
+\item EM waves in vacumns/other media (3D)
+\item Sound waves (3D)
+\end{itemize}
+
+Lumped systems in 3D will then have $3N$ degrees of freedom, translational modes in $x,y,z$. There will also be vibrational, rotation, and excitational modes. We can write our wave equation thus as:
+
+$$\nabla^2(\psi) = \frac{1}{v^2}\frac{\partial^2\psi}{\partial t^2}$$
+
+where we see that the medium must be isotropic for this equation to work, because the propogation is independent of direction. We then note that the right hand side has some significance when viewed from relativity, so we use the \emph{d'Alembertian operator} $\Box^2 = \nabla^2 - \frac{1}{c^2}\frac{\partial^2}{\partial t^2}$ to write that $\Box^2\psi = 0$. Lol.
+
+We then note that the Pythagorean metric looks like:
+
+$$\begin{pmatrix}\Delta x & \Delta y & \Delta z\end{pmatrix}\begin{pmatrix}1&0&0\\0&1&0\\0&0&1\end{pmatrix}\begin{pmatrix}\Delta x\\\Delta y\\\Delta z\end{pmatrix}$$
+
+while relativistic mechanics uses the 4D Minkowski metric, as follows:
+
+$$\begin{pmatrix}\Delta t & \Delta x & \Delta y & \Delta z\end{pmatrix}\begin{pmatrix}-1&0&0&0\\0&1&0&0\\0&0&1&0 \\ 0&0&0&1\end{pmatrix}\begin{pmatrix}\Delta t\\\Delta x\\\Delta y\\\Delta z\end{pmatrix}$$
+
+We then see that in 3D that we can have scalar wavefunctions $\psi(\vec{r}, t)$ and vector wavefunctions $\vec{E}(\vec{r},t)$, $\vec{B}$, $\vec{A}$. In relativity, we even have spacetime vector fields. We then must note that geometry is everywhere in physics!
+
+\begin{itemize}
+\item Space of the system $(\vec{r},t) \leftrightarrow (\vec{k},\omega)$
+\item State of system $\psi$, etc.
+\item Dynamics, which are a question of curvature (wave equation)
+\item Boundary conditions
+\end{itemize}
+
+We can then define $\vec{k}$ as we have always done and the dispersion relation $\omega = \omega(k)$, where for isotropic media $\omega = \omega(|k|)$, i.e. it is direction independent. Then, given some wave equation of form $(O_x + O_y + O_z + O_t)\psi = 0$, we look for solutions $\psi \propto \psi_x(x) + \psi_y(y) + \psi_z(z) + \psi_t(t)$. This is true due to separation of variables. Remember that $\frac{O_q\psi_q(q)}{\psi_q(q)} = \textrm{stuff dependent on y,z,t}$, and the RHS must be constant. This is stuff from math (that I don't know. poop.) that leaves you with eigenvalue problems, etc. Very powerful when it works. Note that this is very coordinate-dependent, and while it works beautifully for Cartesian coordinates it doesn't work nearly as well for polar coordinates, though still manageable. We can thus use separation of variables to write:
+
+$$\psi \propto e^{i(\vec{k}\cdot\vec{r} - \omega t)}$$
+
+which holds only if $\omega^2 = v^2(k_x^2 + k_y^2 + k_x^2)$, the dispersion relation. Note then that any linear superposition of these satisfying $\omega = v(\omega)|k|$ will also work, which we will choose based on boundary conditions. The solution given above is a plane wave, which propagates in one direction as is infinite in the other two. Note then that the phase is $\phi = \vec{k}\cdot\vec{r}$. Note that phase is constant, and so $d\phi = 0 \rightarrow \vec{k}\cdot d\vec{r} = 0 \rightarrow d\vec{r}\perp \vec{k}$. 
+
+\chapter{December 6 - After skipping a few classes...Single slit diffraction/diffraction gratings}
+
+Recall from last lecture that Huygen's Principle: Any finite-sized source of coherent radiation can be modelled as a linear superposition of many point sources (each of which obviously gives out spherical waves).
+
+We begin by dividing the aperture $D$ into $N$ point sources ($N \to\infty$) which are each spaced by distance $d = \frac{D}{N}$. We then pass an electromagnetic wave $\vec{E} = A_0e^{-i\omega t}$ where we note $A_0 \propto \frac{1}{r\sqrt{N}}$. We then examine what the superposition of these sources produces at any given point $r$ away from the aperture. The electromagnetic wave at any point (where we assume $A_0$ is the same for both waves because the $r$ are infinitesimally close) is given by:
+
+\begin{align*}
+\vec{E} &= \vec{A_0} e^{i\omega t}e^{ikr}\left[1 + e^{ikd\sin\theta} + e^{2ikd\sin\theta} +...+e^{(n-1)ikd}\sin\theta\right]\\
+&= \vec{A_0} e^{-i\omega t}e^{ikr}[1 + e^{i\delta} + e^{2i\delta} +...e^{(n-1)i\delta}]\\
+&= \vec{A_0}e^{-i\omega t}e^{ikr}\frac{e^{iN\delta}-1}{e^{i\delta} - 1}\\
+&= \vec{A_0}\underbrace{e^{-i(\omega t - kr)}}_{\text{rapid oscillation}}e^{i(n-1)\delta/2}\frac{\sin(Nkd\sin\theta/2)}{\sin(kd\sin\theta/2)}
+\end{align*}
+
+where $\delta = kd\sin(\theta)$. We then take the limit as $N \to\infty$ with the condition that $Nd = D$, which leaves $A_0N$ as finite as well (this is the sort of ``total energy'' of the wave...I think) We then get:
+
+\begin{align*}
+\vec{E} &= \frac{A}{N}\frac{\sin(kD\sin\theta/2)}{\frac{kD\sin(\theta/2)}{N}}\\
+&= A\frac{\sin t}{t}
+\end{align*}
+
+where $t = kD\sin\theta/2$. Graphing this, we find a classic sinc function. The angular width is on the order of $t = \pi = kD/2$. Then, we substitute $k = 2\pi/\lambda$ and end up finding that $\theta \propto \frac{\lambda}{D}$. This is called the Fraunhofer diffraction peak. This shows that it is impossible to make a plane wave propogate straight through an aperture; it will always diffract.
+
+Note, interestingly, that even though the wave incoming towards the aperture had $k_x = 0$, waves coming out of the aperture have a $k_x$ component! We can then see that $\Delta k_x = k \Delta\theta = \frac{2\pi}{\lambda}\frac{\lambda}{D} = \frac{2\pi}{D}$. If we then treat the aperture as an uncertainty in $x$, because it's an uncertainty in source, we will see that $\Delta x \Delta k_x \approx 2\pi$. Note that while the derivation for the diffraction pattern used a lot of assumption, this Heisenberg Uncertainty is actually general for all plane waves.
+
+Heisenberg's thought experiment for uncertainty (a digression): To see an atom's location, we need to shine light on it using a microscope. But then, because microscopes map linear position to angular position, the above uncertainty principle limits how well we can map angle to position and thus we cannot see atoms to arbitrary accuracy. On top of this, the light from the microscope scatters the atom, so even without the wave uncertainty we would still be limited mechanically in trying to observe the atom. This microscope is called the Heisenberg microscope.
+
+This calculation for diffraction patterns seems similar to localizing wavepackets in time/space using a finite spectrum in $\omega,k$, for which we used Fourier transforms to go between frequency and time space. We can apply the same tools here: Note that the slit can be modeled as a tophat function, for which the Fourier transform is indeed a sinc function, as was calculated earlier. We can then calculate our Fourier coefficients (note that this still only holds in the far field) such as:
+
+$$B(k_x) = \int{f(x)\cos(kx)\;dx} = \int_{-D/2}^{D/2} \cos(kx)\;dx = \frac{1}{\pi}\frac{\sin(k_xD/2)}{k_xD/2}$$
+
+We won't do the whole thing out.
+
+We then stand the picture on its head. If we collect light through an aperture of size $D$, how well can we perceive a source from $L$ away? We can see from similar math to above that $\Delta\theta \propto \lambda/D$. Let's do a back-of-the-envelope calculation for an astronaut trying to see home. He's at $150 \mathrm{mi}$ up, trying to see visible light $\propto 5500$\AA, with the diameter of the pupil on the order of $2$mm. This gives us a $\Delta X \approx 6600$cm, which is pretty large compared to the size of a house. Therefore, there is no way to see the house without a larger diameter collection, i.e. a telescope (I feel like since these are circular collection areas, this should have the factor of $1.22$ in Raleigh's critereon, but since this is order of magnitude calculation it won't change much). 
+
+We remember that last lecture we performed this calculation for two-slit diffraction (T$\_$T), so we'll combine both our current work and our work from last lecture to get to work on diffraction gratings, a large number of slits spaced closely together. Each slit has width $D$ and is spaced by $d > D$. Now, if we remember from earlier today, we took our single slit to be a lot of point sources, and took the limit as point sources approached infinitely many. The diffraction grating is simply a finite case of this! We thus have:
+
+\begin{align*}
+A_{Total} &= A_0N\left[\frac{Nkd\sin\theta/2}{N\sin(kd\sin\theta/2)}\right]\times\underbrace{\frac{\sin(kD\sin\theta/2)}{kD\sin\theta/2}}_{\text{Fraunhofer pattern}}\\
+\end{align*}
+
+There is obviously a peak at $\theta = 0$. We then see that there must be a peak at $\theta = 0$ and there must be principal maxima when $\frac{kd\sin\theta}{2} = n\pi$ (because the middle term above is equal to $1$ at these principal maxima), or $\sin\theta = n\lambda/d$. Thus, if we know $d$, we can measure $\Delta \theta$ and measure $\lambda$ for any light. There are then secondary maxima at $(Nkd\sin\theta)/2 = n\pi$, which are much more closely spaced. This means that there are $N-2$ secondary maxima in between each principal maximum. Note that, because $\sin\theta \leq 1$, that $n$ must be bounded for principal maxima, i.e. thereis a finite number of principal maxima. We then can see that, letting $t = kd\sin\theta/2$, that $t_1 = \pi$ and subsequent maxima have $Nt = N\pi(1+\frac{1}{N})$. The fractional spacing is then $\frac{\Delta\theta}{\theta} \propto\frac{\Delta\lambda}{\lambda} \propto \frac{1}{N}$. This is called the \emph{resolving power} of a diffraction grating $R = \frac{\Delta\lambda}{\lambda} \propto \frac{1}{N}$. If we then throw some numbers at this, such as $750$ slits/mm, $\lambda = 550$nm, and thus $d = 1330$nm. This gives three principal peaks: $\lambda = 0^\circ, 25^\circ, 55^\circ$. The width of these peaks is $\frac{1}{N} = \frac{1}{20000}$ for a $1''\times1''$ grating. This gives the power to distinguish $550.000$nm from $550.028$nm wavelengths. This is called high resolution spetroscopy!
+
+If we recall the energy graph we produced last lecture (darn...) produced for two-slit diffraction, it looks just like a wave packet-ish thing, a sinc function with width $\lambda/D$ with cosine waves inside of width $\lambda/d$. If we graph the diffraction grating in the same manner, we will see a big Fraunhofer pattern with width $\lambda/D$ , within which there are $\cos$ waves with width $\lambda/d$ governing the primary maxima, and smaller cosine waves with width $\lambda/Nd$ governing secondary maxima. . 
+
+We then look at some pictures. Interestingly, waves passing through a slit produces some degree of reflection! Just negligible for most slit sizes. Also, looking at slits from a very close distance rather than a very far, diffraction patterns change to produce ``Franell diffraction'' (sp.?), which is very analytically complex. This phenomenon arises because tophats have very ugly Fourier transforms (and thus diffractions) at their edges. Were we to create a Gaussian slit (partially transmissive mirrors), the near-distance diffraction pattern would become very pretty. Airy diffraction patterns, which are basically just Fraunhofer diffractions in two dimensions, arise from circcular apertures. 
+
+\end{document}

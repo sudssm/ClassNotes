@@ -1,0 +1,39 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath, amsthm, amssymb}
+\usepackage{fancyhdr, amsmath, amsthm, amssymb, hyperref, paracol, graphicx, setspace}
+\usepackage[margin=1in]{geometry}
+\usepackage[version=3]{mhchem}
+\newcommand{\scinot}[2]{#1\times 10^{#2}}
+\usepackage[labelfont=bf]{caption}
+\begin{document}
+
+\doublespace
+\pagestyle{fancy}
+\lhead{Yubo Su - Ma 1c}
+\setlength{\headheight}{15pt}
+
+\section{April 1 - April Fools, I didn't go to class}
+
+But I do have a few notes from reading the book. An interior point $a$ of a set $S$ is defined such that any point in the neighborhood of $a$ must necessarily be in $S$. We can also use ``ball'' notation, $B(a)$, denoting an $n$-ball centered at $a$, $n=\dim(S)$. 
+
+An open set is a set all of whose points are interior; $S$ is open iff $S = \mathrm{Int}(S)$. 
+
+An external point is then a point whose neighborhood contains no points in $S$ (neighborhood is now taken to be $n$-ball etc.). Points that are neither exterior nor interior are denoted boundary points and are denoted $\partial S$.
+
+This is basically all we covered on the first day of class, so I hear.
+
+\section{April 3 - Second day of class}
+
+Note some key terms: interior points, exterior points, boundary points, and the closure of a set. The former three are what they sound like (I missed the rigorous definition), and the closure of a set $S$ is defined as the union of the set and its boundary points. This is also the smallest closed set containing $S$.
+
+We then recall a result from Math 1a: Let $S \in \mathbb{R}$ be closed and obunded. Then $S$ has both a maximum and minimum point, called the supremum and infinum respectively.
+
+We define a set $C \in \mathbb{R}^n$ to be compact if each of its open subsets is $U_i$, $C$ can be spanned by the union of finitely many of them. For example, finite sets are compact while open sets $(0,1)$ are not compact. 
+
+We then cite the Heine-Borel Theorem: $S\in \mathbb{R}^n$ is compact iff $S$ is closed and bounded. The proof takes a long time, so I'm not going to write it down =D
+
+We then discuss limits and continuous functions, $f:D\in \mathbb{R}^n \to \mathbb{R}^m$. A few examples were given, but I'm not sure where this is going. Will check after class. Also, note that $m = 1$ gives a scalar function, $n > 1$ gives a vector function.
+
+We then discuss limits for real! The standard definition, if $x \to a \Rightarrow f(x) \to b$, then $\lim_{x \to a}f(x) = b$. We can make this more rigorous with the $\delta-\epsilon$ definition. 
+
+\end{document}

@@ -1,0 +1,143 @@
+\documentclass[10pt,twocolumn]{article}
+\usepackage{fancyhdr, amsmath, amsthm, amssymb, hyperref, paracol, graphicx, setspace, lmodern, tikz}
+\usepackage[margin=0.5in, top=0.8in,bottom=0.8in]{geometry}
+\usepackage[version=3]{mhchem}
+\newcommand{\scinot}[2]{#1\times 10^{#2}}
+\newcommand{\bra}[1]{\left<#1\right|}
+\newcommand{\ket}[1]{\left|#1\right>}
+\newcommand{\dotp}[2]{\left<\left.#1\right|#2\right>}
+\newcommand{\rd}[2]{\frac{d#1}{d#2}}
+\newcommand{\pd}[2]{\frac{\partial #1}{\partial#2}}
+\newcommand{\rtd}[2]{\frac{d^2#1}{d#2^2}}
+\newcommand{\ptd}[2]{\frac{\partial^2 #1}{\partial#2^2}}
+\newcommand{\norm}[1]{\left|\left|#1\right|\right|}
+\newcommand{\abs}[1]{\left|#1\right|}
+\newcommand{\Log}[0]{\mathrm{Log}}
+\newcommand{\tensor}[1]{\overset{\leftrightarrow}{#1}}
+\newcommand{\Arg}[0]{\mathrm{Arg}}
+\newcommand{\Res}[0]{\mathrm{Res} }
+\newcommand{\expvalue}[1]{\left<#1\right>}
+\usepackage[labelfont=bf, font=scriptsize]{caption}
+\everymath{\displaystyle}
+
+\begin{document}
+
+%\doublespace
+% \pagestyle{fancy}
+% \rhead{Yubo Su - Joke class (Ec11)}
+%\setlength{\headheight}{15pt}
+
+Unit 1
+\begin{itemize}
+    \item Ecomonics is study of maximizing some function $T(x)$; for us, $T'(x) = 0, T''(x) < 0$ is necessary/sufficient maximum condition. 
+    \item Oftentimes $T(x) = B(x) - C(x)$ benifits - costs with $B(x)$ strictly/weakly concave and $C(x)$ strictly/weakly convex ($B''(x) </\leq 0, C''(x) >/\geq 0$). We are usually interested only in $x \geq 0$ domain.
+    \item Given this, global optimum of $T(x)$ exists and is unique; if $B'(0) < C'(0)$ then $x^* = 0$ the maximum, else $B'(x^*) = C'(x^*)$. Crossing conditions $B'(x \to \infty) \to 0$ or $C'(x \to \infty) \to \infty$ guarantees uniqueness of global \emph{maximum}.
+    \item Constrained optimization subject to $x \in [L,B]$ is at $x_0: T'(x_0) = 0$ if $x_0 \in [L,B]$ else it is a corner solution at $x* = L,B$.
+    \item Sometimes a two variable problem can be eliminated to a one-variable problem when constraint exists, i.e. ``Optimize $U(x) + V(y)$ subject to $px + qy = C$.''
+\end{itemize}
+
+Unit 2
+\begin{itemize}
+    \item ``Experienced utility'' function $U(x, m)$ measures utility experienced when purchasing $x$ of desired good and $m$ of other stuff. We will assume quasi-linear $U(x,m) = B(x) + m$.
+    \item If then consumer has wealth $W$ and price of $x$ is $p$, then utility maximization becomes maximizing $U(x, W - xp) = B(x) + W - xp = B(x) - xp$ (since constant $W$ doesn't factor into extremum problem) which is just benefit minus cost. So $p$ introduces a linear $C(x)$ in the earlier $T(x) = B(x) - C(x)$, then if $B'(0) > C'(0) = p$ with concavity we know interior solution exists (as $\exists x > 0, B'(x) = C'(x)$). 
+    \item We notate the $x*(p)$ the maximum of $U(x,m)$ at some price $p$; this is the demand function. Plot price on vertical axis, quantity on horizontal. 
+    \item * --- If we then imagine $U(x,p)$ a 3-D plot ``coming out of'' a $P,Q$ or $x,p$ plot, we can imagine than taking planes of constant $p$ produces an upside down parabola (like $T(x)$ earlier) with maximum at $x^* > 0$ if $B'(0)_{p=p_0} > 0$. The plot of $x^*(p)$ is the line such that $U'(x^*) = B'(x^*) - p = 0$, and it is a line in the $x,p$ plane. This equation also implies that $B'(x^*) = p^*$. 
+    \item Note no income effects $\rd{x^*}{W} = 0$. Law of demand $\rd{x^*}{p} \leq 0$ with equality only when $x^* = 0$; see by differentiating $\rd{}{p}(B'(x^*) - p) \Rightarrow B'' \rd{x^*}{p} = 1$, then since concavity says $B'' < 0$ QED.
+    \item Consumer surplus is defined as net benefit of buying optimally at price $p$, or $CS(p) = B(x^*(p))- B(0) - px^*(p)$. Increase in experienced utility when buying at some price $p$, so $U(x^*,p) - U(0,p)$. 
+    \item Can compute CS function under assumption $p^*(x) = B'(x)$ to be $CS(p) = \displaystyle\int\limits_{0}^{x^*(p)}p^*(x) - p\;dx$. We can use fitting to determine $x^*(p)$ and its inverse, so this is just determining an $x^*(p)$ empirically and using a variable $p$ to find $CS$ as a function of $x^*$ which is a function of $p$.
+    \item Consumer mistakes happen where $B'(x)$ the ``decision utility'' is different (usually too large, i.e. addiction) from $B(x)$ the experienced utility.
+\end{itemize}
+
+Unit 3
+\begin{itemize}
+    \item Production function $F(k,l)$, $k$ capital and $l$ labor. Define \emph{marginal product of capital} $MPK = \pd{F}{k}$ and \emph{marginal product of labor} $MPL = \pd{F}{l}$. Assume $\rd{}{k}MPK, \rd{}{l}MPL < 0$ as $k,l \to \infty$ respectively, i.e. optimum exists.
+    \item Taxonomy production functions satisfied at all $(k,l)$
+        \begin{itemize}
+            \item CRS: constant returns to scale $F(\lambda k, \lambda l) = \lambda F(k,l)$
+            \item DRS: decreasing returns to scale $F(\lambda k, \lambda l) < \lambda F(k,l)$
+            \item IRS: increasing returns to scale $F(\lambda k, \lambda l) > \lambda F(k,l)$
+        \end{itemize} Not all functions are classifiable
+    \item Call $r, w$ cost per unit capital/labol. Then firm maximizes $qp - (rk + wl), q = F(k,l)$. Note then that $q^*$ is supply, $k^*$ is demand for capital, $l^*$ is demand for labor. Two ways to solve
+        \begin{itemize}
+            \item Choice over inputs: maximize $pF(k,l) - (rk + wl)$ WRT $k,l$ and $q^* = F(k,l)$.
+            \item Choice over output: minimize $rk + wl$ WRT $k,l$ subject to $F(k,l) =  q$. Then define $C(q|w,l) = rk^{min}(q|w,r) + wl^{min}(q|w,r)$ cost of $q$ units WRT $w,l$. We then maximize $pq - C(q|w,r)$ to obtain $q^*$ and plug into $k^{min}, l^{min}$.
+        \end{itemize}
+    \item Key: Profit maximization requires cost minimization! i.e. Profit maximized at $q^*, k^*, l^* \Rightarrow k^*, l^*$ minimize cost of production.
+    \item Define \emph{isoquant} (quantity is invariant): $\pd{F}{k}dk + \pd{F}{l}dl = 0$, \emph{isocost} (cost is invariant): $l = \frac{c}{w} - \frac{r}{w}k$. Cost is minimized when isocost and isoquant tangent, i.e. $\frac{\rd{F}{k}}{\rd{F}{l}} = \frac{r}{w}$. Intuitively, $\frac{\rd{F}{k}}{\rd{F}{l}}$ ($\frac{MPK}{MPL}$) is just the marginal rate of techincal substitution while $\frac{r}{w}$ is just the relative prices of capital/labor. 
+    \item Firm then tries to maximize $pq - c(q)$, $q^*(p)$ is the supply.
+    \item Producer surplus $PS(\theta) = \Pi(\theta) - \Pi_{no-trade}$ with $\Pi_{no-trade} = FC$, $FC$ being the fixed cost of production, i.e. difference in profits!. 
+\end{itemize}
+
+Unit 4
+\begin{itemize}
+    \item Aggregate demand is always the sum of the consumers' individual demands $X^D(p) = \sum_i x^D_i(p)$. Key: sum consumers' quantities not prices!! Then $P^D(x)$ is the marginal benefit of any consumer buying any more.
+    \item Aggregate supply is $\sum_j x^F_j(p)$ so total supply at price $p$.
+    \item Prices such that $X^D(p^*) = X^S(p^*)$; called competitive market equilibrium cME, where AS/AD intersect. 
+    \item Comparative statics: If some parameter $a$ changes then solve for $AD(a, p), AS(a, p)$ and find $p^*(a)$. Explicitly
+        $$\pd{p^*}{a} = \frac{\pd{X^S}{a} - \pd{X^D}{a}}{\pd{X^D}{p} - \pd{X^S}{p}}$$
+    \item Social surplus is consumer + producer surplus. It is easy to show that for some feasible allocation $\alpha$ that $SS(\alpha) = \sum_iU_i(\alpha) + C$ with constant $C$, the $U_i$ being the consumer utility functions.
+\end{itemize}
+
+Unit 5
+\begin{itemize}
+    \item An allocation $\alpha$ is called \emph{Pareto optimal} if no other allocation Pareto improves over $\alpha$; Pareto improving is ``improve at least one dude while keeping everybody else at least no worse.''
+    \item First Welfare Theorem: any competitive market equilbrium allocation is Pareto Optimal.
+    \item Deadweight loss is defined as $SS^{opt} - SS(\alpha)$ at some allocation $\alpha$.
+    \item Two types of taxes, lump-sum (fixed amount regardless of actions) and non-lump sum. Former does not introduce inefficiencies, 
+\end{itemize}
+
+Unit 6
+\begin{itemize}
+    \item Consumers in the endogenous market have utility function $U = q - \frac{l^2}{2\theta} + m$ with $q$ goods purchased and $l$ units of labor provided; $\theta$ is a measure of the disutility of providing labor (cost of effort).
+    \item Since generally $m = lw - pq$ up to some constant, we see that for good $q$ we have $MB = 1, MC = p$, and so the demand curve is a step function at $p=1$ from $0$ to $\infty$, as is the AD.
+    \item For labol $l$ then $MB = w$ and $MC = \frac{1}{\theta}$ so labol supply is $l = \theta w$ and AS is $w \sum_{i}^{}\theta_i$ for each laborer's $\theta_i$.
+    \item On the other side firms have production function $F(l) = \gamma l$ and want to maximize $p\gamma l - wl$ resulting in a step function for laborer demand at $w=p\gamma$.
+    \item Then in this super-simplified model our CME equilibrium is given 
+        \begin{align}
+            p^* &= 1\\
+            w^* &= \gamma\\
+            q^* &\propto \bar{\theta}\gamma^2\\
+            l^* &\propto \bar{\theta}\gamma
+        \end{align} for $\bar{\theta}$ average $\theta$. Note one CME per $q$. 
+    \item At equilibrium each person has income $I = \theta w^2 = \theta\gamma^2$ and utility $U = \frac{\theta\gamma^2}{2}$. 
+    \item With a tax $\tau$ per earned dollar on the consumer maximization becomes $\max_{q,l\geq0} q - \frac{l^2}{2\theta} + l(1-\tau)w - pq + T$ with $T$ the total tax return. Consumer assumes fixed $T$. 
+    \item Since then no change in $q,l$ markets, $p^* = 1, w^* = \gamma$. However, MB of labor supply falls to $MB = (1-\tau)w$ so labor AS goes to $\propto(1-\tau)w\bar{\theta}$.
+    \item Total revenue is $\propto \tau(1-\tau)\gamma C\bar{\theta}$. Laffer curve!
+    \item Net redistribution of tax per consumer is $\tau(1-\tau)\gamma^2\left( \bar{\theta} - \theta_i \right)$, so consumers who hate work receive net transfer and those with low disutility of labor pay net tax. 
+    \item Second Welfare theorem: Let $\alpha$ be a Pareto optimal allocation, then there exists a set of zero-sum lump-sum transfers $T_i$ such that $\alpha$ remains a CME. This is a $T_i$ for each consumer though, which is unrealistic; too much info required!
+    \item Price controls include ceiling/floor or simple (fixed price), complex. First three generate inefficiency when change equilibrium; produces excess demand so rationing required.
+    \item Complex price floor: gov buys excess supply at equilibrium $p^*$ and destroys, pulling money from equal lump-sum tax. Super inefficient!
+\end{itemize}
+
+Unit 7
+\begin{itemize}
+    \item Monopolies differ in that they are price setters, so take consumer demand, plug into profits function and maximize wrt $p$ i.e. $\operatorname{max} p^D(q)q - c(q)$.
+    \item Monopolies are inefficient; generate DWL because $q^m < q^*$ the monopoly quantity and the optimal.
+    \item Monopolies under price discrimination are slightly different; they can extract \emph{all} consumer benefit.
+    \item Consider two consumer types $p_A^D(q), p_B^D(q)$, then monopolist wants to max $n_AB(q_A) + n_BB(q_B) - c(n_Aq_A + n_Bq_B)$ (noting equivalence of consumer benefit and monopolist's revenue). Note this allocation is Pareto Optimal: PS = SS, CS = 0. 
+    \item Simple model of imperfect price discrimination is to sell $\bar{q}$ units at $p_1$ and additional are sold at $p_2$. Turns out with homogeneous consumers monopoly can still extract full SS.
+    \item Multi-market discrimination is just maximizing with respect to each market; marginal revenue in each market is equal to marginal cost.
+\end{itemize}
+
+Unit 8
+\begin{itemize}
+    \item Oligopoly lies just between between monopoly/competition. Firms maximize profits assuming fixed other firms' behavior, i.e. maximize $q_i p^D(q_i + q_j) - c_i(q_i)$; maximization from here is just like monopoly. Oligopoly equilibrium occurs when all firms predict correctly, less DWL than monopoly. Identical firms is special case, easy to solve exactly by assuming all $q_i$ are equal.
+    \item Monopolistic competition: Firms pay SFC to create a brand and produce at constant MC $\mu$; brands split market equally and are monopolists within own brand. Consumer becomes loyal buyer of only one brand but demand doesn't shift upon commitment.
+    \item Let $I$ be number of brands, then each firm faces demand $\mu = p^{max} - Imq$ and yields $p^{MC} = \frac{p^{max} + \mu}{2}$. This yields profits $\Pi^{MC} = \frac{\left( p^{max} \right)^2}{4mI} - F$ and equilibrium of firms is largest $i$ such that $\Pi > 0$. 
+    \item Takeaway is that brands screw with perceived utility, equilibrium produced $q$ remains at monopolistic level. 
+\end{itemize}
+
+Unit 9
+\begin{itemize}
+    \item Define \emph{externality} when actions of one economic actor affect another actor; direct/market typing. 
+    \item \emph{Public bads} are externalities that impact decision utility vs. experienced utility that impact DWL; maximize given $e(q)$ externality as a function of quantity.
+    \item Ways to eliminate public bads DWL:
+        \begin{itemize}
+            \item Pigouvian taxation: tax imposed on every action generating externality equal to marginal benefit of externality, returned to consumers in lump-sum transfer. Leads to optimal allocation but requires much information 
+            \item Permit markets: Gov. creates $q^{opt}$ of permits, cannot exceed permits, permit trading freely; also optimal.
+        \end{itemize}
+    \item \emph{Public goods} positive externalities to other actors. Corrective policies then include Pogouvian subsidies (opposite of taxation), gov. provision (buy some public goods). 
+    \item Pigouvian taxes are equal to marginal externality. We compute optimal tax by setting taxed consumption equal to optimal production under externality; when doing this set $e = q^*$. 
+\end{itemize}
+
+\end{document}

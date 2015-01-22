@@ -1,0 +1,24 @@
+\contentsline {chapter}{\numberline {1}1 - Les notes pour L103a}{2}
+\contentsline {section}{\numberline {1.1}October 3 - Intro (few notes)}{2}
+\contentsline {section}{\numberline {1.2}October 5 - Conjuger les verbes... }{2}
+\contentsline {section}{\numberline {1.3}October 8 - Une petite dict\'ee}{2}
+\contentsline {section}{\numberline {1.4}October 10 - L'imperatif}{3}
+\contentsline {section}{\numberline {1.5}October 12 - COMPOSITION 1!!}{3}
+\contentsline {section}{\numberline {1.6}October 15 - Dict\'ee}{3}
+\contentsline {section}{\numberline {1.7}October 17 - Les f\^etes en indochine p. 64 EBF}{4}
+\contentsline {section}{\numberline {1.8}October 19 - }{4}
+\contentsline {section}{\numberline {1.9}October 22 - Rien}{4}
+\contentsline {section}{\numberline {1.10}October 24 - Reviser le composition}{4}
+\contentsline {section}{\numberline {1.11}October 26 - Lire un romain!}{4}
+\contentsline {section}{\numberline {1.12}October 29 - Pass\'e Simple}{5}
+\contentsline {section}{\numberline {1.13}October 30 - Le subjonctif/conditionnel}{5}
+\contentsline {section}{\numberline {1.14}October 31 - Plus de romain}{5}
+\contentsline {section}{\numberline {1.15}November 2 - Des notes sur ma composition}{5}
+\contentsline {section}{\numberline {1.16}November 12 - L'utilisation de ``de''}{5}
+\contentsline {section}{\numberline {1.17}November 13 - Comment poser une question}{5}
+\contentsline {section}{\numberline {1.18}November 14 - Quiz 2/Composition 2!}{5}
+\contentsline {section}{\numberline {1.19}November 19 - Pronons}{6}
+\contentsline {section}{\numberline {1.20}November 26 - Plus de pratique sur les pronons}{6}
+\contentsline {section}{\numberline {1.21}November 28 - Refaire Composition numero deux}{6}
+\contentsline {section}{\numberline {1.22}December 3 - Un peu de devoirs...}{6}
+\contentsline {section}{\numberline {1.23}December 7 - Un petit jeu}{6}

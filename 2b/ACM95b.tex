@@ -1,0 +1,1191 @@
+\documentclass[10pt]{report}
+\usepackage{fancyhdr, amsmath, amsthm, amssymb, setspace, tikz}
+\usepackage[margin=1in]{geometry}
+\usepackage[version=3]{mhchem}
+\newcommand{\scinot}[2]{#1\times 10^{#2}}
+\newcommand{\rtd}[2]{\frac{d^2#1}{d#2^2}}
+\newcommand{\ptd}[2]{\frac{\partial^2 #1}{\partial#2^2}}
+\newcommand{\bra}[1]{\left<#1\right|}
+\newcommand{\ket}[1]{\left|#1\right>}
+\newcommand{\dotp}[2]{\left<#1\left.\right|#2\right>}
+\newcommand{\rd}[2]{\frac{d#1}{d#2}}
+\newcommand{\pd}[2]{\frac{\partial #1}{\partial#2}}
+\newcommand{\norm}[1]{\left|\left|#1\right|\right|}
+\newcommand{\abs}[1]{\left|#1\right|}
+\newcommand{\Log}[0]{\mathrm{Log} }
+\newcommand{\Arg}[0]{\mathrm{Arg} }
+\newcommand{\Res}[0]{\mathrm{Res} }
+\usepackage[labelfont=bf, font=scriptsize]{caption}
+\everymath{\displaystyle}
+
+\begin{document}
+
+%\doublespace
+\pagestyle{fancy}
+\rhead{Yubo Su - ACM95b - Dan Meiron}
+%\setlength{\headheight}{15pt}
+\title{ACM95 - KRK 119 - MWF 11-12}
+\author{Yubo Su}
+\date{ }
+
+\maketitle
+
+\tableofcontents
+
+\chapter{Key Concepts}
+
+\begin{itemize}
+    \item $A_1(z)y' + A_0(z)y = 0$ produces solution $y(z) = c_0\exp\left[ -\displaystyle\int\limits_{z_0}^{z}\frac{A_0(t)}{A_1(t)}\;dt \right]$ with $c_0 = y(z_0)$.
+    \item Inhomogenous case can be solved using either integrating factors or introducing the adjoint problem and writing
+        \begin{align*}
+            0 &= \rd{x}{z} - \frac{A_0}{A_1}x(z) \\
+            x(z) &= \exp\left[ \displaystyle\int\limits_{z_0}^{z}\frac{A_0(t)}{A_1(t)}\;dt \right]\\
+            y(z) &= \underbrace{\frac{c_0}{x(z)}}_{\text{homo solution}} + \underbrace{\frac{1}{x(z)}\displaystyle\int\limits_{z_0}^{z}\frac{x(t)f(t)}{A_1(t)}\;dt}_{\text{particular solution}}
+        \end{align*}
+    \item The differential equation $A_1(z) y' + A_0(z)y = f(z)$ subject to $y(z_0) = y_0$ with have a unique solution in every interval provided that $A_0, A_1, f$ are continuous and $A_1$ doesn't vanish. Existence + uniqueness is not guaranteed if $A_1$ vanishes.
+    \item Let $f(x,y)$ and $\pd{f}{y}$ be continuous on some rectangle defined by $x \in [\alpha,\beta], y \in [\gamma,\delta]$. There exists a unique solution that satisfies the initial conditions that is defined over some interval $x \in [x_0 -h, x_0 + h]$ contained within $[\alpha,\beta]$.
+    \item Consider ODE of form $y'' + p(x)y' + q(x)y = r(x)$ such that $p,q,r$ are continuous on $x \in [\alpha,\beta]$ then there exists a unique solution on the interval satisfying inital conditions.
+    \item Two solutions of the homogeneous ODE $y'' + p(x)y' + q(x)y = 0$ are called a \emph{fundamental set} if every solution of the IVP can be expressed as a linear combination of these two solutions. We know two solutions $y_1, y_2$ are a fundamental set if $\begin{bmatrix} y_1 & y_2\\y_1' & y_2' \end{bmatrix} \neq 0$ the \emph{Wronskian}, also given $W = c\exp\left[ -\int^x p(t)\; dt \right]$.
+    \item Abel's theorem: If the functions $p,q$ in $y'' + p(x) y' + q(x)y = 0$ over some interval $x\in[\alpha,\beta]$ and $y_1,y_2$ are solutions of the ODE, then the Wronskian is identically zero or is never zero over $\left[ \alpha,\beta \right]$. 
+    \item Types of 2nd-order ODE that can be solved: constant coefficient, Euler ODE ($y'' + \frac{\alpha}{x}y' + \frac{\beta}{x^2}y = 0$).
+    \item Reduction of order: given ODE $y'' + p(x) y' + q(x) y = 0$ and some solution $y_1(x)$ we can find $y_2(x) = v(x)y_1(x)$ and substitute through ODE to find $v(x)$; result is $v'(2y_1' + py_1) + v''y_1 = 0$.
+    \item Variation of constants: given ODE $y'' + p(x)y' + q(x) y = r(x)$ with homogeneous solutions $y_1, y_2$ we have particular solution of form $y = u_1(x) y_1 + u_2(x) y_2$ ($y_{1,2}$ are homogeneous solutions) with $u_1' = -\frac{y_2r}{W}, u_2' = \frac{y_1r}{W}$ with $W$ the Wronskian.
+    \item ODEs as systems works in both directions. The most general system has form $\vec{x}' = A(z)\vec{x} + F(z)$ with $A(z)$ a coefficient matrix. Then if $A(z)$ has continuous entries and $F(z)$ is piecewise continuous (or absent in homogeneous case) then existence and uniqueness.
+    \item For a solution to a system IVP, it must hold that for general solutions $\vec{x}_i$
+        $$W = \begin{pmatrix} \vec{x}_1 & \vec{x}_2&\dots \end{pmatrix} = \exp\left[ \int \mathrm{Tr}A(z)\; dz \right]\neq 0$$
+    \item If $A$ is constant coefficients matrix, easiest to work in eigenbasis where $y_i \propto e^{\lambda_i z}$ with $y_i$ eigenvectors. If degenerate eigenvalues, use Jordan normal form and use red. order. to determine degenerate solutions (recall to take in solution degenerate space same eigenvalue as the eigenvalue of the entire space under $A$). 
+    \item Fundamental matrix is given by $\phi(z_0) = I, \phi' = A\phi$ because $\vec{x} = \phi \vec{x}_0$, also method of Green's functions. 
+    \item Reduction of order; if $\vec{x}_1$ is a solution, then we can construct
+        $$\Gamma = \begin{pmatrix} 1 & 0 & \dots & 0 & x_{11}\\0 & 0 & \dots & 0 & x_{12} \\\vdots & \vdots & \ddots & \vdots & \vdots\\0 & 0 &\dots & 1 & x_{1n-1}\\0 & 0 &\dots & 0 & x_{1n} \end{pmatrix}, \Gamma^{-1}(A\Gamma - \Gamma') $$
+        Then solving $\vec{y}' = B\vec{y}$ (where $B$ has a last column of $0$s if we use a solution to construct $\Gamma$), then $\vec{x} = \Gamma \vec{y}$ is also a solution.
+    \item Adjoints for systems: Given $\vec{x}' = A\vec{x} + \vec{f}$, construct $\phi = \left\{ \vec{y}_i \right\}$ where $\vec{y}_i' = -A^\dagger \vec{y}_i$, then $\phi \vec{x} = \phi(0) \vec{x}(0) + \int \phi f\; dz$ (in absurd shorthand). Then since $\phi' = -\phi A, \phi = e^{Az}$ and we eliminate the adjoint from the problem; same result as going from variation of constants.
+    \item For a pure power series solution, if $p,q$ are analytic in some region in the complex plane containing $x_0$, then the series converges in that region. We call such points $x_0$ \emph{ordinary points}. The radius of convergence of the power series will be at least as large as the minimum convergence of $p,q$.
+    \item Frobenius theory depending on roots of indicial equation
+        \begin{itemize}
+            \item Distinct roots differing not be an integer: $ y = \sum a_n(x-x_0)^{n + \alpha}$
+            \item Repeated roots: one solution is $y_1 = \sum a_n(x-x_0)^{n+\alpha}$ and other $y_2 = \pd{}{\beta}\sum a_n(\beta)(x-x_0)^{n+\beta}\big|_{\beta = \alpha}$. 
+            \item Distinct roots differing by an integer: ugly as balls, 1/31/14 lecture.
+        \end{itemize}
+    \item Laplace transform exists for $\Re s > a$ where $f(t)$ has tail bounded by $Ke^{at}$ as 
+        \begin{equation}
+            F(s) = L[f(t)] = \displaystyle\int\limits_{0}^{\infty}e^{-st}f(t)\;dt
+        \end{equation}
+        Analytic continuation extends $F(s)$ past $a$. Importantly $L[f^{(m)}(t)] = sL[f(t)] - \sum_{n=0}^{m-1}s^{n}f^{(m-1-n)}(0)$.
+    \item Sturm-Liouville ODEs are of form below and have some interesting properties.
+        \begin{align}
+            \rd{}{x}\left( p(x)\rd{y}{x} \right) - q(x)y(x) + \lambda r(x)y(x) = L[y] = 0
+        \end{align} subject to homogeneous boundary conditions. They obey
+        $$\displaystyle\int\limits_{a}^{b}L[u(x)]v(x)\;dx = \displaystyle\int\limits_{a}^{b}u(x)L[v(x)]\;dx$$
+    \item Parseval's theorem for Fourier series looks like 
+        $$\displaystyle\int\limits_{-L}^{L}f^2(x)\;dx = \frac{L}{2}\left[ 2B_0^2 + \sum_{n=1}^{\infty}A_n^2 + B_n^2 \right]$$
+        but can be applied to all S-L eigenfunctions, some expression relating square integral to coefficients. 
+    \item Differentiability of Fourier series term by term only when no Gibbs phenomenon, or only for periodic, uniformly convergenct $f(x)$. Always can integrate though.
+    \item Homogeneous BCs can be solved easily using S-L expannsion, inhomogenous BC can either transform to homogeneous BC or use finite transforms.
+    \item Uniform convergence says that the Fourier Series will converge to $f(x)$ everywhere $f$ is differentiable and will converge to the average value when $f$ is discontinuous.
+    \item Greens Functions: General S-L ODE $-\rd{}{x}\left[ p(x)\rd{y}{x} \right] + q(x)y - \lambda r(x)y = f(x)$ with $y(a) = y(b) = 0$ can be written
+        \begin{equation}
+            y(x) = \displaystyle\int\limits_{a}^{b}G(x,x';\lambda)f(x')\;dx', G(x,x') = \sum_{n=0}^{\infty}\frac{\phi_n(x)\phi_n(x')}{\lambda - \lambda_n}
+        \end{equation}
+    \item In general $G(x,x')$ can be written
+        \begin{equation}
+            G(x,x') =
+            \begin{cases}
+                \frac{1}{W(x')}y_1(x)y_2(x')& \mbox{if } x < x'\\
+                \frac{1}{W(x')}y_1(x')y_2(x)& \mbox{if } x > x'
+            \end{cases}
+        \end{equation}
+    \item Fourier Transform
+        \begin{align}
+            F(k) &= \frac{1}{\sqrt{2\pi}}\displaystyle\int\limits_{-\infty}^{\infty}f(s)e^{-iks}\;ds\\
+            f(x) & =\frac{1}{\sqrt{2\pi}}\displaystyle\int\limits_{-\infty}^{\infty}F(k)e^{ikx}\;dk
+        \end{align}
+
+\end{itemize}
+
+\chapter{1/6/14 - Review ODEs}
+
+Instructor can be found at 305 Guggenheim, moodle is where to find things (key ``Laplace''). No official course text, lecture notes + slides on moodle. Notes are too detailed, lecture slides probably better.
+
+Midterm + final can use class notes + own notes. Grade in class is the maximum of two grading schemes: 50\% each exam or 33\% exam/HW. Lowest HW score is dropped. Collaboration is normal, weekly HW, blah blah. HW sets are assigned on Fridays and due on Mondays at Steele House box at 5PM. Scores are all posted on Moodle. Pick up HW from TA. First part of the course is review.
+
+Rough syllabus:
+\begin{itemize}
+    \item Linear/nonlinear ODE - examples/definitions. Mostly linear. 
+    \item Existence/uniqueness theorems. 
+    \item Second-order, $n$-th order linear ODE.
+    \item Laplace transform
+    \item Series solutions/singular points
+    \item Boundary value problems
+    \item Sturm-Liouville ODE/self-adjoint problems
+    \item Fourier series and other complete sets of functions
+    \item Regular vs. singular Sturm-Liouville problems
+    \item Fourier transforms
+\end{itemize}
+
+This will prepare us for PDEs in 95c. 
+
+Let's start class (it's an hour in\dots). The most general type of ODE is a relationship $F(z,y,y', y''\dots, y^{(n)}) = 0$ for some $y(z)$. We use $z$ because we will often discuss differential equations of complex variables. In general then the solution will have $n$ arbitrary constants of integration, and our solution can be written $y(z) = G(z,c_1,\dots c_n)$. 
+
+We then call an ODE \emph{linear} if $F$ is a linear relation in $y$ and its derivatives. This means that $F(z) = \sum_{j=0}^{n}A_j(z)y^{(j)}(z) - f(z)$ where for $f(z) = 0$ we call \emph{homogeneous} and $f(z) \neq 0$ we call \emph{inhomogeneous}. The general solution to a linear ODE is always a superposition of solutions $y(z) = \sum_{i=1}^{n}c_iy_i(z) + y_{part}(z)$ with maybe an additional particular solution (in the inhomogeneous case). Note these coefficients to be the same degrees of freedom as the constants of integration. The $y_i$ are called the \emph{homogeneous solutions} and satisfy $\sum_{j=0}^{n}A_j(z)y_j^{(j)} = 0$ the homogeneous solution. The \emph{particular solution} satisfies $\sum_{j=0}^{n}A_j(z)y_{part}^{(j)} = f(z)$
+
+In general, nonlinear ODEs are much harder. I miss Niles Pierce already. Back on track, the solution still has form $y(z) = G(c_1\dots c_n, z)$, but rather than just appearing as coefficients of the homogeneous solutions the constants tend to appear in a nonlinear way. 
+
+In any case, let's discuss linear problems. In order for there to be a unique solution, we have to provide $n$ pieces of information to fix the constants. There are two common approaches to this, the initial value problem and the boundary value problem. For initial value problems we are given $y^{(i)}(z_0)$ up to some order which determines the constants of integration. For example, in dynamics we are given $\ddot{y} = F(t)$ and some initial position/velocity! Boundary value problems specify $y(z_i)$ for $n$ values $z_i$. For example, $y'' + y' + 3y = 0$ over $z \in [z_0, z_1]$ with $y(z_0) = 1, y(z_1) = 2$ is a boundary value problem. We are most worried about uniqueness and existence problems now, and it turns out that for IVPs it's very easy to state existence/uniqueness but for BVPs it is much harder. We'll discuss more next time with examples!
+
+\chapter{1/8/14 - First-order ODE}
+
+Let's begin with our simplest first order linear ODE $A_1(z)y' + A_0(z)y = f(z)$. Let's first examine the homogeneous case. Rewrite as
+$$\frac{y'}{y} + \frac{A_0}{A_1} = 0$$
+which is simply integrable to produce solution $y(z) = c_0\exp\left[ -\displaystyle\int\limits_{z_0}^{z}\frac{A_0(t)}{A_1(t)}\;dt \right]$. Then for an IVP $y(z_0) = y_0$ we simply have $c_0 = y(z_0) = y_0$.
+
+The inhomogeneous problem can be solved using integrating factors, but we will see something slightly different. Introduce the \emph{adjoint} equation $\rd{x}{z} - \frac{A_0}{A_1}x(z) = 0$ subject to $x(z=z_0) = 1$. This is homogeneous and yields solution $x(z) = \exp\left[ \displaystyle\int\limits_{z_0}^{z}\frac{A_0(t)}{A_1(t)}\;dt \right]$.
+
+This is advantageous because we note
+\begin{align}
+    \rd{}{z}(xy) &= xy' + yx'\\
+    &= \frac{-A_0}{A_1}xy + x\frac{f}{A_1} + \frac{A_0}{A_1}xy\\
+    &= x(z) \frac{f(z)}{A_1(z)}
+    \label{1.8.adjoint}
+\end{align}
+
+Then we can integrate both sides of Equation \ref{1.8.adjoint}
+\begin{equation}
+    y(z) = \frac{c_0}{x(z)} + \frac{1}{x(z)}\displaystyle\int\limits_{z_0}^{z}\frac{x(t)f(t)}{A_1(t)}\;dt 
+    \label{1.8.sol}
+\end{equation}
+and simply substitute in $x(z) = \exp\left[ \displaystyle\int\limits_{z_0}^{z}\frac{A_0(t)}{A_1(t)}\;dt \right]$. Cue example time, zzzz. Niles's examples were so much more attractive/engaging. Maybe he's just more attractive.
+
+Let's now discuss existence/uniqueness for linear first-order ODEs. Theorem! The differential equation $A_1(z) y' + A_0(z)y = f(z)$ subject to $y(z_0) = y_0$ with have a unique solution in every interval provided that $A_0, A_1, f$ are continuous and $A_1$ doesn't vanish. If $A_1$ vanishes the solution may not necessarily exist or be unique.
+
+Nonlinear ODEs are much harder. Consider $y' = f(x,y)$ subject to $y(x_0) = y_0$. Generally speaking, there exists no explicit solution. Theorem! Let $f(x,y)$ and $\pd{f}{y}$ be continuous on some rectangle defined by $x \in [\alpha,\beta], y \in [\gamma,\delta]$. There exists a unique solution that satisfies the initial conditions that is defined over some interval $x \in [x_0 -h, x_0 + h]$ contained within $[\alpha,\beta]$.
+
+Let's consider an example $y' = y^2$ with $y(0) = 1$, \emph{spontaneous singularities} arise. The solution is $\frac{1}{1-x}$, so spontaneous singularity at $x=1$! Who would have guessed. There is no existence beyond $x=1$. However, if we have initial condition $y(0) = 2$ we have solution $y = \frac{2}{1-2x}$ which means that the singularity changes with initial condition!!
+
+\chapter{1/10/14 - 2nd order ODE}
+
+General second order ODE takes form $F(x,y,y',y'') = 0$. General linear ODE is $y'' + A(x) y' + B(x)y = g(x)$. We expect two arbitrary constants regardless of linearity. There is no general solution for the second order ODE, even linear.
+
+To determine the constants we need two conditions, either initial values or boundary values. Many important functions are defined by the ODEs they satisfy. There is a theorem for existence/uniqueness for second-order linear ODEs. Consider ODE of form $y'' + p(x)y' + q(x)y = r(x)$ such that $p,q,r$ are continuous on $x \in [\alpha,\beta]$ then there exists a unique solution on the interval satisfying inital conditions.
+
+Two solutions of the homogeneous ODE $y'' + p(x)y' + q(x)y = 0$ are called a \emph{fundamental set} if every solution of the IVP can be expressed as a linear combination of these two solutions. To show that two solutions $y_1, y_2$ are fundamental, we must show that for some $\phi(x) = c_1y_1 + c_2y_2$ we can plug into the IVP and solve uniquely for $c_1, c_2$ for any initial values. In other words, we require
+\begin{align}
+    c_1y_1 + c_2y_2 &= y_0\\
+    c_1y_1' + c_2y_2' &= y_0'\\
+    \begin{bmatrix} y_1 & y_2\\y_1' & y_2' \end{bmatrix} \neq 0
+    \label{1.10.wronskian}
+\end{align}
+
+Equation \ref{1.10.wronskian} is called the \emph{Wronskian} and is a condition for two solutions to be a fundamental set. We then arrive at Abel's theorem. If the functions $p,q$ in $y'' + p(x) y' + q(x)y = 0$ over some interval $x\in[\alpha,\beta]$ and $y_1,y_2$ are solutions of the ODE, then the Wronskian is identically zero or is never zero over $\left[ \alpha,\beta \right]$.
+
+One way to solve for a fundamental set of solutions is to solve some ODE subject to two sets of IVPs $y_1 = 1, y'_1 = 0, y_2=0, y'_2=1$; the solutions to these form a fundamental set by construction as the Wronskian doesn't vanish. 
+
+We can get the Wronskian even without knowing solutions. Suppose we have $y_1'' + py_1' + qy_1 = 0, y_1'' + py_1' + qy_1 = 0$. Let's then multiply the first equation by $y_2$, the  second equation by $y_1$ and subtract to obtain
+$$\underbrace{\left( y_1y_2'' - y_2y_1'' \right)}_{\frac{dW}{dx}} + p\underbrace{\left( y_1y_{2' - y_2y_1'} \right) = 0}_{W}$$
+
+We then have a first-order ODE in the Wronskian which gives $W = c\exp\left[ -\int^x p(t)\; dt \right]$. Then obviously unless $c=0$ then $W \neq 0$. 
+
+We can consider a connection between fundamenttal solutions and linear independence of vectors. Two functions $f,g$ can be considered linearly dependent if $c_1f + c_2g = 0$ for $c_1, c_2 \neq 0$, otherwise linearly independent. The Wronskian does not vanish for a fundamental set.
+
+Constant-coefficients in the second-order ODE is solvable; try ansatz $y = e^{\alpha x}$ and win. Recall if the resulting polynomial has equal roots then the two roots are $e^x, xe^x$; this can be shown via reduction of order. 
+
+Euler ODE ($y'' + \frac{\alpha}{x}y' + \frac{\beta}{x^2}y = 0$) is another exactly soluble case; plug in $x^r$ to obtain quadratic in $r$. If $r$ is degenerate root, then two roots are $x^r, x^r\ln r$. Another case can be complex roots, in which case $x^{\gamma + i\delta} = x^\gamma\left[ \cos(\delta \ln x) + i\sin(\delta \ln x) \right]$.
+
+\chapter{1/13/14 - More 2nd order ODEs, ODEs as systems}
+
+Reduction of order; given ODE $y'' + p(x) y' + q(x) y = 0$ and some solution $y_1(x)$ we can find $y_2(x) = v(x)y_1(x)$ and substitute through ODE to find $v(x)$; result is $v'(2y_1' + py_1') + v''y_1 = 0$. 
+
+Variation of constants: given ODE $y'' + p(x)y' + q(x) y = r(x)$ with homogeneous solutions $y_1, y_2$ we can make ansatz to inhomogeneous solution of form $y = u_1(x) y_1 + u_2(x) y_2$ and obtain that $u'_1(x) y_1 + u'_2(x)y_2 = 0, u'_1(x) y'_1 + u'_2(x)y'_2 = r(x)$. This yields $u_1' = -\frac{y_2r}{W}, u_2' = \frac{y_1r}{W}$ with $W$ the Wronskian as coefficients for our particular solution to the general solution to the inhomogeneous case. 
+
+We can treat higher-order ODEs as systems, so if we have ODE $F(y''', y'', y', y', x) = 0$ we can write $z_1 = y, z_2 = y', z_3 = y''$ and write $z_3' = G(x, z_i), z_i' = z_{i+1}$ as a system of first-order ODEs. We can then introduce vector notation $\vec{x} = \{x_i\}, \vec{h}(z,\vec{x}) = \{G_i(z, \vec{x})\}$, which gives compactly $\vec{x}' = \vec{h}(z, \vec{x})$. We can also convert any system of ODEs to a higher-order ODE, just substitute stuff around; not always works when coefficients are non-differentiable.
+
+The system formalism is actually more general, so we use that. The most general system has form $\vec{x}' = A(z)\vec{x} + F(z)$ with $A(z)$ a coefficient matrix. Then if $A(z)$ has continuous entries and $F(z)$ is piecewise continuous (or absent in homogeneous case) then existence and uniqueness.
+
+There are as many linearly independent solutions as the dimensions of the problem (vectors/matrix) which makes sense as we are reducing an $n$-order ODE to systems so need to be $n$ constants of integration. There are then also $n$ solution vectors, and the general solution is a superposition of these $\vec{x}_i$. In order then to solve the IVP, the generalized Wronskian must be nonzero, the Wronskian being
+$$W = \begin{pmatrix} \vec{x}_1 & \vec{x}_2&\dots \end{pmatrix} = \exp\left[ \int \mathrm{Tr}A(z)\; dz \right]\neq 0$$
+where we have also inserted the generalization of Abel's theorem.
+
+\chapter{1/15/14 - 1st order linear systems}
+
+Given case $\vec{x}' = A(z)\vec{x} + F(z)$ we can examine when $A$ is constant. We can then diagonalize $A$ in its eigenbasis via $T^{-1}AT = D$. Then define a new set of dependent variables $\vec{y} = T^{-1}\vec{x}$ which defines a new ODE system $\vec{y}' = D\vec{y}$. Solutions are then $y_i \propto e^{\lambda_i z}$ and are linearly independent because decoupled ODEs. Then to solve back in $\vec{x}$ we just have $\vec{x}_i = T\vec{y}_i$. 
+
+We assume here that $A$ has distinct eigenvalues. If repeated eigenvectors then must use Jordan normal form. Exhibit a matrix $T^{-1}AT = J$, then $J$ is block diagonal with block sizes of the degeneracy of the eigenvalues. If the Jordan block isn't trivial i.e. diagonal, it can be of form (2D for example) $\begin{pmatrix} \lambda_2 & 1 \\ 0 & \lambda_2 \end{pmatrix} $ which produces system
+\begin{align}
+    y_2' &= \lambda_2 y_2 + y_3\\
+    y_3' &= \lambda_2 y_3
+    \label{1.15.Jordan}
+\end{align}
+
+We solve this by solving the second equation and then plugging solution into first and solving as inhomogeneous ODE. This isn't very important to what we do.
+
+Fundamental matricies. Suppose we can find a matrix such that $\phi(z_0) = I$ and $\phi' = A\phi$, then this is called the fundamental matrix of the system. Then $\vec{x} = \phi \vec{x}_0$ with $\vec{x}_0$ the initial value problem. Matrix $\phi$ is an example of a Green's function. 
+\chapter{1/17/14 - System reduction of order, adjoint systems}
+
+Reduction of order also applies to systems. Suppose we have $\vec{x}' = A(z)\vec{x}$ for which $\vec{x}_1$ is a solution. Now define the matrix
+$$\Gamma = \begin{pmatrix} 1 & 0 & \dots & 0 & x_{11}\\0 & 0 & \dots & 0 & x_{12} \\\vdots & \vdots & \ddots & \vdots & \vdots\\0 & 0 &\dots & 1 & x_{1n-1}\\0 & 0 &\dots & 0 & x_{1n} \end{pmatrix} $$
+
+Now let $\vec{x} = \Gamma \vec{y}$. Then $\Gamma' \vec{y} + \Gamma \vec{y}' = A\Gamma\vec{y}$, or alternatively $\vec{y}' = \Gamma^{-1}(A\Gamma - \Gamma')\vec{y} = B\vec{y}$. Then we note that if $\vec{x}$ is a solution then $\vec{y} = (00\dots01)^T$. We note that then the last column of $B$ is zeros, and the order is reduced by $1$. Let's see an example\dots
+
+Suppose $\vec{x}' = \begin{pmatrix} 0 & 1 & 0\\0 &  0 & 1\\-2 & -5 & -4 \end{pmatrix} \vec{x}$. The eigenvalues are $-1, -1, -2$ and there are only two eigenvectors $(1,-1,1)^T, (1,-2,4)^T$. We can thus get two solutions using eigentechniques, and we will use reduction of order to get the last one. First, we construct $\Gamma$ (using the solution associated with the degenerate eigenvalue)
+$$\Gamma = \begin{pmatrix} 1 & 0 & e^{-z} \\0 & 1 & -e^-z\\ 0 & 0 & e^{-z}\end{pmatrix}, \Gamma^{-1} = \begin{pmatrix} 1 & 0 & -1\\0 & 1 & 1\\0 & 0 & \frac{e^z}{a} \end{pmatrix} $$
+
+We next need 
+$$B = \Gamma^{-1}\left( A\Gamma - \Gamma' \right) = \begin{pmatrix} 2 & 6 & 0\\-2 & -5 & 0\\-\frac{2e^z}{a} & -\rd{5e^z}{a}&0 \end{pmatrix} $$
+
+Note the column of zeros. Then the resulting system decouples $y_1, y_2$ from $y_3$ so we can just solve the system of equations
+\begin{align}
+    y_1' &= 2y_1 + 6y_2 & y_2' = -2y_1 - 5y_2\\
+    y_1 &= -2ce^{-z} & y_2 &= ce^{-z}
+\end{align}
+and we can just plug this into $y_3'$ equation and integrate to obtain $y_3 = -cz$. Then we can compute $\vec{x}_3 = \Gamma(\vec{y}_3$ to obtain 
+$$\vec{x}_3 = e^{-z}\begin{pmatrix} -2c\\c\\0 \end{pmatrix} + ze^{-z}\begin{pmatrix} -c & c & -c \end{pmatrix} $$
+to finally get the general solution
+$$\vec{x} = e^{-z}\begin{pmatrix} a-2c\\-a+c\\a \end{pmatrix}  + ze^{-z}\begin{pmatrix} -c & c & -c \end{pmatrix} + e^{-2z}\begin{pmatrix} b & -2b & 4b \end{pmatrix} $$
+
+Note the $ze^{-z}$ term which arises because the matrix is defective. $n$ roots produce up to $z^{n-1}e^{z}$ terms.
+
+Consider next adjoint matricies. Exhibit $\vec{x}' = A(z)\vec{x} + \vec{f}(z)$. Construct adjoint system $\vec{y}' = -A^T(z)\vec{y}$. Suppose then we know a solution of the homogeneous system $\vec{y}_1$, then
+\begin{align}
+    (\vec{y}_1^T\vec{x})' &= \vec{y}_1^T\vec{x}' + (\vec{y}_1^T)'\vec{x}\\
+    &= \vec{y}_1^T(A\vec{x} + \vec{f}) - \vec{y}_1^TA\vec{x}\\
+    &= \vec{y}_1^T\vec{f}
+\end{align}
+which is easy to work with. Then we can construct a matrix $\phi$ that looks awfully more like my Ph106 homework than what he's writing on the board (yes, I'm working on HW), so we will refer to class notes to get this!
+
+But then $\phi(z)\vec{x} = \phi(z_0)\vec{x}_0 + \displaystyle\int\limits_{z_0}^{z}\phi(t)\vec{f}(t)\;dt$, which is no longer a differential equation! If then we have a single adjoint solution we can reduce the order of the system while if we have the entire adjoint solution set then we solve the original problem. Moreover, $\phi$ solves the adjoint system because $\phi' = -\phi A$. 
+
+Matrix exponentials btw, use Taylor series.
+\chapter{1/22/14 - Variation of parameters for series, Series solutions}
+
+Consider again the adjoint system $\phi' = -\phi A$ where we now assume $A$ is a constant matrix to yield $\phi = \phi_0e^{-Az}$. Recall then we can use the adjoint to solve the original system via
+\begin{equation}
+    \vec{x} = \phi^{-1}(z)\phi(z_0)\vec{x}_0 + \phi^{-1}(z)\displaystyle\int\limits_{z_0}^{z}\phi(t)\vec{f}(t)\;dt
+    \label{1.22.adjsol}
+\end{equation}
+
+Then given constant matrix $A$ we can obtain instead
+\begin{equation}
+    \vec{x} = e^{Az}\vec{x}_0 + \displaystyle\int\limits_{z}^{z_0}e^{A(z-t)}\vec{f}(t)\;dt
+    \label{1.22.consta}
+\end{equation}
+
+Refer to Lecture 19 for an example using this!! Key because this is confusing as balls.
+
+Variation of parameters for systems. Suppose in Equation \ref{1.22.adjsol} we write $\phi^{-1} = \psi$ and write $\vec{x} = \psi\vec{y}$. Then it is easy to see/show that $\psi$ also generates a set of solutions
+\begin{equation}
+    \vec{x} = \psi(z)\vec{l}_0 + \psi(z)\displaystyle\int\limits_{z_0}^{z}\psi^{-1}(t)\vec{f}(t)\;dt
+    \label{1.22.adjsoly}
+\end{equation}
+
+Apparently this is the formal expression of variation of parameters! W00t.
+
+Let's look now at series solutions! Suppose we have some IVP $y'' + py' + qy = 0$ with $p,q$ sufficiently smooth about $x_0$ to take INFINITE derivatives. We make ansatz $y = \sum_n a_n(x-x_0)^n$ and plug back through! Let's see this in an example, the Airy ODE $y'' = xy$ (technically $y'' = -xy$ but we study the former for now). We plug in and obtain
+\begin{align}
+    y'' &= xy\\
+    \sum_{n=0}^{\infty}(n+1)(n+2)a_{n+2}x^n &= x\sum_{n=0}^{\infty}a_nx^n\\
+    &= \sum_{n=1}^{\infty}a_{n-1}x^n
+    \label{1.22.Airy}
+\end{align}
+
+Now relating coefficients and through the IVP we uniquely determine all coefficients! We can then see that the general solution takes form through the power series solution (two constant coefficients are the IVP), so we've found the general solution!
+
+Then if our coefficients aren't quite this nice ($\sin$ or $\cos$ even), we can still expand the coefficients themselves in a power series (since we assume they're infinitely differentiable). 
+
+\chapter{1/24/14 - Frobenius Theory}
+
+We note that if we use series for coefficients we can obtain a general solution to the second order ODE $y'' + py' + qy$ but we cannot tell anything about convergence which is what we really care about! Suppose then that $p,q$ are analytic in some region in the complex plane containing $x_0$, then the series converges in that region. We call such points $x_0$ \emph{ordinary points}. The radius of convergence of the power series will be at least as large as the minimum convergence of $p,q$. Very powerful theorem to determine convergence of power series without doing work!
+
+Define then \emph{regular singular points} $x_0$ such that the maximum order of the singularity at $x_0$ of $p$ does not exceed $1$ and of $q$ does not exceed $2$. \emph{Irregular singular points} exceed these orders.
+
+For IVPs with regular singular points $x_0$ may actually be analytic at $x_0$! In any case it is possible to show that there is always one solution of form $(x-x_0)^\alpha A(x)$ with $A(x)$ analytic at $x_0$. If we expand $A(x)$ about $x_0$ it will be convergent at least to the singularity nearest $x_0$. This series $(x-x_0)^\alpha A(x)$ is called a \emph{Frobenius series}.
+
+If the order of the ODE is $n \geq 2$ then a second solution exists of form $y = (x-x_0)^\beta B(x)$ or $=(x-x_0)^\alpha A(x)\ln(x-x_0) + C(x)(x-x_0)^\beta$; because near $x_0$ the equation behaves similarly to an Euler ODE. 
+
+\emph{Irregular singular points} have no rigorous theory, and generally correspond to essential singularities. At least one solution is not a Frobenius or Taylor series. 
+
+\chapter{1/27/14 - Singular points}
+
+I went ahead and took lecture notes on this earlier, but I'll jot down his presentation too. Why is he not lecturing off his ppt and using the whiteboard?
+
+We left off last lecture at \emph{ordinary points} of $y'' + py' + qy = 0$. Suppose that we want to expand about $x_0$, then we try power series solution $y = \sum_{m=0}^\infty a_m(x-x_0)^m$. Then we know that if $p,q$ are analytic at $x_0$ then the series solution exists and converges up to the nearest singularity. This holds true for any linear orders; so long as the coefficient functions are analytic at some $x_0$ then the power series solution exists and has some nonzero convergence radius. Recall that nonlinearity doesn't guarantee existence of solutions even while coefficient functions are analytic!
+
+Things break down at singular points, singularities of the coefficient functions. For certain singular points we can still have a few things to say. Regula singular points and irregular singular points. A point $x_0$ is a regular singular point is a regular singular point iff $(x-x_0)^2q(x)$ and $(x-x_0)p(x)$ are analytic at $x_0$ (i.e. poles of order $2,1$ respectively). 
+
+As an example, suppose we exhibit $y'' = \frac{y}{x-1}$. Note then that $x=1$ is a regular point. Another one, $y'' = \frac{y'}{x} + \frac{y}{x^2}$ has a regular singular point at $x=0$. However $y'' = \frac{y}{x^3}$ exhibits an irregular singular point at $x=0$ while all other points are ordinary points  by inspection. 
+
+This definition generalizes to higher order ODEs, if $\sum_n y^np_n(x)$ then if $(x-x_0)^np_n(x)$ are all analytic then $x_0$ is a regular singular point. For matricies $\vec{y}' = A\vec{y}$ then the corresponding generalization is that $(x-x_0)A(x)$ is analytic at $x=x_0$ for $x_0$ to be a singular point, where we define analyticity of matrix to be analyticity of entries. For an inhomogeneous equation then we have $y'' + py' + qy = f(x)$. Suppose then $f(x)$ has singularity at $x=x_0$, then we don't really care, because this only affects the particular solution, which is why we are focusing on the homogeneous case (this was in answer to student).  
+
+We have rigorous guarantees about solutions about regular singular points. For one the solution is meromorphic; analytic, pole, or branch points. Also, there will always be a solution of form $(x-x_0)^\alpha A(x)$ with $\alpha\in \mathbb{C}$ incidicial exponent and $A(x)$ analytic at $x_0$. Note that this has leading-order behavior $(x-x_0)^\alpha a_0$ with $a_0$ leading term in the power series for $A(x)$, the form of which will become clear shortly (because reg singular points are similar to Euler ODEs which exhibit solutions of form $a_0(x-x_0)^\alpha$). This series $(x-x_0)^\alpha \sum_{m}^{}a_m(x-x_0)^m$ is a Frobenius expansion. 
+
+Example, $y' = \frac{y}{\sinh x}$. Note that $\sinh x$ has a simple zero at $x=0$ so regular singular point at $x=0$; the solution is $y \propto \tanh \frac{x}{2}$ which is analytic at $x=0$. Moreover, $\tanh\frac{x}{2}$ has power series with radius of convergence $\pi$, which makes sense since $\sinh(i\pi) = 0$ (the radius of convergence of the solution is convergent up to the nearest singularity of the coefficien function). 
+
+If we have second order ODE, we have a second solution that is of form \emph{either} $y = (x-x_0)^\beta B(x)$ o $y = (x-x_0)^\alpha A(x)\ln(x-x_0) + C(x)(x-x_0)^\beta$. This happens because regular singular points are similar to Euler ODEs (note point above) as we can see by looking as $x\to x_0$ of $y'' + py' + qy \to y'' + \frac{p_0}{x-x_0}y' + \frac{q_0}{(x-x_0)^2}y = 0$. Recall then that Euler ODEs have either power law solutions or multiplied by logarithm for degenerate roots. 
+
+For $m$-th order ODE solutions exhibit form $y = (x-x_0)^\gamma\sum_{i=0}^{m-1}\ln^i(x-x_0)A_i(x)$ with analytic $A_i$. Moreover, all points that exhibit solutions like this exhibit regular singular points. 
+
+Little rigorous theory on irregular sinuglar points, and usually solutions exhibit essential singularities in the complex plane. At least one solution will not be Frobenius form.
+
+Last point discussion, point at infinity. We solve our ODE instead in terms of $x \to \frac{1}{t}$. We can then use $\rd{}{x} = -t^2\rd{}{t}, \rtd{}{x} = t^4\rtd{}{t} + 2t^3\rd{}{t}$. It turns out that the point at infinity is oftentimes very different from what we expect for the finite complex plane behavior!
+
+\chapter{1/29/14 - Frobenius examples}
+
+So far we've considered the singular points for ODEs. We've seen that for ordinary points the Taylor series solves. For regular points, we've found that Frobenius series work while Taylor series cannot. For irregular singular points no Taylor or Frobenius series exists, while an asymptotic series solution can exist; we don't touch on this much.
+
+Suppose for example if we try Taylor series on $y'' + \frac{y}{4x^2} = 0$ we find a zero solution. If we instead try a Frobenius expansion $y(x) = x^\alpha a_n x^n$ we find that for the $n=0$ coefficient we have $(\alpha(\alpha - 1) + 1/4)a_0 = 0$ in which case if we solve the indicial equation we can have arbitrary $a_0$ eliminating the problem of a zero solution. In our present case we note that $\alpha = \frac{1}{2}$ is a degenerate root and so by Frobenius theory our second solution is $a_0 x^{\frac{1}{2}}\ln x$. 
+
+Let's examine another example, less trivial, the modified Bessel ODE $y'' + \frac{y'}{x} - \left( 1 + \frac{\nu^2}{x^2} \right)y = 0$. Assume that $\nu$ is not an integer or half-integer. Note that $x=0$ is a regular singular point, so Frobenius series $y = a_n x^{n+\alpha}$. Plugging this in, we obtain leading terms
+\begin{align}
+    x^{\alpha - 2}&: (\alpha^2 - \nu^2)a_0 = 0\\
+    x^{\alpha - 1}&: \left[ (\alpha + 1)^2 - \nu^2 \right]a_1 = 0\\
+    x^{\alpha + m - 2}&: \left[ \left( \alpha + m \right)^2 - \nu^2 \right]a_{m} = a_{m-2}
+\end{align}
+This tells us that $\alpha = \pm \nu, a_1 = 0, a_{2n+1} = 0$. The two solutions are then
+\begin{equation}
+    y_{\pm} = a_{\pm}x^{\pm \nu}\sum_{m=0}^{\infty}\frac{x^{2m}}{2^{2m}m!\left( \pm \nu + m \right)\dots\left( \pm \nu + 1 \right)}
+\end{equation}
+Note that $+$ solution doesn't explode while $-$ solution does. 
+
+General 2nd order case, recall $y'' + \frac{p}{x-x_0}y' + \frac{q}{(x-x_0)^2}y = 0$ for $p,q$ analytic expressable in terms of $p =p_m(x-x_0)^m$ and similarly for $q$. The general recursive relation is then given
+\begin{equation}
+    \underbrace{\left[ (\alpha + m)^2 + (p_0 - 1)(\alpha + m) + q_0 \right]}_{P(\alpha)}a_m = -\sum_{k=0}^{m-1}[(\alpha + k)p_{n-k}+ q_{n-k}]a_k
+    \label{1.29.recurs}
+\end{equation}
+
+Then for $m=0$ we have $P(\alpha) a_0 = 0$ and we require $P(\alpha) = 0$. Take two roots $\abs{\alpha_1} > \abs{\alpha_2}$. Then we can just plug in our first root to obtain recursion relations. The second root is more complicated. Some cases
+\begin{itemize}
+    \item If $\alpha_1 \neq \alpha_2, \alpha_1 - \alpha_2 \notin \mathbb{Z}$ then second solution comes from \ref{1.29.recurs} (if the difference is equal to an integer then recursion relation truncates which is bad).
+    \item If $\alpha_1 = \alpha_2$ then solution includes $\log(x-x_0)$.
+    \item Then if $\alpha_1 - \alpha_2 \in \mathbb{Z}$ then also includes $\log(x-x_0)$ but coefficients are also coupled.
+\end{itemize}
+
+Let's examine the degenerate roots case a bit more. Let's write $y = (x-x_0)^\alpha \sum_{m=0}^{\infty}a_m(\alpha)(x-x_0)^m$. Let's define the ODE to be $\mathbb{L}[y] = 0$ with operator $\mathbb{L}$. It turns out then that $\mathbb{L}[y] = a_0(x-x_0)^{\alpha - 2}P(\alpha)$ which holds with our earlier requirement that $P(\alpha) = 0$. But then when $\alpha_1 = \alpha_2$ we know that $P(\alpha) \propto (\alpha - \alpha_1)^2$. Then not only $y(x,\alpha_1)$ is a solution, we need a second solution. This arises because we also require $\mathbb{L}[\pd{}{\alpha}y|_{\alpha = \alpha_1}] = 0$, which yields the logarithm that we expect, or more precisely
+\begin{equation}
+    \pd{}{\alpha}y = y(x, \alpha_1)\ln(x-x_0) + \sum_{m=0}^{\infty}b_m(x-x_0)^{\alpha_1 + m}
+\end{equation}
+with $b_m = \pd{}{\alpha}a_m(\alpha)|_{\alpha = \alpha_1}$. 
+
+\chapter{1/31/14 - Finishing Frobenius theory, irregular singular points}
+
+Last time we noted that for Frobenius series if roots are distinct and don't differ by an integer then Frobenius series solution $y = \sum a_n(x-x_0)^{n+\alpha}$ exists. Then for repeated roots we found that one solution is $y_1 = \sum a_n(x-x_0)^{n+\alpha}$ and other $y_2 = \pd{}{\beta}\sum a_n(\beta)(x-x_0)^{n+\beta}\Big|_{\beta = \alpha}$. 
+
+As an example, consider the Bessel equation $y'' + \frac{y'}{x} - y = 0$ and we find $\alpha = 0$ is a double root. We then can find the recursion relation $(\alpha + m)^2a_n = a_{m-2}$. So the root $\alpha = 0$ generates the first Frobenius solution $y_1 = a_0 \sum \frac{(x/2)^{2n}}{(n!)^2}$, converging for all $z$. Then to get the other solution we solve $a_m(\alpha) = \frac{a_{m-2}(\alpha)}{(\alpha + m)^2}$ and write
+\begin{align}
+    y_2 &= \pd{}{\alpha}y_1(x,\alpha) \\
+    &= \pd{}{\alpha}\sum_{n=0}^{\infty}a_{2n}(\alpha)x^{2n+\alpha}\Big|_{\alpha = 0}\\
+    &= y_1 \ln x +\sum_{m=0}^{\infty}b_{2m}x^{2m}\\
+    b_{2m} &= -\frac{a_0}{2^{2m}(m!)^2}\left[ 1 + \frac{1}{2} + \frac{1}{3} +\dots + \frac{1}{n} \right]
+\end{align}
+where our expression for $b_{2m}$ just comes from taking the derivative $\pd{a_m(\alpha)}{\alpha} = \frac{a_0}{(\alpha + 2)^2 (\alpha + 4)^2 \dots(\alpha + 2m)^2}$ in a nifty way!
+
+We then examine quickly what happens when roots differ by integer. Suppose $\alpha_1 - \alpha_2 = N > 0$. The larger root definitely gives a solution $y_1(x)$. We then whip back out of a hat the indicial equation \ref{1.29.recurs}
+\begin{equation}
+    P(\alpha + m)a_m = -\sum_{k=0}^{m-1}\left[ (\alpha + k)p_{n-k} + q_{n-k} \right]a_k
+\end{equation}
+
+So then after $N$ steps we note that $P(\alpha_2 + N) = P(\alpha_1) = 0$ and so our recursion relation terminates! This is bad news. There are then two cases. Sometimes the RHS also vanishes, and this yields a new solution with arbitrary coefficient $a_N$. This is related to the Jordan Normal form case where repeated roots occur but still distinct eigenvalues.
+
+If no miracle, then let's then look back at $\mathbb{L}\left[ \pd{y}{\alpha}\Big|_{\alpha = \alpha_1} \right] = a_0P'(\alpha_1)(x-x_0)^{\alpha_2 +N-2}$. The reason this is no longer a solution is because $P'(\alpha_1)$ doesn't vanish since not a repeated root! We then seek a particular integral $y_p$ such that $\mathbb{L}[y_p] = \mathbb{L}\left[\pd{y}{\alpha}\Big|_{\alpha_1}\right]$ so that $y_2 = \pd{y}{\alpha}\Big|_{\alpha = \alpha_1} - y_p$. It turns out that $y_p = \sum_{m=0}^{\infty}c_n(x-x_0)^{m + \alpha_2}$ with $c_n$ related to $a_n$.
+
+Irregular singular points cannot be worked with in Taylor or Frobenius theory. Irregular singular points usually correspond to essential singularities. Let's acquire some intuition about this via example. Examine the modified Bessel equation $y'' + \frac{y'}{x} - \left[ 1 - \frac{\nu^2}{x^2} \right]y = 0$ for complex $\nu$. The ODE then has an irregular singular point at $z_\infty$, easily seen when making $x \to \frac{1}{t}$ transformation. 
+
+Then if we make substitution $v = y\sqrt{x}$ we obtain $v'' + \left[ \frac{1}{4x^2}-1 \right]v = 0$. So then it is evident that $x\to \infty$ we have $v'' - v = 0$ and so $v(x) \sim e^{\pm x}, y(x) \sim \frac{e^{\pm x}}{\sqrt{x}}$. Let's then examine the possible solution $y = \frac{e^{-x}}{\sqrt{x}}w(x)$ for some $w$ that then satisfies ODE
+\begin{equation}
+    w'' + 2w' + \frac{w}{4x^2} = 0
+\end{equation}
+
+A power series $w = a_n x^{-n}$ actually satisfies this ODE, and recursion relation $a_{n+1} = a_n\frac{(2n+1)^2}{4(n+1)}$. We note that these coefficients explode though so no convergence is to be observed; radius of convergence is zero. We can then see what happens when the series actually is evaluated though, and we find that if we truncate the series before it diverges we actually get a really damn good approximation of the exact solution! It actually converges much faster than the Taylor series if we know when to truncate it, so this is why this could be useful even as we approach the irregular singular point.
+
+Next lecture we start Laplace transforms.
+\chapter{2/3/14 - Laplace transform}
+
+Define a real function $f(t)$ piecewise continuous that satisfies $\abs{f(t)} < Ke^{at}$ when $t \geq M$ such that $M, K, a$ real positive, or that $f(t)$ never grows faster than exponentially. We then define the Laplace transform
+\begin{equation}
+    F(s) = L[f(t)] = \displaystyle\int\limits_{0}^{\infty}e^{-st}f(t)\;dt
+    \label{2.3.Laplace}
+\end{equation}
+
+This defines a function that exists only for $\Re s > a$ as $s$ is in general complex, otherwise integral is without bound.
+
+Then for $\Re s \leq a$ we use analytic continuation to define $F(s)$ in the entire complex plane. 
+
+For example, if we take the Laplace transform of $f(t) = 1, t \geq 0$ we have $F(s) = \frac{1}{s}$ for $\Re s > 0$ since the integral doesn't converge otherwise. But then we note that $F(s) = \frac{1}{s}$ is easily analytically continued past its simple pole at $s=0$, so NBD! Another example we can use $f(t) = e^{at}, t \geq 0$. Then we can compute Laplace transform $\frac{1}{s-a}$ which again is analytically continuable past $s = a$. 
+
+We note that Laplace transform is linear. We note also its property under differentiation $L[f'(t)] = -f(0) + sL[f(t)]$ so it turns differentiation into multiplication! Generalizing we have $L[f^{(m)}(t)] = sL[f(t)] - \sum_{n=0}^{m-1}s^{n}f^{(m-1-n)}(0)$.
+
+Inverting the Laplace transform is usually done by looking it up in a table, but a formula exists
+\begin{equation}
+    f(t) = \frac{1}{2\pi i}\displaystyle\int\limits_{c - i\infty}^{c + i\infty}F(s) e^{st}\;ds
+\end{equation}
+
+This formula actually comes by doing a contour integral along the Bromwich contour, below
+\begin{figure}[!h]
+    \centering
+    \begin{tikzpicture}[scale=0.5]
+        \draw[<->] (-4,0) -- (4,0);
+        \node[right] at (4,0) {Re};
+        \draw[<->] (0,-4) -- (0,4);
+        \node[above] at (0,4) {Im};
+        \draw[<->] (1,-4) -- (1,4);
+        \node[right] at (1,0.5) {$c$};
+    \end{tikzpicture}
+    \caption{Bromwich contour! Can take any path between endpoints $(c - i\infty, c + i\infty)$.}
+\end{figure}
+We choose $c$ to lie to the right of all singularities in the complex plane for $F(s)$, or a point $c > a$ where $a$ in the definition of the Laplace transform. 
+
+Let's try taking the Laplace transform of the inverse Laplace transform, and we expect to obtain the Lplace transform itself back!
+\begin{align}
+    \displaystyle\int\limits_{0}^{\infty}e^{-st}dt\;\frac{1}{2\pi i}\displaystyle\int\limits_{c-i\infty}^{c+i\infty}F(z) e^{zt}\;dz &= \frac{1}{2\pi i}\displaystyle\int\limits_{c-i\infty}^{c+i\infty}F(z)\;dz\displaystyle\int\limits_{0}^{\infty}e^{(z-s)t}\;dt\\
+    &= \frac{1}{2\pi i}\displaystyle\int\limits_{c-i\infty}^{c+i\infty}\frac{F(z)}{s-z}\;dz
+\end{align}
+
+At this point, we will close our Bromwich contour to the right with a semicircle, and since we know no singularities exist within our cntour we can ML bound the semicircular contour to vanish. Then Cauchy inegral formula tells us that
+\begin{equation}
+    \frac{1}{2\pi i}\displaystyle\int\limits_{c-i\infty}^{c+i\infty}\frac{F(z)}{s-z}\;dz = F(s)
+\end{equation}
+
+\chapter{2/5/14 - Makeup:Laplace continued}
+
+Useful properties
+\begin{itemize}
+    \item Inverse transform of $F(s-a)$ is $e^{at}f(t)$
+    \item Inverse transform of $\rd{F}{s}$ is $-tf(t)$, and inverse transform $\rtd{F}{s}: t^2 f(t)$ 
+    \item $L[f*g] = F(s)G(s)$ where $f*g$ the convolution is defined $\displaystyle\int\limits_{0}^{t}f(t-\tau)g(\tau)\;d\tau$
+\end{itemize}
+
+Example of convolution theorem, find Laplace transform of $\displaystyle\int\limits_{0}^{\infty}f(\tau)\;d\tau$. Note that this is the convolution with $G = 1$ so transform is $\frac{F(s)}{s}$. Could have also integrated by parts.
+
+Laplace transform of step function $u_c(t) = 1$ for $t > c$ and $=0$ for $t < c$ is just 
+$$\displaystyle\int\limits_{0}^{\infty}e^{-st}u_c(t)\;dt = \displaystyle\int\limits_{c}^{\infty}e^{-st}\;dt = \frac{e^{-cs}}{s}$$
+
+Laplace transform turns ODEs into algebraic equations! Particularly useful with IVP, since we can just use IVP on the $f(0)$ terms in transforming derivative (note shift can be used to coincide initial conditions to $0$). Then inverse transform using complex analysis.
+\chapter{2/6/14 - Midterm Review!}
+
+Consider a linear system with constant coefficients $\mathbf{x}' = A\mathbf{x} + \mathbf{f}(t)$ we have solution
+\begin{equation}
+    \mathbf{x} = e^{At} \mathbf{x}(t_0) + e^{At}\displaystyle\int\limits_{t_0}^{t}e^{-As}\mathbf{f}(s)\;ds
+    \label{2.6.gensol}
+\end{equation}
+First term is homogeneous solution, second is particular. The problem then usually boils down to exponentiating $A$ (not quite trivial if $A$ is not diagonalizable). Distinct eigenvalues make this straightforward, diagonalize via $A = TDT^{-1}$ with $T$ having columns as eigenvectors. 
+
+If $A$ is not diagonalizable, three approaches
+\begin{itemize}
+    \item Degenerate eigenvalue yields second solution of form $te^t$. 
+    \item Jordan normal form gives $A$ as sum of diagonal + upper triangular matricies, which commute and yield $e^A$ easily. 
+    \item Reduction of order
+\end{itemize}
+
+Example: $\mathbf{x}' = A\mathbf{x}, A = \begin{pmatrix} 1 & 1\\0 & 1 \end{pmatrix} $. We note degenerate eigenvalue $1$ and eigenvector $(1,0)$. 
+
+First approach is that we can then note that the second solution can be constructed (for repeated eigenvalues) as
+\begin{equation}
+    \mathbf{x} = c_1 \begin{pmatrix} 1\\0 \end{pmatrix} e^t + c_2 \begin{pmatrix} 1\\0 \end{pmatrix} te^{t}
+\end{equation}
+
+Second approach is that $e^{A+B} = e^Ae^B$ when $[A,B] = 0$. We compute easily $e^A = \exp[I] + \exp\begin{bmatrix} 0 & 1\\ 0 & 0 \end{bmatrix} $. Then since $e^{\begin{pmatrix} 0 & 1 \\ 0 & 0 \end{pmatrix} }$ truncates we can easily then compute $e^{At} = \begin{pmatrix} e^{t} & te^t\\0 & e^t \end{pmatrix} $ and see that
+\begin{equation}
+    \mathbf{x} = \begin{pmatrix} e^t & te^t\\0 & e^t \end{pmatrix} \mathbf{x}(t_0)
+\end{equation}
+
+Third approach is reduction of order. Not going to jot this down since it's pretty bitchy. It is only more effective when we don't have constant coefficient matricies, because the first two approaches don't work with variable matricies. 
+
+With variable coefficients then we want to construct $\Phi(t)$ the fundamental matrix such that $\Phi(t_0) = I$ and
+$$\mathbf{x} = \Phi(t) \mathbf{x}(t_0) + \Phi(t)\displaystyle\int\limits_{t_0}^{t}\Phi^{-1}(s)f(s)\;ds$$
+or more clearly seen from the homogeneous term. First construct $\Psi(t)$ with columns the homogeneous solution vectors. Then we note that we can exhibit $c_i$ components of $\mathbf{x}$ in the solution basis, such that $\mathbf{x} = \Psi(t) \mathbf{c}$ which yields general solution $\mathbf{x} = \Psi(t) \Psi^{-1}(t_0)x(t_0)$. We then note that $\Phi(t) = \Psi(t)\Psi^{-1}(t_0)$ is considered the fundamental matrix.
+
+Then if only one homogeneous solution is known to the variable coefficients case, we want to use reduction of order to find other homogeneous solutions. We construct our $\Gamma$ with an identity and add solution vector on RHS and zeroes on bottom row. i.e. in the 2D case we have
+\begin{equation}
+    \Gamma = \begin{pmatrix} 1 & x_1\\0 & x_2 \end{pmatrix} 
+\end{equation}
+
+We then compute $B = \Gamma^{-1}(A\Gamma - \Gamma')$. We then want to solve transformed system $\mathbf{y}' = B\mathbf{y}$ and transform back to $\mathbf{x}$. 
+
+Let's try an example
+\begin{equation}
+    \begin{pmatrix} x_1'\\x_2' \end{pmatrix} =\begin{pmatrix} -t & 1 \\ 1-t^2 & t \end{pmatrix} \begin{pmatrix} x_1\\x_2 \end{pmatrix}  + \begin{pmatrix} 1\\t \end{pmatrix} 
+\end{equation}
+
+It turns out that one homogeneous solution is $\begin{pmatrix} 1\\t \end{pmatrix}$. We then compute
+\begin{align}
+    \Gamma &= \begin{pmatrix} 1 & 1 \\ 0 & t \end{pmatrix} \\
+    \Gamma^{-1} &= \frac{1}{\det \Gamma} \begin{pmatrix} d & -b \\ -c & a \end{pmatrix} = \frac{1}{t}\begin{pmatrix} t & -1 \\ 0 & 1 \end{pmatrix}\\
+    \Gamma' &= \begin{pmatrix} 0 & 0 \\ 0 & 1 \end{pmatrix} \\
+    B &= \begin{pmatrix} -\frac{1}{t} & 0\\ \frac{1}{t} - t  & 0\end{pmatrix} 
+\end{align}
+
+We then want to solve transformed system $\mathbf{y}' = B\mathbf{y}$
+\begin{align}
+    \begin{pmatrix} y_1' \\ y_2' \end{pmatrix}  &= \begin{pmatrix} -\frac{1}{t} & 0 \\ \frac{1}{t} - t & 0 \end{pmatrix} \begin{pmatrix} y_1 \\ y_2 \end{pmatrix} \\
+    y_1' &= -\frac{1}{t}y_1\\
+    y_1 &= \frac{C}{t}\\
+    y_2 &= C\left( -\frac{1}{t} - t \right) + D\\
+    \mathbf{x} &= \Gamma \mathbf{y} = -C\begin{pmatrix} t\\t^2 + 1 \end{pmatrix} + D\begin{pmatrix} 1 \\t\end{pmatrix} 
+\end{align}
+
+Note that the second term is related to the initial homogeneous solution! So keep your constants of integration.
+
+Let's then compute the fundamental matrix. Note (let's assume $t_0 = 0, \mathbf{x}(0) = (1,1)$)
+\begin{align}
+    \Psi(t) &= \begin{pmatrix} 1 & t \\ t & t^2 + 1 \end{pmatrix} \\
+    \Psi^{-1}(t) &= \begin{pmatrix} t^2 + 1 & -t \\ -t & 1 \end{pmatrix} \\
+    \Psi^{-1}(t_0) &= I\\
+    \Phi(t) &= \Psi(t)\\
+    \mathbf{x} &= \begin{pmatrix} 1 & t \\ t & t^2 + 1 \end{pmatrix} \begin{pmatrix} 1\\1 \end{pmatrix}  + \begin{pmatrix} 1 & t \\ t & t^2+1 \end{pmatrix} \displaystyle\int\limits_{0}^{t}\begin{pmatrix} s^2 + 1 & -s\\-s & 1 \end{pmatrix} \begin{pmatrix} 1 \\s\end{pmatrix} \;ds\\
+    &= \begin{pmatrix} 1 + 2t\\2t^2 + t + 1 \end{pmatrix} 
+\end{align}
+
+Recall then that general second order ODE does not have solution. Taylor expansions then work for $y'' + py' + qy = 0, p,q$ analytic, and Frobenius works about regular singular points. There are three cases corresponding to roots to the indicial equation
+\begin{itemize}
+    \item Two distinct roots $\alpha_1, \alpha_2$ not differing by integer guarantees two solutions
+    \item Double root yields two solutions $y_1 = a_n x^{n + \alpha_1}, y_2 = y_1\ln x + b_n x^{n + \alpha_1}$. To find $b_n$ we can either just plug $y_2$ general form into ODE and solve for coefficients or evaluate $b_n = a_n'(\alpha)$ for $\alpha = \alpha_1$ for which $a_n(\alpha)$ must be computed explicitly.
+    \item Distinct roots differing by integer $N$ has two subcases for smaller root's recurrence relation (larger root is unaffected)
+        \begin{itemize}
+            \item If $0 a_N = 0$ when we hit the other root then we can set $a_N = 0$ in the recurrence relation so that the two series remain linearly independent (any nonzero component of $a_N$ is contained in $y_1$)
+            \item If $0 a_N \neq 0$ then the second solution doesn't have a form of power series, and will have form $y_2 = cy_1\ln x + b_n x^{n + \alpha_2}$, whereupon plugging in and solving for the recurrence relation between $b_n, c$ is easiest way.
+        \end{itemize}
+\end{itemize}
+
+Let's do an example of case 3a above, $x^2 y'' + 2xy' + (x^2 - 2)y = 0$. We note that $x=0$ is a regular singular point (upon inspection dividing through by $x^2$). The indicial equation then ends up being $(\alpha)(\alpha - 1) + 2\alpha - 2$ when we plug in the Frobenius form to obtain
+
+We note that indicial equation yields $\alpha = -2, 1$, which is also the only way to allow $a_0 \neq 0$. Then we can see from the above equation that $a_1 = 0$ is forced. Note that we could have chosen $a_0 = 0$ and taken the indicial equation for $a_1$, as this produces the same power series. If we end up with even more indicial equations then more coefficients vanish! Fuahahahaha.
+
+Let's then look at the lower root, since the upper root will produce a Frobenius-type series. First let's compute recursion relation $a_n = -\frac{a_{n-2}}{n(n-3)}$. Then it is clear that $n=3$ will produce an issue with our recurrence relation, but not to fear since the indicial equation vanishes at lower root $+3$ as well! We can compute the first couple of terms for the lower root to be $a_2 = \frac{a_0}{2}$. We note next that $a_3$ is arbitrary, since $a_3(3)(3-3) = -a_1 = 0$ (if $a_1 \neq 0$ then we would run into case 3b above, and the solution cannot be of series form). Then we can set $a_3 = 0$ since the behavior for $a_3 \neq 0$ is encapsulated in the higher order solution! Continuing then the recursion relation we find all odd $a_n$ vanish. 
+
+We then need to find the $b_n$ recurrence relation, which is just plugging in the higher root to the recurrence relation; we find this to be $b_n = -\frac{b_{n-2}}{n(n+3)}$ which as we expect never has any problems. Then our second solution is
+\begin{equation}
+    y(x) = a_n x^{n-2} + b_n x^{n+1}
+\end{equation}
+
+with $a_n, b_n$ by the recurrence relations, $a_0, b_0$ by initial conditions and $a_3 = 0$. 
+
+Laplace transforms!! Let us recall that $Y(s) = \displaystyle\int\limits_{0}^{\infty}dt\;y(t) e^{-st}, y(t) = \frac{1}{2\pi i}\int ds\; Y(s)e^{st}$. Recall also property $L[y'(t)] = sY(s) = y(0), L[y''(t)] = s^2 Y(s) - sy(0) - y'(0)$. Also useful is convolution theorem
+\begin{align}
+    L[f*g] &= F(s)G(s)\\
+    f*g &= \displaystyle\int\limits_{0}^{t}f(\tau)g(t-\tau) \; d\tau = \displaystyle\int\limits_{0}^{t}f(t-\tau)g(\tau)\;d\tau
+\end{align}
+
+Example, $y'' + y = f(t)$ for $f(t \geq 0) = te^{-t}, f(t < 0) = 0$ subject to $y(0) = y'(0) = 0$. Let's then take the Laplace transform of both sides to obtain
+\begin{align}
+    s^2 Y(s) - sy(0) - y'(0) + Y(s) &= F(s)\\
+    Y(s) &= \frac{F(s)}{s^2 + 1}
+\end{align}
+
+Here we could take the Laplace transform of $te^{-t}$ to obtain $Y(s)$ and then take inverse Laplace transform, but we have much better by convolution theorem. Note then that $L[f*g] = F(s)G(s) = Y(s), y(t) = f * g$ where $f$ is just $f(t)$ and $g$ is the inverse Laplace transform of $\frac{1}{s^2 + 1}$. We thus compute the inverse Laplace transform and then the convolution.
+
+To compute our inverse Laplace transform, we must compute $\frac{1}{2\pi i}\int_L ds \; \frac{e^{st}}{s^2 + 1}$. We then note two complex singularities at $s = \pm i$. Then we place our Bromwich contour some vertical line at a positive real part $> 0$. Then if $t > 0$ we note that we want to close our contour to the right to make the semicircular part vanish, and since we enclose no singularities we note that the integral along the Bromwich contour is $0$, and so $t < 0$ we find that the contour integral vanishes and $g(t < 0) = 0$.
+
+We then find that for $t > 0$ we have two residues to compute, $\pm i$ and so we have $g(t) = \sum \Res$. Using $\frac{p}{q'}$ method to compute these residues, we can find $g(t > 0) = \sin t$. We then have that
+\begin{equation}
+    y(t) = f*g = \displaystyle\int\limits_{0}^{t}\sin(t-\tau) \tau e^-\tau\;d\tau
+\end{equation}
+
+This is all we need! We are done. (Note that this is actually familiar to us, because we know the Green's function for SHOs to be $\sin(t-\tau)$ and in this case we just have a Green's function solution to the driven SHO!).
+
+
+\chapter{2/7/14 - Poles of Laplace transform, system transforms}
+
+We note that a pole in the transformed $Y(s)$ at $s=\alpha$ corresponds to an exponential term in the solution when using residues to compute inverse LAplace transform. $n$-th order pole prooduces either $e^{\alpha at}, t^me^{\alpha t}$.
+
+It is also possible to Laplace transform systems with constant coefficients. Consider $\mathbf{x}' = A\mathbf{x}, \mathbf{x}(0) = \mathbf{x}_0$. Define then $\mathbf{X}(s)$ the Laplace transform of $\mathbf{x}(t)$ element-by-element, and the derivative. Note we don't need to transform $A$ because constant coefficients. This produces
+\begin{align}
+    s\mathbf{X}(s) - \mathbf{x}_0 &= A\mathbf{X}(s)\\
+    (sI - A)\mathbf{X}(s) &= \mathbf{x}_0
+\end{align}
+which is then just a linear system. Then, constructing $B(s) = (sI - A)^{-1}$ we just solve for $\mathbf{X}(s) = B(s) \mathbf{x}_0$. Then invers Laplace transform $\mathbf{X}(s)$ to get solution $\mathbf{x}(t)$. 
+
+First we can see that $\lim_{s \to \infty}sB(s) = I$. Then noting that $B(s)$ must have rational polynomial entries, each element of $B$ must have numerator of greater order in $s$ than denominator. This also means that each element has partial fraction decomposition. Then supposing that $A$ has distinct eigenvalues $\lambda_i$ we can decompose as $B(s) = \sum_i \frac{B_i}{s-\lambda_i}$ with constant $B_i$. Then transforming this back we have
+$$\mathbf{x}(t) = \sum_i e^{\lambda_i t}B_i \mathbf{x}_0$$
+Moreover, $e^{At} = \sum_i e^{\lambda_it}B_i$.
+
+Then for degenerate roots we have multiplicity of each root $m_{i}$ and thus partial decomposition $B(s) = \sum_{i=1}^k\sum_{j=1}^{m_i}\frac{B_{ij}}{(s-\lambda_i)^j}$. This then yields the solution easily
+$$\mathbf{x}(t) = \sum_{i=1}^{k}\sum_{j=1}^{m_i}\frac{t^{j-1}e^{\lambda_it}B_{ij}\mathbf{x}_0}{(j-1)!}$$
+
+Note that the nonzero columns of $B_i$ are the eigenvectors of $A$ associated with eigenvalue $\lambda_i$. I'm lost on the rest.
+\chapter{Skipped - Sturm-Liouville ODEs}
+
+BVPs are hard, very little rigorous theory possible. Let's examine a quick example of BVPs, the heat equation
+\begin{align}
+    \pd{\Theta(x,t)}{t} &= D\ptd{\Theta(x,t)}{x}\\
+\end{align}
+over domain $0\leq x\leq1, t > 0$. Then suppose that there is some $\Theta_0(x)$ initial condition at $T=0$ and that $\Theta(0) = \Theta(1) = 0$ for all $t$. If we then introduce separation of variables $\Theta(x,t) = X(x) T(t)$, a technique learned way long ago, we arrive at decoupled equations
+\begin{align}
+    \rtd{X(x)}{x} - Cx &= 0\label{SL.XEX}\\
+    \rd{T(t)}{t} - DCt &= 0\label{SL.timeEX}
+\end{align}
+
+We know that Equation \ref{SL.timeEX} admits simple physical solutions $T(t) \propto e^{DCt}$, but since the temperature must not grow, so we anticipate $C = -\lambda^2 < 0$. Plugging this into Equation \ref{SL.XEX} and recalling BVP $X(0) = X(1) = 0$ we discover sinusoidal solutions so the general solution is
+\begin{align}
+    \Theta(x,t) = \sum_{n=1}^{\infty}B_ne^{-n^2\pi^2t}\sin n\pi x
+\end{align}
+
+Then examining $\Theta_0 = B_n\sin n\pi x$ we note that given initial conditions we must determine $B_n$ and we will have the general solutions!
+
+We then turn our head to the Sturm-Liouville ODE. The form for the Sturm-Liouville ODE is given
+\begin{align}
+    \rd{}{x}\left( p(x)\rd{y}{x} \right) - q(x)y(x) + \lambda r(x)y(x) = 0
+\end{align}
+
+subject to $a < x < b$ and boundary conditions 
+\begin{align}
+    c_1y(a) + c_2y'(a) &= 0\\
+    d_1y(b) + d_2y'(b) &= 0
+\end{align}
+called \emph{homogeneous} boundary conditions. Since they provide boundary conditions only at $a,b$ we call these separated because they only depend on the one instant in time. We will also take $r,p$ to be strictly positive. 
+
+We will take a quick example of the S-L ODE, the Bessel equation, given by
+\begin{align}
+    \rtd{y(x)}{x} + \frac{1}{x}\rd{y}{x} + \left( \lambda^2 - \frac{m^2}{x^2} \right)y(x) &= 0
+\end{align}
+
+We note with a bit of manipulation that this satisfies the S-L conditions. The solutions to this ODE are called the Bessel functions. Note that the ODE has a regular singular point at $x=0$, so Frobenius theory tells us that one singular solution blows up at the origin and one does not.
+
+We can examine then the determinant corresponding to the boundary values, and we find that it vanishes at peculiar intervals, approaching $2\pi$ as $\lambda \to \infty$. This is because the solutions are sine-like! We find more about this theory in next lecture.
+
+\chapter{2/14/14 - Lagrange Identity, Sturm-Liouville as linear algebra}
+
+Last lecture we introduced Sturm-Liouville ODEs, and we will spend a few lectures examining these in a more rigorous/systematic fashion. Consider operator form for the S-L ODE
+\begin{align}
+    L[y(x)] = -\rd{}{x}\left[ p(x)\rd{y}{x} \right] + q(x) y(x) = \lambda r(x) y(x)
+\end{align}
+
+Note then that $L$ is a linear operator. We want to head in the direction of $\displaystyle\int\limits_{a}^{b}L[u(x)]v(x)\;dx = \displaystyle\int\limits_{a}^{b}u(x)L[v(x)]\;dx$, the Lagrange identity; this shows that $L$ is a Hermitian operator. We proceed by
+\begin{align}
+    \displaystyle\int\limits_{a}^{b}L[u(x)]v(x)\;dx &= \displaystyle\int\limits_{a}^{b}-\rd{}{x}\left[p(x)\rd{u}{x}v(x)\right] + q(x) u(x) v(x)\;dx\\
+    &= -\left[v(x)p(x)\rd{u}{x}\right]_a^b + \displaystyle\int\limits_{a}^{b}p(x)\rd{v}{x}\rd{u}{x}\;dx + \displaystyle\int\limits_{a}^{b}q(x)u(x)v(x)\;dx\\
+    &= -\left[ p\left[ \rd{u}{x}v - u\rd{v}{x} \right] \right]_a^b + \displaystyle\int\limits_{a}^{b}u(x)L[v(x)]\;dx
+\end{align}
+
+We then note that the boundary term arises. We recall that we will only examine separable boundary conditions $c_1u(a) + c_2u'(a) = 0, d_1u(b) + d_2u'(b) = 0$. Then it is clear that if the boundary conditions given above are satisfied that the boundary term vanishes and Lagrange's identity holds.
+
+We can think of the integral then as a dot product, and we see that $L$ is then a self-adjoint (Hermitian) matrix. Then a scalar product $(u,v)$ will also yield $(Lu,v) = (u,Lv)$, a property of self-adjoint operators (makes me so happy to see physics pop up in math class :D). We then recall some properties of symmetric matricies
+\begin{itemize}
+    \item Real Eigenvalues
+    \item Mutually orthogonal eigenvectors
+\end{itemize}
+
+Let's then examine properties of the S-L eigenvalues and eigenfunctions. We then see that the Sturm-Liouville equation $-\rd{}{x}\left( p(x)\rd{y}{x} \right) + q(x)y(x) = \lambda r(x)y(x)$ can be written in form $Ly = \lambda ry$, a simple eigenvalue/eigenfunction problem! Then just by applying the Feynman algorithm we can learn a lot about the solutions provided our conditions are all satisfied (finite domain, $r,p > 0$, separable boundary conditions).
+
+\begin{itemize}
+    \item All eigenvalues $\lambda$ are real.
+    \item Orthogonality: Defining dot product $\displaystyle\int\limits_{a}^{b}r(x) \phi_1(x)\phi_2(x)\;dx$, then for $\phi_1, \phi_2$ corresponding to \emph{distinct} eigenvalues they are orthogonal. 
+    \item All eigenvalues are distinct.
+    \item Eigenvalues increase without bound.
+    \item Given two eigenfunctions $\phi_{1,2}$ and eigenvalues $\lambda_2 > \lambda_1$ then there is at least one zero of the eigenfunction $\phi_2$that lies between the zeroes of $\phi_1$. So number of zeroes increases with higher eigenvalues.
+    \item Can use eigenfunctions to expand arbitrary $f(x)$ over $a \leq x \leq b$ so long as $\displaystyle\int\limits_{a}^{b}f^2(x)r(x)\;dx$ converges. (This lies at the heart of the Fourier/Laplace transform\dots). 
+    \item Expansion coefficients are unique.
+\end{itemize}
+
+Convergence is defined in the mean squares sense, that
+\begin{equation}
+    \lim_{N \to \infty}\displaystyle\int\limits_{a}^{b}\abs{f(x) - \sum_{m=1}^{N}a_m\phi_m(x)}^2r(x)\;dx \to 0
+\end{equation}
+\chapter{Makeup: Expanding functions in S-L eigenfunctions}
+
+If we use orthonormal eigenfunctions $\dotp{\phi}{\phi} = 1$ for $\phi \propto \sin n\pi x$(I'm using my own notation b/c it's easier) we can then project arbitrary functions in terms of the eigenfunctions
+\begin{align}
+    f(x) &= \sum_{n=1}^{\infty}B_n\phi_n(x)\\
+    B_n &= \displaystyle\int\limits_{0}^{1}f(x)\phi_n(x)\;dx
+\end{align}
+assuming normalized $\phi(x)$.
+
+Then in the general S-L case recall that the definition of the dot product changes, so we have for normalized eigenfunctions $\psi_n(x)$
+\begin{align}
+    f(x) &= \sum_{n=0}^{\infty}a_n\psi_n(x)\\
+    a_n &= \displaystyle\int\limits_{a}^{b}r(x)f(x)\psi_n(x)\;dx
+\end{align}
+
+Then we exhibit the Sturm comparison theorem. Given $u,v$ solutions of the S-L ODE and let $\alpha,\beta$ be consecutive zeroes of $v$. Suppose that on the interval $[\alpha,\beta]$ we have
+\begin{align}
+    \rd{}{x}\left( p\rd{u}{x} \right) + qu + P(x) u &= 0\\
+    \rd{}{x}\left( p\rd{v}{x} \right) + qv + Q(x) v &= 0
+\end{align}
+with $P(x) \geq Q(x)$ on $[\alpha,\beta]$ then either $u(x)$ vanishes in $(\alpha,\beta)$ or $u$ is a constant multiple of $v$. 
+
+Then if we apply this to S-L functions, let $P,Q$ be constants corresponding to eigenvalues, then we know that the function corresponding to the higher eigenvalue must vanish in between the zeroes of the lower eigenfunction. 
+\chapter{2/24/14 - Fourier Series}
+
+Recall that the S-L equation is given
+\begin{align}
+    -\rd{}{x}\left( p(x)\rd{y}{x} \right) - q(x)y &= \lambda r(x)y
+\end{align}
+over $x \in [a,b]$ with boundary conditions
+\begin{align}
+    \alpha_1y(a) + \alpha_2y'(a) &= 0\\
+    \beta_1y(b) + \beta_2y'(b) &= 0
+\end{align}
+
+Then in the very simple case $p(x) = 1, q(x) = 0, r(x) = 1$ with $a = 0, b = 1$ and $y(0) = y(1) = 0$ we have eigenfunctions $\psi_n  = \sin (n\pi x)$ with eigenvalues $\lambda_n = n^2\pi^2$ for $n \geq 1$ (Note that $y(0) = y(1) = 0$ is a Dirichlet boundary condition).
+
+We then studied the Neumann (pronounced ``Noi-man'' o.o) boundary conditions $\rd{y}{x}(0) = \rd{y}{x} = 0$ which yields eigenfunctions $\psi_n = \cos(n\pi x), \lambda_n = n^2\pi^2$ for $n \geq 0$.
+
+Lastly we looked at $y(0) = y(1), y'(0) = y'(1)$ periodic boundary conditions. While this not a regular S-L problem, the eigenfunctionss turn out to be related; eigens $\psi_n = \sin(2n\pi x), \cos(2n\pi x), \lambda_n = \left( 2n\pi \right)^2$. This violates standard S-L theory because multiple eigenfunctions per eigenvalue. It turns out though that for all periodic \emph{and} regular S-L we have orthogonal basis.
+
+This leads naturally into the discussion of Fourier series. Change interval to be over $[-L,L]$ and so the full periodic series expansion is
+\begin{align}
+    f(x) &= \sum_{n=1}^{\infty}A_n\sin\frac{n\pi x}{L} + \sum_{n=0}^{\infty}B_n\cos\frac{n\pi x}{L}\\
+    A_n &= \frac{1}{L}\displaystyle\int\limits_{-L}^{L}f(x) \sin \frac{n\pi x}{L}\;dx\\
+    B_{n \neq 0} &= \frac{1}{L}\displaystyle\int\limits_{-L}^{L}f(x)\cos \frac{n\pi x}{L}\;dx\\
+    B_0 &= \frac{1}{2L}\displaystyle\int\limits_{-L}^{L}f(x)\;dx
+\end{align}
+
+If we then do a little bit of manipulation by splitting the integral in half we can find
+\begin{align}
+    A_n &= \frac{2}{L}\displaystyle\int\limits_{0}^{L}\frac{f(x) - f(-x)}{2}\sin \frac{n\pi x}{L}\;dx\\
+    B_{n \neq 0} &= \frac{2}{L}\displaystyle\int\limits_{0}^{L}\frac{f(x) + f(-x)}{2}\cos \frac{n\pi x}{L}\;dx\\
+    B_0 &= \frac{1}{L}\displaystyle\int\limits_{0}^{L}\frac{f(x) + f(-x)}{2}\;dx
+\end{align}
+
+This tells us that the we can examine the Fourier components with only an integration over $[0,L]$ with information on the function everywhere (he's failing to impress me; I think he's trying to show that the sine/cosine coefficients vanish for odd/even functions respectively?). A function under which $f(x) = -f(-x)$ is odd and $f(x) = f(-x)$ is even (did he seriously just say that in lecture? He clarifies the weirdest things). 
+
+Then we note that $\frac{f(x) - f(-x)}{2}$ is odd and $\frac{f(x) + f(-x)}{2}$ is even, and so we are effectively generating odd/even functions with $f(x)$ over $[0,L]$ and just taking the Fourier components of our modified function! Long story short I was right, only odd functions have have sine like coefficients. Note that we can performm function expansions with any S-L eigenfunctions, not necessarily just Fourier series.
+
+We can also write the full Fourier series in complex form. We can write $\sin \frac{n\pi x}{L} = \frac{e^{in\pi x/L} - e^{-in\pi x/L}}{2i}$ and $\cos \frac{n\pi x}{L} = \frac{e^{in\pi x/L} + e^{-in\pi x/L}}{2}$, and so plugging this into the form of our general function we obtain
+\begin{equation}
+    f(x) = \sum_{-\infty}^{\infty}C_ne^{\frac{in\pi x}{L}}
+\end{equation}
+
+This is fully equivalent to the full Fourier expansion if we define
+\begin{equation}
+    C_n = \begin{cases} \frac{B_n - iA_n}{2} & n > 0\\ \frac{B_n + iA_n}{2} & n < 0 \\ B_0 & n = 0\end{cases}
+\end{equation}
+We note that the $e^{\frac{in\pi x}{L}}$ are orthogonal over $[-L,L]$. We can thus also compute the coefficients directly
+\begin{equation}
+    C_n = \frac{1}{2L}\displaystyle\int\limits_{-L}^{L}f(x)e^{-\frac{in\pi x}{L}}\;dx
+\end{equation}
+
+Let's then do some examples of Fourier series! To start with, let's do $f(x) = \sin(\pi x) + \frac{1}{3}\sin(3\pi x)$ (\dots this is an example??). We then note that if we compute the coefficients only two coefficients do not vanish! This is the power of orthogonality. 
+
+Let's do a harder example $f(x) = \frac{1 - \frac{\cos x}{e}}{1 - \frac{2}{e}\cos x - \frac{1}{e^2}}$ over interval $[0,\pi]$. We know that the function is even with period $\pi$, so it makes sense to expand in cosines $\cos nx$! We write our function
+\begin{align}
+    f(x) &= \sum_{n=0}^{\infty}A_n\cos(nx)\\
+    A_n &= e^{-n}\\
+    f(x) &= \sum_{n=0}^{\infty}e^{-n}\cos(nx)
+\end{align}
+as it turns out if we perform the integration. We then want to see whether this series converges to our function; intuitively this should converge since $e^{-n}$ decays really quickly. We will see whether it converges in the next lecture.
+
+Let's do one last example, $f(x) = x$ for $x \in [0,\pi]$. We will try this with sine series (probably makes most sense since $f(x)$ is odd) $\sin (nx)$. It turns out that we find
+\begin{align}
+    A_n &= \frac{2}{n}\left( -1 \right)^{n+1}
+\end{align}
+which don't decay quickly at all! More interestingly if we expand using cosine series we obtain $B_n = \frac{2(-1 + (-1)^n)}{\pi n^2}$! It converges faster but hardly any better. We want to determine how quickly functions converge. We will see this next lecture!
+\chapter{2/26/14 - Convergence of S-L eigenfunctions}
+
+We will first discuss Parseval's Theorem. Write $f(x) = \sum_{n=-\infty}^{\infty}C_ne^{in\pi x/L}$ over $-L \leq x \leq L$. Let's then consider
+\begin{align}
+    \displaystyle\int\limits_{-L}^{L}f^2(x)\;dx &= \displaystyle\int\limits_{-L}^{L}\left( \sum_{n=-\infty}^{\infty}C_ne^{in\pi x/L} \right)\left( \sum_{n=-\infty}^{\infty}C_ne^{in\pi x/L} \right)\;dx\\
+    &= \displaystyle\int\limits_{-L}^{L}\left( \sum_{n=-\infty}^{\infty}C_ne^{in\pi x/L} \right)\left( \sum_{n=-\infty}^{\infty}\bar{C}_ne^{-in\pi x/L} \right)\;dx\\
+    &= 2L\sum_{n=-\infty}^{\infty}C_n\bar{C}_n
+\end{align}
+
+when we consider that $f(x) = \bar{f}(x)$ since $f(x)$ is real. Then notating $C_n = \frac{A_n + iB_n}{2}$ we have
+\begin{align}
+    \displaystyle\int\limits_{-L}^{L}f^2(x)\;dx = \frac{L}{2}\left[ 2B_0^2 + \sum_{n=1}^{\infty}A_n^2 + B_n^2 \right]
+\end{align}
+
+This is Parseval's theorem. We can then consider the minimization property. Consider $F_n(x) = \beta_0 + \sum_{n}\beta_n\cos \frac{n\pi x}{L} + \alpha_n \sin \frac{n\pi x}{L}$ the truncated series with unknown coefficients $\alpha_n, \beta_n$ not necessarily the correct Fourier components. Then we can consider the least squares accuracy of the truncated series as
+\begin{align}
+    I &= \displaystyle\int\limits_{-L}^{L}\left[ f(x) - F_n \right]^2\;dx\\
+    &= \displaystyle\int\limits_{-L}^{L}f^2(x)\;dx + L\sum_{k=1}^{N}(\alpha_k^2 + \beta_k^2) + 2L\beta_0^2 - 2L\sum_{k=1}^{N}\alpha_kA_k + \beta_k B_k - 4L\beta_0B_0
+\end{align}
+with $A_k, B_k, B_0$ the Fourier coefficients of $f(x)$. We then seek the minimizing $\alpha,\beta$ of $I$ the least squares sum. We do this by computing $\pd{I}{\alpha_k} = 0, \pd{I}{\beta_k} = 0$ which is very simple to solve and we find $\alpha_k = A_k, \beta_k = B_k$. In other words, the S-L coefficients are the coefficients that even in truncated sum best approximate $f(x)$ in the least squares sense. We can then rewrite
+\begin{align}
+    I = \displaystyle\int\limits_{-L}^{L}f^2(x) - L\sum_{k=1}^{N}A_k^2 + B_k^2 - 2LB_0^2\;dx &\geq 0\\
+    2LB_0^2 + L\sum_{k=1}^{N}A_k^2 + B_k^2 &\leq \displaystyle\int\limits_{-L}^{L}f^2(x)\;dx
+\end{align}
+we obtain \emph{Bessel's Inequality} which in the $N \to \infty$ limit goes to Parseval's Theorem. It also says that the least squares difference vanishes as $N \to \infty$. This is convergence in the mean squares sense. Of course then it is crucial that $\displaystyle\int\limits_{-L}^{L}f^2(x)\;dx < \infty$. 
+
+Careful that pointwise convergence and mean squares convergence are not quite the same thing; this is called the Gibbs phenomenon. More precisely if $f(x)$ has a jump discontinuity at $a$ then $F(a)$ the value of the Fourier convergence yields $F(a) = \frac{f(a^+) + f(a^-)}{2}$ and convergence to $F(a)$ is not uniform in any neighborhood of $x=a$. 
+\chapter{2/28/14 - Convergence of S-L coefficients}
+
+Suppose we have some piecewise differentiable $f(x)$ over $x \in [0,2\pi]$ then the Fourier series converges everywhere $f(x)$ is differentiable, and if $f(x)$ has discontinuity at $f=a$ then the Fourier series converges to $\frac{f(a^+) + f(a^-)}{2}$. 
+
+Note then that sine is odd and cosine is even, so when we expand a function $f(x)$ over $[0,2\pi]$ over sines or cosines then the function is extended either odd/even to the left of the origin. The speed of Fourier coefficient convergence is related to the number of derivatives that exist everywhere on the interval; we will see this.
+
+We then want to discover the speed of the series convergence, so we use the most powerful tool in ACM, integration by parts (lol). Assume some periodic $f(x), x \in [-\pi, \pi]$ with continuous derivatives up to order $k-1$ and assume $f^{(k)}(x)$ is integrable. Then our expression for the Fourier Series coefficients is
+\begin{align}
+    C_n &= \frac{1}{2\pi}\displaystyle\int\limits_{-\pi}^{\pi}f(x)e^{-inx}\;dx\\
+    &= \underbrace{-\frac{1}{2\pi}\left[ f(x)\frac{e^{-inx}}{in} \right]_{-\pi}^\pi}_{=0} + \frac{1}{2\pi}\displaystyle\int\limits_{-\pi}^{\pi}f'(x)\frac{e^{-inx}}{in}\;dx\\
+    &= \frac{1}{2\pi}\frac{1}{(in)^k}\displaystyle\int\limits_{-\pi}^{\pi}f^{(k)}(x)e^{-inx}\;dx
+\end{align}
+where the term vanishes b/c periodicity. Well, now the question of how quickly the terms decay must go with $\frac{1}{n^k}$ at least, it seems. But then how does the integral converge? We use the \emph{Reimann-Lebesgue lemma}, which says that
+\begin{align}
+    \lim_{n \to \infty}\displaystyle\int\limits_{-\pi}^{\pi}g(x)e^{-inx}\;dx \to 0\label{2.28.RLL}
+\end{align}
+
+For our expression then, we know that the integral must vanish, but it can't go any faster than $\frac{1}{n}$ otherwise we'd be able to integrate by parts one more time. Thus, our convergence is bounded by $\frac{1}{n^k}, \frac{1}{n^{k+1}}$. The corrolary is that if we have Fourier series that decay with $n^{-k}$ then the $k-1$ derivative is continuous. 
+
+Let's then examine differentiability of S-L expansions. For example, let's try $f(x) = x$, which gives
+\begin{align}
+    x &= \sum_{n=1}^{\infty}\frac{(-1)^{n+1}2}{n}\sin nx\\
+    1 &= \sum_{n=1}^{\infty}2\left( -1 \right)^{n+1}\cos nx
+\end{align}
+
+This doesn't look good; this series doesn't seem to converge and we don't even recover the Fourier series for $1$! Then when can you differentiate a Fourier series? Suppose $f(x)$ has a uniformly convergent Fourier series expansion of the form $f(x) = \frac{\beta_0}{2} + \beta_n\cos nx + \alpha_n \sin nx$ and is periodic $f(0) = f(2\pi)$ then you can differentiate term by term. 
+
+It turns out that we can always integrate a Fourier series expansion, but the result may not be a fourier series! The $\beta_0$ term ruins us. Jerk.
+\chapter{3/3/14 - Solving BVP with S-L}
+
+Let's now solve BVP with S-L eigenfunctions. There are three classes we will tackle
+\begin{itemize}
+    \item Inhomogeneous BVP with S-L ODE, homogeneous BC.
+    \item Inhomogeneous BVP with S-L ODE, inhomogeneous BC
+    \item General linear ODE
+\end{itemize}
+
+The inhomogeneous S-L ODE is given
+\begin{equation}
+    \rd{}{x}\left( p(x)\rd{y}{x} \right) - q(x)y(x) + \lambda r(x)y = r(x) f(x)\label{3.3.ODE}
+\end{equation}
+over $a \leq x \leq b$ and $y(a) = y(b) = 0$ (assume regularity $p, r > 0$.. Let's first consider for arbitrary $\lambda$ (not necessarily eigenvalue). Let then $\phi_n$ be the S-L eigenfunctions corresponding to eigenvalue $\lambda_n$. Then knowing that the $\phi_n$ form a complete basis we can expand $y$ in terms of the S-L eigenfunctions
+\begin{equation}
+    y(x) = \sum_{n=1}^{\infty}A_n\phi_n(x)
+\end{equation}
+
+We then want to determine the $A_n$ by substituting into \eqref{3.3.ODE}. This yields
+\begin{equation}
+    \sum_{n=1}^{\infty} (\lambda - \lambda_n)r(x)A_n\phi_n(x) = r(x)f(x)
+\end{equation}
+
+Note that we differentiate twice here, so we must check our final answer to be sure that such differentiation is okay. If we then expand $f(x)$ in the eigenfunctions we find
+\begin{align}
+    (\lambda - \lambda_n)A_n &= f_n\\
+    f_n &= \frac{\displaystyle\int\limits_{a}^{b}f(x)\phi_n(x)r(x)\;dx}{\displaystyle\int\limits_{a}^{b}r(x)\phi_m^2(x)\;dx}
+\end{align}
+$f_n$ the S-L components. Then we obtain
+\begin{equation}
+    A_n = \frac{f_n}{\lambda - \lambda_n}
+\end{equation}
+
+This conforms with intuition in choice of $\lambda$; if we had chosen $\lambda$ in \eqref{3.3.ODE} to be an eigenvalue then there would be no solution. But so long as $\lambda \neq \lambda_n$ we have a series solution; we must then look into convergence of
+\begin{equation}
+    y(x) = \sum_{n=1}^{\infty}\frac{f_n}{\lambda - \lambda_n}\phi_n(x)\label{3.3.gensol}
+\end{equation}
+
+We know convergence by the \emph{Reimann-Lebesgue lemma} which tells us that $f_n \to 0$ as $n \to \infty$ (recall \eqref{2.28.RLL}). Recall then that S-L eigenvalues grow with $n^2$. Combining these two facts we find that the coefficients of \eqref{3.3.gensol} decay faster than $\frac{1}{n^2}$. This gives that we are doubly differentiable.
+
+In general if $\lambda$ is an eigenvalue in \eqref{3.3.ODE} then our series solution doesn't quite work. However, suppose that $f_m = 0$ the component along the eigenvalue, then our solution can be written 
+\begin{equation}
+    y(x) = \sum_{n \neq m}^{\infty}\frac{f_n}{\lambda - \lambda_n}\phi_n(x) + C\phi_m(x)
+\end{equation}
+there is no unique solution (since the homogeneous piece doesn't affect the solution). This $\lambda = \lambda_m$ case of \eqref{3.3.ODE} has these two cases called the \emph{Fredholm alternative} (which ``sounds like a thriller but is not''). 
+
+Let's have an example $y'' + \lambda y = f(x)$ over $[0,\pi]$ with $y(0) = y(\pi) = 0$. Let $f(x)$ be the stepfunction at $\frac{\pi}{2}$. We choose the $\phi_n(x) = \sin nx, \lambda_n = n^2$ to expand. Expanding $f(x) = \sum_{n}^{}D_n\sin nx$ we find
+\begin{align}
+    D_n &= \frac{2}{\pi}\displaystyle\int\limits_{0}^{\pi}f(x)\sin nx\;dx\\
+    &= \frac{2\cos \frac{n\pi}{2} + (-1)^{n+1}}{\pi n}
+\end{align}
+
+This is not a great Fourier series; we note Gibbs phenomenon near $\frac{\pi}{2}$. However, if we examine $A_n = \frac{D_n}{\lambda - \lambda_n}$ for $\lambda_n = n^2$ we find coefficients
+\begin{equation}
+    A_n = 2\frac{\cos \frac{\pi n}{2} + \left( -1 \right)^{n+1}}{\pi n\left( \lambda - n^2 \right)}
+\end{equation}
+and so no Gibbs phenomenon and doubly differentiable! 
+
+Let's see an example where this breaks down. Consider $y'' + \lambda y = f(x)$ for nonvanishing boundary conditions $y(0) = y_0, y(\pi) = y_\pi$ (he could not be more original about naming these BCs) and $f(x) = \sum_{n}^{}F_n \sin nx$. Let's go ahead and expand in terms of the sines anyways despite bad BCs (just to be instructive; cosines require vanishing derivative which is not in our BC but still would have made more sense). We obtain $A_n = \frac{F_n}{\lambda - n^2}$. The Fourier series obviously doesn't converge too well, not well enough for our solution, so we consider how to improve our solution.
+
+One way is to turn the BVP into a different one with homogeneous BC. The second idea is to somehow use integration instead of differentiation, because recall that Fourier series are always integrable; this is called the method of finite transforms.
+
+Let's start by trying to make BCs homogeneous. Let's use $u(x) = y(x) - \frac{y_{\pi}}{\pi}x - \frac{y_0}{\pi}(\pi - x)$ which vanishes $u(0) = u(\pi) = 0$. We can then plug this in for our ODE and find an ODE in $u$
+\begin{align}
+    u'' + \lambda u &= g(x)\\
+    g(x) &= -\frac{\lambda}{\pi}\left( y_\pi x + y_0(\pi - x) \right) + f(x)
+\end{align}
+
+Then we can expand $g$ in terms of the sines with coefficients $G_n$ and obtain general solution
+\begin{equation}
+    y(x) = \frac{1}{\pi}\left[ y_\pi x + y_0(\pi-x) \right] + \sum_{n=1}^{\infty}\frac{G_n}{\lambda - n^2}\sin nx
+\end{equation}
+
+Then by Reimann-Lebesgue we have that the coefficients vanish faster than $\frac{1}{n^2}$ and so we are doubly differentiable and we have a usable solution! Key point he's emphasized at least five times: a fourier series solution \emph{exists} but exhibits bad behavior; what we do here is called ``pulling the poisoned tooth'' which takes care of the bad behavior in the fourier series.
+
+
+\chapter{3/5/14 - Method of finite transforms, Greens Functions}
+
+Last lecture we started solving inhomogenous BC BVPs with S-L eigenfunctions by adding a term to our solutions such that the remainder of the problem is homogeneous.
+
+We will this lecture discuss method of finite transforms. Suppose we are given $y'' + \lambda y = f(x)$ with $y(0) = y_0, y(\pi) = y_1$. Then we can finitely transform both sides and obtain
+\begin{align}
+    \displaystyle\int\limits_{0}^{\pi}dx\;\frac{2}{\pi}\sin(nx) y'' + \displaystyle\int\limits_{0}^{\pi}\lambda \left( \frac{2}{\pi} \right)\sin nx y(x)\;dx &= \displaystyle\int\limits_{0}^{\pi}\frac{2}{\pi}f(x)\sin nx\;dx
+\end{align}
+
+Then if we can expand $y,f$ in Fourier series with coefficients $A_n, F_n$ the above expression reduces to
+\begin{align}
+    \displaystyle\int\limits_{0}^{\pi}\frac{2}{\pi}y''\sin nx\;dx + \lambda A_n &= F_n
+\end{align}
+
+We integrate the remaining integral by parts
+\begin{align}
+    \frac{2}{\pi}\displaystyle\int\limits_{0}^{\pi}y''\sin nx\;dx &= \frac{2}{\pi}\left[ \sin nx y'(x) \right]_0^\pi - \frac{2n}{\pi}\displaystyle\int\limits_{0}^{\pi}\cos(nx)y'(x)\;dx\\
+    &= -\frac{2n}{\pi}\left[ \cos(nx)y(x) \right]_0^\pi - \frac{2n^2}{\pi}\displaystyle\int\limits_{0}^{\pi}y(x)\sin nx\;dx\\
+    &= \frac{2n}{\pi}\left( y_0 + y_1(-1)^{n+1} \right) - \frac{2n^2}{\pi}\displaystyle\int\limits_{0}^{\pi}y(x)\sin nx\;dx
+\end{align}
+
+The boundary conditions popped out of nowhwere! We can then obtain
+\begin{align}
+    \frac{2n}{\pi}\left( -1 \right)^{n+1}y_1 + \frac{2n}{\pi}y_0 - n^2A_n + \lambda A_n &= F_n\\
+    \frac{F_n}{\lambda - n^2} - \frac{1}{\lambda - n^2}\frac{2n}{\pi}\left[ y_0 + \left( -1 \right)^{n+1} y_1 \right] &= A_n
+\end{align}
+
+Last lecture we found an expression that pulled out the bad behavior; note that the method of finite transforms cannot discover the fourier series of the ```fixed'' boundary conditions. But if we transform the linear component from our previous result we should get the same thing as our finite transforms result. 
+
+Let's then examine a general ODE $y'' + f(x) y = g(x)$ with $y(0) = 0, y(1) = 0$. We can then substitute $y(x) = a_n \phi_n(x)$ and if we use $\phi_n$ eigenfunctions that also satisfy the BCs then we have coefficients decaying fast enough that direct substitution of the series is okay. We then can just plug through and solve the infinite linear system resulting for the coefficients. In general we do this by truncating the series etc. We won't always get a high quality answer though, because we recall that the boundary behavior of the eigenfunctions plays a role in how well the series converges; it turns out that doing an expansion in singular eigenfunctions works better. We will see this some other day. 
+
+We will now learn about Greens functions. Up until now we have been solving the S-L equation $\rd{}{x}\left( p(x)\rd{y}{x} \right) - q(x)y(x) + \lambda r(x) y = r(x) f(x)$ under homogeneous BCs such as $y(a) = y(b) = 0$. Let's normalize our S-L solutions $\displaystyle\int\limits_{a}^{b}r(x) \phi^2_n(x)\;dx = 1$. Then the general solution to the S-L ODE is given by
+\begin{align}
+    y &= A_n \phi_n(x)\\
+    A_n &= \frac{f_n}{\lambda - \lambda_n}\\
+    f_n &= \displaystyle\int\limits_{a}^{b}r(x)f(x)\phi_n(x)\;dx\\
+    y(x)& = \sum_{n=0}^{\infty}\frac{1}{\lambda - \lambda_n}\left[ \displaystyle\int\limits_{a}^{b}r(x')f(x')\phi(x')\;dx' \right]\phi_n(x)\\
+    &= \displaystyle\int\limits_{a}^{b}f(x')r(x')G(x,x';\lambda)\;dx\\
+    G(x,x';\lambda) &= \sum_{n=0}^{\infty}\frac{\phi_n(x)\phi_n(x')}{\lambda - \lambda_n}
+\end{align}
+
+This $G$ is called the Greens function. This is somewhat related to the vector problem: $A\vec{x} = \vec{b} \Rightarrow \vec{x} = A^{-1}\vec{b}$, and the Green's function is effectively this inverse matrix. 
+
+Let's consider $y'' + \lambda y = f(x)$ subject to $y(0) = y(\pi) = 0$. Then we want to find the Greens function here, there are two ways. The first is to use an expansion in the $\phi_n = N \sin nx$. The second way is to relate the homogeneous solutions (which we know) is to use variation of parameters to express the full solution in terms of an integral, the form of the Green's function. 
+\chapter{3/7/14 - Green Functions}
+
+Recall that we can write our general solution to a S-L ODE
+\begin{equation}
+    -\rd{}{x}\left[ p(x)\rd{y}{x} \right] + q(x)y - \lambda r(x)y = f(x)
+\end{equation}
+with $y(a) = y(b) = 0$ can be written
+\begin{equation}
+    y(x) = \displaystyle\int\limits_{a}^{b}G(x,x';\lambda)f(x')\;dx', G(x,x') = \sum_{n=0}^{\infty}\frac{\phi_n(x)\phi_n(x')}{\lambda - \lambda_n}\label{3.7.Green}
+\end{equation}
+with $G(x,x')$ the Green function. 
+
+Let's consider an example $y'' + \lambda y = f(x)$ with $y(0) = y(\pi) = 0$. It then turns out that $G(x,x'; \lambda) = \frac{2}{\pi}\sum_{n=1}^{\infty}\frac{\sin nx \sin nx'}{\lambda - n^2}$. We can use variation of parameters to get an explicit expression for $G$. Recall that the general solution is given by this to be
+\begin{equation}
+    y(x) = C_1y_1(x) + C_2y_2(x) + y_2(x)\displaystyle\int\limits_{}^{x}\frac{y_1(x')f(x')}{W(x')}\;dx' - y_1(x)\displaystyle\int\limits_{}^{x}\frac{y_2(x')f(x')}{W(x')}\;dx'
+\end{equation}
+
+Then since we know that $y_1(x) = \sin \sqrt{\lambda}x, y_2(x) = \cos \sqrt{\lambda}x$ for our particular problem, the particular solution then becomes
+\begin{equation}
+    y_{part} = \cos \sqrt{\lambda}x \displaystyle\int\limits_{}^{x}\frac{\sin \sqrt{\lambda}x'}{W}f(x')\;dx' - \sin\sqrt{\lambda}x\displaystyle\int\limits_{}^{x}\frac{\cos \sqrt{\lambda}x'}{W}f(x')\;dx'
+\end{equation}
+which doesn't satisfy BCs. So instead we expand in a different basis $y_1 = \sin \sqrt{\lambda}x, y_2 = \sin \sqrt{\lambda}(\pi - x)$ and use variation of parameters and we obtain
+\begin{equation}
+    y_{part} = \sin \sqrt{\lambda}(x-\pi)\displaystyle\int\limits_{0}^{x}\frac{\sin \sqrt{\lambda}x'}{\sqrt{\lambda}\sin \sqrt{\lambda}}f(x')\;dx' + \sin \sqrt{\lambda}x \displaystyle\int\limits_{x}^{\pi}\frac{\sin \sqrt{\lambda}(x' - \pi)}{\sqrt{\lambda}\sin \sqrt{\lambda}}f(x')\;dx'
+\end{equation}
+
+This satisfies the BCs and so we are done. Yeah right. We can move the homogeneous solutions under the integral because the integral is only over $x'$. Then we can write this solution into form
+\begin{align}
+    y_{part} &= \displaystyle\int\limits_{0}^{\pi}H(x,x';\lambda)f(x')\;dx'\\
+    H(x,x';\lambda) &= 
+    \begin{cases}
+        \frac{1}{\sqrt{\lambda}\sin \sqrt{\lambda}\pi}\sin \sqrt{\lambda}x \sin \sqrt{\lambda}(x' - \pi) & \mbox{if } x < x'\\
+        \frac{1}{\sqrt{\lambda}\sin \sqrt{\lambda}\pi}\sin \sqrt{\lambda}x' \sin \sqrt{\lambda}(x - \pi) & \mbox{if } x > x'
+    \end{cases}
+\end{align}
+
+However, this still isn't the same as the Green Function we found in \eqref{3.7.Green}! It turns out that we've found the sum of $G$. The function then is continuous everywhere (as we expect) but isn't differentiable everywhere (at $x=x'$). Note then that $\rtd{G}{x} + \lambda G$ vanishes for $x > x', x < x'$ because $G$ is a homogeneous solution for $x \neq x'$. Then to find out the behavior at $x=x'$ we integrate $G\; dx$ and we obtain
+\begin{align}
+    \displaystyle\int\limits_{x' - \epsilon}^{x' + \epsilon}\rtd{G}{x}\;dx + \lambda \displaystyle\int\limits_{x' - \epsilon}^{x' + \epsilon}G\; dx &= \displaystyle\int\limits_{x' - \epsilon}^{x' + \epsilon}\rtd{G}{x}\;dx\\
+    &= \rd{G}{x}\Big|_{x' - \epsilon}^{x' + \epsilon}
+\end{align}
+
+because $G$ is continuous and so when $\epsilon \to 0$ the integral vanishes. It turns out then that this expression always evaluates out to $1$. Thus $\rtd{G}{x} + \lambda G$ yields some function that vanishes $x \neq x'$ but integrates to be $1$. This is called the Dirac delta function $\delta(x-x')$, a generalization of the Kronecker delta. It is closer to a distribution than a function, and is better described by a limiting procedure (e.g. a sharply peaked Gaussian or a Lorentzion). It can also be treated as the derivative of the Heaviside step function. 
+
+It also has a sifting property $\displaystyle\int\limits_{a}^{b}f(z) \delta(z-z_0)\;dz = f(z_0)$ if $z_0 \in [a,b]$. 
+
+Then if we can solve $L[G] = \delta(x-x')$ generally then for $L[y] = f(x)$ we have solution $y = \displaystyle\int\limits_{a}^{b}f(x')G(x,x')\;dx'$. 
+\chapter{3/10/14 - Makeup: More Green Functions, Completeness}
+
+We constructed the Green function last class, now we will solve ODEs with it. Suppose we have some ODE $L[y] = f(x)$ and we can find some $G(x,x')$ such that $G(a,x') , G(b,x')$ obey BCs then a solution can be constructed
+\begin{equation}
+    y(x) = \displaystyle\int\limits_{a}^{b}G(x,x')f(x')\;dx'
+\end{equation}
+
+We then do an example, $\rtd{y}{x} = f(x)$ over $[a,b]$ subject to $y(a) = y(b) = 0$. Start by solving $\rtd{G}{x} = \delta(x-x')$. Two linear independent homogeneous solutions are then $1,x$. We know that the Green's function must vanish at $x=a, x=b$ and its derivative obeys
+\begin{equation}
+    \rd{G}{x}\Big|_{x' - \epsilon}^{x' + \epsilon} = 1
+\end{equation}
+
+The guess at the Green function is then
+\begin{equation}
+    G = 
+    \begin{cases}
+        A(x-a)(x' - b) & \mbox{if } x < x'\\
+        A(x'-a)(x - b) & \mbox{if } x > x'
+    \end{cases}
+\end{equation}
+
+This satisfies BCs and is continuous at $x=x'$. Note that we do it by using homogeneous solutions that satisfy BCs at one endpoint at a time. The derivative constraint then shows that $A = \frac{1}{b-a}$.
+
+We can do this more generally for ODE $y'' + Py' + Qy = 0$ over $[a,b]$ exhibiting two homogeneous solutions $y_1(a) = 0, y_2(b) = 0$. We then seek to find the Green function, of form
+\begin{equation}
+    G(x,x') =
+    \begin{cases}
+        Ay_1(x)y_2(x')& \mbox{if } x < x'\\
+        Ay_1(x')y_2(x)& \mbox{if } x > x'
+    \end{cases}
+\end{equation}
+
+This satisfies BCs by construction, so we determine $A$ by integrating over $x=x'$ and we find
+\begin{equation}
+    A = \frac{1}{W(x')}
+\end{equation}
+with $W$ the Wronskian. 
+
+This procedure is slightly complicated when $L[G]  = 0$ has nontrivial solution; an example of this case is when S-L ODE with $\lambda$ an eigenvalue.
+
+We can see the Greens function as an inverse matrix, consider the matrix system $A\mathbf{x} = \mathbf{b}$, where we can formally write solution $\mathbf{x} = A^{-1}\mathbf{b}$. While this is very difficult to do in practice since inverting matricies sucks poop, it is a formal parallel of Greens functions.
+
+If we then examine our Green's function for sines $G(x,x';\lambda) = \frac{2}{\pi}\sum_{n}^{}\frac{\sin nx\sin nx'}{\lambda - n^2}$ we note three striking properties. First, poles at $\lambda = n^2$, at the eigenvalues, which makes sense since no solutions when $\lambda = \lambda_n$. Second, if we consider $G$ in the complex plane $\lambda = \lambda_n$ are poles with coefficient $\sin nx'$ (not sure why this is important). Finally, we note that $G(x,x';\lambda) = G(x', x,\lambda)$. These hold in general for S-L ODE problems, poles are eigenvalues with residue proportional to eigenfunctions and symmetry. 
+
+One last note, completeness relation for orthogonal functions can be written explicitly as
+\begin{equation}
+    \sum_{n=0}^{\infty}\phi_n(x)\phi_n(x') = \frac{\delta(x-x')}{r(x)}
+\end{equation}
+
+\chapter{3/12/14 - Fourier Transform at last!}
+
+We look into singular S-L problems. We have been examining
+\begin{equation}
+    -\rd{}{x}\left( p(x)\rd{y}{x} \right) + q(x)y(x) = \lambda r(x)y(x)
+\end{equation}
+subject to $a \leq x \leq b$ and $p(x) > 0$ on $[a,b]$. 
+
+Then singular S-L problems (impossible to restrict function behavior at boundary, e.g. $p(x)$ vanishes at endpoints) exhibit the following properties
+\begin{itemize}
+    \item Cannot ask $y(a) = 0$ or $y(b) = 0$.
+    \item One of $a,b$ is infinite.
+    \item Can seek solutions that are smooth up to and including $a,b$.
+    \item Possible to have discrete eigenvalues/orthogonal eigenfunctions but not guaranteed.
+    \item Possible to have a dense set of eigenvalues. 
+\end{itemize}
+
+Let's begin by examining a singular S-L problem on a finite interval, the Legendre equation
+\begin{equation}
+    \rd{}{x}\left[ (1-x^2) \rd{y}{x} \right] + \lambda y(x) = 0
+\end{equation}
+over $[-1,1]$. We see that $x=\pm 1$ is a regular singular point. The Legendre equation exhibits one singular solution and one nonexploding solution at the endpoints, and the difficulty is that solutions that are nonsingular at one endpoint can very well be singular at another!
+
+It turns out that for particular values of $\lambda$ it is guaranteed that solutions nonsingular at one endpoint will be nonsingular at the other. These eigenvalues are $\lambda = \nu(\nu + 1)$; these guarantee that $y(-1), y(1)$ are finite. The solutions are the Legendre polynomials, indexed by discrete eigenvalues and are mutually orthogonal. More properties of Legendre polynomials are in lecture notes.
+
+We now look at an example with continuous spectrum of eigenvalues. Let $f(x)$ be bounded and absolutely integrable (integral of absolute value) on $[-\infty,\infty]$. We will sample $f(x)$ on $[-L,L]$. If we assume $f(x)$ is periodic on this interval then 
+\begin{align}
+    f(x) &= \sum_{n=-\infty}^{\infty}C_ne^{i\frac{n\pi x}{L}}\\
+    C_n &= \frac{1}{2L}\displaystyle\int\limits_{-L}^{L}f(s)e^{-in\pi s/L}\;ds
+\end{align}
+
+This isn't quite what we want, since we want to examine properties of the function on the entire real line. We can instead then define some $k = n\Delta k, \Delta k = \frac{\pi}{L}$ and write
+\begin{align}
+    f(x) &= \frac{1}{2L}\sum_{n=-\infty}^{\infty}\displaystyle\int\limits_{-L}^{L}ds\;f(s)e^{-in\pi\frac{s-x}{L}}\\
+    &= \frac{1}{2\pi}\sum_{k = -\infty}^{\infty}\Delta k \displaystyle\int\limits_{-L}^{L}f(s)e^{-ik(s-x)}\;ds
+\end{align}
+
+Then if we let $L \to \infty$ we note by our constraint of $f(x)$ being absolutely integrable that the integral above must converge in the $L \to \infty$ limit. Call this function $g(k,x)$. Thus we have
+\begin{align}
+    f(x) &= \frac{1}{2\pi}\sum_{k=-\infty}^{\infty}\Delta k g(k,x)
+\end{align}
+
+It is clear then that this is becoming a Reimann sum as well. The eigenfunctions in the $L \to \infty$ limit have increasingly dense eigenvalues, note, so we see it does obey the singular S-L property (I think that's what he was saying\dots). Then taking the Reimann sum we obtain
+\begin{align}
+    f(x) &= \frac{1}{2\pi}\displaystyle\int\limits_{-\infty}^{\infty}g(k,x)\;dk\\
+    &= \frac{1}{2\pi}\displaystyle\int\limits_{-\infty}^{\infty}\displaystyle\int\limits_{-\infty}^{\infty}f(s)e^{-ik(s-x)}\;dsdk\\
+    &= \frac{1}{2\pi}\displaystyle\int\limits_{-\infty}^{\infty}e^{ikx}\;dk\displaystyle\int\limits_{-\infty}^{\infty}f(s)e^{-iks}\;ds
+\end{align}
+
+Fourier Transform! more precisely
+\begin{align}
+    F(k) &= \frac{1}{\sqrt{2\pi}}\displaystyle\int\limits_{-\infty}^{\infty}f(s)e^{-iks}\;ds\\
+    f(x) & =\frac{1}{\sqrt{2\pi}}\displaystyle\int\limits_{-\infty}^{\infty}F(k)e^{ikx}\;dk
+\end{align}
+
+Fourier transforms don't exhibit Gibbs phenomena at discontinuities!
+
+Moreover if we want to compute the Fourier transform, it seems like a difficult problem, but we will perform our acrobatics in the complex plane (probably at a later date?) to help make this integral easier. We will do an example of the Fourier transform, namely Gaussians!
+
+We find that $f(x) = Ne^{-ax^2}$ yields transform $F(k) = \frac{N}{\sqrt{2a}}e^{-k^2/(4a)}$. Note interestingly that $a \to 0$ will produce a fat $f(x)$ and peaked $F(k)$. This makes sense since $f(x)$ that is super-flat has its information contained in the very low modes. 
+
+We want lastly to relate this to the completeness relation. We can finish the limit above and find
+\begin{equation}
+    \frac{1}{\sqrt{2\pi}}\displaystyle\int\limits_{-\infty}^{\infty}\delta(x)e^{-ikx}\;dx = \frac{1}{\sqrt{2\pi}}
+\end{equation}
+
+Then we can extend this to be
+\begin{align}
+    \delta(x) &= \frac{1}{2\pi}\displaystyle\int\limits_{-\infty}^{\infty}e^{ikx}\;dk\\
+    \delta(x-x_0) &= \frac{1}{2\pi}\displaystyle\int\limits_{-\infty}^{\infty}e^{ik(x-x_0)}\;dk
+\end{align}
+
+Thus since we can attain a delta function with the Fourier transform we can obtain any function (similar to the intuition of Greens Functions). Recall that
+\begin{equation}
+    \sum_{n=0}^{\infty}\phi_n(x)\phi_n(x') = \delta(x-x')
+\end{equation}
+is the discrete completeness relation, and our above is the continuous completeness relation. 
+
+\chapter{3/13 - Final Review}
+
+There are three main BVPs, self-adjoint problems, S-L (regular/singular) and periodic BCs. Then in solving inhomogeneous problem we can do a direct solution with eigenfunctions or we can solve it by constructing a Green's function. We will examine each of these in turn.
+
+<++>
+
+The next example we will examine is $y'' + 4y' + (4 + 9\lambda)y = 0$ subject to $y(0) = y'(1) = 0$. We will develop orthogonality relation for eigenfunctions as well as see if negative eigenvalues exist. Since there is no guarantee that the problem is self-adjoint, we should put it into S-L form and check the $r(x)$ term (the metric by which we define inner product). To put this into S-L form, recall HW1 \#3 where we learned to put general second-order ODE into S-L form, accomplished by integrating factor $\exp[\int a_1/a_2 \;dt]$. The result is
+\begin{equation}
+    -\rd{}{x}\left( e^{4x}y' \right) - 4e^{4x}y = 9e^{4x}\lambda y
+\end{equation}
+which shows that the orthogonality relation then must be
+\begin{equation}
+    \displaystyle\int\limits_{0}^{1}e^{4x}\phi_n(x)\phi_m(x)\;dx = 0
+\end{equation}
+
+Note we can find this without determining the eigenfunctions themselves. Then we want to see whether a negative eigenvalue exists. First we can solve our original ODE under the assumption $\lambda$ is negative. We then obtain general solution
+\begin{equation}
+    y = Ae^{(-2 + 3\sqrt{-\lambda})x} + Be^{(-2 - 3\sqrt{-\lambda})x}
+\end{equation}
+upon which we can just enforce BCs and check whether a solution exists. It turns out a single one does.
+
+We then discuss periodic boundary conditions $y(-L) = y(L), y'(-L) = y'(L)$. Note that this is not a regular S-L problem! There are repeated eigenvalues because it is irregular. We will expand all solutions in terms of the fully periodic Fourier series, given by
+\begin{equation}
+    y(x) = \frac{b_0}{2} + \sum_{n=1}^{\infty}b_n\cos\frac{n\pi x}{L} + a_n\sin\frac{n\pi x}{L}
+\end{equation}
+where the $a_n, b_n$ are given by orthogonality
+\begin{align}
+    a_n &= \frac{1}{L}\displaystyle\int\limits_{-L}^{L}f(x)\sin \frac{n\pi x}{L}\;dx\\
+    b_n &= \frac{1}{L}\displaystyle\int\limits_{-L}^{L}f(x)\cos \frac{n\pi x}{L}\;dx
+\end{align}
+
+If we are only examining over $[0,L]$ be sure to use appropriate eigenfunction expanion (i.e. integrate $[0,L]$ with $\cos (2n\pi x/L)$). If $f$ is odd then use the sine terms. Alternatively, to obtain the sine series we can use the odd periodic extension $g(x) = -f(-x), x \in [-L,0]$ and $=f(x)$ for $[0,L]$. I don't quite know what he's trying to say, so let's see his example.
+
+Determine the sine series for $f(x) = -x^2 + x$ over $[0,1]$. Then the odd extension is given
+\begin{align}
+    g(x) = \begin{cases}x^2 + x & -1 < x < 0\\
+        -x^2 + x & 0 < x < 1\end{cases}
+\end{align}
+
+But then to find the coefficients we must compute $b_n = 2\displaystyle\int\limits_{0}^{1}f(x)\sin(n\pi x)\;dx$ and we find $b_n =\frac{4}{n^3\pi^3}\left( \cos n\pi - 1 \right)$. We see the rate of decrease is related to the number of continuous derivatives of the periodic extension (ahh, this is why he introduced the periodic extension, even though it's not related to computing the coefficients themselves). In our particular case, we see that $g''(x)$ is the derivative that no longer exists, so we can do integration by parts twice and so the coefficients must decay at least at $n^{-2}$.   
+
+We then want to look at the inhomogeneous S-L problem, for which we will assume S-L form already $-\rd{}{x}(py') + qy - \lambda ry = f(x)$ (recall how to put it into this form). We must first solve the homogeneous eigenvalue problem and then develop a series solution using eigenfunctions. 
+
+Then to develop the series solution we must expand the inhomogeneous term $f(x)$ in terms of coefficients $f_n$, upon which $A_n = \frac{f_n}{\lambda - \lambda_n}$ the coefficients for the solution to the ODE. Then if $\lambda = \lambda_m$ for some $m$ there are no solutions unless $f_m = 0$, in which case Fredholm Alternative (general inhomogeneous solution). 
+
+We will try to clean this up a bit by first writing out our general solution
+\begin{align}
+    y(x) &= \displaystyle\int\limits_{a}^{b}f(x')\left[ \sum_{n}^{}\frac{\phi_n(x)\phi_n(x')}{(\lambda - \lambda_n)\displaystyle\int\limits_{a}^{b}r(x)\phi_n^2(x)\;dx} \right]\;dx'\\
+    &= \displaystyle\int\limits_{a}^{b}f(x')G(x,x';\lambda)\;dx'
+\end{align}
+with $G(x,x';\lambda)$ our Greens function. Alternatively we can express it by introducing the Dirac delta to define $G$ (he goes over definition of Dirac delta, key thing is the $1$ under integral/$0$ everywhere property + sifting property)
+\begin{equation}
+    L[G(x,x';\lambda)] = \delta(x-x')
+\end{equation}
+
+Let's do an example; suppose $y'' - 4y = f(x)$ for $y(0) = y(1) = 0$ then we know the homogeneous solutions $\cosh, \sinh$ and so the Green's function takes on form
+\begin{equation}
+    G(x,x') = \begin{cases}a\cosh(2x) + b\sinh(2x) & x <  x'\\
+        c\cosh(2x) + d\sinh(2x) & x > x'\end{cases}
+\end{equation}
+
+There are then 4 equations to solve for the four unknowns; $y(0), y(1)$, continuity at $x=x'$ and height of discontinuity in derivative (must $=1$ b/c delta function). This is then pretty straightforward to solve out, and we can find final Greens Function (nope, not going to jot down this work)
+\begin{equation}
+    G(x,x') = \begin{cases} \frac{\sinh\left[ 2\left( x' - 1 \right) \right]}{2\sinh2}\sinh(2x) & x<x'\\
+        \frac{\sinh\left[ 2\left( x-1 \right) \right]}{2\sinh 2} \sinh(2x') & x>x'\end{cases}
+\end{equation}
+and final solution
+\begin{equation}
+    y(x) = \displaystyle\int\limits_{0}^{1}f(x)G(x,x';\lambda)\;dx'
+\end{equation}
+
+Note that $G$ is defined differently a $x<x', x > x'$ so this will break into two integrals.
+
+\end{document}

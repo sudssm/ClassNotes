@@ -1,0 +1,13 @@
+\contentsline {chapter}{\numberline {1}Hum009}{2}
+\contentsline {section}{\numberline {1.1}Oct. 2 - What will we be learning in class?}{2}
+\contentsline {section}{\numberline {1.2}Oct. 4 - Berlin, Pryor}{2}
+\contentsline {section}{\numberline {1.3}October 9 - Descartes P.1}{3}
+\contentsline {section}{\numberline {1.4}October 11 - Descartes P.2}{4}
+\contentsline {section}{\numberline {1.5}October 16 - Descartes Medidation Six}{5}
+\contentsline {section}{\numberline {1.6}October 18 - Kripke FML}{5}
+\contentsline {section}{\numberline {1.7}October 23 - More Kripke}{6}
+\contentsline {section}{\numberline {1.8}October 25 - Even more Kripke}{7}
+\contentsline {section}{\numberline {1.9}October 30 - Galileo/Locke}{8}
+\contentsline {section}{\numberline {1.10}November 6 - Berkeley}{8}
+\contentsline {section}{\numberline {1.11}November 13 - Berkeley/Malcolm}{9}
+\contentsline {section}{\numberline {1.12}November 20 - Descartes Meditations 3,5}{9}

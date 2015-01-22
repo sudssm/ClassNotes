@@ -1,0 +1,18 @@
+\contentsline {chapter}{\numberline {1}October 4 - Harmonic Oscillators and Superposition}{2}
+\contentsline {section}{\numberline {1.1}Simple Harmonic Oscillators}{2}
+\contentsline {section}{\numberline {1.2}Linearity and Superposition}{3}
+\contentsline {section}{\numberline {1.3}Harder Harmonic Motion!}{4}
+\contentsline {chapter}{\numberline {2}October 9 - Generalize ALL the Motion! $N$ degrees of freedom}{5}
+\contentsline {chapter}{\numberline {3}October 10 - TA Recitation}{8}
+\contentsline {chapter}{\numberline {4}October 11 - Frequency space}{10}
+\contentsline {chapter}{\numberline {5}October 16 - Longitudinal waves and other stuff}{14}
+\contentsline {chapter}{\numberline {6}October 18 - Damped driven oscillations and \textbf {REALLY IMPORTANT STUFF}}{17}
+\contentsline {chapter}{\numberline {7}October 23 - Multiple damped degrees of freedom}{20}
+\contentsline {chapter}{\numberline {8}October 25 - GENERALIZED DAMPING! and Travelling Waves}{22}
+\contentsline {chapter}{\numberline {9}October 30 - Traveling Waves}{24}
+\contentsline {chapter}{\numberline {10}November 1 - Electromagnetic Waves}{26}
+\contentsline {chapter}{\numberline {11}November 6 - Electromagnetic waves}{30}
+\contentsline {chapter}{\numberline {12}November 13 - Localizing waves, Complex Fourier Transform}{32}
+\contentsline {chapter}{\numberline {13}November 15 - }{36}
+\contentsline {chapter}{\numberline {14}November 20 - Wave packets and 3D waves}{39}
+\contentsline {chapter}{\numberline {15}December 6 - After skipping a few classes...Single slit diffraction/diffraction gratings}{43}

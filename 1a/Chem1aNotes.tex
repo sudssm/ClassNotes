@@ -1,0 +1,335 @@
+\documentclass{report}
+\usepackage{amsmath, amsthm, amssymb, hyperref, paracol}
+\usepackage[version=3]{mhchem}
+\usepackage[cm]{fullpage}
+\newcommand{\scinot}[1]{$\times 10^{#1}$}
+\begin{document}
+
+\title{Chem 1a Notes - Lloyd House}
+\author{Yubo n00bhax0r Su}
+\date{ }
+	
+\maketitle
+
+\tableofcontents
+
+\chapter{October 1 - Intro to Chem 1a, Atoms and the Bohr Model}
+MAKE SURE TO PICK UP A SYLLABUS/SCHEDULE AND QUIZ1!! Also, no cell phones in class. If it rings, the big bad professor will steal it. Sig figs will be helpful.
+
+People!
+\begin{itemize}
+\item Instructor: Nate Lewis 210 Noyes x6335 nslewis@caltech.edu
+\item Head TA: Matthew Sprague 58 Crellin x3016 sprague@caltech.edu 
+
+Add/drop/change sections, etc.
+\item Head Grader Michiel Niesen 214 Noys, x3964 mniesen@caltech.edu late hw, grading errors
+\end{itemize}
+
+Recitation sessions can be found on REGIS and will be held on Thursday 11-12; all exceptions will be emailed to you!
+
+Chem1a resource room is in 20 Gates, and homeworks will be in both the resource room and online. Homework is due Fridays @ 1600 in between Lloyd and Page. Quizzes biweekly in resource room, due by Tuesday @ 2000. WRITE YOUR NAME AND REC SECTION NUMBER ON EVERY PAGE, and contact head grader in advance for remission slip.
+
+Homework with asterisks will be no collaboration. Be responsible for everything you write on your paper, and then just use common sense.
+
+\url{http://chemweb.caltech.edu/chem1ab} is the best resource! It has everything from notes to syllabus to schedule to homework to answner keys to selected solutions!
+
+\begin{itemize}
+\item Problem sets 1-5 = 100 pts each
+\item Problems sets 6-9 = 200 pts each
+\item Quizzes 2-5 = 100 pts each
+\item Midterm = 500 pts
+\item Final = 1000 pts
+\item Total = 3200 pts
+\end{itemize}
+
+2400 total points and $\geq$ 700 points on final to pass. Rec section 12 is the supersection! Email Matt to change in/out.
+
+Quiz 1 (and 6, when the time comes) has 20 questions, 5 choices each, last choice is a joke on each question, you have 45 minutes, no calculator will be necessary. Due tomorrow @ 2000. The same quiz will be administered at the end of the quarter, and the higher of the two scores will replace lowest HW1-5 or quiz grade during the quarter. All answers to this pre/post quiz will be given in class and pointed out as "`Chemistry in Context"' in class. 
+
+On Mondays, professor will select 5 volunteers for lunch at the Athenaeum! 2 girls 3 guys cuz of ratio.
+
+Empedocles - 4 elements theory, earth air fire water.
+Democritus - Atoms exist, is water like sand, smooth from afar, coarse up close, atoms had no mass just volume
+Boyle - Postulated irreducable elements
+Dalton - Atoms have mass and form substances
+Avogadro - Postulates that compounds are formed from molecules
+Faraday - Charge/mass ratio of protons is proposed
+
+To calculate size of atom, can use incompressible solid, mass + atomic mass to find number of atoms, then calculate volume of individual atoms. ezpz.
+
+Farady calculates charge/mass ratio by putting plates connected to battery into water, and by calculating how much current passes through circuit and change in mass of plates, one can calculate charge/mass for various species, as Faraday does. The lightest species in ratio must be the proton alone, because everything else is heavier, and Farady finds that ratio is $10^8$ C/kg. This is called electroplating. 
+
+Thompson finds oppositely charged particle and calls it the electron. He uses cathode ray tube. Fires electrons through a joint electromagnetic field apparatus such that the particles go straight. By adjusting the ratio of electric to magnetic field, he can then calculate the charge/mass ratio by physicsing very hard. He finds the same ratio to be about $10^11$ C/kg. People were then confused whether electron was much lighter or whether its charge was much stronger. 
+
+Millikan then figures out the charge on electrons by oil drop experiment. Ionizes oil drops and then because knows density, calculates volume and then mass. He then gives electric field to counteract gravity exactly, and using the previously given ratio finds that charges occur in multiples of $1.6 \times 10^{-19}$. 
+
+We then make an assumption that protons and electrons are the same magnitude of charge, we obtain rough estimates of masses of protons and electrons. 
+
+Rutherford then figures out how atoms look like, finding the nucleus via deflection experiment. He fired alpha particles at a thin metal foil, expecting to see general deceleration of alpha particles, but instead saw no deceleration and much deflection. By classical mechanics, he can calculate based on deflection velocity and angle the mass of whatever was being hit. This is how he draws the famous picture of atomic nuclei. This is called Rutherford Backscattering Spectroscopy, because the deflections will change based on what element is being hit, so you can figure out what is being hit and what substances are in a given sample.
+
+Key vocabulary: elements, isotopes, ions. Elements are atoms with same number of protons, isotopes have different number of neutrons, ions have different number of electrons. 
+
+Note that electrons are $\frac{1}{1836}$'th the mass of the proton/neutron. 
+
+\chapter{October 2 - The Bohr Model}
+
+We can determine what element something is through many ways such as: Emission spectra - elements that are heated will emit "`spectral lines"'. Mixtures will emit a combination of spectral lighcts. 
+
+\begin{center}
+\textbf{Chemistry in Context} 
+
+Heated metal ions give off brightly colored light that provides fireworks with their colors.
+\end{center}
+
+Note that $c = v \lambda$ for all waves, where $c$ is the speed of light, $v$ is the frequency, and $\lambda$ is the wavelength. Einstein then postulated that $E = hv$ where $h = 6.626 \times 10^{-34}$ is Planck's Constant. Also, $E = hv = hc \tilde{\nu}$ where $\tilde{\nu} = \frac{1}{\lambda}$ is the "`wavenumber"'.
+
+Lyman then finds that hydrogen spectrums are emitted with spectra $E = 13.6 eV(1-\frac{1}{n^2})$ where $n \in \mathbb{Z}$. Balmer then finds emission spectra at $E = 13.6 eV(\frac{1}{2^2}-\frac{1}{n^2})$. Paschen then finds spectra at $E = 13.6 eV(\frac{1}{3^2}-\frac{1}{n^2})$. The series then become clear that $E = 13.6 eV(\frac{1}{n_1^2}-\frac{1}{n_2^2}$, where the Rydberg constant is $R_H =13.6eV= \frac{e^2}{2hc4\pi \epsilon_0 a_0}$. 
+
+Atoms are then paradoxical:
+
+\begin{itemize}
+\item Potential Energy = $\frac{(-e)(e}{4 \pi \epsilon_0 r} = \frac{-e^2}{4 \pi \epsilon_0 r}$
+\item Kinetic Energy = $\frac{1}{2} m_p v_p^2 + \frac{1}{2}m_e v_e^2$
+\item Total Energy = PE + KE
+\item Ground state would then be the minimum of Total Energy, which would be PE = $-\infty$ and KE = $0$, which means it is when electron sits stably at the nucleus. 
+\item Also, moving charges should broadcast EM waves. 
+\end{itemize}
+
+Bohr then proposes his theory:
+
+\begin{itemize}
+\item Atoms have well-defined electron orbits
+\item They don't radiate for some reason
+\item Circular orbits with only specific orbits such that angular momentum is $L = n \frac{h}{2\pi}$ such that $n \in \mathbb{Z}$. This is the quantization postulate.
+\item Electrons are fixed in the quantized orbits, so electrons have to "`jump"' orbits. 
+\end{itemize}
+
+Bohr then shows (where $Z$ is the change of the nucleus):
+
+\begin{align*}
+F_{coulombic} &= F_{centrifugal}\\
+\frac{Ze^2}{4\pi \epsilon_0 r_n^2} &= \frac{mv^2}{r_n}\\
+L &= mvr_n = \frac{nh}{2\pi}\\
+v &= \frac{nh}{2\pi m r_n}\\
+\frac{Ze^2}{4\pi \epsilon_0 r_n^2} &= \frac{mn^2h^2}{4\pi^2 m^2 r_n^3}\\
+r_n &= \frac{n^2 h^2 \epsilon_0}{\pi m Z e^2} = \frac{n^2 a_0}{Z}
+\end{align*}
+
+where $a_0 = 0.529$\AA is a newly defined constant called the Bohr Radius. We obviously can't measure on the order of magnitude of \AA, so we must calculate orbital energies instead:
+
+\begin{align*}
+E &= KE + PE\\
+&= \frac{1}{2} mv^2 - \frac{Ze^2}{4 \pi \epsilon_0 r_n}\\
+&= \frac{Ze^2}{8 \pi \epsilon_0 r_n^3} - \frac{Ze^2}{4 \pi \epsilon_0 r_n}\\
+&= (\frac{e^2}{2 r_n} - \frac{e^2}{r_n})\frac{Z}{4\pi \epsilon_0}\\
+&= \frac{-Z^2 m e^4}{8 n^2  h^2 \epsilon_0^2}\\
+&= \frac{-13.6 eV \times Z^2}{n^2}
+\end{align*}
+
+where $r_n = \frac{n^2h^2\epsilon_0}{\pi m Z e^2}$ is made use of in the second to last step. The electron drops between orbitals (whose energies can be calculated by Bohr's formmulae) then match up with the Lyman, Balmer, and Paschen series. Bohr also predicts orbitals for $\ce{He+}$ and $\ce{Li2+}$.
+
+However, he has problems explaining multi-electron atoms and ends up being completely wrong, according to quantum mechanics! Cue Cliffhanger!
+
+\chapter{October 4 - First Supersection - Schr\"odinger equation}
+
+We note that $F = ma$ by Newton, and so we eventually obtain some function $x(t,v_0,x_0)$ which are initial conditions. However, by Heisenberg Uncertainty we know we cannot know both $x_0$ and $v_0$. We must then turn to the Schr\"'odinger equation for some wavefunction $\Psi(x,t)$:
+
+$$-\frac{\hbar}{i}\frac{\partial \Psi}{\partial t} = \frac{\hbar^2}{2m}\frac{\partial^2 \Psi}{\partial x^2} + V(x,t)\Psi(x,t)$$
+
+where $|\Psi|^2 dx$ is the probability of finding a particle between $x$ and $dx$. We then note that $\Psi(x,t) = f(t)\psi(x)$ where we separate the time-dependent and time-independent components of the wavefunction. We will then derive the time-independent Schr\"odinger Equation (under the assumption that $V$ is independent of time):
+
+\begin{align*}
+\frac{\partial \Psi}{\partial t} &= \psi(x) \frac{df}{dt}\\
+\frac{\partial^2 \Psi}{\partial x^2} &= f(t) \frac{\partial^2 \psi}{\partial x^2}\\
+\frac{1}{f(t) \psi(x)} \left[-\frac{\hbar}{i} \psi(x) \frac{\partial f}{\partial t}\right] &= \frac{1}{f(t) \psi(x)} \left[\frac{\hbar^2}{2m}f(t)\frac{\partial^2 \psi}{\partial x^2} + V(x)\psi(x)f(t)\right]\\
+-\frac{\hbar}{i} \frac{1}{f(t)} \frac{\partial f}{\partial t} &= \frac{\hbar^2}{2m} \frac{1}{\psi(x)}\frac{\partial^2 \psi}{\partial x^2} + V(x) = E(x,t)\\
+\end{align*}
+
+\begin{paracol}{2}[There are then two parts:]
+\begin{align*}
+\displaystyle\int \frac{1}{f(t)} df  &= \displaystyle\int -\frac{iE}{\hbar} dt\\
+f(t) &= e^{-\frac{iEt}{h}}
+\end{align*}
+
+\switchcolumn
+
+\begin{align*}
+E\psi(x) &= \psi(x)\left[\frac{\hbar^2}{2m} \frac{1}{\psi(x)}\frac{\partial^2 \psi}{\partial x^2} + V(x)\right]\\
+E \psi(x) &= \frac{\hbar^2}{2m} \frac{\partial^2 \psi}{\partial x^2} + V(x) \psi(x)
+\end{align*}
+\end{paracol}
+
+The equation on the right is known as the Time-Independent Schr\"odinger equation. We then have:
+
+\begin{align*}
+\Psi &= e^{-\frac{iEt}{\hbar}}\psi(x)\\
+|\Psi|^2 &= \Psi* \cdot \Psi\\
+&= (e^{-\frac{iEt}{\hbar}}\psi^*(x))(e^{\frac{iEt}{\hbar}}\psi(x))\\
+&= \psi^*(x) \psi(x)
+\end{align*}
+
+So, assuming that $E$ is real and time-independent, we see that the probability distribution of the particle does not change in time. We then define normalization of $\Psi$ to be as follows:
+
+$$\displaystyle\int\limits_{-\infty}^{\infty} |\Psi|^2 dx = 1$$
+
+and probability of finding a point somewhere between $a$ and $b$ as follows:
+
+$$\displaystyle\int\limits_a^b |\Psi|^2 dx = 1$$
+
+Note that while we've dealt with the Schr\"odinger equation in one dimension, it generalizes easily to multiple dimensions by simply using a multi-dimensional wavefunction. 
+
+\chapter{October 8 - Quantum view of Chemistry!}
+
+\begin{center}
+\textbf{Chemistry in Context}
+A typical middle-aged star, like the sun, contains mostly \ce{H}; 15\% \ce{He}, and only traces of heavier elements. In more massive stars, \ce{He} atoms will produce \ce{Be}: \ce{He_2^4 + He_2^4 -> Be_4^8 + E}.
+
+\textbf{Chemistry in Context}
+Neon lights generate photons of a specific wavelength as a result of eletronic transitions.
+\end{center}
+
+But then bam, quantum mechanics shows up. Bohr model violates Heisenberg uncertainty principle because both position and momentum are well defined in the Bohr model. As an example, let's say we want to determine whether a particle really lies in an atom, so we'll say it must lie within a tenth of a \AA, because an atom's radius is on the order of \AA. If we do the nonsense math out, we will find that determining its position to such accuracy will leave its uncertainty in velocity on the order of $10^7 \mathrm{\frac{m}{s}}$, which leaves us completely helpless. There are no constructions to beat Heisenberg uncertainty.
+
+The best we can do is to construct a probability function for these electrons, which is called the \emph{wavefunction}. This wave function was confirmed by scanning tunneling electron microscopes. 
+
+Small digression: Let $f(x) = A \sin(\frac{\pi x}{d})$ be a wave as a function of distance. We then introduce an evolution over time: $f(x,t) = A \sin(\frac{\pi x}{d}) \cos(\omega t)$. This function, which describes the wave both in position and time, is called the \textbf{wavefunction} $\Psi$. Standing waves must be $\Psi = 0$ at endpoints. Note that the most basic standing wave has no nodes, because the endpoints are fixed at $0$ and nowhere else on the function is there no displacement at all times. More complex standing waves have successively increasing numbers of nodes. Note that increasing numbers of nodes have increasing amounts of energy. One last thing to notice is that these nodes are discretely quantized, that there are only certain wavefunctions that satisfy the boundary conditions for standing waves, and they are denoted each with a "`quantum number"'. This bears an eerie similarity to quantum mechanics!
+
+We then move on to two-dimensional waves, where it becomes clear that the boundary conditions would be having all the edges of the wave tied down (i.e. were it a square, we would have all four edges tied down). In two dimensions, nodes are lines. Note that the nodes of standing waves in $n$ dimensions are of $n-1$ dimensions. Also, standing waves are not rotationally symmetric (i.e. if there's a single node, the case with a horizontal node is not the same as the case with a vertical node), though rotational symmetry forms a degenerate set(?? I think...a degenerate set is a set that is linearly independent). Notice also that the wavefunctions with diagonal nodes can be obtained by superimposing the wavefunctions with vertical or horizontal. More generally, any set of two wavefunctions that are distinct can form a basis for these wavefunctions! Third dimensional wavefunctions will be covered tomorrow.
+
+\chapter{October 15 - }
+
+We name orbitals by three numbers; $n$ is the principal quantum number, $l$ is the number of angular nodes (the lobes in the pictures that we're used to seeing), and $m$ is an index running from $-l$ to $l$. This means that $l$ determines whether the orbitals are $s,p,d,f$ and $m$ is the number of orientations that there are. Note that there are values of $n, l, m$ that satisfy the Schr\"odinger equation, or correspond to solutions to the Schr\"odinger equation. 
+
+See lecture slides for a rough derivation of where the orbitals come from. Err, actually, we can type this up:
+
+\begin{align*}
+H \Psi &= E \Psi\\
+E &= KE + PE
+\end{align*}
+
+At this point, we should note that our approach will consist of starting with the expression for total energy, finding $H$ via classical and quantum mechanical relationships, and then finding $\Psi$ that satisfy the Schr\"odinger equation:
+
+\begin{align*}
+KE &= \frac{p^2}{2m}\\
+p_x &= -i\hbar \frac{\partial \Psi}{\partial x}\\
+KE_x &= \frac{\left(-i\hbar \frac{\partial \Psi}{\partial x}\right)^2}{2m}\\
+&= \frac{-\hbar^2}{2m}\frac{\partial^2 \Psi}{\partial x^2}\\
+KE &= \frac{-\hbar^2}{2m}(\nabla^2 \Psi)\\[10pt]
+PE &\neq \frac{-e^2}{4\pi\epsilon_0 r}\\
+&= \frac{-e^2}{4\pi\epsilon_0 r}\Psi\\[10pt]
+\frac{-\hbar^2}{2m}(\nabla^2 \Psi) - \frac{e^2}{4\pi\epsilon_0 r}\Psi &= E\Psi
+\end{align*}
+
+$E$ must be the total energy because we construct the Hamiltonian as its total energy. We then are solving the eigenvector problem for the Hamiltonian. ezpz, you know. We then have a shat ton of math, and we can prove that some things are solutions. See supersection notes! (Yubo, go steal those ASAP!)
+
+We note that bigger $n$ just means that the orbitals are a bit bigger, but for each $l$ the shapes of the orbitals are the same. \textbf{Learn how to draw them!}  (He emphasized this)
+
+Periodic trends come out of orbital theory, which is pretty simple to understand. Mendeleev constructs the periodic table purely from empiricism. Lothar Meyer also found periodic trends about atomic volume. We can understand this through energy of monoelectronic \cf{H} atoms.
+
+If we plug in the $1s$ orbital to the Schr\"odinger equation, we will get $-13.6 \mathrm{eV}$, as Bohr predicted. In fact, Schr\"odinger matches Bohr's numbers perfectly. The principal quantum number is the $n$ we see in the denominator of the Rydberg equation!
+
+The thing is that with multielectronic atoms a three-plus body problem arises, which has no defined wavefunction. Way back in the day, people had to crunch these on snails a.k.a. chisel and stone, and now we can compute much more easily, but the bottom line is that the Schr\"odinger predicts the emmision spectra for every single atom out there, adjusting for relativistic effects. The qualitative conclusion is that ``shielding'' is now a new problem, which means that other electrons might change the effective charge $Z_{eff}$. It turn sout that on average $Z_{eff} < Z$, the actual atomic charge. 
+
+\chapter{October 22 - Atomic Radius}
+
+\begin{center}
+\textbf{Chemistry in Context: } Magnetic media was used to store analog or digital forms. Which contain billions of microscopic magnetic particles and can be "`read"' with a small coil of wire and "`written"' with an active electromagnet. (acetate aluminmum).
+\end{center}
+
+Note that atomic radius isn't accounted for entirely by shielding, because filled electron orbitals are exceptionally stable and outer orbitals are exceptionally well-shielded. So \ce{Be} is smaller than expected while \ce{B} is bigger than expected. The only exception on this row is \ce{N} because all the orbitals are filled with exactly one electron, resulting in exceptional stability. This follows until \ce{O}, where the orbitals become doubly-filled because both spins are present, so the radius becomes bigger than expected again. 
+
+\begin{center}
+\textbf{Chemistry in Context: }
+
+\ce{2Zn + 2MnO2 + H2O -> 2MNo(OH) + 2ZnO}
+ 
+has operating voltage 1.55V and energy density is 80Wh/kg. 
+
+but
+
+\ce{graphite + Li+-Mn2O4 -> Li+-graphite + Mn2O4} 
+
+has operating voltage 3.9V and energy density 430 430Wh/kg
+
+Thus, lithium batteries have higher energy density than standard alkaline batteries.
+\end{center}
+
+Be careful when discussing electron affinity that EA is positive when energy is released, which is \emph{opposite} the thermodynamic definition. Note that no atom has a positive 2nd electron affinity. 
+
+\chapter{October 29 - Lewis Dot Structures, Resonance}
+
+We know that electrons in orbitals (valence electrons) are the defining factors of reactivity. Interesting fact: Lewis's own notebooks show that he thought that electrons went in a cube around the nucleus. But the basic idea is that if all electrons in a molecule have $8$ dots then the molecule is stable. Note that Lewis dot structures are not about molecular geometry; we will understand that during VSEPR. 
+
+Remember also that double bonds exist and are stronger/shorter than single bonds. Same goes for triple bonds. zzz. Note that Lewis dot structures don't work for transition elements. 
+
+\begin{center}
+\textbf{Chemistry in Context} Sodium arc lamps give off visible light with a bright yellow color; used in San Diego so as not to interfere with Palomar observations.
+\textbf{Chemistry in Context} \ce{SO2} and \ce{NO2} reacts with water to produce hydrogen ions and \ce{HSO4-} and \ce{NO3-} acid rain. Killer fog caused by the coal industry, smoke was causing people to die. Can't use high sulfur coal anymore. Ph. of water changes, but \ce{CO2} scrubbers reduce emissions by 80\%.
+\end{center}
+
+Consider then resonance structures! They are somewhere in between...Then remember formal charge! The difference between valence electrons and the number of electrons surrounding it in a molecule. To create ``reasonable'' resonance structures, we form octets if possible, maximize bonds, and then try to distribute formal charges. Note that for \ce{N2O} it still resonates, with $N$ as the center of the molecule and the bonds resonating between double-double and triple-single. Resonance structures are more stable because of the additional numbers of ways the electrons can be configured. The benzene ring is actually exceptionally stable. Cue many examples. 
+
+\chapter{November 5 - VSEPR continued, Molecular Orbitals}
+
+\begin{center}
+\textbf{Chemistry in Context} Microwave ovens are tuned to rotation transition in \ce{H2O}
+\textbf{Chemistry in Context} Ammonium nitrate played a deadly role in the 1995 Oklahoma city bombing - Ammonium nitrate owes its explosive character to the combination of oxidative and reductive components.
+\textbf{Chemistry in Context} The nerve agent Sarin was used in the 1995 gas attack in a Tokyo subway by disrupting the removal of acetylcholine from the receptor sites. The P-O-C functions make these molecules water soluble. 
+\end{center}
+
+Lone pairs are really fat in VSEPR, so it will always try to find as roomy of a position as possible. Note also that multiple bonding acts similarly to lone pairs, it is fatter.
+
+We then go to Molecular Orbital theory, or MO-LCAO: Molecular Orbital - Linear Combination of Atomic Orbitals. The big problems with Lewis Dot structures are that they don't work for excited states and they sometimes don't even predict the correct ground state (note paramagnetism of \ce{O2}). MO-LCAO will tell us three things: local stabilities, their bond orders/lengths, and their magnetic porperties.
+
+The theory begins with Energy as a function of internuclear distance. At infinity, the energy is zero, but as they get closer together electrons begin being attracted and thus the energy begins to decrease. Then it reaches a minimum (bond energy) and begins to increase very strongly as nuclear repulsion becomes considerable. We can look at the \ce{H2} molecule. We can guesstimate that the total wavefunction for the bonded electrons for the \ce{H2} atom is a rough superposition. The merging of the two $1s$ orbitals is the $1\sigma$ orbital. However, there needs to be another electron orbital, not just the bonding orbital $1\sigma$. The other orbital, the antibonding orbital, is the superposition of a positive $1s$ orbital and a negative $1s$ orbital. Note that this superposition has strictly zero probability in between the two atoms and therefore is actually less favorable than the un-bonded electrons. This antibonding orbital is called the $1\sigma*$ orbital. (Note that bonding orbitals interfere constructively while antibonding orbitals interefere destructively, and that antibonding orbitals have a node in between them. Sign conventions are arbitrary, but these rules are absolute)
+
+Be careful that the wavefunctions are added and then norms taken to find probability, rather than adding the norms to find probability. Adding probabilities produces different wavefunctions that are incorrect.
+
+Note also that antibonding orbitals are more instable than bonding orbitals are stable, due to nuclear repulsion, so only when bonding orbitals are more filled than antibonding is the molecule very stable (think \ce{He2} vs \ce{He2+}). But if we look at \ce{H2}, it is clear that both electrons fall into the $1\sigma$ bonding orbital and thus stability is increased and the bond is favored.
+
+We then define the \emph{Bond Order} for the molecule to be half the difference between bonding/antibonding electrons. The bond order corresponds to single/double bonds. Magnetism is the number of unpaired electrons under MO-LCAO; if there are unpaired electrons then the molecule is paramagnetic. Note that molecules like \ce{H2+} has a smaller bond order and therefore the bond is longer and the molecule is paramagnetic. 
+
+\chapter{November 12 - More MO theory}
+
+We know bond order is half the difference between bonding and antibonding orbitals. Paramagnetism/dimagnetism occurs when unpaired electrons exist. Note that \ce{H2+} has one electron, in the bonding orbital, and thus is stable because bond order is greater than $0$. Note that \ce{H2-} is also stable for the same reason. However, \ce{He2} does not exist because bond order is $0$, and because antibonding is stronger than bonding the \ce{He2} is actually unstable. Note that for \ce{H2} we can examine excited states. If we promote an electron from bonding to antibonding orbital, bond order becomes $0$ and we would predict dissociation, which is true. Note also that promoting an electron tends to flip the spin of the electron because electrons prefer to be unpaired in their spins; promoting and keeping spin intact (i.e. keeping the electron pair's spins opposite) requires more energy.
+
+\begin{center}\textbf{Chemistry in Context: } The waste tanks at Hanford, Washington are a repository of acidic, radioactive waste. The good news is that the hul is intact, and no high-level waste has leaked. The bad news comes from the reaction \ce{2H+ + 2e- -> H2}, which means that the tanks ``burp'' hydrogen gas. The bottom line is that Hanford repositories burp reactive hydrogen gas and radioactive goop.\end{center}
+
+We can then begin to work with elements in the second row. We see that the $1\sigma$ bonding and antibonding are always full, so it's a wash and we can often ignore. When we draw \ce{Li2}, we have two electrons in the $2\sigma$ orbital. Because they are all paired, this is dimagnetic. Be careful to note that $2\sigma$ is still a higher energy level than $1\sigma*$, despite the latter being an antibonding orbital. We see that \ce{Li2} is a single bond.
+
+Note that overlapping is key to stability, and since $1s$ overlaps better than $2s$, it is clear that \ce{H2} is more stable than \ce{Li2}. Note also that bonding orbitals have no nodes in between the atoms, while antibonding orbitals always have one smack dab in the middle. That's what creates the instability.
+
+We then examine overlapping $p$ orbitals. Note that due to the orientations, one of the three $2p$ orbitals will overlap better than the other two, producing a stronger bonding and stronger antibonding orbitals. Note that while the $z$ axis is the internuclear axis, the $z$ axis points positively outwards for both atoms, in that the two atoms don't share a coordinate system. Note that the stronger $2p$ bonding orbital (the ones that are aligned) is called $2p\sigma$, and the corresponding antibonding orbital is called the $2p\sigma*$. At this point, we can see the awkward sign convention, because adding the positive combination of the atoms creates the bonding orbitals. Note that this is simply a convention, and that it is not a rule that the positive combination MUST be bonding, it's just convention. 
+
+We then look to the remaining two $p$ orbitals. These are a degenerate set, and they form $2p\pi$ and $2p\pi*$ orbitals. These are no longer symmetric with respect to rotation about the internuclear axis, and thus it must be a $\pi$ orbital rather than a $\sigma$. Thus, our list of energies from lowest to highest now goes something like $1\sigma, 1\sigma*, 2\sigma, 2\sigma*, 2p\sigma, 2p\pi, 2p\sigma*, 2p\pi*$. However, sometimes the $2s$ and $2p$ atomic orbitals are too close in energy, and because $2p\sigma$ and $2\sigma$ are both $\sigma$ bonds, the $2p\sigma$ will sometimes be ``pushed upwards'' by the $2\sigma$ orbital, and sometimes the $2p\sigma$ will rise in energy to be above $2p\pi$. The rule will be that if both atoms in a diatomic are in the $O$ or $F$ columns, then the $2p\pi$ orbital will be below $2\sigma$, because the $2p$ and $2s$ are too closely packed. \textbf{This rule is important!!}
+
+If we then look to something like \ce{F2}, then we see that the bond order is $1$ and it is dimagnetic, which agrees with the Lewis Dot structure. If we then examine \ce{O2} and various ions, the magnetism and bond order match up perfectly with the predictions of the Lewis dot structures. Note interestingly \ce{O2^2+} is a triple bond, but it isn't any shorter a bond than \ce{O2} because it is the union of two positive ions. 
+
+\chapter{November 19 - Hybridization}
+
+Note that hybridized orbital sproduce sigma bonds.
+
+\begin{center}
+\textbf{Chemistry in Context: }Color-safe whiteners are dyes that absorb UV light (we cannot see) and emit visible blue light. White reflects all light, and dingy white absorbs blue white, so if we add something that emits blue light it looks cleaner!
+\textbf{Chemistry in Context: }Free radicals in biosystems cause cell damage when they acquire another electron to match the unpaired electron. Free radicals are neutralized when anttioxidized, such as Vitamins C and E, which are water and fat soluble respectively.
+\end{center}
+
+In \ce{BH3}, for example, one electron in $B$ jumps from $2s$ to $2p$ thus leaving three unpaired electrons, which then means the two $2p$ orbitals and the one $2s$ combine to make three $2sp^2$ orbitals. In \ce{CH4}, the same idea; we promote one $2s$ electron to $2p$ and then create four $sp^3$ orbitals. These will always follow VSEPR spacial configurations.
+
+If we then look at \ce{NH3}, it must hybridize $2s$ and $2p$ orbitals to make $sp^3$ (steric number is $4$), where one of the orbitals is already filled, corresponding to the lone pair. Makes sense! \ce{H2O} will also do the same sort of hybridization.
+
+If we continue and look at \ce{C2H6}, we see that each carbon should also be $sp^3$ hybridization. Note that since sigma bonds are fine with rotation that this molecule is perfectly okay when rotated about the central bond (i.e. both parts can rotate freely independently of one another). However, when we look at \ce{C2H4}, we see $sp2$ hybridization and one $p$ orbital, which will make a $\pi$ bond, making the central bond a double bond and fixing the two $C$ atoms such that the two parts can only rotate together. Thus, the $H$ are constrained to lie in a single plane. \ce{C2H2} will simply have $sp$ hybridization, two $\pi$ bonds and thus a triple bond. HOWEVER, note that triple bonds allow rotation! $\pi$ bonds occupy almost the entire free space and thus rotation is extremely easy because the $p_x$ and $p_y$ transition is smooth. 
+
+If we then look at benzene rings, we see that each carbon must be $sp2$ hybridized with a non-bonding $p$ orbital. In fact, the six non-bonding $p$ orbitals act as a humongous single delocalized $\pi$ bond over the entire ring. We thus have six atomic orbitals combining to form six molecular orbitals. The most favorable bonding orbital having all signs aligned and the least favorable antibonding having alternating signs. We then need four more orbitals, which come from two with one node and two with two nodes, two degenerate sets. The orbitals with no nodes and one node are bonding, and the ones with two and three nodes are antibonding. 
+
+\section{November 26 - Crystals}
+
+Overlap is desirable in metals. The most basic lattice is a cube, then we have face-centered, so $14$ atoms, and then there's the offset case, which has an additional number of secondary atoms on every edge and in the dead center, such as \ce{NaCl}. This can be thought of by filling all the octahedral holes. (Rock Salt Structure)
+
+Another form of Face Centered Cubic is filling exactly every other tetrahedral hole. Refer to lecture notes for graphics. This is more favored by $sp^3$ hybridization and same-atom structures, such as \ce{Si} or \ce{C}. When the tetrahedral holes are filled with the same atoms, it is the Diamond lattice. Otherwise, it is the Zinc Blende lattice, such as \ce{GaAs} and \ce{InP}. 
+
+It turns out that our filled-octahedral has exactly a $1:1$ ratio, hence, \ce{NaCl}. In the case without the octahedral holes filled, we will find a $3:1$ ratio. In the tetrahedral holes, it is also a $1:1$ ratio. Tetrahedral hole has the smallest hole, then octahedral, then with the biggest ions there is exactly one hole in the middle of the cube lattice (body centered cubic structure).
+
+We can then generate $2:1$ by just sticking a shrunk cube inside the larger cubic lattice to form the ``anti-fluoride'' lattice. The final structure we consider (I think) is when we take the anti-fluoride lattice and then fill in just all of the Rock Salt holes too. This produces a $1:3$ stoichiometry. 
+
+\end{document}

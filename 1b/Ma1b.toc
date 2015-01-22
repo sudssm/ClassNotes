@@ -1,0 +1,3 @@
+\contentsline {chapter}{\numberline {1}Introduction/Vector Spaces - January 7}{2}{chapter.1}
+\contentsline {chapter}{\numberline {2} - January 11}{4}{chapter.2}
+\contentsline {chapter}{\numberline {3}A very long hiatus later...matricies - January 28}{6}{chapter.3}

@@ -1,0 +1,398 @@
+\documentclass{report}
+\usepackage{amssymb, amsmath, amsthm, hyperref, paracol}
+\usepackage[margin=0.5in]{geometry}
+\usepackage[version=3]{mhchem}
+\newcommand{\scinot}[2]{#1\times 10^{#2}}
+\newcommand{\ket}[1]{\left| #1 \right>} % for Dirac bras
+\newcommand{\bra}[1]{\left< #1 \right|} % for Dirac kets
+
+\begin{document}
+
+\title{Phys 12b - Notes}
+\author{Yubo Su}
+\date{ }
+
+\maketitle
+
+\tableofcontents
+
+\chapter{Introduction/Quantum Beginnings - January 8}
+
+Problem sets only no later than 2010 can be consulted.
+
+Gil Refael - refael@caltech.edu - W Bridge 164 - x4705
+
+Office hours - Tuesday 1500-1600, Wednesday 1500-1600, OH 1600-1700
+
+URL is \url{http://www.cmp.caltech.edu/refael/ph12b/}
+
+Quantum begins due to two phenomenon:
+
+\begin{itemize}
+\item Black Body Radiation
+\item Photoelectric effect
+\end{itemize}
+
+So in 1887, Hertz sets up a circuit with parallel plates, and found sparks jumping between the parallel plates. He found eventually that this was due to shining a UV light, and discovered the following properties:
+
+\begin{itemize}
+\item There is no current for $\nu < \nu_{threshold}$. 
+\item The current is proportional to the intensity ($j \propto I$, or $j \propto AIe/E_w$). 
+\item The kinetic energy of the electrons was a linear function of $\nu$: $E_k = \alpha + \beta\nu$.
+\end{itemize}
+
+Black body radiation was a known phenomenon for a long time (heated objects radiate light), but near 1900s the exact spectrum came out. If the plot of $I(\lambda)$ is plotted at various temperatures, it becomes clear that the peak intensity shifts to higher wavelengths while the area under the curve decreases (so the peak emission comes at a lower energy while the total energy is also lower). Note that at body temperature, our peak emission is in the infrared, hence military! 
+
+Returning on topic, Stefan and Boltzmann discover in 1879 and 1884 respectively the total intensity as follows: $I/A = \sigma T^4$, where $\sigma = 5.67\times 10^{-8}$ is their new constant. Wien's Law then cites that $T\lambda_{max} = C_w = \scinot{2.9}{-3}$.
+
+Rayleigh and Jeans then derived a law in 1900 that the number of normal modes in a black box with frequency $<\nu$ is $n_{modes} \propto V\nu^d$ where $d$ is the number of dimensions of said black box. The equipartion theorem then stated $\left<E\right> \propto k_bT$. Raleigh/Jeans then find that $\rho_E \propto v^dk_BT$, and $I = c\rho_E \propto v^dk_BT$. However, this then implies that at higher frequencies (and lower wavelengths) the energy should increase, rather than tend to zero as as experimentally confirmed. This is the UV catastrophe.
+
+Enter Plank, 1905. Let us suppose, completely without justification, that energy must be quantized, such that $E = nh\nu$ where $h$ is a new constant he introduced. We must then look at energy scales: if $h\nu\ll k_BT$, then quantization is not important, but if $h\nu \gg k_BT$ then quantization means that $k_BT$ is negligible. So Planck then claims that frequencies for which quantization becomes significant should just be ignored. If we follow through with this, then $I \propto k_BT\nu^3 \propto T^4$! Stefan-Boltzmann law. Wien's law also checks out. Einstein then points out that quantization also explains the photoelectric effect, by treating light as a bunch of photons and $E_k = h(\nu - \nu_{threshold})$. By then measuring the work function and some other stuff, Einstein concluded that $h = \scinot{6.626}{-34}$.
+
+Quantization of electron energies also came out. The hypothesis then went that electrons are like the waves in a box, with normal modes. Thus, we can test electron interference, and it turns out that wave-particle duality exists! This experiment was conducted by Davisson and Germer in 1928. 
+
+\chapter{Schroedinger Equation - January 10}
+
+We recall that the pivotal point is where light is realized to be quantized, each photon having $E = h\nu = \hbar\omega$. We recall also that electrons also seem to have quantized energy levels as well.
+
+Now, let us pass light through a two-slit diffraction onto a screen, with slit width $d \tilde \lambda$ and $L \gg \lambda$. We can parameterize the position on the back screen as a function of small angle $\theta$. Now, we wish to represent the light that passes through the slits as wavefunctions of form $\psi = e^{ikx}$. Thus, we note that the path difference is $d\sin\theta$ and thus $\psi_2 = \psi_1\cdot e^{id\sin\theta k}$. Thus, $\psi_{screen} = \psi_1(1 + e^{id\sin\theta k})$. Then, if we wish to calculate the intensity, we recall that $I \propto |\psi|^2$, and so for us $I = |\psi_1|^2 (1+e^{ikd\sin\theta})(1 + e^{-ikd\sin\theta}) = 2+2\cos(kd\sin\theta) = 4\cos^2\left(\frac{kd\sin\theta}{2}\right)$. We then see that maxima occur at $kd\sin\theta/2 = n\pi$. If we then construct a similar sort of experiment with electrons, an interference pattern will also emerge upon passing electrons through a diffraction gratings, the experiment that Davisson and Germer produced in 1928. 
+
+De Broglie is then the famous scientist who proposed that electrons are waves; interestingly, he spent four years on a graduate thesis (1924) and submitted a page and a half, and the only equation he submitted in his paper was $p = \frac{h}{\lambda}$. But first, we examine the parallels between waves and classical particles:
+
+\begin{center}
+\begin{tabular}{l|l}
+Waves & Classical particles\\\hline
+$\nu$ & $E = h\nu$\\
+$\lambda$ & $p = \frac{h}{\lambda}$\\
+\end{tabular}
+\end{center}
+
+We then recognize that $K = p^2/2m$, and because we wish to confirm this we give an electron some potential energy and measure the kinetic energy. This yields $eV = \frac{h^2}{2m_e\cdot 3\times 10^{-10}\mathrm{m}}$, where $p \approx \frac{h}{3 \times 10^{-10}\mathrm{m}}$, which can be calculated out to require about $50$V of potential to produce the desired momentum and thus wavelength. 
+
+We go back to look at the wave equation for light. We know $\psi = e^{i(kx - \omega t)}$, and we know the dispersion relation $\omega = ck$. But this current wave equation is confined to the $x$ direction, and the 3D wave equation looks more like $\psi = e^{i(\vec{k}\cdot\vec{r} - \omega t)}$, and we want something more like $\omega^2 = c^2\vec{k}^2$, which is differentiable compared to the earlier version.
+
+Note that now, if we want to pull out $\omega$ we can write $i\frac{\partial}{\partial t}\psi = \omega \psi$, or $-\frac{\partial^2}{\partial t^2}\psi = \omega^2 \psi$. If we want the $\vec{k}$, we can operate $\frac{1}{i}\nabla\psi = \vec{k}\cdot\psi$, or $-\nabla^2\psi = \vec{k}^2\psi$. Substituting this back into the dispersion relation, we find $\frac{\partial^2}{\partial t^2}\psi = c^2\nabla^2\psi$, which is the wave equation for light. This can be derived using Maxwell's equations and will also yield the value of $c$, but we are not interested in that and so our much simpler derivation will suffice.
+
+We now guess at the dispersion relation for electrons. We note that we want a relation between $\omega \to k$, while we have $E \to p: E = \frac{p^2}{2m}$. We make some simple substitutions to obtain $\hbar \omega = \frac{\hbar^2k^2}{2m}$. Continuing, making the assumption that electrons have the same waveform as light, we can rewrite as:
+
+$$i\hbar\frac{\partial\psi}{\partial t} = -\frac{\hbar^2}{2m} \nabla^2 \psi$$
+
+where $\psi = e^{i(\vec{k}\cdot\vec{r} - \omega t)}$ and $\omega = \frac{\hbar k^2}{2m}$. This equation is the Schr\"odinger equation for free particles. But then we must examine potential energies $V(\vec{r})$, where $E = \frac{p^2}{2m} + V$. In our earlier derivation then, should we use $E = K$ or $E = K + V$? We realize that $\nu$ is a conserved quantity over a waveform and thus that $E = h\nu$ should correspond to the total energy. We can simply replace this into our derivation and find
+
+$$i\hbar\frac{\partial\psi}{\partial t} = -\frac{\hbar^2}{2m}\nabla^2\psi + V\psi$$
+
+which is the full Schr\"odinger equation. We will now solve the equation for free electrons.
+
+Let $\psi = e^{ikx - i\omega t}$, confined in the $x$ direction. This will solve the Schr\"odinger equation if and only if $\omega = \frac{\hbar k^2}{2m}$. But then we note that, because the Schr\"odinger equation is linear, we can use superposition, where if $\psi_1, \psi_2$ solve the equation then $\psi_1 + \psi_2$ will also solve. As for most PDEs though, the equation is very difficult to solve straight-up. Fortunately, we already know one solution, and can use superposition to acquire infinitely more.
+
+However, we must look for a localized wavefunction; electrons do after all have a defined position! We note that our previous solution has no probability maximum (because, if we square it, it has constant magnitude; we assume that the probability of finding an electron is related to $\psi^2$). To look for a localized wavefunction, we try a fairly complex superposition:
+
+$$\psi = \displaystyle\int\limits_{-\infty}^\infty \frac{dk}{2\pi}\phi(k)e^{i(kx - \frac{\hbar k^2}{2m}t)}$$
+
+where $\phi$ is some distribution in $k$ which is a set of coefficients [hey look, this looks like a Fourier transform!]. We think of localized wavefunctions, and one such wavefunction could be a Gaussian. Thus, we search for coefficients such that $\psi(t=0) = e^{-\frac{x^2}{4\Delta x^2}}$. We thus have 
+
+$$\psi(t=0) = \displaystyle\int\limits_{-\infty}^\infty \frac{dk}{2\pi}\phi(k)e^{ikx}$$
+
+This is a Fourier Transform! [knew it!]. Note that the Fourier transform looks like $\phi(k) = \int dxe^{-ikx}\psi$. This allows us to construct any wavefunction we want! We want $\phi(k) = ae^{-k^2/4\Delta k^2}$. We then transform $\psi = \int \frac{dk}{2\pi} ae^{-k^2/4\Delta k^2 + ikx}$, where the integral is of course over $(-\infty, \infty)$. We want to complete the square in the exponential, so $\frac{k^2}{4\Delta k^2 - ikx} = \frac{1}{4\Delta k^2}\left[(k - 2i\Delta k^2x)^2 + 4\Delta k^4x^2\right]$. We can then put that into the integral:
+
+\begin{align*}
+\psi &= \displaystyle\int\limits_{-\infty}^\infty \frac{dk}{2\pi}ae^{-\frac{\left(k - 2i\Delta k^2x\right)^2}{4\Delta k^2}}\cdot e^{-\Delta k^2 x^2}\\
+&= \displaystyle\int\limits_{-\infty}^\infty 2\Delta k \frac{du}{2\pi} e^{-u^2}ae^{-Delta k^2x^2}\\
+&= \frac{\Delta k\sqrt{\pi}}{\pi}ae^{-x^2\Delta k^2}\\
+\Delta k^2 &= \frac{1}{4\Delta x^2}
+\end{align*}
+
+We then see that we can get a Gaussian in $x$ by choosing $\Delta k$ as prescribed. This is how to construct a Gaussian probability distribution by carefully choosing our coefficients in our superposition. We then note that $\Delta k \Delta x = 1/2$, or $\Delta p \Delta x = \frac{\hbar}{2}$. Note that Gaussians are actually create the minimum $\Delta p \Delta x$, which means that this is the Heisenberg Uncertainty! We will rederive this and prove that this is the minimum in a future class. Au revoir!
+
+\chapter{Probability Densities with Schr\"odinger Equation - January 15}
+
+We now wish to answer the question ``where is the particle?'' in the case of wavefunctions. Note that back in classical mechanics, we defined the intensity of an incident wave to be $|\psi|^2$. Here, it is the same; the probability of finding a particle is $\psi(x)\psi^*(x)$ at any arbritrary point $x$.  Note that we wish to require that $\int{\psi^2} = 1$, and so we will normalize $\psi$. However, there are many criterion that must be satisfied for this to happen:
+
+\begin{enumerate}
+    \item Probability Conservation - If $\psi$ is normalized at any point in time, then it must be normalized at all points in time, even as evolving with the Schr\"odinger equation. In other words, $\frac{\partial}{\partial t} \int{|\psi|^2} = 0$. This also reads $\int{\frac{\partial \psi}{\partial t} \psi^* + \frac{\partial \psi^*}{\partial t}\psi}$. We recall that Schr\"odinger's equation gives $\partial_t \psi$, and we can simply write $-i\hbar\partial_t\psi^* = -\frac{\hbar^2}{2m} \partial_x^2 \psi^* + V\psi^*$, noting the additional negative sign. Thus, we can simply multiply the SE (henceforth denoting the Schr\"odinger Equation) for $\psi$ by $\psi^*$ and vice versa to obtain (with some algebraic manipulation):
+
+        \begin{align*}
+            \frac{\partial \psi}{\partial t} \psi^* &= \frac{-i\hbar}{2m}\frac{\partial^2\psi}{\partial x^2}\psi^* + V\psi\psi^*\\
+            -\frac{\partial \psi^*}{\partial t} \psi &= \frac{-i\hbar}{2m}\frac{\partial^2\psi^*}{\partial x^2}\psi + V\psi\psi^*\\
+        \end{align*}
+        
+    If we then take the difference, we obtain $\frac{\partial \psi}{\partial t}\psi^* + \frac{\partial \psi^*}{\partial t}\psi = \frac{1}{i\hbar}\frac{-\hbar^2}{2m}\left(\partial_x^2\psi\psi^* - \partial_x^2\psi^*\psi\right)$. Now, we note that this expression doesn't have to $=0$ at all $x$! The only way then to guarantee that the integral $=0$ for all functions is if the integrand is a derivative of a function that vanishes for $x \to\pm\infty$. Seeing this, we obtain that the integral is $= -\frac{\hbar}{2mi}\int{\partial_x\left(\psi^*\partial_x\psi - \psi \partial_x\psi^*\right)} = -\frac{\hbar}{2mi}\left(\psi^*\partial_x\psi - \psi\partial_x\psi^*\right)\big|_{-\infty}^\infty$, and since wavefunctions must vanish at the end of the world (i.e.$\psi(\pm\infty) = 0$), it is clear that global probability is indeed conserved!
+
+\item Now, if we envision a one-dimensional distribution of charge, and we examine a small section of this length of length $dx$, we can calculate the rate of change of charge $\rho dx$ as a function of $j$ current at either boundary. This can be expressed as $-\frac{d(\rho dx)}{dt} = j(x + dx) - j(x)$, where $x$ is the location of the left boundary of our length of examination. 
+
+    The reason we discuss this is to search for a sort of probability current. We first rearrange our previous expression in decidedly unrigorous fashion to obtain $-\frac{\partial \rho}{\partial t} = \frac{\partial j}{\partial x}$, or $-\frac{\partial \rho}{\partial t} = \nabla \cdot \vec{j}$ in the 3D case. We then can substitute our earlier expression for the derivative of our probability density to obtain $-\frac{\partial \rho}{\partial t)} = \frac{\partial}{\partial x}\frac{\hbar}{2mi}\left(\psi^*\partial_x\psi - \partial_x\psi^*\psi\right)$, and then we can find that (taking advantage of the fact that the difference of complex conjugates is twice the imaginary part)$j = \frac{\hbar}{m}\mathrm{Im}(\psi^*\partial_x\psi)$ where $j$ is the probability current. So we can rewrite our wavefunction as $\psi = e^{i(px/\hbar - p^2/2m\hbar t)}$, and then substituting into our expression for $j$ we find that $j = \frac{p}{m}\psi^2 = v\psi^2$. Note from earlier that $\rho v = j$, and so this seems to conformm as well. We can call this local probability conservation. 
+
+\item We now need to fulfill the normalization criterion. Recall from last lecture that $\psi = e^{-x^2/4\Delta x^2}$ (we will add a $4$ here that will make the result much nicer), but we can also add a normalization coefficient, so we want to define an $N$ such that $\int{N^2 e^{-x^2/2\Delta x^2}} = 1$. We substitute $u = x/\sqrt{2}\Delta x$ and obtain $\int{du(\sqrt{2}\Delta xe^{-u^2}} = N^2 \sqrt{2\pi}\Delta x$, and so $N = \frac{1}{\sqrt{\Delta x\sqrt{2\pi}}}$. If we plug this into our wavefunction then we have a complete wavefunction that satisfies all the necessary criterion.
+\end{enumerate}
+
+We can then calculate the expectation value for $x$ as denoted by $\left<x\right> = \int{\psi^*x\psi} = \int{xe^{-x^2/2\Delta x^2} \frac{1}{\Delta x \sqrt{2\pi}}}$, which clearly evaluates to $0$ because the integrand is an odd function. But now, we can calculate the variance:
+
+\begin{align*}
+    \sigma_x^2 &= \left<(x - \left<x\right>)^2\right>\\
+               &= \left<x^2\right> - \left<x\right>^2\\
+    \left<x^2\right>_{Gaussian} &= \int{\frac{1}{\sqrt{2\pi}\Delta x} x^2 e^{-x^2\alpha}}\\
+                                &= \frac{1}{\sqrt{2\pi}\Delta x}\frac{-partial}{\partial \alpha}\int{dx e^{-\alpha x^2}}\\
+                                &= \Delta x^2\\
+\end{align*}
+
+And so we finally find that $\sigma_x = \Delta x$, at least for Gaussians. Next lecture we will begin discussing momentum space, while we have only been discussing position space so far.
+
+\chapter{Wavefunction Collapse - January 22}
+
+We continue the discussion from last lecture (not attended) about wavefunction collapse. Note that, intuitively, this makes no sense, that a simple act of measurement collapses the wavefunction. It is arguable that uncertainty is a limit on observation, but that the electron is actually deterministic. In any case, we will use the wavefunction collapse formalism.
+
+We then ask whether an electron can have a wavefunction with two peaks. We first note that, due to wavefunction collapse, if we should measure the particle at one peak then the wavefunction at the other peak instantaneously goes to zero. It seems then that this violates relativity and causality. Is there a version of collapse that can reconcile with relativity? It turns out not. So what happens with this dilemma?
+
+Recall that relativity prohibits transmission of information faster than the speed of light. It turns out that wavefunction collapse transmits no information. Consider Alice and Bob measuring at each peak. From Bob's frame of reference, he measures the electron with probability $50$\% regardless of what Alice measures, because even if Alice measures first she has no way of transmitting the result of her observation to Bob. 
+
+Einstein was a proponent of the hidden variables theory, which postulated that it is the fault of the observer rather than an intrinsic property of particles that we cannot measure them deterministically. We thus ask the question whether any experiment can show that there are indeed two peaks rather than any deterministic solution. We can construct an experiment by passing one peak through a series of apparatusses to make the electron interfere with itself, and thus if we make this interference perfect we should observe zero probability at the point of this interference. However, if the electron were deterministic then no such interference should exist. 
+
+We then recall Bell's inequality, which we will return to either at the end of this class or the next, which finds a two-particle system that classically can only be measured in range $(-1,1)$ but quantum mechanically can exceed this range. Recall that experimentation showed this inequality to be quantum mechanical.
+
+Returning to the example of our experiment setup, if the two peaks no longer interfere then it is clear that a measurement has been performed. We say quantum mechanically that Alice's knowledge of the electron has become entangled with the wavefunction of the electron, and because Alice's knowledge cannot interfere with itself then the reality of the particle cannot interfere with itself either, because it is a reality now rather than a wavefunction. 
+
+Let's get back to some math. We recall $\psi = e^{-x^2/4\Delta x^2}\frac{1}{\sqrt{\sqrt{2\pi}\Delta x}} \Leftrightarrow \psi_k = \frac{e^{-k^2/4\Delta k^2}}{\sqrt{\Delta k}} \sqrt{\sqrt{2\pi}}$. We need a velocity average (I think?), so we write the time-dependent wavefunction: $\psi(x,t) = \int{\frac{dk}{2\pi}\psi_ke^{ikx - i(\hbar k^2/2m) t}}$. We see that the exponent as written satifsies our desired dispersion relation and thus the Schr\"odinger Equation. We thus find that, given our initial state, we can take the Fourier transform and then take the inverse Fourier Transform with the time-dependent term to find the time-wise evolution that satisfies the Schr\"odinger Equation (in the absence of a potential). But notice that for now, our particle is localized at $x=0$. We want now to discuss wavepackets with nonzero velocity. These are wavepackets.
+
+We want to construct wavepackets (at time $t=0$) such that $\left<x\right> = x_0, \left<p\right> = 0$, or $\left<p\right> = p_0, \left<x\right> = 0$, or maybe even both $\left<x\right> = x_0, \left<p\right> = p_0$. 
+
+We work with our first case, where expectation value of momentum is $0$ and expected value is $x_0$. This is obviously just
+
+$$\psi = \frac{e^{-(x - x_0)^2/(4\Delta x^2)}}{\sqrt{\sqrt{2\pi}\Delta x}}$$
+
+We then look at the Fourier Transform 
+
+\begin{align*}
+    \psi_k &= \int dx e^{-ikx}e^{-(x-x_0)^2/(4\Delta k^2)}\frac{1}{\sqrt{\sqrt{2\pi}\Delta k}}\\
+&= \int dx e^{-ikx_0} e^{-ik(x-x_0)}e^{-(x-x_0)^2/(4\Delta x^2)} \frac{1}{\sqrt{\sqrt{2\pi}\Delta x}}\\
+&= \int dx' e^{-ikx_0}e^{-ikx'}e^{-x'^2/(4\Delta x^2)}\frac{1}{\sqrt{\sqrt{2\pi}\Delta x}}\\
+&= e^{-ikx_0 \psi_{0k}}
+\end{align*}
+
+where $\psi_{0k}$ is the original $\psi_{k}$ for the $\psi$ centered at $x = 0$, written above. We note that $\left<p\right>$ for this above wavefunction is unchanged and therefore still $0$, because the extra multiple of $e^{-ikx_0}$ is a root of unity and thus when we take the integral of $\psi^2$ the conjugation makes the term fall out. We now examine the case for $\left<p\right> = p_0$, which is totally the exact same algebra as above except in momentum space. We can thus suspect that this produces $\psi_x = e^{ixk_0} \psi_{0x}$. Note that this also gives the interpretation that $e^{ixk_0}$ is the travelling wave with momentum $k_0$ but delocalized, so we are simply multiplying the stationary localized wave by a delocalized travelling wave to obtain a localized travelling wave. If we then examine the time-dependent solution, we find:
+
+\begin{align*}
+    \psi(x,t) &= \int \frac{dk}{2\pi} e^{ikx - i\frac{\hbar k^2}{2m}t}\psi_0\\
+              &= \int \frac{dk'}{2\pi} e^{i(k' + k_0)x - i\frac{\hbar}{2m}(k' + k_0)^2t}\psi_0\\
+              &= e^{ik_0x - i\frac{\hbar}{2m}k_0^2t}\int \frac{dk'}{2\pi}e^{ik'x - i\frac{\hbar}{2m}(2k_0k't}e^{i\frac{\hbar}{2m}k'^2t}\psi_0
+\end{align*}
+
+We recognize that the part of the integral we pulled out front looks like a travelling wave with phase velocity $v = \frac{\hbar k_0}{2m}$. If we then ignore the $k'^2$ term (a somewhat valid approximation as will be seen in a problem set FML), we will find
+
+\begin{align*}
+    \psi(x,t) &\approx e^{ik(x-vt)}\int\frac{dk}{2\pi} e^{i(k'(x - \frac{\hbar k_0}{m}t)}\\
+              &= e^{ik(x-vt)}\psi_0(x-p_0t)
+\end{align*}
+
+where we note that the integral is the Gaussian with velocity $\frac{\hbar k_0}{m} = p_0$, just as expected. This is the group velocity. How do we know the expression $v_g = \frac{d\omega}{dk}$? We note that this arises because our omission of $k'$ corresponds roughly with a Taylor series expansion, for which the group velocity is the first order coefficient. 
+
+Note that if we want the third and final case, we can simply change the $x \to x - x_0$.
+
+\chapter{WELCOME BACK YOU LAZY ASS Harmonic Oscillators - February 12}
+
+We recall that the Bohr-Sommerfield quantization $\int p dx = nh$ gave us $E = \hbar \omega (n + 1/2)$, which shows a ground state energy. This was covered earlier, but it was covered the ``easy way.'' We will now cover the ``hard way'', which is generalization.
+
+Recall that the hamiltonian for a harmonic oscillator is $H = \frac{p^2}{2m} + \frac{m\omega^2x^2}{2}$. If we draw the $V(x)$ for the harmonic oscillator, with some $V = E_0$ drawn horizontally, then the points where the line intersects the potential should be the antinodes of the oscillatory motion. 
+
+We then write our TISE for the harmonic oscillator:
+
+$$E\psi = -\frac{\hbar}{2m}\frac{\partial^2 \psi}{\partial x^2} + \frac{1}{2} m\omega^2x^2 \psi$$
+
+We first examine the solution for large $x$, so $E\psi \ll \frac{1}{2}m\omega^2x^2$. This then yields for large $x$:
+
+\begin{align*}
+\frac{1}{2}m\omega^2x^2\psi &= \frac{\hbar^2}{2m}\frac{\partial^2\psi}{\partial x^2}\\
+\frac{\partial^2\psi}{\partial x^2} &= \underbrace{\frac{m^2\omega^2}{\hbar^2}}_{\textrm{length scale}}\psi x^2\\
+\end{align*}
+
+define $\xi = x\sqrt{\frac{m\omega}{\hbar}}$. We then have
+
+\begin{align*}
+\frac{\partial^2\psi}{\partial^2 \xi} &= \xi^2\psi
+\end{align*}
+
+which we know how to solve. Using some intuition (must vanish as $x \to\infty$), we use a bit more intuition to see that $\psi = e^{-\xi^2/2}$, where the equality holds for large $x \propto \xi$. So $\psi \sim e^{-\xi^2/2}$. Protip: always put a $\sim$ when not sure - Professor Refael. We examine the Hamiltonian to see what happens when the particle exceeds the classical boundaries: when $V>E$, we find $p$ to be imaginary. This shows that this is not a stable state; this is quantum tunneling. 
+
+We then need to scale the wavefunction $\psi = e^{-\xi^2/2}f(\xi)$ (why? I didn't catch). We need to rescale our SE to accomodate $\xi$
+
+$$\frac{2E}{\hbar\omega}\psi -\xi^2\psi + \frac{\partial^2 \psi}{\partial \xi^2} = 0$$
+
+Since we then are looking for $f$, we must substitute into the SE. Ugly stuff, but let's go:
+
+\begin{align*}
+\frac{\partial \psi}{\partial \xi} &= e^{-\xi^2/2}\left[-\xi f + f'\right]\\
+\frac{\partial^2 \psi}{\partial \xi^2} &= e^{-\xi^2/2}\left[(-\xi)(-\xi f + f') - f' - \xi f' + f''\right]\\
+e^{-\xi^2/2}\left[\left(\frac{2E}{\hbar\omega}-\xi^2\right)f + \xi^2f-2\xi f' - f + f''\right] &= 0\\
+\left(\frac{2E}{\hbar \omega}-1\right)f - 2\xi\frac{\partial f}{\partial \xi} + \frac{\partial^2 f}{\partial xi^2} &= 0
+\end{align*}
+
+We guess that at large $\xi$ we can ignore the first term because of some stuff, but this gives $f' = e^{\xi^2}$, which makes $\psi$ diverge at large $\xi$, which doesn't make sense. This is what happens when we apply the Frobenius method to infinite order. So being physicists, we truncate the series (making substitution $2E/\hbar\omega -1 = 2n$):
+
+$$\sum_l\left(2nf_l\xi^l-2\xi f_l\xi^{l-1}l + l(l-1)\xi^{l-2}f_l\right) = 0$$
+
+We want to introduce some manipulations so that things are linearly independent and everything must be $0$, roughly. We can thus rewrite (noting that our first rewriting is okay because $l=0,1$ give $0$ due to $l(l-1)$):
+
+\begin{align*}
+0 &= \sum_l\left(2nf_l - 2f_ll + (l+2)(l+1)\xi^lf_{l+2}\right)\xi^l\\
+&= \forall l: f_l(2n - 2l) + f_{l+2}(l+2)(l+1)\\
+f_{l+2} &= f_l\frac{2(l-n)}{(l+1)(l+2)}
+\end{align*}
+
+We note that the recursion relation stops iff $l=n$, so if $n \in \mathbb{Z}$; otherwise, we get the divergence we saw above, which doesn't allow us to satisfy boundary conditions. We note that having $n=0$ produces $f_0 = 1$, everything else being $0$, which going all the way back corresponds to the solution $\psi = e^{-\xi^2/2}$. This is the ground state! We then note $n=1$ produces $f_1 = 1$, everything else being $0$. This corresponds to the next energy level $\psi = e^{-\xi^2/2}\xi$. For $n=2$, we begin with $f_0 = 1$ and we find $f_2 = -2$, everything else being $0$, and find $\psi = e^{-xi^2/2}(1-2\xi^2)$.
+
+Interestingly, if we confine the oscillator within a box, the problem becomes much harder because the diverging solutions no longer diverge. The solution is a combination of particle in a box and harmonic oscillator problems. This is the source of much cruelty, but the lesson to take away is to appreciate problems with no infinite potentials! This way boundary conditions are much more rigorous, interestingly, due to normalization.
+
+So we return to our solutions, replacing $\psi(x) = e^{-\frac{m\omega}{2\hbar}x^2}\cdot H_n(\xi)$, where $H_n$ are the Hermite polynomials (in ACM95). All Hermite polynomials are orthonormal given an appropriate wavefunction coefficient. We recall that we made the substitution $2n = \cdots$, and solving we find $E = \hbar \omega(n+1/2)$. Screw me some people are too smart. But anyways, since we know that these are orthogonal solutions, we can normalize something like via $\left<n|m\right> = \delta_{nm}N = 1$, where $N$ is the normalization coefficient.
+
+We note that the extra $1/2$ produces a vacumn energy, zero point energy, giving the Casimir force and science fiction. 
+
+We can now examine the easy way to harmonic oscillators, but a quick break: uncertainty principle! We recall that $px \neq xy = (px)^\dagger$, and so $[p,x] = -i\hbar$, if we do it out. We then want to examine $\Delta x \Delta p$. We note $\Delta x^2 = \left<(x-\left<x\right>)^2\right> = \left<X\right>$, where we define $X$. Same with $\Delta p^2 = \left<P^2\right>$. We then note $[P,X] = [p,x] = -i\hbar$, because expectation values i.e. constants commute. Then also $\left<[P,X]\right> = -i\hbar$ as well. We then write $|\left<PX\right>| + |\left<XP\right>| \geq |\left<[P,X]\right>| = \hbar$. This makes a lot of sense, because $|a| + |b| \geq |a+b|$. 
+
+On the other hand, we recall $\left<XP\right> = (\left<\psi|X)(P|\psi\right>) \leq \sqrt{\left<\psi|X^2|\psi\right>\left<\psi|P^2|\psi\right>} = \Delta x\Delta p$! We then return to our initial train of thought, where $|\left<PX\right>| = \left<XP\right>|$ because they are complex conjugates. Thus, combining the two, we finally find $\Delta x\Delta p \geq \frac{\hbar}{2}$. Very very cool derivation of the uncertainty relation from commutators. So basically, we defined $X$ and $P$ and used both absolute values of norms and Cauchy-Schwartz of the product of two vectors. Again, people in this world are too smart. 
+
+\chapter{Harmonic Oscillator, the easy way - February 14th}
+
+Recall the Hamiltonian is $H = \frac{1}{2m}p^2 + \frac{1}{2} m\omega^2 x^2$. We can try to factor it as of form $a^2 + b^2 = (a+bi)(a-bi)$, but it does not work well because $\hat{x},\hat{p}$ do not commute. We can still try anyhow, to arrive at.
+
+\begin{align*}
+\left(\frac{1}{\sqrt{2m}}p + i\sqrt{\frac{m}{2}}\omega x\right)\left(\frac{1}{\sqrt{2m}}p - i\sqrt{\frac{m}{2}}\omega x\right) &= \frac{1}{2m}p^2 + \frac{1}{2}m\omega^2x^2 + \frac{\omega}{2}(-i\hat{p}\hat{x}+ \hat{x}{p})\\
+&= H - \frac{i\omega}{2}[p,x]\\
+&= H - \frac{\hbar\omega}{2}
+\end{align*}
+
+We think at first that this can just be seen as a constant shift in the potential, but since we are dealing with a harmonic oscillator we require its (classical?) minimum to be at $V=0$, and a negative energy shouldn't make sense. But we can simply write:
+
+$$H = \left(\frac{1}{\sqrt{2m}}p + i\sqrt{\frac{m}{2}}\omega x\right)\left(\frac{1}{\sqrt{2m}}p - i\sqrt{\frac{m}{2}}\omega x\right) + \frac{\hbar\omega}{2}$$
+
+This shows the vacumn energy or zero point energy, which arises from the commutator $[p,x]$. If we then factor the Hamiltonian into an energy scale and redefine $a^\dagger = \frac{1}{\sqrt{2m\hbar\omega}}p + i\frac{m\omega}{2\hbar}x$ (which are called the ladder operators (I remember this from somewhere...) because they raise and lower energy upon multiplication) to write:
+
+$$H = \hbar\omega(a^\dagger a + \frac{1}{2})$$
+
+We then look a the commutator $[a,a^\dagger]$. We note that this must be real because, if we examine, $[a,a^\dagger]^\dagger = [a,a^\dagger]$, or at least the result must be hermitian, which is encouraging. Let's actually compute the commutator (with some intuition to eliminate some terms ahead of time), we find:
+
+$$[a,a^\dagger] = \frac{i}{\hbar}[p,x] = 1$$
+
+Armed with this, we try to compute $[H, a] = \hbar\omega[a^\dagger a, a]$. We expect our result to have one more power of $a$ than $a^\dagger$ by power counting. We can then simply commute by expanding $[H,a] = \hbar\omega[a^\dagger, a] = -\hbar\omega a$, where we recall $[a^\dagger,a] = -[a,a^\dagger] = 1$. We then postulate $H\ket{n} = E\ket{n}$, which is sensible. We write $\ket{n'} = a\ket{n}$ and compute $H\ket{n'} = aH\ket{n} + [H,a]n = (E-\hbar\omega)(a\ket{n})$. This is awesome! We note that $a\ket{n}$ generates some solution $\ket{n'}$ with $\hbar\omega$ less energy! We can repeat the algebra to find $H[a^\dagger \ket{n}] = (E + \hbar\omega)a\dagger\ket{n}$. This shows the power of the ladder operators, because they move up and down energy states.
+
+This is an easier approach because we now have a whole ladder of solutions once given an initial solution, because $a, a^\dagger$ give us an infinite set of equations. We also can take with a leap of faith and some classical intuition that energy is bounded from below, i.e. a ground state, so the eigenvalues of $H$ are bounded from below. So we know that there must be some ground state $a\ket{0} = 0$, which will force all the successive lower ladder states to be $0$. This is our only differential equation in today's solution. We then solve:
+
+\begin{align*}
+\left(\frac{i}{\sqrt{2m\hbar\omega}}\frac{\hbar}{i}\frac{\partial}{\partial x} - i\sqrt{\frac{m\omega}{2\hbar}}x\right)\psi &= 0\\
+\frac{\partial \psi}{x\partial x} &= -\frac{m\omega}{\hbar}\psi\\
+\end{align*}
+
+Being physicists (or maybe it's rigorous idk), we can see that $xdx = \frac{1}{2}d(x^2)$, and so we can write (using full derivatives because there's no time): $\frac{d\psi}{d(x^2)} = -\frac{m\omega}{2\hbar}\psi$, giving $\psi = e^{-\frac{m\omega}{2\hbar}x^2}$ for the ground state. Then, we recall that to find the next state $\psi_1 = a^\dagger\psi_0$. If we write this out, we can find (recalling the relationship between $a, a^\dagger$):
+
+\begin{align*}
+\psi_1 &= a^\dagger\ket{0}\\
+&= \left(\frac{1}{\sqrt{2m\hbar\omega}}\frac{\hbar}{i}\frac{\partial}{\partial x} + ix\sqrt{\frac{m\omega}{2\hbar}}\right)e^{-\frac{m\omega}{2\hbar}x^2}\\
+&= \left(a+2ix\sqrt{\frac{m\omega}{2\hbar}}\right)e^{-\frac{m\omega}{2\hbar}x^2}\\
+&\propto xe^{-\frac{m\omega}{2\hbar}x^2}
+\end{align*}
+
+where we can use proportional to also note that the solution isn't normalized anyways. We now note that, while we have the eigenfunctions, we don't have the eigenvalues; what are $E_n$? We note $H\ket{0} = \hbar\omega\left(a^\dagger a + \frac{1}{2}\right) = \frac{\hbar\omega}{2}\ket{0}$, so $E_0 = \frac{\hbar\omega}{2}$. Similarly, we can find $H(a^\dagger\ket{0}) = \frac{3\hbar\omega}{2}a^\dagger\ket{0}$, and more generally, noting that $(a^\dagger a)(a^\dagger)^n\ket{0} = n(a^\dagger)^n\ket{0}$, we can find $H(a^\dagger)^n\ket{0} = \left(n + \frac{1}{2}\right)\hbar\omega$. 
+
+We try to explain this last step a bit more. Note $\hbar\omega\left(a^\dagger a + \frac{1}{2}\right)(a^\dagger)^n\ket{0} = \hbar\omega\left(n+\frac{1}{2}\right)(a^\dagger)^n\ket{0}$, which then follows easily $(a^\dagger a)\ket{n} = n\ket{n}$. We call $a^\dagger a = N$ the number operator because it gives the energy level of the system.
+
+We now discuss normalization: $a^\dagger\ket{0} = C_1\ket{1}$. We want $\bra{1}C_1^*C_1\ket{1} = |C_1|^2 = \bra{0}aa^\dagger\ket{0} = \bra{0}a^\dagger a+1\ket{0} = 1$. This gives that $a^\dagger \ket{0} = \ket{1}$. Sadly, this is not true for the general case. We try:
+
+\begin{align*}
+(a^\dagger)^n\ket{0} &= C_n\ket{n}\\
+|C_n|^2 &= \bra{0}a^n(a^\dagger)^n\ket{0}\\
+&= \bra{0}a^{n-1}(aa^\dagger)(a^\dagger)^{n-1} \ket{0}\\
+&= \bra{0}a^{n-1}(a^\dagger a-[a^\dagger,a])(a^\dagger)^{n-1}\ket{0}\\
+&= C_{n-1}^* \bra{n-1}a^\dagger a +1\ket{n-1}C_{n-1}\\
+&= |C_{n-1}|^2\bra{n-1}n-1+1\ket{n-1}\\
+&= n|C_{n-1}|^2
+\end{align*}
+
+This gives the normalization coefficients inductively. 
+
+\chapter{Delta function potentials - February 19}
+
+Recall that $H = \hbar\omega\left(a^\dagger a + \frac{1}{2}\right)$, where we called $a^\dagger a$ the number operator. Recall that $a = \left(\frac{p}{\sqrt{2m}} - i\sqrt{\frac{m}{2}}\omega x\right)$. The intuitive explanation for there being a ground state energy is because of uncertainty, the ground state wavepacket must have some width, and on the harmonic oscillator potential graph, some non-zero width yields non-zero total energy. Alternatively, we note:
+
+\begin{align*}
+E_0 &= \left<H\right>\\
+&= \left<0|H|0\right>\\
+&= \left<\frac{p^2}{2m}\right> + \left<V\right>\\
+&= \left<0|p \cdot p|0\right> + \left<0|x\cdot x\cdot 0\right>\\
+&> 0
+\end{align*}
+
+where we note that the inner product of any vector with itself is positive (why not nonnegative?). Recall that $\ket{0}$ is defined as the vector that $a^\dagger$ annihilates. Note that one major application of this quantization is the Casimir force, which has been observed. Wikipedia it!
+
+We now discuss $\delta-$function potentials. Imagine there being a potential $V(x) = V\delta(x)$. Then the hamiltonian becomes $H = \frac{p^2}{2m} + V\delta(x)$. We then write our SE
+\begin{align*}
+\hat{H}\left|\psi\right> &= E\left|\psi\right>\\
+E\psi = -\frac{h^2}{2m}\frac{\partial^2 \psi}{\partial x^2} + V\delta(x)\psi
+\end{align*}
+
+Let us examine first for $x \neq 0$, over which the particle is simply a free particle. We recall that the general solution for a free particle is $a_+e^{ikx} + a_-e^{-ikx}$ where $E = \frac{\hbar^2k^2}{2m}$. For $x < 0$, we will use $\psi = a_+e^{ikx} + a_-e^{-ikx}$, and for $x > 0$ we will use $\psi = b_+e^{ikx} + b_-e^{-ikx}$. Now, suppose a particle begins at $x < 0$ and travels to the right with wavefunction $e^{ikx}$. Once it hits the delta function, it can either reflect with new waveform $ae^{-ikx}$ or transmit with waveform $be^{ikx}$, where $a,b < 1$, as we will use probability conservation to stipulate $|a|^2 + |b|^2 = 1$. Classically, $b=0$, but quantum tunnelling gives a mechanism for $b > 0$. Note that a particle at $x > 0$ moving towards $0$ is a mirror image and produces the same SE, thus the same mechanics, so we only need to solve this one case to obtain both the mirror solution and superpositions.
+
+We note that $\delta(x)\psi \to \infty$ at $x = 0$, so upon examining the SE we note that $\frac{\hbar^2}{2m}\frac{\partial^2\psi}{\partial x^2} \to \pm \infty$. So $\frac{\partial \psi}{\partial x}$ at $x = 0$ must have a jump at $x = 0$, while $\psi$ is continuous. This gives, in shorthand, $\psi_{0-} = \psi_{0+}$. We also recall that $e^{ikx} + ae^{-ikx} = b^{ikx}$, so for $x = 0$ we find $1+a = b$ (recall also this result from Ph 12a as well). We now finally actually use the SE to note that the following integral is 0 identically:
+\begin{align*}
+0 &= \int_{0-}^{0+} \left(-\frac{\hbar^2}{2m}\frac{\partial^2\psi}{\partial x^2} + V\delta(x)\psi - E\psi\right)\\
+&= -\frac{\hbar^2}{2m}\left.\frac{\partial \psi}{\partial x}\right|_{0-}^{0+} + V\psi
+\end{align*}
+
+where we note that $E\psi$ vanishes when integrated over $(0-,0+)$. We continue:
+\begin{align*}
+0 &= -\frac{\hbar^2}{2m}\left(\left.\left(ikbe^{ikx}\right)\right|_{0+} - \left.\left(-ikae^{-ikx}\right)\right|_{0-}\right) + Vb\\
+Vb &= \frac{\hbar^2}{2m}\left(b + a - 1\right)\\
+b+a-1 &= \frac{2mV}{ik\hbar^2}b\\
+\end{align*}
+
+Then recalling that $1+a=b$, we can solve and find $b = \frac{ik}{ik - \frac{mV}{\hbar^2}}$ and $a = \frac{mV/\hbar^2}{ik - mv/\hbar^2}$. We can then easily calculate transmission and reflection by squaring the coefficients.
+
+We now note that given some $j_{in}$ going towards $x=0$, we can calculate $j_{ref}, j_{trans}$ probability currents, where $j = \frac{1}{2m}\left(\psi^*p\psi - p\psi^*\psi\right)$. We will subsitute $\psi = e^{ikx}$, as we've been setting up, so we find $j_{in} = \frac{1}{2m}\left(e^{-ikx}\hbar ke^{ikx} - (-\hbar k)e^{-ikx}e^{ikx}\right) = \frac{\hbar k}{m}$, and likewise, $j_{ref} = -\frac{|a|^2\hbar k}{m}$ and $j_{trans} = |b|^2\frac{\hbar k}{m}$. We then Kirchoff's this to note $a^2+b^2 = 1$. Careful though, that in general cases it's not necessarily so simple, because velocity play a role as it is current density we are dealing with. However, since in this case, $v_l = v_r = \hbar k/m$, so we're good. 
+
+Note that a similar problem, one of different potentials for $x<0, x>0$, would have such a sort of problem, because energy is conserved, so we can treat the potential as equal everywhere but different kinetic energies i.e. $v_l \neq v_r$, which is a much easier solution than simply using different probabilities. 
+
+Now, what if our delta function is negative instead? We can still formulate a solution in terms of transmitted wave, incident wave, blah blah. However, one thing changes: bound states. Note that with a negative delta function, we can theoretically have a negative kinetic energy, which we remember from earlier yields attenuation and a short-lived particle. To investigate negative energies, we look at the SE $-\frac{\hbar^2}{2m}\frac{\partial^2 \psi}{\partial x^2} = -E\psi$, which porduces $e^{\pm\sqrt{2mE/\hbar^2}x}$. Recall that our previous problem with this solution was that at $\pm \infty$ this solution diverges. However, here, with a delta function, maybe we can make it work. Maybe $\psi = Ae^{-\sqrt{2mE/\hbar^2}|x|}$, because this produces the discontinuity in the second derivative as expected due to the delta function! We note that there should only be one $E$ per delta function by examining the integral of the SE, because $|E|$ determines the height of the jump in the first derivative. We simply write out our integral:
+
+\begin{align*}
+0 &= \int -\frac{\hbar^2}{2m}\frac{\partial^2\psi}{\partial x^2}-V\delta(x)\psi\\
+&= -\frac{\hbar^2}{2m}\left(-A\sqrt{\frac{2mE}{\hbar^2}}\cdot 2\right) - VA\\
+V &= \hbar\sqrt{\frac{2E}{m}} \\
+E &= \frac{V^2m}{2\hbar^2}
+\end{align*}
+
+This then gives a solution of $\psi = Ae^{\frac{-mV}{\hbar^2}|x|}$. This shows that for a stronger delta function, faster attenuation occurs. 
+
+\chapter{Two well potentials - February 26}
+
+Let us examine the hamiltonian $H = -\frac{\hbar^2}{2m}\frac{\partial^2}{\partial x^2} - V(\delta(x-a) + \delta(x+a))$. We recall that we've solved the exact eigenstates in lecture a week ago. Call the solution for the right $\delta$ function $\left|R\right>$ and the left $\left|L\right>$. We then recall that $\left|R\right> = \sqrt{\kappa}e^{-\kappa |x-a|}$ and $\left|L\right> = \sqrt{\kappa}e^{-k|x+a|}$. Additionally, if we write $H_R\left|R\right> = E\left|R\right>$ and correspondingly for $\left|L\right>$, we can write $H = H_R - V\delta(x+a) = H_L - V\delta(x-a)$. We then note from the TISE that $\frac{1}{2}\kappa V = \frac{\hbar^2}{2m}\kappa^2$, thus recovering $\kappa = \frac{mV}{\hbar^2}$.
+
+We then note that the wavefunctions over each of the three regions (divided by the $\delta$ functions) should be of form $e^{-\kappa x}$, where this $\kappa$ isn't necesarily the same as in the one-well problem, and so we can write these parameterizations out:
+
+$$\psi(x) = \begin{cases}Ce^{\kappa x} &\mbox{if } x < -a\\Ae^{\kappa x} + Be^{-\kappa x} & \mbox{if } -a < x < a\\De^{-\kappa x} & \mbox{if } x > a\end{cases}$$
+
+We note that the symmetric and antisymmetric case about $x=0$ should both be solution states. In fact, the higher-order superpositions can be ignored so long as our current $\kappa \approx \kappa_0$, where $\kappa_0$ is the solution from the one-well problem. We are expecting two bound states arising from bringing two independent bound states close to one another (i.e. for finite $a$) will generate a separation of the two bound states $E_0 \pm \epsilon$. These energies obviously result from the superpositions of the $\left|L\right>,\left|R\right>$. Let's guess the superpositions for now as the two bound states, with a guess of a normalization: $\left|+\right> = \frac{1}{\sqrt{2}}\left(\left|R\right> + \left|L\right>\right), \left|-\right> = \frac{1}{\sqrt{2}}\left(\left|R\right> - \left|L\right>\right)$. We check our by taking $\left|+\right|\left.+\right> = 1 + \left<R\right>\left.L\right>$, where we take advantage of the fact that $\left<L|R\right> = \left<R|L\right>$ by taking conjugates of real functions. It looks about right. We then calculate the energy $E_+ = \frac{\left<+|H|+\right>}{\left<+|+\right>} = \frac{1}{2}\frac{\left<L|H|L\right> + \left<L|H|R\right>+\left<R|H|L\right> + \left<R|H|R\right>}{1+\left<L|R\right>}$. We note that we can write the numerator in matrix formalism 
+
+$$\text{Numerator}=\begin{pmatrix}\frac{1}{\sqrt{2}}\\\frac{1}{\sqrt{2}}\end{pmatrix}\begin{pmatrix}H_{LL} & H_{LR}\\H_{RL} & H_{RR}\end{pmatrix}\begin{pmatrix}\frac{1}{\sqrt{2}}\\\frac{1}{\sqrt{2}}\end{pmatrix}$$
+
+where we calculate $H_{RR} = H_{LL} = \left<L|H_L - V\delta(x-a)|L\right> = E_0 - V\kappa e^{-4\kappa a} \approx E_0$ and $H_{LR} = H_{RL} = \left<L|H_R-V\delta(x+a)|R\right> = \left<L|R\right>E_0 - V\kappa e^{-2\kappa a}$, and so the numerator becomes $\text{Num} \approx 2\left(E_0(1+\left<L|R\right>) - V\kappa e^{-2\kappa a}\right)$, giving our energy $E_+ = E_0 - \frac{V\kappa e^{-2\kappa a}}{1+\left<L|R\right>} = E_0 - V\kappa e^{-2\kappa a}$, because $\left<L|R\right> \sim e^{-4\kappa a}$. If we then repeat a similar procedure for $E_-$, we can just track sign changes and find $E_0 + V\kappa e^{-2\kappa a}$, and as expected the energy is higher for the antisymmetric superposition.
+
+(I need to copy this down from the beginning of the board/class) We discussed the matrix formalism at the beginning of class. Note that we can write $H\left|\psi\right>$ instead as $H$ being a matrix acting on some orthonormal basis, where $\psi$ is expressed as a vector in that orthonormal basis. We note that our orthonormal basis consists of $\left|n\right> = e^{ik_nx}$ so that the matrix elements of $H$ simply become $\left<m|H|n\right> = \int dx e^{-ik_mx}He^{ik_nx}$. Good stuff.
+
+But wait, what if we go from our matrix equation, and simply plug in our calculations to find $H = \begin{pmatrix}E_0&-V\kappa e^{-2\kappa a}\\-V\kappa e^{-2\kappa a}& E_0\end{pmatrix}$. The eigenvalues for this are very simple, we know to be $\left|+\right> = \begin{pmatrix}1\\1\end{pmatrix},\left|-\right> = \begin{pmatrix}1\\ -1\end{pmatrix}$, for which the eigenvalues are $E_+ = E_0 - V\kappa e^{-2\kappa a}, E_- = E_0 + V\kappa e^{-2\kappa a}$. 
+
+Let's sum up what we did. We guessed a splitting of the degenerate solutions for the individual wells, and we guessed the eigenstates based on the splitting patterns, and found the solutions. Alternatively, we could say that we need to find the Hamiltonian for which $\left|+\right>,\left|-\right>$ are eigenstates, and once we calculate that Hamiltonian we will arrive at the same solutions (this is confusing...ish...).
+
+We can then investigate the ``Rabi Oscillations'', where the SE becomes $i\hbar \frac{\partial}{\partial t}\left|\psi\right> = \begin{pmatrix}E_0&-J\\-J&E_0\end{pmatrix}\left|\psi\right>$, where we use $J = V\kappa e^{-2\kappa a}$, and we know the solution state $\left|\psi\right>$ is a superposition of $\left|L\right>,\left|R\right>$. We then ask what the solutions of the full SE are, for which we intuit two $\left|+(t)\right> = \left|+\right>e^{-i(E_0-J)t/\hbar}, \left|-(t)\right> = \left|-\right>e^{-i(E_0+J)t/\hbar}$. We will elaborate on this solution process. We first write $E\psi = H\psi \Leftarrow E\begin{pmatrix}\psi_L\\\psi_R\end{pmatrix} = \begin{pmatrix}E_0&-J\\-J&E_0\end{pmatrix}\begin{pmatrix}\psi_L\\\psi_R\end{pmatrix}$. We see that this corresponds to the time-dependent SE as $i\hbar \frac{\partial}{\partial t}\left(\psi_L\left|L\right> + \psi_R\left|R\right>\right) = H\left(\psi_L\left|L\right> + \psi_R\left|R\right>\right)$. We note that only the coefficients $\psi_L, \psi_R$ depend on time, so we can call $\left|L\right>,\left|R\right>$ basis vectors, and so if we multiply the TDSE by the bras $\left<L\right|,\left<R\right|$, we can write the results of both multiplications in the vector equation
+
+$$i\hbar \frac{\partial}{\partial t}\begin{pmatrix}\psi_L\\\psi_R\end{pmatrix} = \begin{pmatrix}H_{LL}&H_{LR}\\H_{RL} & H_{RR}\end{pmatrix}\begin{pmatrix}\psi_L\\\psi_R\end{pmatrix}$$
+
+We then guess that $\begin{pmatrix}\psi_L(t)\\\psi_R(t)\end{pmatrix} = \begin{pmatrix}\psi_L\\\psi_R\end{pmatrix}f(t)$, so separating variables by requiring only one function of time rather than two. We can then plug this into our TDSE vector equation above , we find $H\begin{pmatrix}\psi_L\\\psi_R\end{pmatrix} = \frac{i\hbar}{f(t)}\frac{\partial f(t)}{\partial t}\begin{pmatrix}\psi_L\\\psi_R\end{pmatrix}$, at which point we realize that $\frac{i\hbar}{f(t)}\frac{\partial f(t)}{\partial t} = E$, so we can use the same techniuqes as before to finish this off (I'm a tad lost, but he said a bit more here that I didn't catch).
+
+ Note that this super complicated hamiltonian has been reduced into four simple problems by use of the matricies. Continuing, however, we try to solve for the time evolution of $\psi(0) = \left|L\right> = \frac{1}{\sqrt{2}}\left(\left|+\right> - \left|-\right>\right)$. We find 
+
+\begin{align*}
+\psi(t) &= \frac{1}{\sqrt{2}}\left(\left|+\right>e^{-i(E_0-J)t/\hbar} - \left|-\right>e^{-i(E_0+J)t/\hbar}\right)\\
+&= \frac{1}{2}\left(\left|R\right> \left(e^{-i(E_0 - J)t/\hbar}-e^{-i(E_0+J)t/\hbar}\right) + \left|L\right>\left(e^{-i(E_0-J)t/\hbar} + E^{-i(E_0+J)t/\hbar}\right)\right)\\
+&= e^{-iE_0t/\hbar}\left(\left|R\right>i\sin\left(\frac{Jt}{\hbar}\right) + \left|L\right>\cos\left(\frac{Jt}{\hbar}\right)\right)
+\end{align*}
+
+Cool. So at time $t=0$, the particle is in the left state. However, as time evolves, the particle evolves to go to the right state as well. This technique of solution is called Rabi Oscillations, as was mentioned earlier. Electronic states also obey such a solution.
+
+\end{document}

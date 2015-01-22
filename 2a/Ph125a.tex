@@ -1,0 +1,1616 @@
+\documentclass[10pt]{report}
+\usepackage{fancyhdr, amsmath, amsthm, amssymb, hyperref, paracol, graphicx, setspace}
+\usepackage[margin=1in]{geometry}
+\usepackage[version=3]{mhchem}
+\newcommand{\scinot}[2]{#1\times 10^{#2}}
+\newcommand{\bra}[1]{\left<#1\right|}
+\newcommand{\ket}[1]{\left|#1\right>}
+\newcommand{\dotp}[2]{\left<#1\left.\right|#2\right>}
+\newcommand{\rd}[2]{\frac{d#1}{d#2}}
+\newcommand{\pd}[2]{\frac{\partial #1}{\partial#2}}
+\newcommand{\norm}[1]{\left|\left|#1\right|\right|}
+\newcommand{\abs}[1]{\left|#1\right|}
+\newcommand{\expvalue}[1]{\left<#1\right>}
+\newcommand{\rtd}[2]{\frac{d^2#1}{d#2^2}}
+\newcommand{\ptd}[2]{\frac{\partial^2 #1}{\partial#2^2}}
+\usepackage[labelfont=bf, font=scriptsize]{caption}
+\everymath{\displaystyle}
+
+\begin{document}
+
+%\doublespace
+% \pagestyle{fancy}
+% \rhead{Yubo Su - Ph125a - Mark Wise}
+%\setlength{\headheight}{15pt}
+
+\title{Physics 125!\\ Downs 107 MWF 10-11}
+\author{Yubo Su}
+\date{ }
+
+\maketitle
+
+\tableofcontents
+
+\chapter{Formula/Key Concepts}
+
+Key number, $\frac{e^2}{\hbar c} = \frac{1}{137}$.
+
+Time to spend some time organizing formulae. We first cover the formulae he called ``review'' i.e. first four lectures:
+
+\begin{itemize}
+	\item \emph{Dirac notation} uses $\ket{e_i}$ to represent elements of a vector space in $\mathbb{C}$ and $\bra{e_i}$ to represent its complex conjugate. 
+	\item Inner product of infinite vectors:
+		$$\dotp{\psi_2(t)}{\psi_1(t)}=\int dx \psi_2^*(x,t)\psi_1(x,t)$$
+	\item \emph{Hermitian} operators are self-adjoint $H=H^\dagger$, have real eigenvalues, and have an orthonormal eigenbasis. Recall that adjoint is used $\dotp{a}{\Omega b} = \dotp{\Omega^\dagger a}{b}$.
+	\item \emph{Unitary} operators are exponentials of some Hermitian operator $U=e^{iCH},C \in \mathbb{R}$, share an eigenbasis with their Hermitian operator, and has eigenvalues of modulus $1$. 
+	\item Operator $\Omega$ can be written in basis $\left\{ e_i \right\}$ by $\Omega_{ij}=\bra{e_i}\Omega\ket{e_j}$.
+	\item Completeness relation $I=\sum_i \ket{e_i}\bra{e_i}$ for basis $\left\{ e_i \right\}$. Part two of quantum swiss army knife (part one is integration by parts).
+	\item \emph{Projection operator} projects onto subspace of $\left\{ e_i \right\}$ spanned by $\left\{ e_j \right\}$; given by $P_j=\sum_j \ket{e_j}\bra{e_j}$.
+	\item \emph{Dirac delta function} is defined below, and has properties $\int \delta(x-x') dx = 1, x\neq x' \to \delta(x-x') =0$
+		$$\int \frac{dk}{2\pi}e^{ik(x'-x)}$$
+	\item $\dotp{x}{\psi} = \psi(x)$. 
+	\item Functions of operators are defined via power series of the functions. 
+	\item Schr\"odinger equation governs time evolution:
+		$$i\hbar\rd{}{t}\ket{\psi(t)}=H\ket{\psi(t)}$$
+	\item SE admits solution using unitary propogator $U$:
+		$$\ket{\psi(t)} = \underbrace{\exp\left[ -\frac{iH}{\hbar}t-t_0 \right]}_{\text{U}}\ket{\psi(t_0)}$$
+	\item Probability of a state $\omega$ is given by (where $P_\omega$ is projection operator):
+		$$P(\omega)=\frac{\abs{\dotp{\omega_i}{\psi}}^2}{\abs{\dotp{\psi}{\psi}}^2} = \frac{\bra{\psi}P_\omega\ket{\psi}}{\abs{\dotp{\psi}{\psi}}^2}$$
+	\item \emph{Commutators} and \emph{Anticommutators} are defined by $\left[ a,b \right]=ab-ba, \left\{ a,b \right\}ab+ba$. Products of classical variables map to half their anticommutator ($ab \to \left\{ A,B \right\}/2$).
+	\item $P(\omega)$ defined above becomes a probability density when $\omega$ is continuous (normalization $\sum_\omega P(\omega)=1 \Rightarrow \int P(\omega) d\omega$). 
+	\item \emph{Expectation value} is defined $\expvalue{\Omega}=\bra{\psi}\Omega\ket{\psi}$.
+	\item \emph{Compatible} operators have zero commutator and share an eigenbasis. Incompatible operators share no eigenstates, hence Uncertainty Principle.
+	\item \emph{Pauli spin matricies} $\vec{\sigma}$ is a set of basis vectors for 2x2 Hermitian matricies, given:
+		$$\sigma_1 = \begin{pmatrix}0&1\\1&0\end{pmatrix},\sigma_2=\begin{pmatrix}0&-i\\i&0\end{pmatrix},\sigma_3=\begin{pmatrix}1&0\\0&-1\end{pmatrix}$$
+	\item A two state system for which only relative energies matter (and energy is conserved) can be solved by the following propogator (derivation done in 10/9 lecture)
+		$$U= \cos\frac{gt}{\hbar}I - i\sin \frac{gt}{\hbar} \hat{g}\cdot\vec{\sigma}$$
+	\item The time evolution of an expectation value of a time-independent observable is:
+		$$\rd{}{t}\expvalue{\Omega} =-\frac{i}{\hbar}\left[ \bra{\psi} \left[ \Omega,H \right]\ket{\psi} \right]$$
+	\item A different way to write the propogator is:
+					$$U = \sum e^{-iE_n(t-t_0)}\ket{E_n}\bra{E_n}$$
+	\item Useful result: $\int dz e^{-kz^2} = \sqrt{\pi/k}$
+	\item The classical limit arises in quantum mechanics when $\hbar \to 0$. A really cool way to see this limit is with the Feynman Path formulation, which is not quoted here b/c we won't use it much.
+	\item The Hamiltonian for the harmonic oscillator is given by $H=\frac{p^2}{2m} + \frac{1}{2}m\omega^2x^2$ and yields solution 
+		$$\psi_n(x) = \left( \frac{m}{\pi\hbar 2^{2n}(n!^2)} \right)^{1/4} \exp \left[ \frac{-m\omega x^2}{2\hbar^2} \right]H_n\left[ \sqrt{\frac{m\omega}{\hbar}}x \right]$$
+        with $H_n$ the Hermite polynomials.
+	\item Creation/annihilation operators
+		\begin{align}
+			a&=\left( \frac{m\omega}{2\hbar} \right)^{1/2}X + i\left( \frac{1}{2m\omega\hbar} \right)^{1/2}P\\
+			a^\dagger&=\left( \frac{m\omega}{2\hbar} \right)^{1/2}X - i\left( \frac{1}{2m\omega\hbar} \right)^{1/2}P
+		\end{align}
+		$a^\dagger$ is the creation operator, and $a^\dagger a=N$ is the counting operator; it counts the number of quanta i.e. $H=\hbar\omega(N+1/2)$. Note $a\ket{n} = \sqrt{n}\ket{n-1}, a^\dagger\ket{n} = \sqrt{n+1}\ket{n+1}$.
+	\item There are also relations $x=\sqrt{\frac{\hbar}{2m\omega}}\left( a+a^\dagger \right)$ and $p = i\sqrt{\frac{m\omega\hbar}{2}}\left( a^\dagger -a \right)$.
+	\item Bound state wavefunctions in one dimension are not degenerate, and we can always choose each eigenstate to be real.
+	\item Laplacian in spherical coordinates is
+		$$\Delta^2 = \frac{1}{r^2}\ptd{}{r} + \frac{2}{r}\pd{}{r} + \frac{1}{r^2}\left( \ptd{}{\theta} + \cot \theta \pd{}{\theta} + \frac{1}{\sin^2\theta}\ptd{}{\phi} \right)$$
+	\item \emph{Equation of continuity} a.k.a. conservation of anything is
+		$$\pd{\rho}{t} + \Delta\cdot \vec{j}$$
+	\item Probability currents in QM are given for $\rho = \psi^*\psi$ and the current is 
+		$$\frac{i\hbar}{2m} \left[ \psi^*\Delta\psi - \psi\Delta\psi^* \right]$$
+	\item Electromagnetic Hamiltonian is 
+		$$H = \frac{\vec{p}^2}{2m} - \frac{q}{mc} \left( \vec{p}\cdot \vec{A} + \vec{A} \cdot \vec{p} \right) + \frac{q^2}{2mc^2}\vec{A}^2 + q\phi$$
+	\item Bosons and Fermions are two types of identical particles. QM cannot distinguish between switching identical particles, so system of identical particles must be in superposition of swapped states, either $+$ for bosons or $-$ for Fermions.
+	\item Relation between Poisson bracket and Commmutator is $\left\{ A,B \right\} = -\frac{i}{\hbar}\left[ A,B \right]$, where the poisson brcket is defined $\left\{ A,B \right\} = \sum_i \pd{A}{q_i}\pd{B}{p_i} - \pd{A}{p_i}\pd{B}{q_i}$. 
+	\item If something commutes with the Hamiltonian, its expectation value is constant in time.
+	\item Translations are given by $T(\epsilon) = 1-\frac{i\epsilon}{\hbar}P$ in one dimension, while finite transformations are $T(a) = e^{-\frac{ia}{\hbar}P}$.
+	\item Parity/Inversions don't have generating function because they're discrete; $\Pi = \Pi^{-1} = \Pi^\dagger$, and $\Pi^\dagger X \Pi = -X, \Pi^\dagger P \Pi = -P$. 
+	\item Rotations are given by 
+		$$U(\alpha \hat{z}) = e^{-\frac{i\alpha L_z}{\hbar}}$$
+		where $\alpha \hat{z}$ is just notation for rotation about $z$ axis. $L_z = -i\hbar\left( x\pd{}{y} - y\pd{}{x} \right) = -i\hbar \pd{}{\theta}$
+	\item Commutators for angular momenta in 3D (recall that these generate rotations in 3D) are
+		$$\left[ L_i, L_j \right] = i\hbar \sum_k \epsilon_{ijk}L_k$$
+		Each of these angular momenta operators commutes with any rotationally invariant Hamiltonian, don't forget!
+    \item Writing $J_i = L_i + S_i$ with $S_i$ the spin, we have propagator for rotation
+        $$U(R) = \exp \left[ -i \sum_{i} \frac{\alpha_iJ_i}{\hbar} \right]$$
+        Ladder operators for these $J_i$ are given
+        \begin{align}
+            J_+ \ket{j,m} &= \hbar \sqrt{(j-m)(j+m+1)}\ket{j,m+1}\\
+            J_- \ket{j,m} &= \hbar \sqrt{(j+m)(j-m+1)}\ket{j,m-1}\\
+            J^2\ket{j,m} &= \hbar^2 j(j+1)\ket{j,m}\\
+            J_z\ket{j,m} &= \hbar m \ket{j,m}
+        \end{align}
+    \item In $j=\frac{1}{2}$ case we have the generators of angular rotations
+        $$\vec{J} = \frac{\hbar}{2}\vec{\sigma}$$
+    \item Angular operators in Coordinate basis
+        \begin{align}
+            L_z &= -i\hbar \pd{}{\phi}\\
+            L_{\pm} &= \pm\hbar e^{i\phi}\left( \pd{}{\theta} \pm i\cot \theta \pd{}{\phi} \right)\\
+            L^2 &= -\hbar^2\left( \frac{1}{\sin\theta}\pd{}{\theta}\sin\theta\pd{}{\theta} + \frac{1}{\sin^2\theta} \ptd{}{\phi} \right)\\
+            \nabla^2 &= \frac{1}{r^2}\pd{}{r}r^2\pd{}{r} - \frac{L^2}{\hbar^2 r^2}
+        \end{align}
+    \item Spherical Harmonics $Y_m^l$ satisfy $L^2Y_m^l = \hbar^2l(l+1)Y_m^l$ and $L_zY_l^m = \hbar m Y_m^l$. First few are in lecture day 11/15. Spherical Harmonics are also written $Y_l^m(\theta,\phi) = A_{lm}P_l^m(\cos\theta)e^{im\phi}$ with $P_l^m$ the Legendre polynomials.
+    \item Radial Schrodinger equation arises after separation of variables ansatz $\psi = R(r) Y_{m}^l(\theta,\phi)$ to
+        \begin{align*}
+            \left[ -\frac{\hbar^2}{2m}\nabla^2 + V(r) \right]\psi &= E\psi\\
+            \left[ -\frac{\hbar^2}{2m}\left( \frac{1}{r^2}\pd{}{r}r^2\pd{}{r} - \frac{L^2}{r^2} \right)j+V(r) \right]\psi(r,\theta,\phi) &= E\psi(r,\theta,\phi)\\
+            \left[ -\frac{\hbar^2}{2m}\left( \frac{1}{r^2} \pd{}{r}r^2\pd{}{r} - \frac{l(l+1)}{r^2} \right) + V(r) \right]R(r) &= ER(r)
+        \end{align*}
+    \item Solutions to some problems in spherical
+        \begin{itemize}
+            \item Free particle
+                $$\psi(r,\theta,\phi) = j_r(kr)Y_l^m(\theta,\phi)$$
+                where we have $j$ the correct Bessel function.
+            \item Isotropic harmonic oscillator has energy levels $E = \hbar \omega(n+3/2)$ with $n=2k+l$ and so $l$ ranges from $0,1$ up to $n$ in steps of $2$ depending on the parity of $n$. Wavefunctions are of form
+                $$\psi_{Elm} = \frac{U_{el}}{r}Y_l^m(\theta,\phi), U\left(y= \sqrt{\frac{m\omega}{\hbar}}r \right) = e^{-y^2/2}y^{l+1}\sum_n C_ny^n$$
+                with the power series solution at the end. No special names here.
+            \item Hydrogen atom $E = -\frac{\mu e^4}{2\hbar^2(k+l+1)^2} = -\frac{\mu e^4}{2\hbar^2n^2}$ so that $l \in [0,n-1]$ and $m \in [-l,l]$ don't we forget, so there is $n^2$ degeneracy in $n$ energy level. Wavefunctions of form
+                $$\psi = \frac{\exp \left[ \frac{i\vec{p}_{cm} \cdot \vec{r}_{cm}}{\hbar} \right]}{(2\pi \hbar)^{3/2}}\frac{U(r)}{r}Y_l^m(\theta,\phi), U\left( \rho = \sqrt{\frac{-2\mu E}{\hbar^2}}r \right) = e^{-\rho} \rho^{l+1}L_{n-l-1}^{2l+1}(2\rho)$$
+                with $L$ the \emph{associated Laguerre polynomial} (refer to HW7 for properties). 
+        \end{itemize}
+    \item Hamiltonian for particle in $B$ field is given
+        $$H = \frac{p^2}{2m} - \frac{q}{2mc}\vec{B}\cdot \vec{L} = \frac{p^2}{2m} - \vec{\mu} \cdot \vec{B}$$
+        with $\vec{\mu} = -\frac{q\vec{L}}{2mc}$ magnetic moment. Spin contributes magnetic moment $\vec{\mu} = \gamma\vec{S}$. 
+    \item Spin eigenstates are labelled by $\ket{s, m_s}$ with $S^2, S_z$ same operators as before, though spin is separate degree of freedom. Spin-$\frac{1}{2}$ wavefunctions have two components for each spin state
+        $$\psi(x,t) = \begin{pmatrix}\psi_+(x,t)\\ \psi_-(x,t)\end{pmatrix}$$
+        where the spin operator is given $\vec{S} = \frac{\hbar}{2}\vec{\sigma}$, which makes the Hamiltonian $H = -\gamma \vec{B}\cdot \vec{S}$ with $\gamma = -\frac{ge}{2mc}$ and $g$ an experimental factor (electrons $2$, protons $5.6$, neutrons $-3.8$).
+    \item Noting $e^{-i\vec{\theta} \cdot \vec{S} / \hbar} = \cos \frac{\theta}{2}I - i\sin\frac{\theta}{2}\hat{\theta}\cdot \vec{\sigma}$, we see that the spin Hamiltonian $H_s = -\gamma\vec{B}\cdot \vec{S}$ is just a rotation by angle $\vec{\theta}(t) = -\gamma\vec{B}t$.
+    \item NMR is a spin problem, consult 11/22. Note that the Hamiltonian is time-dependent (oscillating magnetic field) so the differential equation must be solved straight-up (no $U = e^{-iHt/\hbar}$). Resonance occurs when we choose frequency of magnetic field $\omega = \gamma B'$ with $B'$ the magnitude of the oscillating field.
+    \item Stern Gerlach is an experiment that shows quantization of angular momenta. 
+    \item Consider two spin-$\frac{1}{2}$ particles. $S_z = S_{z1} + S_{z2}$ operates on the linear combinations of the two particles as $S_z \ket{++} = \hbar\ket{++}, S_z \ket{\pm \mp} = 0, S_z \ket{- -} = -\hbar\ket{--}$. Note the degeneracy.
+    \item The eigenvectors of the total spin operator $S^2 = S_1^2 + S_2^2$ are $\ket{++}, \ket{--}, \frac{\ket{+ -} + \ket{- +}}{\sqrt{2}}, \frac{\ket{+ -} - \ket{- +}}{\sqrt{2}}$, corresponding to total angular momentta $1,1,1,0$ respectively. Note that $S^2, S_z$ share an eigenbasis again as we expect.  Note also the triplet states are all symmetric while the singlet state is antisymmetric.
+    \item Clebsch-Gordan coefficients generalizes the above.
+\end{itemize}
+
+\chapter{9/30 - Introduction/Dirac Notation}
+
+Problem set handed out every Wednesday morning in class, returned next Wednesday 4PM out where problem sets are due at Professor's office. Returned the next Wednesday in class or at office. Extension policy is to talk to Professor.
+
+Website is \url{https://sites.google.com/site/ph125ab}. TA/office hour information is on the website. Grading distribution is:
+
+\begin{itemize}
+	\item Problem sets - 40\%
+	\item Midterm - 30\%
+	\item Final - 30\%
+\end{itemize}
+
+Collaboration policy is ``try to do the problem set.'' Tests are take home.
+
+Linear algebra is the basic fundamental of QM; Shankar 1-57 is a great review. 
+
+Let's discuss the difference between states of particles in QM/classical. Assume a particle in 1D. In QM, the particle is described by a wavefunciton $\psi(x,t)$, whereas in classical the particle is described by $x(t),p(t)$. In QM, the variables $x,p$ map to the QM operators $X,P$ (Uppercase). The way the operators operate on the wavefunction is $X:\psi(x,t) \to X\psi(x,t), P:\psi(x,t) \to -i\hbar \frac{\partial}{\partial x} \psi(x,t)$. We will be working mostly in Dirac notation.
+
+We have some linear basis for our vector space $\{\vec{v_i}\}$ such that these basis vectors are linearly independent. We then define the dot product $\vec{w}\cdot\vec{v}$ to have the following properties:
+
+\begin{itemize}
+	\item Maps two vectors to a scalar
+	\item Not commutative: $\vec{w}\cdot\vec{v} =(\vec{v}\cdot\vec{w})^*$
+	\item Linear in second argument ($\vec{w}\cdot\left( \alpha\vec{v}_1 + \beta\vec{v}_2 \right) = \alpha\vec{w}\cdot\vec{v}_1 + \beta \vec{w}\cdot\vec{v}_2$) and antilinear in the first argument ($\left(\alpha\vec{w}_1 + \beta\vec{w}_2\right) \cdot \vec{v} = \alpha^*\vec{w}_1\cdot\vec{v} + \beta^* \vec{w}_2\cdot\vec{v}$)
+	\item $\vec{v}\cdot\vec{v} = \norm{\vec{v}}^2$
+\end{itemize}
+
+Our $n$-dimensional vector space $\{e_i\}$ we assume to be orthonormal. We will change our notation of vector spaces to Dirac notation: $\vec{v}\to\ket{v}, \vec{w}\cdot\vec{v} \to \dotp{w}{v}, \psi(x,t) \to \ket{\psi(t)}$. We then generalize inner product; $\dotp{\psi_2(t)}{\psi_1(t)}=\int dx \psi_2^*(x,t)\psi_1(x,t)$, and we can generalize the norm squared. 
+
+We then discuss Hermitian operators. Let $\Omega$ be a linear operator (i.e. $\Omega\ket{\alpha V + \beta W} = \alpha\Omega \ket{v} + \beta\Omega\ket{w}$). We also have the adjoint $\Omega^\dagger$ such that $\dotp{v}{\Omega w} = \dotp{\Omega^\dagger v}{w} = \dotp{w}{\Omega^\dagger v}^*$. Hermitian operators are defined such that $\Omega^\dagger = \Omega$. 
+
+Vectors $\ket{v}$ can be decomposed into components of an orthonormal basis $\{e_i\}$ such that it has components $v_i$. All operators can be represented as a matrix in terms of the orthonormal basis as well. $\Omega\ket{v}=\ket{w}$, then we write in the basis $\sum{W_i\ket{e_i}} = \sum{V_i\Omega\ket{e_i}}$, then we dot both sides with $e_j$: $w_j=\sum{v_i\bra{e_j}\Omega\ket{e_i}}$. We can then introduce the matrix elements $\Omega_{ji}=\bra{e_j}\Omega\ket{e_i}$ such that we then write $w_j=\sum{\Omega_ji}v_i$, which is then a matrix equation. This is how to determine the matrix elements of an arbitrary operator in any orthonormal basis.
+
+Most operators that we deal with will be infinite dimensional, but feel free to think of the operators as matricies anyhow. 
+
+We continue manipulating our earlier result: $\bra{e_j}\Omega\ket{e_i} = \dotp{\Omega^\dagger}{e_i} = \dotp{e_i}{\Omega^{\dagger}_j}^*$, so $\Omega_{ji}=(\Omega^{\dagger})^*_{ij}$. We first investigate the identity operator $I$, which we write as $I=\sum{\ket{e_i}\bra{e_i}}$, also called the completeness relation.
+
+We can then examine another linear operator where we take the first $s$ elements of an $n$-dimensional vector space, which produces a subspace. The identity operator for the subspace, but not the full space, is given by $P_s=\sum_{i=1}^{s}{\ket{e_i}\bra{e_i}}$. This is called a projection operator. An important property of these operators is that they ``square themselves'': $P_s^2 = P_s$. It is also Hermitian. 
+
+\chapter{10/2 - Delta and wave functions}
+
+Review: Recall that the identity operator for an $n$ dimensional vector space is given by $\sum_i^n \ket{e_i}\bra{e_i}$, while the projection vector of the first $s$ dimensions is given by $\sum_i^s \ket{e_i}\bra{e_i}$. Our observables then are given by matricies and thus have eigenvectors and eigenvalues. Note that our operators are also Hermitian.
+
+So, for example, if we examine operator $\Omega$ with eigens $\omega_1,\omega_2$, we find $\bra{\omega_2}\Omega\ket{\omega_1} = \omega_1\dotp{\omega_2}{\omega_1}$, but we can also find that we can manipulate $\dotp{\Omega\omega_2}{\omega_1} = \dotp{\omega_1}{\Omega\omega_2}^* = \omega_2^*\dotp{\omega_2}{\omega_1}$. We can further determine that Hermitian operators have orthonormal eigenbasis with real eigenvalues. Let's get an example, momentum. 
+\begin{align}
+	-i\hbar \pd{}{x}\psi_p(x) &= p\psi_p(x)\\
+\end{align}
+This then has a simple exponential solution, but it does not normalize (i.e. $\int N^2\abs{\psi_p(x)}^2 dx = 1$ where $N$ is the normalizing factor) in infinite space. We still don't have a solution to normalization. The first solution is to put the particle in a box of length $L$, so the limits of integration aren't infinite. After then implementing periodic boundary conditions of $\psi(0) = \psi(L)$, we can confirm that $p$ is Hermitian:
+\begin{align}
+	\int_0^L dx \psi_2(x)^*\left( -i\hbar \rd{}{x}\psi_1(x) \right) &= -i\hbar \psi_2^*(x)\psi_1(x)|_0^L + i\hbar\int dx \left( \rd{}{x}\psi_2^*(x) \right)\psi_1(x)\\
+	&= \int dx \left( i\hbar \rd{}{x} \psi_2(x)\right)^*\psi_1(x)
+\end{align}
+After yielding the solution $\psi_p(x) = \frac{1}{\sqrt{L}}e^{i\left( \frac{2\pi n}{L}\right)} x = e^{ipx/\hbar}$ where $p=\hbar k$. We digress a bit to talk about Fourier transforms: let there be a function $f(x)$ that is ``nice'' enough to yield to the transform. We can then write $\tilde{f}(k)$ such that the two are related by (all integrals are over infinity)
+\begin{align}
+	\tilde{f}(k) &= \int dx \frac{e^{ikx}}{\sqrt{2\pi}}f(x)\\
+	f(x) &= \int \frac{dk}{2\pi}e^{-ikx}\tilde{f}(k)
+\end{align}
+We will then doubly transform our original function, and allow for changing order of integration; policy in this class is to do so unless nonsense ensues.
+\begin{align}
+	f(x)&=\int dk \frac{e^{-ikx}}{\sqrt{2\pi}}\int dx \frac{e^{ikx'}}{\sqrt{2\pi}}f(x')\\
+	&= \int dx \left( \int \frac{dk}{2\pi}e^{ik(x'-x)} \right)f(x')\\
+	&= \int dx \delta(x-x') f(x')
+\end{align}
+where $\delta(x-x')$ is the Dirac Delta function. 
+
+We return to our former problem of normalizing state vectors, now using the Dirac Delta function. We write the state function with a convention (also normalizing coefficient) $\ket{p} = \frac{e^{ipx/\hbar}}{\sqrt{2\pi\hbar}}$. But now, instead of requiring basis vectors be orthonormal, we instead use the Dirac Delta:
+\begin{align}
+	\dotp{p}{p} &= \int dx \psi_p^*(x)\psi_p(x) \\
+	&= \frac{1}{2\pi\hbar}\int dx e^{i(p-p')x/\hbar}\\
+	&= \frac{1}{2\pi} \int du e^{i(p-p')u}\\
+	&= \delta(p-p')
+\end{align}
+where $u=x\hbar$. This is our new eigenbasis to our momentum operator. We examine the position function similarly, and we find $\dotp{x}{x'}=\delta(x-x')$ is the eigenbasis. 
+
+We then ask the question of what the state function really is. Let's examine with $\dotp{x'}{\psi} = \int dx' \delta(x'-x)^*\psi(x') = \psi(x)$. Thus, the wave function $\psi(x)$ comprises the components of the state vector in the $x$ eigenbasis. Moreover, any space could be used as our basis for describing these wavefunctions. The reason we typically use $x$ space is due to the Schroedinger Equation, where $V(x)$ would act as multiplication. 
+
+Let's return to the completeness relation. The integral formulation then looks like $\int dp \ket{p}\bra{p} = I$ with our new normalization criterion. We can then dot both sides with $\bra{x'},\ket{x}$ to check that everything checks out. Thus:
+\begin{align}
+	\int dp \dotp{x}{p}\dotp{p}{x'} &= \bra{x}I\ket{x'} \\
+	&= \delta(x-x')
+\end{align}
+Let's talk then about functions of operators. Let's give $\Omega$ an orthonormal eigenbasis $\ket{\omega_i}$. Then if we have $f(\Omega)\ket{v}$, we express $\ket{v}$ in the $\omega_i$ basis and find $\sum f(\Omega)v_i\ket{\omega_i} = \sum v_if(\omega_i)\ket{\omega_i}$. 
+
+But of course, our basis might not be eigenvectors. Another way to envision this is to expand $f$ as a power series $f(x) = \sum \frac{f^{(n)}(0)x^n}{n!}$, so then we find $f(\Omega) = \sum \frac{f^n(0)}{n!}\Omega^n$. These are the two simplest cases, and the only ones we will deal with in this class.
+
+We next examine the Hamiltonian. Classically, $H=\frac{p^2}{2m}+V(x)$, such that $p=mx,m\ddot{x}=-rd{V}{x}$, Newtonian formalism. We can also write $\dot{p}=-\pd{H}{x},\dot{x}=\pd{H}{p}$, the Hamiltonian formalism. Even in quantum mechanics, the Hamiltonian governs the dynamics of the system, just like in classical mechanics. 
+
+\chapter{10/4 - More fundamentals of QM}
+
+We denote the state function $\ket{\psi}$ and our dynamical variables $x(t),p(t)$ correspond to Hermitian operators. For example, letting $\ket{x}$ be an eigenvector of $X$, we find $\bra{x}X\ket{x'} = x\delta(x-x')=x'\delta(x-x')$. When we try $\bra{x}P\ket{x'} = -i\hbar\rd{}{x}\delta(x-x') = i\hbar\rd{}{x'}\delta(x-x')$.
+
+We can then examine $\bra{x}P\ket{\psi} = \int dx' \bra{x}P\ket{x'}\dotp{x'}{\psi} = \int dx' \left( -i\hbar\rd{}{x}\delta(x-x') \right)\psi(x) = -i\hbar\rd{\psi(x)}{x}$.
+
+We can then discuss the probability of getting an eigenstate $\ket{\omega}$ being $P(\omega)\propto\abs{\dotp{\omega}{\psi}}^2$.
+
+We still haven't discussed how dynamics work in QM, i.e. how we propogate forward in time. We call this equation the Schrodinger Equation:
+$$i\hbar\rd{}{t}\ket{\psi(t)} = H\ket{\psi(t)}$$
+Now, since the Hamiltonian is identified with the total energy, we will assume zero energy transfer for now and assume $H$ is time-independent e.g. $H=\frac{p^2}{2m}+ V(x)$. This SE is a little different from what we've seen before, but we can easily recover our familiar one using the above Hamiltonian, the classical mechanics one. We will dot both sides with $\bra{x}$ and proceed:
+\begin{align}
+	i\hbar\rd{}{t}\dotp{x}{\psi(t)} &= \bra{x}H\ket{\psi(t)}\\
+	&= \displaystyle\int\limits_{\infty}^{\infty} dx' \bra{x}H(X,P)\ket{x'}\dotp{x'}{\psi(t)}\\
+	i\hbar\rd{}{t}\psi(x,t)&=\int dx' \bra{x}\frac{p^2}{2m}+ V(x)\ket{x'}\psi(x',t)\\
+	&= \int dx' \bra{x}\frac{p^2}{2m}\ket{x'}\psi(x',t) + V(x')\delta(x-x')\psi(x',t)\\
+	&= \int \frac{1}{2m}\int dz \bra{x}P\ket{z}\bra{z}P\ket{x'}dx' + V(x)\psi(x,t)\\
+	&= -\frac{\hbar^2}{2m}\int \int dz\left( \rd{}{x}\delta(x-z)\rd{}{z}\delta(z-x') \right) dx'+ V(x)\psi(x,t)\\
+	&= -\frac{\hbar^2}{2m}\int \int dz\left( \rd{}{x}\rd{}{z}\delta(x-x') \right) dx'+ V(x)\psi(x,t)\\
+	&\vdots\\
+	&= -\frac{\hbar^2}{2m}\frac{d^2}{dx^2}\psi(x,t) + V(x)\psi(x,t)
+\end{align}
+where it is crucial to note that $V(x)$ is defined in the $\ket{x,x'}$ basis, and so $\bra{x}V(x)\ket{x'}=V(x')\delta(x-x')$. 
+
+We can solve the SE iin the original form pretty straightforwardly:
+\begin{align}
+	i\hbar\rd{}{t}\ket{\psi(t)}&=H\ket{\psi(t)}\\
+	\ket{\psi(t)} &= \underbrace{\exp\left[ -\frac{iH}{\hbar}t-t_0 \right]}_{\text{U}}\ket{\psi(t_0)}
+\end{align}
+
+We call the exponential $U(t,t_0)$ the time evolution operator. It is unitary $UU^\dagger=1$. Every unitary operator is an exponential of some factor of $iH$ where $H$ is a hermitian operator. This means that the unitary matrix also has an orthonormal basis ($U=e^{iH}$ in the eigenbasis of $H$), and moreover it has eigenvalues of modulus $1$. We also note that unitary matricies preserve dot products. 
+
+We then discuss measurements some more. If we want to measure some operator $\Omega$, we would find all eigenkets $\ket{\omega}$ and express $\ket{\psi} = \sum_i \ket{\omega_i}\dotp{\omega_i}{\psi}$. We then note $P(\omega)\propto \abs{\dotp{\omega}{\psi}}^2 = \dotp{\omega}{\psi}^*\dotp{\omega}{\psi}=\dotp{\psi}{\omega}\dotp{\omega}{\psi} = \bra{\psi}P_\omega\ket{\psi}$, the projection operator.
+
+We can discuss the actual probability now, i.e. normalization, by writing $P(\omega)=\frac{\abs{\dotp{\omega_i}{\psi}}^2}{\sum_i P(\omega_i)} = \frac{\abs{\dotp{\omega_i}{\psi}}^2}{\abs{\dotp{\psi}{\psi}}^2}$. Note that $P(\omega)$ is the probability, $P_\omega$ is the projection operator. For example, if our state is $\ket{\psi}=\frac{\alpha\ket{\omega_1}+\beta\ket{\omega_2}}{\sqrt{\alpha^2+\beta^2}}$, then $P(\omega_1)=\frac{\abs{\alpha}^2}{\abs{\alpha}^2+\abs{\beta}^2}$. 
+
+We run into some complications around here. First of all, $xp$ might map to $XP$ or $PX$, but quantum mechanically that can't be true; $[X,P]=i\hbar I$. We can see this by
+\begin{align}
+	[X,P]\psi(x) &= x\left( -i\hbar\rd{}{x}\psi\right)+ i\hbar\rd{}{x}\left( x\psi \right)\\
+	&= i\hbar\psi(x)
+\end{align}
+where we invoke product rule differentiation. 
+
+We then posit that $xp$ maps to $\Omega=\alpha XP + \beta PX$ such that $\alpha+\beta=1$ and $\Omega$ is Hermitian, or $\Omega=\Omega^\dagger$. So $\Omega^\dagger=\alpha P^\dagger X^\dagger + \beta X^\dagger P^\dagger$, and so $\alpha=\beta$. Thus, $\Omega=\frac{1}{2}\left( XP + PX \right)$ corresponds to $xp$ in classical mechanics. 
+
+If we run across an operator that doesn't correspond to a classical dynamic variable, then we just have to find an operator that reproduces the correct behavior. This doesn't happen often, but usually first-principle calculations can yield the correct operator for something like spins. 
+
+Our formulae thusfar have only treated non-degenerate eigenvalues. First we treat for two degenerate eigenvalues, which generalizes easily. We treat the corresponding eigenvectors to some degenerate eigenvalue as $\ket{\omega,1},\ket{\omega,2}$. The projection operator for the eigenvalue is then $P_\omega=\ket{\omega,1}\bra{\omega,1} + \ket{\omega,2}\bra{\omega,2}$. Then, since $P_\omega=\frac{\bra{\psi}P_\omega\ket{\psi}}{\dotp{\psi}{\psi}}$, and suddenly we're out of time in class. Poop. Until next time, kiddos!
+
+\chapter{10/7 - End of review, start of dynamics}
+
+We will cover a few examples of QM systems to get the hang of QM, though not all in one lecture. These will evolve according to the propogator equation mentioned in the previous lecture. These are:
+\begin{itemize}
+	\item 2 state systems
+	\item 1D free particle
+	\item Harmonic oscillator
+	\item Coulomb Problem Atoms 3D
+\end{itemize}
+We recall that $P(\omega)=\frac{\abs{\dotp{\omega}{\pi}}^2}{\dotp{\psi}{\psi}}$, or just the denominator if we're normalized. This holds for non degenerate eigenvalues. For degenerate eigenvalues, we compute the correct projection vector for the corresponding eigenspace (i.e. tensor(?) product of orthonormal eigenvectors), and just write $P(\omega)=\frac{\bra{\psi}P_\omega\ket{\psi}}{\dotp{\psi}{\psi}}$. That's the generalization, that's it.
+
+We recall that we can express our wavefunction in terms of the eigenvectors $\{\ket{\psi}\}$ as $\ket{\psi} = \int d\omega \ket{\omega}\dotp{\omega}{\psi}$. So $I = \int d \omega\ket{\omega}\bra{\omega}$ is the completeness relation. Then, to show that we are in an orthonormal basis, we can dot both sides of our expression for $\ket{\psi}$ with $\bra{\omega'}$, giving $\dotp{\omega'}{\psi} = \int d\omega\dotp{\omega'}{\omega}\dotp{\omega}{\psi} = \int d\omega\delta(\omega-\omega')\dotp{\omega}{\psi}$, which satisfies our orthonormality condition.
+
+If we then require normalization over probabilities, then $P(\omega) = \abs{\dotp{\omega}{\psi}}^2$, and taking the integral of both sides we can use the completeness relation and derive that $\dotp{\psi}{\psi}=1$, which is a given. Thus, $P(\omega)$ is actually a probability density, rather than the actual probability.
+
+So let's say that we have two eigenstates $\ket{\lambda_1},\ket{\lambda_2}$ and some state $\ket{\omega}=\frac{1}{\sqrt{3}}\ket{\lambda_1}+\sqrt{\frac{2}{3}}\ket{\lambda_2}$. It is impossible to conclude the specific probability distribution off of single measurements, as measurements perturb the system. Thus, we speak of \emph{ensembles}. 
+
+We can discuss the expectation value of some operator $\expvalue{\Omega}=\sum P(\omega_i)\omega_i = \sum \abs{\dotp{\omega_i}{\psi}}^2\omega_i = \sum \dotp{\psi}{\omega_i}\dotp{\omega_i}{\psi}\omega_i$. We can then insert an $\Omega$ into the first inner product, then use completeness relation to write $\expvalue{\Omega}=\bra{\psi}\Omega\ket{\psi}$. 
+
+We can then compute the statistical uncertainty in the expectation value $\Delta \expvalue{\Omega} = \expvalue{\left(\Omega-\expvalue{\Omega}I\right)^2}^{1/2}$. (I know that there's a simpler relation, but he didn't introduce it\dots). 
+
+Let's exhibit two operators $\Omega,\Lambda$. We want to produce a state that's simultaneously an eigenstate of both, $\ket{\omega,\lambda}$. Let's compute the commutator acting on this state $\left[ \Omega,\Lambda \right]\ket{\omega,\lambda}=\left( \Omega\Lambda-\Lambda\Omega \right)\ket{\omega,\lambda}$. We can clearly see that this reduces to $0$, when we compute out eigenstates. So then $\ket{\omega,\lambda}$ is either an eigenvector with $0$ eigenvalue or the two operators commute. If they commute, i.e. their commutator is zero, they're called \emph{compatible}, while if they don't commute it is possible to demonstrate that they have no zero eigenvalues. Let's investigate these two separately:
+
+Let $\ket{\psi}$ be a state that we can express in this simultaneous eigenbasis as $\ket{\psi} = \alpha\ket{\omega_3,\lambda_3}+\beta\ket{\omega_1,\lambda}+\gamma\ket{\omega_2,\lambda}$, where we cover the case of single degeneracy that can easily be generalized. We want normalization such that $|\alpha|^2+|\beta|^2+|\gamma|^2=1$. Suppose we measure $\Omega$ and we obtain $\omega_3$, then the probability that if we measure $\Lambda$ we get the probability $P(\omega_3,\lambda_3)$ is $|\alpha|^2$. Same applies for measuring $\Lambda$ then $\Omega$ and getting $\lambda_3,\omega_3$ in sequence. Suppose we then measure $\Omega$ and we obtain $\omega_1$, then $P(\omega_1,\lambda)=|\beta|^2$. However, now if we measure in reverse order and find measuring $\Lambda$ yields value $\lambda$, then we have some new state $P_\Lambda\ket{\psi}=\beta\ket{\omega_1,\lambda}+\gamma\ket{\omega_2,\lambda}$, and the probability of arriving here is $|\beta|^2+|\gamma|^2$. Then, if want to find the probability of finding $\omega_i$, then we find the probability is $\frac{|\beta|^2}{|\beta|^2+|\gamma|^2}$, and the cumulative probability is amazingly still $|\beta|^2$.
+
+This marks the end of review; we start computing some dynamics!
+
+Let's investigate a two-state system, with two orthonormal states. This is a zero-dimensional system. Then our Hamiltonian will be a $2\times2$ matrix, and all states are written as two component kets. Then, if energy is conserved, our Hamiltonian is Hermitian. It is often expressed in terms of the four basis vectors for $2\times2$ matricies:
+$$I=\begin{pmatrix}1&0\\0&1\end{pmatrix},\sigma_1 = \begin{pmatrix}0&1\\1&0\end{pmatrix},\sigma_2=\begin{pmatrix}0&-i\\i&0\end{pmatrix},\sigma_3=\begin{pmatrix}1&0\\0&-1\end{pmatrix}$$
+These are basis vectors for Hermitian matricies, and we refer to the latter three vectors $\vec{\sigma}$. We can thus write $H=CI +  \sum g_i\sigma_i = CI + \vec{g}\cdot\vec{\sigma}$. Then we try evolution:
+$$\ket{\psi(t)}=e^{-iHt/\hbar}\ket{\psi(0)} = e^{-iCt/\hbar}e^{-i\vec{g}\cdot\vec{\sigma}t/\hbar}\ket{\psi(0)}$$
+Thus, since the $C$ (written in class as a happy face lol) is just a phase difference, we can write our Hamiltonian as $H=\vec{g}\cdot\vec{\sigma}$. We note a curious property about the $\sigma_i$, that $\{\sigma_i,\sigma_j\}$, the anticommutator, yields $2\delta_{ij}$, the Kronecker delta.
+
+We can write $H$ more explicitly as
+$$H=\begin{pmatrix}g_3&g_1-ig_2\\g_1+ig_2&-g_3\end{pmatrix}=\vec{g}\cdot\vec{\sigma}=g\hat{g}\cdot\vec{\sigma}$$
+with some alternative representations (think Bloch sphere/quantum computing!). We then compute the propogator
+\begin{align}
+	e^{-iHt/\hbar}&=e^{\frac{-igt}{\hbar}\hat{g}\cdot\vec{\sigma}}\\
+	&= \sum_{n=0}^\infty \left( \frac{-igt}{\hbar} \right)^n \frac{1}{n!}\left( \hat{g}\cdot\vec{\sigma} \right)^n
+\end{align}
+
+We will finish this work later. 
+
+\chapter{10/9 - 2 state systems}
+
+We will focus on two state systems under conservation of energy. The two orthonormal basis vectors are then $\ket{1},\ket{2}$. We can express some state $\ket{\psi}$ in the basis $\ket{\psi} = \psi_1\ket{1} + \psi_2\ket{2}$. The Hamiltonian can then be expressed as a sum of the Pauli spin matricies $\vec{\sigma}$ and $I$. We thus express the Hamiltonian $H=E_0I+\sum_i g_i\sigma_i$. Last lecture we discussed $E_0$ being irrelevant, but $E_0$ represents a constant shift in all energies. We don't care about anything but relative energies, but sometimes (i.e. dark energy), the absolute energy matters. $E_0$ is the baseline energy, which doesn't affect dynamics, so we will write our Hamiltonian the same way as we wrote last class, $H=\vec{g}\cdot\vec{\sigma}=g\hat{g}\cdot\vec{\sigma}$. 
+
+We can compute the dynamics of the system corresponding to the Hamiltonian by computing the propogator 
+\begin{align}
+	e^{-iHt/\hbar}&=\sum \left(\frac{-igt}{\hbar}\right)^n \frac{1}{n!}(\hat{g}\cdot\vec{\sigma})^n\\
+	&= \sum \left( \frac{-igt}{\hbar} \right)^{2n} \frac{1}{2n!}(\hat{g}\cdot\vec{\sigma})^{2n} + \sum \left( \frac{-igt}{\hbar} \right)^{2n+1} \frac{1}{(2n+1)!}(\hat{g}\cdot \vec{\sigma})^{2n+1}
+\end{align}
+We then recall the anticommutator of the Pauli matricies yields $2\delta_{ij}$. We can then simpily $(\hat{g}\cdot\vec{\sigma})^2 = \sum \sum \hat{g}_i\hat{g}_j \sigma_i \sigma_j = \sum \sum \hat{g}_i\hat{g}_j \frac{1}{2}(\sigma_i \sigma_j + \sigma_j \sigma_i) = \sum \hat{g}_i\hat{g}_i = 1$ where we write with the $1/2$ by regrouping terms from the other half of the summation (i.e. taking the $(i,j) \to (j,i)$ case).
+
+This means that $(\hat{g}\cdot\vec{\sigma})^n$ is $I$ when $n$ is even, and $\hat{g}\cdot\vec{\sigma}$ when $n$ is odd. Thus, our sum becomes:
+\begin{align}
+	e^{-iHt/\hbar}&= I\sum \left( -1 \right)^n\left( \frac{gt}{\hbar} \right)^{2n} \frac{1}{2n!} -i \sum \left( -1 \right)^n\left( \frac{gt}{\hbar} \right)^{2n+1} \frac{1}{(2n+1)!} (\hat{g}\cdot\vec{\sigma})\\
+	&= \cos\frac{gt}{\hbar}I - i\sin \frac{gt}{\hbar} \hat{g}\cdot\vec{\sigma}
+\end{align}
+We can then examine the probability of, say, $\ket{1}$ transforming to $\ket{2}$ after some time by the expression given by 
+\begin{align}
+	P_{12}(t) &= \abs{\bra{2}e^{-iHt/\hbar}\ket{1}}^2 \\
+	&= \abs{\cos\frac{gt}{\hbar}I_{21} - i\sin \frac{gt}{\hbar} \hat{g}\cdot\vec{\sigma}_{21}}\\
+	&=\abs{0-i\sin\frac{gt}{\hbar}\left( \frac{g_1 + ig_2}{g} \right)}^2\\
+	&= \sin^2\frac{gt}{\hbar}\left( \frac{g_1^2+g_2^2}{g^2} \right)
+\end{align}
+This forms the basis of quantum computing.
+
+We examine another two-state system, one that will definitely not be tested. We will discuss neutrinos (thank god it's not on the test). We do a bit of particle physics background. The electron and proton are stable, but the neutron is not stable, breaking down into a proton and a neutron, but conservation of energy/matter introduces the antineutrino upon decay of neutrons. Neutrons in nuclei do not decay because the binding energy of the nucleus ensures no decay. The more massive counterparts to the electron, the muon and tau, can decay into a lesser counterpart, its corresponding antineutrino, and the antineutrino that corresponds to the original particle. If a cosmic ray comes in and interacts with the atmosphere then pions are produced. The positive pions produces positive muons and neutrinos, while the negative pions produce negative pions and antineutrinos, on very small time scales. These muons then decay to electrons, with more neutrinos. We can then measure these interactions, which we've done. This is our bridge back into QM.
+
+Long story short, we expect to measure two muon neutrinos per electron neutrinos by first approximation, and theory predicts $1.96$. However, the data predict only $0.63$ as much as theory predicts. The wrong part of our theory is that the operator doesn't take the neutrinos as eigenstates, so over time evolution the neutrinos can change into one another! We will examine this problem.
+
+Define the three states $\ket{e},\ket{\tau}, \ket{\mu}$. The $\ket{e}$ don't influence the dynamics of the problem, so we will approximate the problem in two dimensions $\ket{\tau},\ket{\mu}$. The two basis vectors let's call $\ket{\nu_i}$, which are not the same as our $\tau,\mu$ states. We can find the unitary transformation operator between these two states by
+$$\begin{pmatrix}\ket{\mu}\\\ket{\tau}\end{pmatrix}=U\begin{pmatrix}\ket{\nu_1}\\\ket{\nu_2}\end{pmatrix}$$
+So it turns out that $U$ is real, so it must be a rotation matrix, so $U=\begin{pmatrix}\cos\theta&\sin\theta\\-\sin\theta&\cos\theta\end{pmatrix}$. Then, we can write
+$$\ket{\mu(t)} = \cos\theta e^{-iE_1t/\hbar}\ket{\nu_1} + \sin\theta e^{-iE_2t/\hbar}\ket{\nu_2}$$
+It will take a long time to finish this example, so we will just do this next class.
+
+\chapter{10/11 - Uncertainty Principle!}
+
+Curiously the Hamiltonian from the last lecture has some eigenstates that are not the states that we seek to measure! The ``mass eigenstates'' are the actual eigenstates, while the ``weak eigenstates'' are the ones that we measure i.e.$\ket{\tau},\ket{e},\ket{\nu}$. We approximate this via $\ket{\nu},\ket{\tau}$ only two weak eigenstates, and $\ket{1},\ket{2}$ the ``mass eigenstates.'' We have some particle that starts as a $\ket{\nu}$. We then write out the equation of propagation:
+$$e^{-iHt/\hbar}\ket{\nu} = \cos\theta e^{-iE_1t/\hbar}\ket{1} + \sin\theta e^{-iE_2t/\hbar}\ket{2}$$
+Neutrinos are ultrarelativistic, so their energy eigenstates are given by $E_i=\sqrt{p^2c^2 + m_i^2c^4}$, and since $m_i$ is small, we can do a Taylor expansion to obtain $E_i=cp+\frac{m_i^2c^4}{2pc}$. Note that the $m_i$ correspond to the mass eigenvalues. We then write:
+$$e^{-iHt/\hbar}\ket{\nu} = e^{-icpt/\hbar}\left[ \cos\theta e^{-i(m_1^2c^3t/2p\hbar}\ket{1} + \sin\theta e^{-i(m_2^2c^3t/2p\hbar} \ket{2} \right]$$
+We then note the phase factor out in the front is useless, then we can write $p=E/c, L=ct$ as
+$$e^{-iHt/\hbar}\ket{\nu} \propto \left[ \cos\theta \exp\left[ \frac{-i(m_1^2c^3}{2E\hbar}L \right]\ket{v_1} + \sin \theta \exp\left[ \frac{-i(m_2^2c^3t}{2E\hbar}L \right]\ket{2} \right]$$
+We then want to find the probability that it is still in a $\nu$ state after some time $t$, given by 
+$$P_\nu = \abs{\bra{\tau}e^{e^{-iHt/\hbar}}\ket{\mu}}^2 = \abs{-\sin\theta\cos\theta e^{-i(m_1^2c^3/2E\hbar L} + \sin \theta \cos \theta e^{-im_2^2c^3/2E\hbar L}}^2$$
+This absolute value squared is what makes the phase vanish from earlier; we omitted for simplicity. This evaluates to
+$$P = \sin^2 2\theta \sin^2\left( \frac{\Delta m_i^2 L c^3}{4E\hbar} \right)$$
+just for reference and curiosity's sake. There will be nothing on the midterm with this setup, obviously, but it's just a good taste of what can happen. 
+
+Let's go back to some other examples. Let there be two operators $\Omega,\Lambda$. Their expectation value is then given by $\expvalue{\bra{\Psi}\Omega\ket{\Psi}}$, and the standard deviation is given by $\Delta \Omega = \abs{\bra{\Psi}\left( \Omega - \expvalue{\Omega} \right)^2\ket{\Psi}} ^ {1/2}$. We then want to examine the uncertainty principle $\Delta \Omega \Delta \Lambda$, which we know already for $[\Omega,\Lambda] = 0$ yields $)$. We note that the commutator can be construed as an operator, which by $[\Omega,\Lambda]^\dagger = [\Lambda,\Omega] = -[\Omega,\Lambda]$ is anti-Hermitian. We will use the notation $\hat{\Omega} = \Omega - \expvalue{\Omega}, \hat{\Lambda}$. Then, we compute
+\begin{align}
+	(\Delta\Omega)^2(\Delta\Lambda)^2 &= \bra{\Psi}\hat{\Omega}^2\ket{\Psi}\bra{\Psi}\hat{\Lambda}^2\ket{\Psi}\\
+	&=\dotp{\hat{\Omega}}{\Psi}\dotp{\hat{\Lambda}\psi}{\hat{\Lambda}\psi}\\
+\end{align}
+Then recalling the Schwartz inequality, we can write
+\begin{align}
+	&\geq \abs{\dotp{\hat{\Omega}\Psi}{\hat{\Lambda}\Psi}}^2\\
+	&\geq \abs{\bra{\Psi}\hat{\Omega}\hat{\Lambda}\ket{\Psi}}^2\\
+\end{align}
+We note that the anticommutator is Hermitian while the commutator is anti-Hermitian. The former thus has purely imaginary eigens while the latter has purely real. We thus can continue writing:
+\begin{align}
+	&\geq \abs{\bra{\Psi}\frac{\left\{ \hat{\Omega},\hat{\Lambda} \right\}}{2}\ket{\Psi} + \bra{\Psi}\frac{\left[ \hat{\Omega},\hat{\Lambda} \right]}{2}\ket{\Psi}}^2\\
+	&\geq \frac{1}{4}\left[ \abs{\bra{\Psi}\left\{ \Omega,\Lambda \right\}\ket{\Psi}}^2 +  \abs{\bra{\Psi}\left[ \Omega,\Lambda \right]\ket{\Psi}}^2\right]
+\end{align}
+We then can substitute $X,P$ and their respective commutators and anticommutators and compute that $\Delta X \Delta P \geq \hbar/2$. 
+
+We then want to examine the equality case (or as Wise put it, ``of course we want equality, it's the US!''). In the equality case, we know that $\hat{\Omega}\ket{\Psi} = c\hat{\Lambda}\ket{\Psi}$ by the Schwartz inequality, upon which we find $\expvalue{ \left\{ \hat{\Omega},\hat{\Lambda} \right\}}$. We then switch to coordinate basis
+\begin{align}
+	-i\hbar \rd{}{x}-\exp{P} \Psi(x) &= C(x-\exp{x})\Psi(x)\\
+	\frac{d\Psi}{\Psi} &= \frac{i}{\hbar}\left[ \expvalue{P} +cX\right] dx\\
+	\Psi(x) &= \Psi(c) e^{i\expvalue{P}x/\hbar + icx^2/2\hbar}\\
+	0 &= \bra{\Psi}(P-\expvalue{P}X + X(P-\expvalue{P})\ket{\Psi}
+	&= \bra{X\Psi}c+c^*\ket{X\Psi}
+\end{align}
+We note that $c$ is purely imaginary, so letting $c=i$ we can plug back in and note that $\Psi(x)=Ne^{i\expvalue{P}x/\hbar}e^{-x^2/2\Delta^2}$ is a Gaussian.
+
+\chapter{10/14 - Classical Limit}
+
+The classical limit of quantum mechanics is usually construed to be when $\hbar \to 0$, where we recall that $\hbar \sim 10^{-27} \mathrm{g\cdot cm^2/s}$. We can examine the expectation values of $X,P$ and show that they obey the classical values. While dynamical variables have a time dependence, we don't have time-dependent operators! So we must examine $\rd{}{t} \expvalue{\Omega}$. We recall that this is dotted by $\psi(t)$, which we know evolves according to the Schr\"odinger equation. We thus want to calculate this time derivative:
+\begin{align}
+	\rd{}{t}\expvalue{\Omega} &= \bra{\dot{\psi}}\Omega\ket{\psi} + \bra{\psi}\Omega\ket{\dot{\psi}}\\
+	&=\bra{\psi}\Omega\ket{\dot{\psi}}^* + \bra{\psi}\Omega\ket{\dot{\psi}}\\
+	&=-\frac{1}{\hbar}\left(\bra{\psi}\Omega H\ket{\psi}^* + \bra{\psi}\Omega H\ket{\psi}\right)\\
+	&=-\frac{i}{\hbar}\left[ -\bra{\psi}\left( \Omega H)^\dagger \right)\ket{\psi} + \bra{\psi}\Omega H \ket{\psi}\right]\\
+	&=-\frac{i}{\hbar}\left[ \bra{\psi} \left[ \Omega,H \right]\ket{\psi} \right]
+\end{align}
+where we use that $\Omega$ has no time dependence and that it is Hermitian (last step, taking daggers). This gives us our expectation values. Note that any operator that commutes with $H$ is time-independent expectation value.
+
+Let's now take $H=\frac{p^2}{2m} + V(x)$ and compute $\expvalue{X},\expvalue{P}$. Then
+\begin{align}
+	\expvalue{\dot{X}} &= -\frac{i}{\hbar}\bra{\psi}\left[ X,\frac{P^2}{2m} \right]\ket{\psi}\\
+	&=-\frac{i}{2m\hbar}\bra{\psi}\left[ X,P \right]P + P\left[ X,P \right]\ket{\psi}\\
+	&= \frac{i}{m}\bra{\psi}P\ket{\psi}
+\end{align}
+where we recall that $\left[ X,P \right] = -i\hbar$ (or something, he didn't write it up.) We then compute for $P$:
+\begin{align}
+	\expvalue{\dot{P}} &= -\frac{i}{\hbar}\expvalue{\left[ P,V(x) \right]}\\
+	&= -\frac{i}{\hbar}\left[ -i\hbar\rd{V(x)}{x} \right]\\
+	&= -\expvalue{\rd{V}{x}}
+\end{align}
+where we can compute the commutator $\left[ P,V(x) \right]$ by a simple algebraic analysis (Professor used a lot of ``this times that minus this times that but not that leaves this times that\dots'' Mark Wise champ lecturer). We note that this will only resolve to classical mechanics for a small spread in $x$, and that is how we recover classical mechanics from $\expvalue{P}$.
+
+If we then examine the Hamiltonian equation $\ket{\psi(t)} = U\ket{\psi_0}$, we can take a dot product with $\bra{x}$ and insert a complete set of states to give:
+$$\psi(t,x) = \int dx' \bra{x}U\ket{x'}\psi(t_0,x')$$
+If we then take an eigenstate $\ket{E}$ of the Hamiltonian, then it is also is an eigenstate of the propagator, given by
+$$e^{-H(t-t_0)/\hbar}\ket{E} = e^{-iE(t-t_0)/\hbar}\ket{E}$$
+Then, if we represent our $\ket{\psi}$ in our orthonormal basis with $\ket{\psi} = \sum a_n \ket{E_n}$, where we can compute $a_n = \dotp{E_n}{\psi(t)}$, then
+$$e^{-iH(t-t_0)/\hbar}\ket{\psi(t)} = \sum a_n e^{-iE_n(t-t_0)/\hbar}\ket{E_n}$$
+This is how to solve a general problem in quantum mechanics in practice, using the eigenstates of the Hamiltonian.
+
+Let's write $U(t,t_0)$ in a slightly different way:
+\begin{align}
+	\ket{\psi(t)} &= \underbrace{\sum e^{-iE_n(t-t_0)}\ket{E_n}\bra{E_n}}_{U(t,t_0)}\ket{\psi_0}
+\end{align}
+That's cool! Let's try this for a free particle $H = \frac{P^2}{2m}$. Our eigenvalue problem then becomes $\frac{p^2}{2m}\ket{`E}=E\ket{E}$. Then, simple observation shows that $E$ shares an eigenbasis with $P$, with each eigenvector now being doubly degenerate for the $\pm$ cases of the eigenvalue problem. We can then write $U$:
+\begin{align}
+	U(t) &= \int dp \ket{p}\bra{p}e^{-iEt/\hbar}\\
+	&= \int dp \ket{p}\bra{p}e^{\frac{-ip^2t}{2m\hbar}}
+\end{align}
+We want to now compute in position space (useful result: $\int dz e^{-kz^2} = \sqrt{\pi/k}$)
+\begin{align}
+	\bra{x}U(t)\ket{x'} &= \int dp \dotp{x}{p}\dotp{p}{x'}e^{-ip^2t/2m\hbar}\\
+	&= \int dp \frac{e^{ip(x-x')\hbar}}{2\pi\hbar}e^{-ip^2t/2m\hbar}\\
+	&= \frac{1}{2\pi\hbar}\int dp \exp \left[\frac{-it}{2m\hbar} \left( p-\frac{m(x-x')}{t} \right)^2 + \frac{m^2(x-x')^2}{t^2}\right]\\
+	&= \sqrt{\frac{m}{2\pi i \hbar t}} e^{i\left( x-x' \right)^2m/2t\hbar}
+\end{align}
+where we complete the square to compute this one. Suppose we start with some Gaussian wavepacket wih $\expvalue{x} = 0, \expvalue{p} = p_0$ then
+\begin{align}
+	\psi(x',0) &= \frac{e^{ip_0x'/\hbar}e^-x'^2/2\Delta^2}{\left( \pi\Delta^2 \right)^{1/4}}\\
+	\psi(x,t) &= \int dx' \bra{x}U(t)\ket{x'}\psi(x',0)
+\end{align}
+This integral can be solved by completing the square, because it's pretty brutal, but the result is
+$$\psi(x,t) = \left[ \sqrt{\pi} \left( \Delta + \frac{i\hbar t}{m\Delta} \right) \right]^{-1/2} \exp \left[ \frac{-\left( x-p_0t/m \right)^2}{2\Delta^2\left( 1+i\hbar tr/m\Delta^2 \right)} + \frac{ip_0}{\hbar}\left( x-\frac{p_0t}{2m} \right) \right]$$
+
+\chapter{10/16 - Finishing up classical limits, FEYNMAN FORMULATION!}
+
+We will return to the classical limit briefly. We decided that the operators $X,P$ should produce the dynamical variables $x,p$ in their time derivatives. We found $\expvalue{\dot{x}} = \frac{p}{m}$, which was what we expected, but the classical limit for $p$ should not be $-\expvalue{\rd{V}{x}}$ but rather $-\rd{V}{x}\Big|_{x=x_0}$. We can see this final step though, by expanding
+$$-\expvalue{-\rd{V}{x}} = -\expvalue{\rd{V}{x}\Big|_{x_c} + \frac{d^2V}{dx^2}(x-\expvalue{x}) + \cdots}$$
+where we expand about $x_c$ the classical limit. We note that $\expvalue{x-x_c}$ is $0$, and if we call $\expvalue{(x-x_c)^2} = \Delta x$, then if the spread $\Delta x$ is small, then the higher order terms vanish and we recover the classical limit.
+
+We then recall that $U(t) = \sum \ket{E_n}\bra{E_n} e^{-iE_nt/\hbar}$. We then recall that we derived for a free particle
+$$\bra{x}U(t)\ket{x'} = \sqrt{\frac{m}{2\psi \hbar it}} e^{i\left( x-x' \right)^2m/2\hbar t}$$
+
+We then investigated the free particle with $\expvalue{x}=0,\expvalue{p}=p_0$. We can compute the norm squared of the Gaussian wavepacket $\psi(x',0) = \frac{e^{ip_0x'/\hbar}e^-x'^2/2\Delta^2}{\left( \pi\Delta^2 \right)^{1/4}}$, and we obtain
+$$\frac{1}{\sqrt{\pi}\left( \Delta^2 + \frac{\hbar^2t^2}{m^2\Delta^2} \right)^{1/2}} \exp\left[ \frac{-(x-p_0\frac{t}{m}}{\left( \Delta^2 + \left( \frac{\hbar^2t^2}{m^2\Delta^2} \right) \right)} \right]$$
+So we can write the spread as a function of time $\Delta = \sqrt{\Delta^2 + \frac{\hbar^2t^2}{m^2\Delta^2}}$. We will quickly find that for $m=1$g, the spread evolves very negligibly. This is why we are classical!
+
+We will now discuss the path integral formulation. First, we briefly cover Lagrangians. We know the Lagrangian is given by $L=T-V = \frac{1}{2}m\dot{x}^2 + V(x)$. The classical path is then the path that minimizes the action $S = \int L \;dt$. The action is then a functional of the path between endpoints. This principle is called the principle of least action, but in general this is only a stationary point and not actually a minimum. We can then use calculus of variations (proof omitted here; ref. Ph106a notes for more in depth treatment) to find:
+$$\pd{L}{x} - \rd{}{t} \pd{L}{\dot{x}} = 0$$
+is the condition for stationary point. We can discuss quickly whether this is minimum or maximum. We know that the path cannot be maximum because we can draw a ``super wiggly'' path near the classical path, which spikes $T$ but leaves $V$ almost constant, which greatly increases the action. Perhaps the path is a saddle point and not a minimum point. We can find a case for which it is not a minimum: let's work with the harmonic oscillator $k=1, m=1$, which gives $2L = x^2 + \dot{x}^2$. We know that all paths must satisfy boundary conditions $x_0 = x_f, t_0 = 0, t_f = 2\pi$. We know that $x=x_0\cos t$ is the classical path. Let's write the path $(1-\alpha)x_0\cos t + \alpha x_0$, which takes $\alpha$ as a parameter. We can easily compute the action, which computes to be (omitted for simplicity): $-\frac{1}{2}x_0^2\alpha^2$. Thus, we find the classical path $\alpha = 0$ is only a stationary point, not just a minimum! It is a stationary point though. 
+
+We've discussed enough Lagrangian mechanics to discuss the Feynman path formulation. Let's examine $\bra{x_f} U(t_f,t_i) \ket{x_i}$. This can be evaluated as a summation over all paths between $x_i,x_f$ using the summation $\sum e^{iS[x(t)]/\hbar}$. We note then that each path is only a phase difference, and only near the stationary path do the phases not cancel. This is how the classical limit is recovered in Feynman formulation. 
+
+Let's try our hand at this class of integrals. We try to evaluate the integral 
+$$I = \displaystyle\int\limits_{a}^{b}e^{iS(x)/\hbar}\;dx$$
+subject to $S'(x_0) = 0$. Let's expand about the stationary point, yielding $S(x) = S(x_0) + \frac{1}{2}(x-x_0)^2S"(x_0) + \cdots$
+If we then take our integral, we can compute:
+$$I = e^{iS(x_0)/\hbar} \displaystyle\int\limits_{a}^{b}\exp\left[ \frac{i(x-x_0)^2S"(x_0}{2\hbar} + \cdots \right]\;dx$$
+If we then introduce $y = (x-x_0)\sqrt{\frac{S"(x_0)}{2\hbar}}$, then we can simplify the first term to $e^{iy^2}$, and we can consider that the rest of the terms vanish. We will go over this actual integral next class.
+
+
+\chapter{10/18 - 1-D Harmonic Oscillator}
+
+Recall that we were discussing the Feynman path integration and we had earlier computed for a free paricle:
+$$\bra{x}e^{-iHt/\hbar}\ket{x'} = \sqrt{\frac{m}{2\pi i + \hbar}} \exp\left[ \frac{im(x-x')^2}{2t\hbar} \right]$$
+
+We will then work with the path formulation through what we call evaluating integrals by stationary phase. The path integral formulation says that
+$$\bra{}e^{-iHt/\hbar}\ket{x'} = \sum e^{iS[x(t)]/\hbar}$$
+We can compute this integral at a stationary point $S'(x_0) = 0$ by evaluating the Taylor expansion (we omit higher order terms):
+\begin{align}
+	I &= \displaystyle\int\limits_{a}^{b}e^{iS(x)}\hbar\;dx \\
+	&= e^{i\frac{S(x_0}{\hbar}}\displaystyle\int\limits_{a}^{b}\exp\left[ i\frac{(x-x_0)^2}{2\hbar}S"(x_0) + i\frac{(x-x_0)^3}{6\hbar}S^3(x_0)\right]\;dx\\
+	\displaystyle\int\limits_{a}^{b}e^{iS(x)}\hbar\;dx &= e^{i\frac{S(x_0}{\hbar}}\displaystyle\int\limits_{a-x_0}^{b-x_0}\exp\left[ i\frac{y^2}{2\hbar}S"(x_0) + i\frac{y^3}{6\hbar}S^3(x_0)\right]\;dy\\
+	\displaystyle\int\limits_{a}^{b}e^{iS(x)}\hbar\;dx &= e^{i\frac{S(x_0}{\hbar}}\sqrt{\frac{2\hbar}{S"(x_0}}\displaystyle\int\limits_{(a-x_0)\sqrt{S"(x_0)/2\hbar}}^{b-x_0\sqrt{S"(x_0)/2\hbar}}\exp\left[ iz^2 + i\frac{z^3}{6\hbar}S^3(x_0)\left( \frac{2\hbar}{S"(x_0)}^{2/3} \right)\right]\;dy\\
+\end{align}
+Then, for small $\hbar \to 0$ we obtain
+$$I = e^{\frac{iS(x_0)}{\hbar}}\sqrt{\frac{2\pi\hbar i}{S"(x_0)}}$$
+
+We then see that $S(x_0)$ is the classical path, and so $I \sim e^{iS_c/\hbar}$, where $S_c$ is the classical action. 
+
+Let's now do an example. Let's examine a free particle going from $x$ to $x'$, which yields velocity $v=\frac{x-x'}{t}$. We note then that the action is just $\frac{1}{2}mv^2t$, and thus the classical action is $S_c\frac{m(x-x')^2}{2t}$. This is the exponential term to our earlier expression for the free particle! (see beginning of lecture).
+
+We are finished with Feynman now, and we discuss Harmonic Oscillators. This is super powerful because superposition lets us build up to three dimensions, and all problems can reduce to harmonic oscillators. We will use the Hamiltonian $H=\frac{p^2}{2m} + V(x)$, with at least one minimum at $V(0)$. We can do a Taylor expansion for $V(x)$ about $x=0$:
+$$V(x) = V(0) + \frac{x^2}{2}V"(0) + \dots$$
+Recall that we are only concerned with relative energies, so $V(0)$ doesn't concern us, and so $V(x) \approx \frac{x^2}{2}V"(0)$, and so we write our Hamiltonian $H=\frac{p^2}{2m} + \frac{1}{2}m\omega^2x^2$ where we notate $\omega=\sqrt{\frac{V"(0)}{m}}$. 
+
+We can first investigate our classical solution, where we use Hamilton's equations $\dot{x} = \pd{H}{p} = \frac{p}{m}, \dot{p} = -\pd{H}{x} = -m\omega^2x$ to find $m\ddot{x} + \omega^2x = 0$. We know this yields solution $x(t)=x_0\cos(\omega t + \phi)$. This then yields total energy $E = \frac{1}{2}m\omega^2 x_0^2$. An interesting point is 
+$$\dot{x} = -x_0\omega\sin (\omega t + \phi) = -x_0\omega \sqrt{1-\cos^2(\omega t + \phi)} = -\omega\sqrt{x_0^2-x^2}$$
+which shows an oscillation about $x_0$ of $x$! Coolio.
+
+We now compute this quantum mechanically. We have some eigenvalues $E_n$ and some eigenvectorsa $\ket{E_n}$. We can decompose any arbitrary state $\ket{\psi(0)} = \sum a_n \ket{E_n}$ and we note that $e^{-iHt/\hbar}\ket{E_n} = e^{-iE_n t/\hbar}\ket{E_n}$. Thus, we can write $\ket{\psi(t)} = \sum a_n e^{-iE_n t/\hbar} \ket{E_n}$. 
+
+First, we can prove the result that all energy eigenvalues $E_n > 0$. We can compute
+\begin{align}
+	\bra{\psi}H\ket{\psi} &= \frac{1}{2m}\bra{\psi}P^2\ket{\psi} + \frac{1}{2}m\omega^2\bra{\psi}X^2\ket{\psi}\
+	&= \frac{1}{2m}\dotp{P\psi}{P\psi} + \frac{1}{2}m\omega^2\dotp{X\psi}{X\psi}
+\end{align}
+where we realize the final expression must be positive for all $\psi \neq 0$. We are thus done.
+
+We want to then solve the eigenvalue problem $H\ket{E} = E\ket{E}$. This then becomes
+\begin{align}
+	\left(-\frac{\hbar^2}{2m}\frac{d^2}{dx^2} + \frac{1}{2}m\omega^2x^2\right)\psi(x) &= E\psi(x)\\
+	\frac{d^2}{dx^2}\psi(x) + \frac{2m}{\hbar^2}\left( E-\frac{1}{2}m\omega^2x^2 \right)\psi &= 0
+\end{align}
+We will first get rid of some ugly constants. Choose $x=y\sqrt{\frac{\hbar}{m\omega}}$ and $E = \hbar\omega E'$. This then changes the equation:
+$$\frac{d^2}{dy^2}\psi(y) + (2E'-y^2)\psi = 0$$
+
+For large $y$, $E' \approx 0$, and we find $\psi \sim Ae^{\pm y^2/2}$. We thus can rewrite our educated guess solution to be $\psi(y)=u(y)e^{-y^2/2}$, such that $u(y) = e^{y^2/2}$ takes care of the plus case.
+
+\chapter{10/21 - Harmonic Oscillators}
+
+Recall we'd written down the Hamiltonian for the harmonic oscillator $H= \frac{P^2}{2m} + \frac{1}{2}m\omega^2 X^2$ and we're solving $H\ket{E} = E\ket{E}$. We introduced $x=by,b=\sqrt{\frac{\hbar}{m\omega}}, E=\hbar\omega E'$ where we wrote our differential equation
+$$\frac{d^2\psi}{dy^2} + \left( 2E'-y^2 \right)\psi=0$$
+
+We had figured out that for large $y$ the solution takes on form $\psi \sim e^{\pm y^2/2}$. Then, we can consider the small $y$ case, which gives a very straightforward harmonic oscillator problem, which for small $y$ simplifies to $\psi = A+By$ (simplified from $A\cos \sqrt{2E'}y + B\sin \sqrt{2E'}y$. We first investigate our asymptotic case, which was written $\psi = u(y)e^{-y^2/2}$. Doubly differentiating, we find
+$$\psi"(y) = \left[ u"y - 2yu' - u + y^2u \right] e^{-y^2/2}$$
+
+Substituting back into our diffeq, we find 
+$$u"(y) - 2yu' + \left( 2E'-1 \right)u = 0$$
+
+Expressing $u(y)$ as a power series
+\begin{align}
+	\sum \left[ c_nn(n-1)y^{n-2} - 2nc_ny^n + \left( 2E'-1 \right)c_ny^n \right] &= 0\\
+	\sum y^n \left[ c_{n+2}(n+2)(n+1)+ \left( 2E'-1 -2n\right)c_ny^n \right] &=
+\end{align}
+
+Since the $y_n$ are independent, we know that the coefficients are all equal to zero, giving us a recrsion relation
+$$C_{n+2} = -\left[ \frac{2E'-1-2n}{(n+1)(n+2)} \right]C_n$$
+
+We require this recursion relation terminate else the series blows up, a solution we don't want. We thus note that we want $E' = n+\frac{1}{2}$, which caps the power of the series at $y^n$. Substituting back, this gives $E=\hbar\omega\left( n+1/2 \right)$. This solution case is called the Hermite polynomials. and yields
+$$\psi_n(x) = \left( \frac{m}{\pi\hbar 2^{2n}(n!^2)} \right)^{1/4} \exp \left[ \frac{-m\omega x^2}{2\hbar^2} \right]H_n\left[ \sqrt{\frac{m\omega}{\hbar}}x \right]$$
+
+We then learn ``Amazing things.'' We note that energies are quantized! Moreover, there is a zero point energy $E=\hbar\omega$. We now show creation and annihilation operators, an alternative way to solve the problem. We introduce an operator
+\begin{align}
+	a&=\left( \frac{m\omega}{2\hbar} \right)^{1/2}X + i\left( \frac{1}{2m\omega\hbar} \right)^{1/2}P\\
+	a^\dagger&=\left( \frac{m\omega}{2\hbar} \right)^{1/2}X - i\left( \frac{1}{2m\omega\hbar} \right)^{1/2}P
+\end{align}
+
+We can compute that $[a,a^\dagger] = 1$. Let's then compute $a^\dagger a = \frac{1}{\hbar\omega}H-\frac{1}{2}$, which gives $H=\hbar\omega\left( a^\dagger a + \frac{1}{2} \right)$. Let's then call the operator $a^\dagger a = N$, which is the counting operator, in that it counts the number of quanta of energy in the system.
+
+We note that $[a,N] = a, [a^\dagger,N] = a^\dagger$. Moreover, $a^\dagger\ket{n}=(n+1)\ket{n}$ and similarly for $a\ket{n}$. We note that the ground state is annihilated by $a\ket{0}=0$. We then compute that $a^\dagger \ket{n} = \sqrt{n+1}\ket{n+1},a\ket{n} = \sqrt{n}\ket{n-1}$. 
+
+\chapter{10/23 - Finishing HOs, two-dimensions}
+
+Review of harmonic oscillator: there are also relations $x=\sqrt{\frac{\hbar}{2m\omega}}\left( a+a^\dagger \right)$ and $p = i\sqrt{\frac{m\omega\hbar}{2}}\left( a^\dagger -a \right)$. We can try an example: $\bra{n'}X\ket{n}$. This then simply becomes, plugging and chugging, $\sqrt{\frac{\hbar}{2m\omega}}\left( \sqrt{n}\delta_{n',n-1} + \sqrt{n+1}\delta_{n',n+1} \right)$ and similarly for $P$. Ezpz.
+
+Let's try $\bra{3}x^3\ket{2}$. We compute
+\begin{align}
+	\left( \frac{\hbar}{2m\omega} \right)^{3/2}\bra{3}(a+a^\dagger)^3\ket{2}&= \left( \frac{\hbar}{2m\omega} \right)^{3/2}\bra{3}\cdots\ket{2}
+\end{align}
+
+Where we're too lazy to expand, because there's a trick! We can just examine only the ones that raise twice and lower once, because those are the only ones that will produce nonzero upon orthonormality. Thus, we only care about the $aa^{2\dagger}, a^{2\dagger}a, a^\dagger a a^\dagger$ terms. We can then just bash this one pretty easily, and it turns out to be $\left( \frac{\hbar}{2m\omega} \right)^{3/2}9\sqrt{3}$. That's it for harmonic oscillators.
+
+We will quickly touch on bound states in the SE: $-\frac{\hbar^2}{2m}\frac{d^2\psi_1}{dx^2} + V\psi_1 = E\psi_1$. We then examine whether there exists another wavefunction with the same eigenvalue, i.e. $-\frac{\hbar^2}{2m}\frac{d^2\psi_1}{dx^2} + V\psi_2 = E\psi_2$. We will multiply the first be $\psi_2$ and the second by $\psi_1$ and we obtain $\psi_2\frac{d\psi_1}{dx^2} - \psi_1\frac{d^2\psi_2}{dx^2} = 0$. We can then note carefully that this is equivalent (due to cancellations) to $\rd{}{x}\left( \psi_2\rd{\psi_1}{x} - \psi_1\rd{\psi_2}{x} \right)$. This gives us that the expression within parentheses is a constant, and additionally since these are bound states, the quantity must be equal to $0$. Then setting things equal and integrating, we find that they must be related by a constant multiple and thus are the same state. This finally yields that bound states in one dimension have no degeneracy.
+
+We can then look into bound state waveunctions and their realness, where we assert that all wavefunctions can be written as reals. Taking the conjugate of the SE, we find that the conjugate of $\psi^*$ also satisfies the SE. Thus, we can construct real and imaginary functions via superposition that also satisfy the SE, so QED.
+
+We move past two dimensions! We must make a quick digression to talk about \emph{direct product spaces}. Let's have two vector spaces $\mathbb{V_{m,n}}$ with all the normal properties (orthonormal basis, etc.). Let's construct the outer product space $\ket{e_i}\otimes \ket{f_i}$ with dimension $m\times n$. We will define the properties of this new vector space to be $\ket{A} + \ket{B} = \left( a_i + b_i \right)\ket{e_i}\ket{f_i}$ and distributiveness $\dotp{e_if_i}{e_jf_j} = \delta_{ij} \delta_{ij}$. Then suppose an operator acts on $\mathbb{V}^n$, then we can make it operate on the outer space by $\Omega \otimes I$. 
+
+Classically, when we approach multiple dimensions we discuss multiple positions/momenta. Quantum mechanically, each dimension acts on its own Hilbert space, and the whole vector space of the whole system is the outer product of each of these. Thus, we can label our whole state $\ket{x_1,x_2\dot x_n}$, where each of these are the respective dimensions $X_i$ respectively. We note that the identity is now $I = \int dx\dots dx_n \ket{x_1\dots x_n} \bra{x_1\dots x_n}$, and taking a component of a vector $\psi(x_1\dots x_n) = \bra{x_1\dots x_n}\ket{\psi}$. We still have the representations $\bra{x_1\dots x_n}X\ket{\psi} = X\psi, \bra{x_1\dots x_n} = -i\hbar \pd{}{x}\psi$. 
+
+How many dimensions are there? We know there exist at least three dimensions. Suppose there exists a fourth dimension, a ring, of some length $L$ . The boundary conditions are thus $\psi(x_4 = 0) = \psi(x_4 = L)$ and the corresponding derivative equality boundary conditions. We then know that $P = \frac{2\pi n\hbar}{L}$ in this dimension. Suppose we plug this into Einstein's equation for total energy
+$$E^2 = c^2\left( p^2+p_4^2 \right) + m^2c^4 = c^2p^2 + \left( \frac{2\pi n\hbar}{L} \right)^2c^2 + m^2c^4$$
+
+Obviously $n=0$ is undetectable. But if $L$ is tiny, it's very hard to excite to $n=1$. This means that this $L$ must be smaller than such an energy that has been probed. A back of the envelope calculation shows $L$ must be less than $10^{-16}$. 
+
+\chapter{10/25 - Multiple dimensions, Conservation of probability}
+
+We first discuss the three-dimensional harmonic oscillator. The Hamiltonian is given by $H = \frac{P_x^2 + P_y^2+P_z^2}{2m} + \frac{1}{2}m\omega^2\left( X^2+Y^2+Z^2 \right)$. We can expand the eigenvalue problem in the coordinate basis:
+$$-\frac{\hbar^2}{2m} \left(\ptd{}{x} + \ptd{}{y} + \ptd{}{z}\right)\psi(x,y,z) + \frac{1}{2}m\omega^2\left( x^2+y^2+z^2 \right)\psi(x,y,z) = E\psi(x,y,z)$$
+
+We can make the separable solution ansatz to write $\psi(x,y,z)=\psi(x)\psi(y)\psi(z)$. This then gives
+$$\frac{1}{\psi(x)}\left[ \frac{\hbar^2}{2m}\rtd{}{x}\psi(x) + \frac{1}{2}m\omega^2 \psi\right] + \frac{1}{\psi(y)}\left[ \frac{\hbar^2}{2m}\rtd{}{y}\psi(y) + \frac{1}{2}m\omega^2 \psi\right] + \frac{1}{\psi(z)}\left[ \frac{\hbar^2}{2m}\rtd{}{z}\psi(z) + \frac{1}{2}m\omega^2 \psi\right] = E$$
+
+We note that each of these expressions must be independently constant, and then we find that this is just the one-dimensional harmonic oscillator for some energies $E_x,E_y, E_z$ whose sum is $E$. Then each energy is given by $E_x = \hbar\omega\left( n_x + 1/2 \right)$ and correspondingly for $y,z$. This is called the solution of separable problems, and so long as the diffeq is separable then we can make the ansatz and solve. 
+
+Note that our solution doesn't depend on the HO being isotropic, since different $\omega$ in each direction just produces different energies.
+
+Suppose we have a general problem in an isotropic potential such that the potential depends only on $r$. The natural solution is to go into spherical coordinates. We note that we can rewrite our Hamiltonian as $\frac{\sum_i P_i^2}{2m} = -\frac{\hbar^2}{2m}\Delta^2$. Thus, in spherical coordinates the Laplacian is
+$$\Delta^2 = \frac{1}{r^2}\ptd{}{r} + \frac{2}{r}\pd{}{r} + \frac{1}{r^2}\left( \ptd{}{\theta} + \cot \theta \pd{}{\theta} + \frac{1}{\sin^2\theta}\ptd{}{\phi} \right)$$
+
+We can then plug this into our SE and obtain (in shorthand)
+$$-\frac{\hbar^2}{2m}\Delta^2 + \frac{1}{2}m\omega^2 r^2 \psi = E\psi$$
+
+Note that this isn't soluble because the $\Delta^2$ isn't separable. We can make the separable ansatz $\psi(r)\psi(\theta,\phi)$ where the latter part is called the spherical harmonics and is an eigenstate of the $\theta,\phi$ part in the above Laplacian. 
+
+We will make a quick digression on the conservation of probability. We can examine for charge first. Suppose we have some $\rho(\vec{r},t)$ in some volume $V$ defining the charge density. Then the total charge in the volume is $\int_V \rho \; dV$. The change of this total charge is then $-\int_S d\vec{S}\cdot \vec{j}$ where $\vec{j}$ is the current density.
+
+If we throw divergence theorem at this, and we move the time derivative onto the inside, we find
+\begin{align}
+	\rd{}{t}\int \rho dV &= -\int_S d\vec{S} \cdot \vec{j}\\
+	\int dv \left[ \pd{\rho}{t} + \Delta\cdot \vec{j} \right] &= 0
+\end{align}
+
+Forcing the integrand to be $0$ is then called the equation of continuity.
+
+We then investigate this in QM. We look at the SE and its conjugate (where again $V$ is real for Hermitian Hamiltonian)
+\begin{align}
+	i\hbar \pd{}{t}\psi &= -\frac{\hbar^2}{2m}\Delta^2\psi + V\psi\\
+	-i\hbar \pd{}{t}\psi^* &= -\frac{\hbar^2}{2m}\Delta^2 \psi^* + V\psi^*
+\end{align}
+
+Multiplying first equation by $\psi^*$ and the second by $\psi$ and subtracting, we obtain 
+\begin{align}
+	i\hbar \pd{}{t} \left( \psi^*\psi \right) &= -\frac{\hbar^2}{2m} \left[ \psi^*\Delta^2\psi - \psi\Delta^2\psi^* \right]\\
+	\pd{}{t} \left( \psi^*\psi \right) &= \frac{i\hbar}{2m} \Delta\left[ \psi^*\Delta\psi - \psi\Delta\psi^* \right]
+\end{align}
+
+We can interpret the equation as an equation of continuity. We can consider the quantity $\psi^*\psi$ the probability density and thus the expression in brackets above is the probability current.
+
+We will examine some of the classes of problems we will see soon. First is electromagnetism.
+
+Exhibit a particle with charge $q$ and electric fields $\vec{E},\vec{B}$. Let's introduce $\vec{E}=-\Delta\phi - \frac{1}{c}\pd{\vec{A}}{t}$ and $\vec{B} = \Delta\times\vec{A}$, where there's still redundancy because gauge invariance (I think that's why there's a term missing from $\vec{B}$?) We can then construct the classical Lagrangian and Hamiltonian for this system
+\begin{align}
+	L &= \frac{1}{2}m\dot{r}^2 - q\phi + \frac{q}{c}\vec{r}\cdot \vec{A}\\
+	H &= \frac{\left( \vec{p}-\frac{q}{c}\vec{A} \right)^2}{2m} + q\phi
+\end{align}
+
+We can then expand the Hamiltonian
+$$H = \frac{\vec{p}^2}{2m} - \frac{q}{mc} \left( \vec{p}\cdot \vec{A} + \vec{A} \cdot \vec{p} \right) + \frac{q^2}{2mc^2}\vec{A}^2 + q\phi$$
+
+We note that while classically we can simply write $2\vec{p}\cdot \vec{A}$, but in QM these don't commute.
+
+Two-body problems. Let's then examine potentials of form $V(\vec{x}_1, \vec{x}_2)$. By translational invariance, $V(x) = V\left( \vec{x}_1 - \vec{x}_2 \right)$. Then by rotational invariance, $V = V\left( \abs{\vec{x}_1 + \vec{x}_2} \right)$. To then solve this problem, which has Hamiltonian
+$$H = \frac{P_1^2}{2m_1} + \frac{P_2^2}{2m_2} + V(x_1 - x_2)$$
+
+We can then introduce center of mass and relative coordinates. Finding the reduced masses and momenta and all that jazz, we find
+$$H = \frac{p_{cm}^2}{2m_{cm}} + \frac{p^2}{2\mu} + V(x)$$
+
+where $x$ is the relative coordinate, etc. This is classical physics. Let's investigate QM.
+
+We note that $\left[ X_{cm}, P_{cm} \right] = i\hbar$ again, so we can get to work, as each generalized particle (center of mass, relative) just behaves as a real particle. We then note that the Hamiltonian above is separable, and so we can solve. We find
+\begin{align}
+	\psi_E &= \frac{e^{i\vec{p}_{cm}\cdot \vec{x}_{cm}/\hbar}}{\sqrt{2\pi\hbar}} \psi_{rel}\left( \vec{x} \right)
+\end{align}
+
+where $\psi_{rel}$ then just satisfies its own SE. So once we solve $\psi_{rel}$, then we just have a free particle for the center of mass particle.
+
+\chapter*{10/28 - Midterm Info, Bosons/Fermions}
+
+Midterm will be three problems, linear algebra, time evolution, and Harmonic Oscillator ($a,a^\dagger$, though a bit of explicit wavefunction). Can use notes or Shankar or homework, no Mathematica/MATLAB. Usually a third are A's, most are B's. 
+
+Let's look at systems of identical particles, a system with two particles moving in one dimension. Let's denote some wavefunction $\ket{\psi} = \ket{a,b} , \ket{\psi'}= \ket{b,a} = e^{i\alpha}\ket{\psi}$. We can then examine some superposition of this. 
+\begin{align}
+	\ket{\psi} &= \frac{\beta\ket{a,b} + \gamma\ket{b,a}}{\sqrt{\abs{\beta}^2 + \abs{\gamma}^2}}\\
+	\ket{\psi'} &= \frac{\gamma\ket{a,b} + \beta\ket{b,a}}{\sqrt{\abs{\beta}^2 + \abs{\gamma}^2}}\\
+	\ket{\psi'} &= e^{i\alpha}\ket{\psi}\\
+	\beta &= e^{i\alpha}\gamma, \gamma = e^{i\alpha}\beta
+\end{align}
+
+which then produces $\ket{\psi_s} = \frac{1}{\sqrt{2}}\left(\ket{a,b} + \ket{b,a}\right), \ket{\psi_A} = \frac{1}{\sqrt{2}}\left(\ket{a,b}-\ket{b,a}\right)$ as the two possible solutions that satisfy the equation above. The former are bosons, the latter are fermions; bosons are symmetrically switchable while fermions cannot. We can then note that in bosons $a=b$ can exist but fermions cannot; think exclusion principle. 
+
+We want to measure a symmetric system and see what the probability of getting $\omega_1, \omega_2$ for the two bosons are. The expression for this is then $\abs{\dotp{\omega_1,\omega_2}{\psi_s}}^2$. We note the normalization condition, and manipulate
+\begin{align}
+	1 &= \dotp{\psi_s}{\psi_s}\\
+	&= \sum_{\textrm{distinct}} \abs{\dotp{\omega_1\omega_2}{\psi_s}}^2
+\end{align}
+
+where we only sum over distinct states i.e. only counting once the case $\omega_1 = \omega_2$. Let's try an example in position space.
+\begin{align}
+	P_s\left( x_1, x_2 \right) &= \abs{\dotp{x_1,x_2}{\psi_s}}\\
+	&= \displaystyle\int\limits_{-\infty}^{\infty}\displaystyle\int\limits_{-\infty}^{x_2}P_s(x_1, x_2)\;dx_1dx_2\\
+\end{align}
+
+where we only integrate up to $x_2$ to make sure we don't double count. This is also equal to 
+\begin{align}
+	&= \frac{1}{2}\displaystyle\int\limits_{-\infty}^{\infty}\displaystyle\int\limits_{-\infty}^{\infty}P_s(x_1, x_2)\;dx_1dx_2\\
+\end{align}
+
+This then shows us that $\psi_s(x_1,x_2) = \frac{1}{\sqrt{2}}\dotp{x_1, x_2}{\psi_s}$. We try a concrete example. Suppose we have wavefunction $\ket{\psi_s} = \frac{1}{\sqrt{2}}\left(\ket{3,4} + \ket{4,3}\right)$ where $3.4$ are harmonic oscillator states. Then we have
+\begin{align}
+	\psi_s(x_1, x_2) &= \frac{1}{\sqrt{2}}\left( \frac{\bra{x_1,x_2} + \bra{x_2, x_1}}{\sqrt{2}} \right)\left( \frac{\ket{3,4} + \ket{4,3}}{\sqrt{2}} \right)\\
+	&= \frac{1}{\sqrt{2}}\left( \psi_3(x_1)\psi_4(x_2) + \psi_4(x_1)\psi_3(x_2) \right)\\
+	&= \displaystyle\int\limits_{-\infty}^{\infty}\displaystyle\int\limits_{-\infty}^{\infty}\abs{\psi_s(x_1,x_2)}^2\;dx_1dx_2\\
+	&= 1
+\end{align}
+if we expand the integral out like Wise does in class. 
+
+We then check for Fermions, so $\psi_A(x_1,x_2) = \frac{1}{\sqrt{2}}\dotp{x_1,x_2}{\psi_A}, P_A(x_1, x_2) = 2\abs{\psi_A(x_1,x_2)}^2$. We can then check this by writing $\ket{\psi_A}= \frac{1}{\sqrt{2}}\left(\ket{3,4} - \ket{4,3}\right)2, \ket{x_1, x_2} = \frac{1}{\sqrt{2}}\left( \ket{x_1,x_2} - \ket{x_2,x_1} \right)$ and bashing it out. An interesting note is that we can write
+$$\psi_A(x_1,x_2) = \frac{1}{\sqrt{2}}\left( \psi_3(x_1)\psi_4(x_2) - \psi_3(x_2)\psi_4(x_1) \right) = \frac{1}{\sqrt{2}}\det \begin{pmatrix}\psi_3(x_1)&\psi_4(x_1)\\ \psi_3(x_2) \psi_4(x_2)\end{pmatrix}$$
+
+This determinant is overkill for two particles, but for more particles it's much easier to write this way! It's naturally antisymmetric. 
+
+We can examine the three particles case very cursorily. If we're given three arbitrary particles, without considering symmetries, we have six possible states by tensoring the three particles in their various orders. If all three particles are symmetric, then we can construct the symmetric wavefunction $\ket{n_1,n_2,n_3;s} = \frac{1}{\sqrt{3!}}\sum \ket{n_i, n_j, n_k}$ where $i\neq j \neq k \in [1,2,3]$. 
+
+What if they're Fermions? We write
+$$\ket{n_1,n_2,n_3} = \frac{1}{\sqrt{3!}}\left[ \ket{n_1,n_2,n_3} - \ket{n_1,n_3,n_2} - \ket{n_2,n_1,n_3} + \ket{n_2,n_3,n_1} + \ket{n_3,n_1,n_2} - \ket{n_3,n_2,n_1} \right]$$
+, or we could just write the determinants.
+\chapter{11/1 - Classical Physics, conserved quantities/symmetries}
+
+Hamilton formalism of QM. We have some Lagrangian $L(q,\dot{q})$ and we look for a path that leaves the action stationary $S = \int L\; dt$. We can then define $p = \pd{L}{q}$ the canonical momentum. We can then define the Hamiltonian $H = \sum pq - L$. This then gives that $\rd{H}{t} = \pd{L}{t}$ which gives time independence of Hamiltonian.
+
+We then computed the partials $\pd{H}{q} = -\dot{p}$ and $ \pd{H}{p} = \dot{q}$. We then noted that $\left\{ A,B \right\}$ the Poisson bracket defined by $\left\{ A,B \right\} = \pd{A}{q}\pd{B}{p} - \pd{A}{p} \pd{B}{q}$ allows us to write $\left\{ A,H \right\} = \rd{A}{t}$. We then compare to SE and $\left\{ A,B \right\} = -\frac{i}{\hbar}\left[ A,B \right]$ where the latter is the commutator. This concludes our review of last class.
+
+We then want to discuss symmetries in QM. Suppose we first discuss symmetries in classical physics (cue Ph106 collective groan). We map $q_i \to q_i + \delta q_i$ and the same for $p_i$, and if the Hamiltonian is invariant for these $\delta q,\delta p$ then the quantity is conserved. Note that we require small infinitesimal changes, so no inversions!
+
+We can define some intermediate quantity called the \emph{generator} $g(p_i, q_i)$ such that $\delta q = \epsilon \pd{g}{p}, \delta p = -\epsilon \pd{g}{q}$ where $\epsilon$ is just small. If we then compute our $\delta H$, we find
+\begin{align}
+	\delta H &= \pd{H}{q}\delta q + \pd{H}{p} \delta p\\
+	&= \epsilon \left[\pd{H}{q}\pd{g}{p} - \pd{H}{p}\pd{g}{q}\right]\\
+	&= \epsilon \left\{ H,g \right\}
+\end{align}
+
+Thus, if the Poisson bracket of $H,g$ is $0$, then the quantity $g$ is conserved.
+
+Then, if we go to QM, then let the generator $g \to G$, and we know then that $\left[ G,H \right] = 0, \rd{}{t}\expvalue{G} = 0$. Suppose we several particles moving in 3 dimensions. We can exact shifts on them in their $x$, $y$, or $z$ dimensions, completely independently of one another. Then what is $G$? We recall that $\delta z = \epsilon \pd{g}{p_z}$, and so if $\delta z$ is constant, then $g$ should be linear in $p_z$. The same argument follows for other dimensions, so $g = \sum_i p_i$, just the sum of all momenta! And as we can see, $H$ and $G$ commute because they're both functions of $P$ roughly, so we're good.
+
+Let's examine rotations. Euler angles are hard and are the best way to work in three dimensions. Therefore, we will work in two (Mark Quality Wise). If we rotate a set of coordinates by some angle $\theta$, then
+$$\begin{pmatrix}x' \\ y'\end{pmatrix} = \begin{pmatrix}\cos \theta & -\sin \theta \\ \sin \theta & \cos \theta\end{pmatrix}\begin{pmatrix} x\\y\end{pmatrix}$$
+
+straightforward. Call the rotation matrix $R_\theta$ because I'm lazy. We then have for momenta
+$$\vec{p}' = R_\theta \vec{p}$$
+
+If we then use some infinitesmal rotation $\epsilon$, our rotation matrix can be approximated by small angles and we obtain
+$$\begin{pmatrix}x'\\y'\end{pmatrix} = \begin{pmatrix}x-\epsilon y \\ y + \epsilon x\end{pmatrix}$$
+and similarly for $p_{x,y}$. We then want the infinitesmal rotation to produce these changes, so we can construct our generator
+\begin{align}
+	\delta x &= -\epsilon y = \epsilon \pd{g}{x}\\
+\end{align}
+
+and so on and so forth (so lazy). We know our answer already, namely the angular momentum $g = Lz = xp_y - yp_x$, and we can check these! Then if these $g$ have zero poisson bracket with the Hamiltonian, then we know that these correspond to conserved quantities. Woohoo!
+
+We can then examine a particle in one dimension. We have some $\ket{\psi}$. We then map $x \to x + \epsilon, p \to p$ classically, which takes the quantum mechanical statefunction $\ket{\psi} \to \ket{\psi_\epsilon}$ to some new wavefunction that compensates for this transformation. We require this new $\psi_\epsilon$ to be such that
+$$\bra{\psi_\epsilon}X\ket{\psi_\epsilon} = \bra{\psi}X\ket{\psi} + \epsilon = \bra{\psi}X+\epsilon I \ket{\psi}$$
+
+and just $\expvalue{P}_\epsilon = \expvalue{P}$ since $P$ remains the same. We then require some transformation
+$$\ket{\psi_\epsilon} = T(\epsilon)\ket{\psi}$$
+
+such that $T$ is unitary and is a function of $\epsilon$. We'll find this later!
+
+\chapter{11/4 - TA lecture, Feynman formulation v2.0}
+
+The principle of the Feynman formulation hinges on $\dotp{x_f, t_f}{x_i, t_i} = \int D[x(t)] e^{iS[x(t)]/\hbar}$ where the integral is taken over a sum of paths with given endpoints. We will show the derivation.
+
+Suppose we plot $t(x)$. For a free particle this just looks like a straight line between our endpoints. Let us then discretize our time interval into $N$ partitions such that $\Delta t = \frac{t_f - t_i}{N}$ and the time at some given point is given by $t = t_i + k\Delta t, k \in [0,N]$. We then seek the quantum dot product 
+$$\dotp{x_f, t_f}{x_i, t_i} = \bra{x_f} e^{-i\mathbb{H}(t_f - t_i)/\hbar}\ket{x_i}$$
+
+We can then insert our Hamiltonian for each time interval
+$$= \bra{x_f}\underbrace{e^{-\frac{i}{\hbar} \mathbb{H}\Delta t}\cdots e^{-\frac{i}{\hbar} \mathbb{H}\Delta t}}_N\ket{x_i}$$
+
+We then insert a complete set of basis vectors in between each unit integral, and we get
+\begin{equation}
+	\dotp{x_f, t_f}{x_i, t_i} = \bra{x_f}\underbrace{e^{-\frac{i}{\hbar}\mathbb{H}\Delta t} \int \ket{x_{N-1}}\bra{x_{N_1}}\cdots \int \ket{x_1}\bra{x_i}\int e^{-\frac{i}{\hbar}\mathbb{H\Delta t}}}_N \ket{x_i}
+	\label{a}
+\end{equation}
+
+where $x_f= x_N, x_i = x_0$. We can first consider a single term of the product above and substitute our precise form of our Hamiltonian $\mathbb{H} = \frac{P^2}{2m} + V(x)$
+\begin{align}
+	\bra{x_{k+1}}e^{-\frac{i}{\hbar}\mathbb{H}\Delta t}\ket{x_k} &= \int dp \dotp{x_{k+1}}{p}\bra{p}e^{-\frac{i}{\hbar}\mathbb{H}\Delta t}\ket{x_k}
+	&= \int dp \dotp{x_{k+1}}{p}\bra{p}e^{-\frac{i}{\hbar}\left( \frac{p^2}{2m} + V(x) \right)}\ket{x_k}
+\end{align}
+
+Here, we use an identity $e^{A+B} = e^A e^B e^{-\frac{1}{2}\left[ A,B \right]}$ for the commutator. We note that the commutator of $\frac{p^2}{2m}\Delta t$ and $V(x)\Delta t$ must be of order $\Delta t^2$, and so since we anticipate taking the limit as $\Delta t \to 0$ we can approximate $\left[ A,B \right] \approx 1$. This then gives
+\begin{align}
+	&= \int dp \dotp{x_{k+1}}{p}\dotp{p}{x_i}\left[ e^{-\frac{i}{\hbar}\left( \frac{p^2}{2m} + V(x_k) \right)\Delta t} \right]\\
+	&= \int dp \frac{1}{2\pi\hbar}e^{\frac{i}{\hbar}p\left( x_{k+1}-x_k \right)}e^{-\frac{i}{\hbar}\left( \frac{p^2}{2m} + V(x_k) \right)\Delta t}
+\end{align}
+
+We define a velocity $\dot{x}_k = \frac{x_{k+1}-x_k}{\Delta t}$. This thes simplifies
+\begin{align}
+	&= \int \frac{dp}{2\pi \hbar}e^{-\frac{i}{\hbar}\left[ \frac{p^2}{2m} + V(x_k) - p\dot{x}_k \right]\Delta t}\\
+	&= \int \frac{dp'}{2\pi\hbar} e^{-\frac{i}{\hbar}\left[ \frac{p^2}{2m} + V(x_k) - \frac{1}{2}m\dot{x}^2 \right]\Delta t}\\
+	&= \sqrt{\frac{m}{2\pi i \hbar \Delta t}} e^{\frac{i}{\hbar}\left[ \frac{1}{2}m\dot{x}_k^2 - V(x_k) \right]\Delta t}\\
+	&= \sqrt{\frac{m}{2\pi i \hbar \Delta t}} e^{\frac{i}{\hbar} L(x_k, \dot{x}_k) \Delta t}
+\end{align}
+
+We can then define $L(x_k, \dot{x}_k) = \displaystyle\int\limits_{t_k}^{t_{k+1}}L(x_k, \dot{x}_k\;dt = S(x_{k+1}x_k)$. This then gives us each individual term in Equation \ref{a}. We can multiply out and find
+\begin{align}
+	\dotp{x_i, t_f}{x_i, t_i} &= \int \prod_{k_1}^{N-1}\frac{dx_k}{C}e^{\frac{i}{\hbar} \sum_{i=0}^{N-1}S(x_{k+1},x_k)}\\
+	&= \int D[x(t)] e^{\frac{i}{\hbar} S[x(t)]}
+\end{align}
+
+Let's investigate the free particle case $H = \frac{P^2}{2m}$. We seek the propagator
+\begin{align}
+	\dotp{x_f, t_f}{x_i, t_i} &= \bra{x_f} e^{-\frac{i}{\hbar}H(t_f - t_i)j}\ket{x_i}\\
+	&=\int dp \bra{x_f} e^{-\frac{i}{\hbar}H(t_f - t_i)j}\ket{p}\dotp{p}{x_i}\\
+	&= \int dp e^{-\frac{i}{\hbar}\frac{p^2}{2m}(t_f - t_i}e^{\frac{i}{\hbar}p(x_f - x_i)}\\
+	&= \sqrt{\frac{m}{2\pi i \hbar(t_f - t_i)}}e^{\frac{i}{\hbar}\frac{m}{2(t_f - t_i)^2}}
+\end{align}
+
+Not too bad. Let's see what this looks like in path integrals. First, some useful relations
+$$\vec{x} = \begin{pmatrix}x_1\\x_2\\\vdots\\x_N\end{pmatrix}, \vec{y} = \begin{pmatrix}y_1\\y_2\\\vdots\\y_N\end{pmatrix}$$
+
+Given some symmetric matrix $A$, we also have
+$$\int \prod_{n=1}^N dx_n e^{-\frac{1}{2}\vec{x}^T A \vec{x} - \vec{x}^T \vec{y}} = \frac{(2\pi)^{N/2}}{\sqrt{\det A}}e^{\frac{1}{2}\vec{y}^T A^{-1}\vec{y}}$$
+
+Let us also have some almost-diagonal matrix $K$, with $1$s down the diagonal and $-a$ along each adjacent diagonal and everywhere else zero. We have then the formulae
+$$\det K = \frac{\lambda_+^{N+1} - \lambda_{-}^{N+1}}{\lambda_+ - \lambda_-}, \lambda_{\pm} = \frac{1}{2}\left( 1 \pm \sqrt{1-4a^2} \right)$$
+
+We will be interested in the case $a=\frac{1}{2}$, and if we cancel terms in our determinant definition we can find the determinant to be $\frac{N+1}{2^{N}}$. We then begin
+\begin{align}
+	K(x_f, t_f, x_i, t_i) &= \left( \frac{m}{2\pi i \hbar \Delta t} \right)^{\frac{N}{2}}\int \prod_{n=1}^{N-1}dx_n e^{\frac{i}{\hbar}S[x(t)]}\\
+	S[x(t)] &= \frac{1}{2}m\sum_{n=0}^{N-1}\frac{(x_{n+1} - x_n)^2}{\Delta t}\\
+	&= \frac{m}{2\Delta t}\left[ x_n^2 + x_0^2 - 2x_0x_1 - 2x_{N-1} x_{N} +2\left( x_1^2 + \dots + x_{N-1}^2 \right) - 2\left( x_1x_2 +\dots + x_{N-2}x_{N-1} \right)\right]\\
+	&= \frac{m}{2\Delta t}\left[ (x_N^2 + x_0^2) - 2\begin{pmatrix}x_{N-1}&\dots&x_1\end{pmatrix}\begin{pmatrix}x_N\\\vdots\\ \text{N-3 0's}\\x_0\end{pmatrix} + \begin{pmatrix}x_{N-1}&\dots & x_1\end{pmatrix}2K_{a=1/2} \begin{pmatrix}x_{N-1}\\\vdots\\x_1\end{pmatrix} \right]
+\end{align}
+where we denote $K$ to be the matrix whose determinant was given above. We can then rewrite into vector notation
+\begin{align}
+	&= \frac{m}{\Delta t}\left[ \frac{x_0^2 + x_N^2}{2} - \vec{x}^{T}\vec{y} + \vec{x}^{T}K\vec{x} \right]\\
+	K &= \left( \frac{m}{2\pi i \hbar \Delta t} \right)^{N/2} \int \prod_{n=1}^{N-1}dx_n e^{\frac{im}{2\hbar \Delta t}(x_0^2 + x_N^2)}e^{-\frac{1}{2}\vec{x}^{T}A\vec{x} - \vec{x}^{T}\vec{y}}\\
+	&= \sqrt{\frac{m}{2\pi i \hbar \Delta t}}e^{\frac{im}{2\hbar \Delta t}\left( x_0^2 + x_{N}^2 \right)}e^{\frac{1}{2}\vec{y}^{T}A^{-1}\vec{y}}
+\end{align}
+
+Calculating the inverse of $A$ isn't straightforward particularly by hand, but we can confirm with Mathematica that since we only need a few terms ($n-3$ elements of $\vec{y}$ are $0$). We can then make the product out and obtain
+$$K = \sqrt{\frac{m}{2\pi i(t_f - t_i)}} e^{\frac{im}{2\hbar \Delta t}(x_0^2 + x_N^2) + \left( \frac{im}{\hbar \Delta t} \right)^2\left[ \frac{i\hbar \Delta t}{m}\frac{N-1}{N}\left( x_0^2 + x_N^2 \right) + 2\frac{i\hbar \Delta t}{Nm}x_0 x_N \right]}$$
+
+which simplifies by leap of faith to
+$$K = \sqrt{\frac{m}{2\pi i \hbar (t_f - t_i)}}e^{\frac{i}{\hbar}\frac{m}{2(t_f - t_i)}(x_f - x_i)^2}$$
+\chapter{11/6 - Transformations/Symmetries}
+
+Suppose we have some infinitisemal transformation $q \to q + \delta q, p  + \delta p$ with $\delta q = \epsilon \pd{g}{p}, \delta p = -\epsilon \pd{g}{q}$ for some expression $g(q,p)$. This then tells us that $\delta H = \epsilon \left\{ H,g \right\}$ the poisson bracket.
+
+Taking this to QM gives us $q \to Q, p \to P, G(Q,P)$ with $\left[ G,H \right] = 0, \rd{}{t}\expvalue{G} = 0$. We then note some examples from classical physics, such as Cartesian coordinates with momenta in each direction or polar 2D coordinates with conserved qunatity angular momentum. The momenta and angular momenta are called generators of symmetries.
+
+We'll go to QM now. We will use one dimension and examine translations. Under the transformation $x \to x + \epsilon, p \to p$ the translation, we make the ansatz for the transformation $\ket{\psi_\epsilon} = T(\epsilon)\ket{\psi}$ for some unitary $T(\epsilon)$.  The QM variables then map as $\expvalue{X} \to \expvalue{X} + \epsilon, \expvalue{P} \to \expvalue{P}$ when $\ket{\psi} \to \ket{\psi_\epsilon}$. In other words, we can write $\bra{\psi_\epsilon}X\ket{\psi_\epsilon} = \bra{\psi}X + \epsilon I\ket{\psi}$. 
+
+If we then examine in the $X$ basis, we can intuit that $T(\epsilon) \ket{x} = \ket{x + \epsilon}$ where the latter vector is the eigenstate with eigenvalue $x + \epsilon$. If we examine this $\bra{\psi_\epsilon}X\ket{\psi_\epsilon}$ then we can simply note that this is equal to $\bra{\psi}X\ket{\psi} + \epsilon$. Alternatively, $\bra{\psi}T^\dagger X T \ket{\psi} = \bra{\psi}X + I\epsilon \ket{\psi}$. Thus, the correct $T(\epsilon)$ satisfies $T(\epsilon) \ket{x} = \ket{x+\epsilon}$. 
+
+Let's then examine
+\begin{align}
+	\ket{\epsilon} &= T(\epsilon)\ket{\psi}\\
+	&= \displaystyle\int\limits_{-\infty}^{\infty}T(\epsilon) \ket{x}\dotp{x}{\psi}\;dx\\
+	&= \displaystyle\int\limits_{-\infty}^{\infty}\ket{x+\epsilon}\psi(x)\;dx\\
+	\dotp{x'}{\psi_\epsilon} &= \displaystyle\int\limits_{-\infty}^{\infty}\dotp{x'}{x + \epsilon}\psi(x)\;dx\\
+	\psi_\epsilon(x') &= \psi(x'-\epsilon)
+\end{align}
+
+This is curious! While $T^\dagger X T = X + I\epsilon, \psi_\epsilon(x) = \psi(x-\epsilon)$. Anyhow, we Taylor expand for small $\epsilon$ as 
+\begin{align}
+	\psi_\epsilon(x) &= \psi(x) - \epsilon \pd{\psi}{x}\\
+	&= \psi(x) - \frac{i\epsilon}{\hbar}\left( -i\hbar\pd{\psi}{x} \right)\\
+	&= \left(1-\frac{i\epsilon}{\hbar}P + O(\epsilon^2)\right) \psi(x)
+\end{align}
+
+We then note that $T = 1-\frac{i\epsilon}{\hbar}P$. Then we note $T^\dagger  \Omega T = \Omega + \frac{i\epsilon}{\hbar}\left[ P,\Omega \right]$. Then for $\Omega = H, \left[ P,H \right] = 0$ and we find that $P$ is conserved because $\rd{}{t}\expvalue{P} = 0$.
+
+Let's then examine translations by some finite amount $x \to x + a$. Then we can compose an infinite number of infinitesmal transformations and take the limit to obtain
+$$T(a) = \lim_{N \to \infty}\left( 1-\frac{ia}{N\hbar}P \right)^N = e^{-\frac{ia}{\hbar}P}$$
+
+Moreover, $T(a)T(b) = T(a+b)$. 
+
+We then examine parities/inversion. Since there are only two elements to this group, we don't have generating functions. We will work in one dimension $x \to -x$. Convention gives the inversion operator to be $\Pi \ket{x} = \ket{-x}$. We note $\Pi^2 = \Pi \Pi = I$ and so $\Pi^{-1} = \Pi$. 
+
+We compute $\dotp{x'}{\Psi x} = \delta(x'+x) = \dotp{\Psi x'}{x}$, showing that $\Pi^\dagger = \Pi$. We then want to compute $\Pi \ket{p}$. We insert a complete set of states 
+\begin{align}
+	\Pi \ket{p} &= \displaystyle\int\limits_{-\infty}^{\infty}\Pi\ket{x}\dotp{x}{p}\;dx\\
+	&= \displaystyle\int\limits_{-\infty}^{\infty}\ket{-x}\frac{1}{\sqrt{2\pi\hbar}}e^{ipx/\hbar}\;dx\\
+	&= \displaystyle\int\limits_{-\infty}^{\infty}\ket{-x}\dotp{-x}{-p}\;dx\\
+	&= \ket{-p}
+\end{align}
+
+We thus know that $\Pi^\dagger X \Pi = -X$ and $\Pi^\dagger P \Pi = -P$. We note that the Harmonic oscillator has a Hamiltonian that commutes with $\Pi$! We note that the eigenstates of the Harmonic oscillator had a $(-1)^n$ term which means they are eigenstates of $\Pi$. 
+
+We then move on to rotations. We note that a rotation operator $R$ must satisfy $R(a)R(b) = R(a+b)$, which is confirmed by matrix notation
+$$R(\alpha) = \begin{pmatrix}\cos \alpha & -\sin \alpha \\ \sin \alpha & \cos \alpha\end{pmatrix}$$
+
+In QM, we will have a unitary operator that corresponds to this rotation operation. 
+
+\chapter{11/8 - Rotational transformations in 2D}
+
+We know that rotations in two dimensions obeys the rotation matrix 
+$$R(\alpha) = \begin{pmatrix}\cos \alpha & -\sin \alpha \\ \sin \alpha & \cos \alpha\end{pmatrix}$$
+
+Classically, there's not much to discuss, just $R(\alpha_1)R(\alpha_2) = R(\alpha_1 + \alpha_2)$ (not because I was late and am running behind on notes). Let's do QM.
+
+We have some $\ket{\psi} \to^R \ket{\psi_R}: U(\alpha) \ket{\psi}$. We can easily examine and find $U^{-1}(\alpha) = U(-\alpha)$. 
+
+We know from classical-quantum correspondence that expectation values link us to quantum. We then have $\bra{\psi_R}X_i\ket{\psi_R} = \sum_j R_{ij}\bra{\psi}X_j\ket{\psi}$ and similarly for momentum. Let's then examine ($X_i$ are the basis vectors)
+\begin{align}
+	X_1 \ket{x_1, x_2} &= x_1\ket{x_1, x_2}\\
+	X_2 \dots &= \dots\\
+	U(\alpha) \ket{x_1, x_2} &= \ket{\sum_j R_{2j}x_j, \sum_j R_{2j}x_j}\\
+	\bra{\psi_R}X_j\ket{\psi_R} &= \bra{\psi}U^\dagger(\alpha)X_jU(\alpha)\ket{\psi}\\
+	&=\bra{\psi}U(-\alpha)X_jU(\alpha)\ket{\psi}\\
+\end{align}
+
+We can then see that this gives us $X_j \to U(-\alpha)X_jU(\alpha)$. Then we examine $X_i\ket{x_1, x_2}$ post rotation
+\begin{align}
+	U(-\alpha)X_iU(\alpha)\ket{x_1, x_2} &= U(-\alpha)X_i\ket{\sum_j R_{2j}x_j, \sum_j R_{2j}x_j}\\
+	&= U(-\alpha) \left( \sum_l R_{il}x_l \right)\ket{\sum_j R_{2j}x_j, \sum_j R_{2j}x_j}\\
+	&= \left( \sum_l R_{il}x_l \right)U(-\alpha) \ket{\sum_j R_{2j}x_j, \sum_j R_{2j}x_j}\\
+	&= \sum_l R_{il} x_l \ket{x_1, x_2}
+\end{align}
+where we then see that the components rotate! Note $R_{il}$ is the rotation vector. Finally, we see then than
+$$U^\dagger(R) X_i U(R) = \sum_L R_{il}X_l$$
+
+We can then examine how a vector rotates. $\dotp{x_1, x_2}{\psi} = \psi(x_1, x_2)$. We then see that
+\begin{align}
+	\psi_R(x_1, x_2) &= \dotp{x_1, x_2}{U(R)\psi} \\
+	&= \dotp{U(R^{-1})x_1x_2}{\psi}\\
+	&= \psi(\sum R^{-1}x_j, \sum R^{-1}x_j)
+\end{align}
+
+We see that the wave function undergoes a rotation by $R^{-1}$, and thus $\psi_R(R\vec{x}) = \psi(\vec{x})$. 
+
+We then seek to express $U(R)$ as an exponent of a Hermitian operator. This is useful because we can see that if Hamiltonian is invariant under some rotation, then the Hermitian operator commutes with the Hamiltonian! Let's examine infinitesimal rotations as our path to this operator. We know that
+$$R(\epsilon) = \begin{bmatrix}1 & -\epsilon \\ \epsilon & 1\end{bmatrix}$$
+
+We then can compute 
+\begin{align}
+	\psi_R(x,y) &= \psi(x + \epsilon y, y-\epsilon x)\\
+	&\approx \psi(x,y) + \epsilon\left[ y\pd{\psi}{x} - x\pd{\psi}{y} \right]\\
+	&= \psi(x,y) - \frac{i\epsilon}{\hbar}\left[ xP_y - yP_x \right]
+\end{align}
+
+We then see that the bracket is the angular momentum! This gives the form for $U$ for infinitisemal rotations $U(\epsilon\hat{z} = 1-\frac{i\epsilon}{\hbar}$. We can then easily take this to finite rotations and we obtain
+$$U(\alpha \hat{z}) = e^{-\frac{i\alpha L_z}{\hbar}}$$
+where $\alpha \hat{z}$ is just notation for rotation about $z$ axis.
+
+We will now work in polar coordinates, the natural coordinates for rotation. Recall that we have $L_z = -i\hbar\left( x\pd{}{y} - y\pd{}{x} \right)$. We can then convert to polar coordinates and we will obtain $L_z = -i\hbar \pd{}{\theta}$. Thus, $U(R) \psi(r,\theta) = \psi(r,\theta-\alpha)$.
+
+We want then to solve the eigenvalue problem for $L_z$. We want to work in coordinate basis, so we dot both sides of the eigenvalue equation by $\bra{\theta}$ and obtain
+\begin{align}
+	-i\hbar \pd{}{\theta} \psi(\theta) &= l_z \psi(\theta)\\
+	\psi(\theta) &\propto e^{il_z\theta/\hbar}
+\end{align}
+
+We thus have our orthonormal basis of eigenstates. Let's call $l = n\hbar$ and $\Phi_n(\theta) = \frac{1}{\sqrt{2\pi}} e^{in\theta}$.
+
+We're ready to solve the SE! $H = \frac{p^2}{2m} + V(r)$. We can then write our SE
+$$\left[ -\frac{\hbar^2}{2m}\nabla^2 + V(r) \right]\psi_E = E\psi_E$$
+
+We know the form of the Laplacian in polar is $\nabla^2 = \ptd{}{(r^2)} + \frac{1}{r}\pd{}{r} + \frac{1}{r^2}\ptd{}{\theta}$, so we can plug this in for the explicit form. You sad yet? Jkay, we can find simultaneous eigenstates to the Hamiltonian. So $\psi_E = R_{E,n}(r) \Phi_n(\theta)$. We can then plug into the SE. If we work through this, we can find that $\Phi$ cancels out and we find a differential equation in $R$ as below
+\begin{align}
+	-\frac{\hbar^2}{2m}\left[ \pd{}{r} + \frac{1}{r}\pd{}{r} - \frac{n^2}{r^2} \right]R_{E,n}(r) + V(r) R_{E,n}(r) &= ER_{E,m}(r)\\
+	-\frac{\hbar^2}{2m}\left[ \pd{}{r} + \frac{1}{r}\pd{}{r}  \right]R_{E,n}(r) + V_{eff}(r) R_{E,n}(r) &= ER_{E,m}(r)
+\end{align}
+whene we substitute $V_{eff}=V(r) + \frac{\hbar^2n^2}{2mr^2}$. We won't actually solve this right now, but we will move to three dimensions. To generalize, we will need to use the fact that we can rotate about any of three three axes and superposition gives harder rotations. Woohoo!
+\chapter{11/11 - 3D angular momentum}
+
+Angular momentum in three dimensions. Suppose we have some rotation, then we can decompose it into a rotation about each of the three axes, which can be written
+$$R(\alpha_1, \alpha_2, \alpha_3) = \begin{pmatrix}1 & 0 & 0\\0 & \cos \alpha_1 & -\sin \alpha_1\\0 & \sin \alpha_1 & \cos \alpha_1\end{pmatrix}\begin{pmatrix}\cos \alpha_2 & 0 & -\sin\alpha_2\\0 & 1 & 0\\\sin \alpha_2 & 0 & \cos \alpha_2\end{pmatrix}\begin{pmatrix}\cos \alpha_3 & -\sin \alpha_3 & 0\\\sin \alpha_3 & \cos \alpha_3 & 0\\0 & 0 & 1\end{pmatrix}$$
+and we can write the generators of rotations via the angular momenta
+\begin{align}
+	L_x &= yP_z - zP_y\\
+	L_y &= zP_x - xP_z\\
+	L_z &= xP_y - yP_x
+\end{align}
+
+and we can have an infinitisemal rotation $R = 1 - \vec{\epsilon}\cdot \vec{L}$. Let's compute the commutation relation for 
+\begin{align}
+	\left[ L_x, L_y \right] &= \left[ YP_Z - ZP_Y, ZP_X - XP_Z \right]\\
+	&= \left[ PY_Z - ZP_X \right] + \left[ ZP_Y, XP_Z \right]\\
+	&= Y\left[ P_Z,Z \right]P_X + X\left[ Z,P_Z \right]P_Y\\
+	&= Y\left( -i\hbar \right)P_X + X\left( i\hbar \right)P_Y\\
+	&= i\hbar L_z
+\end{align}
+
+Similarly for the other commutators. We will then write these relations in the ``maximally sexy way'' (creds to Mark the Wise)
+$$\left[ L_i, L_j \right] = i\hbar \sum_k \epsilon_{ijk}L_k$$
+
+where this operator is called the \emph{Levi-Civita} operator. We note that each of these commutes with $H$ but not with each other, so we can only diagonalize one at a time\dots Usually we diagonalize $L_z$.
+
+Let's try to do better. Let's construct the quantity $L^2 = L_x^2 + L_y^2 + L_z^2$ and compute $\left[ L^2, L_z \right]$
+\begin{align}
+	\left[ L^2 , L_z\right] &= \left[ L_x^2,L_z \right] + \left[ L_y^2, L_z \right]\\
+	&= L_x\left[ L_x, L_z \right] + \left[ L_x, L_z \right]L_x + L_y\left[ L_y, L_z \right] + \left[ L_y, L_z \right]L_y\\
+	&= L_x\left( -i\hbar L_y \right) + \left( -i\hbar L_y \right)L_x + L_y\left( i\hbar L_x \right) + \left( i\hbar L_x \right)L_y\\
+	&= 0
+\end{align}
+
+Thus, $\left[ L^2, L_j \right] = 0$, so for any rotationally invariant Hamiltonian we can diagonalize all of the quantities $L^2, L_z, H$. 
+
+We then can seek the eigenvalues and eigenstates of $L^2, L_z$, which are the spherical harmonics in coordinate space. But instead, we will do this differently. Let's label the set of joint eigenstates $\ket{\alpha,\beta}$ corresponding to the eigenvalues under $L^2, L_z$ respectively. 
+
+How do we solve this? With a clever trick, almost like the creation-annihilation operators. Let's construct $L_{\pm} = L_x \pm iL_y$ and note that $L_+^\dagger = L_-$. We then note $\left[ L^2, L_\pm \right] = 0$ and we can also compute $\left[ L_z, L_\pm \right] = \pm \hbar L_\pm$. These are the raising and lowering operators, which change eigenvalues! We can then write
+\begin{align}
+	L_z(L_+\ket{\alpha,\beta}) &= L_+L_z\ket{\alpha,\beta} + \left[ L_z, L_+ \right]\ket{\alpha,\beta}\\
+	&= \beta L_+\ket{\alpha,\beta} + \hbar L_+\ket{\alpha,\beta}\\
+	&= (\beta+\hbar)L_+ \ket{\alpha,\beta}
+\end{align}
+
+We thus see that $L_+\ket{\alpha,\beta} \propto \ket{\alpha,\beta + \hbar}$. We can try similarly for $L_-$ and we obtain $L_z(L_-\ket{\alpha,\beta} = (\beta - \hbar)L_-\ket{\alpha,\beta}$ and we thus derive $L_-\ket{\alpha,\beta} \propto \ket{\alpha,\beta-\hbar}$. We can thus compute a whole set of states $\ket{\alpha, \beta \pm n\hbar}$ just by repeated application of these raising and lowering operators.
+
+We can then note that $\bra{\alpha,\beta} L_x^2 + L_y^2 \ket{\alpha,\beta} \geq 0$ by taking advantage of the Hermiticity of the operators and thus due to positivity of self-products. But then, we can also write $L_x^2 + L_y^2 = L^2 - Lz^2$, which then yields $\alpha - \beta^2$ for our constructed dot product, where $\alpha \geq 0$ by definition. This shows that there is actually a bound on $\beta$! Ruh-roh. So the set of states we stated above aren't an infinite set.
+
+We can then write 
+\begin{align}
+	L_- L_+ &= L_x^2 + L_y^2 + i\left[ L_x, L_y \right]\\
+	&= L^2 - L_z^2 - \hbar L_z
+\end{align}
+
+We then note that $L_- L_+ \ket{\alpha,\beta_{max}} = 0$ because $\beta_{max}$ must get annihilated otherwise $L_+$ would raise it to a higher value. Let's then write this explicitly in terms of what we wrote above
+\begin{align}
+	\left(L^2 - L_z^2 - \hbar L_z\right)\ket{\alpha,\beta_{max}} &= 0\\
+	\alpha - \beta_{max}^2 -\hbar \beta_{max} &= 0\\
+	\alpha &= \beta_{max}(\beta_{max} + \hbar)\\
+	&= \beta_{min}\left( \beta_{min} - \hbar \right)
+\end{align}
+
+Setting these equal, we find $\beta_{min} = -\beta_{max}$. We can then write $\beta_{max} - \beta_{min} = \hbar k$ where $k$ is integer; we note that this is the correct quantity to quantize. This then shows that $\beta_{max} = \frac{\hbar k}{2}$. The way we explain this is that the total angular momentum is the sum of the orbital and angular momentum. The orbital angular momentum corresponds to even $k$, and the spin angular momentum is an odd $k$. This spin is another degree of freedom. We'll talk more in the future!
+
+\chapter{11/13 - Solving spin/angular momentum, orbital angular momentum}
+
+Recall that we discovered $\left[ L_i, L_j \right] = i\hbar \sum_k \epsilon_{ijk} L_k$. We then found $L^2 = \sum_i L_i^2$ which commutes with each $L_i$. We then discovered rotational invariance of the Hamiltonian under $L_z$, and so there exists a simultaneous eigenbasis for $L^2, L_z, H$. We then sought the simultaneous eigenstates of $L^2, L_z$ labelled by eigenvalues $\alpha,\beta$. We then discovered the ladder operators, which gave a $\beta_{max}, \beta_{min}$ by argument, where $\alpha = \beta_{max}(\beta_{max}+\hbar)$ and then we also found $\beta_{max} = -\beta_{min}$. We finally found $\beta_{max} = \frac{\hbar k}{2}$.
+
+Our usual notation $\beta = \hbar m, \alpha = \hbar^2 j(j+1)$. We then have our $\beta_{max} = \hbar j$. We then relabel these eigenstates $L^2 \ket{j,m} = \hbar^2 j(j+1)\ket{j,m}, L_z \ket{j,m} = \hbar m \ket{j,m}$, where $m$ ranges from $-j$ to $j$. 
+
+Then since there is a spin component, we can notate the total angular momentum $J_i = L_i + S_i$. We then note commutation relations \begin{align}
+    \left[ S_i, L_i \right] &= 0\\
+    \left[ S_i, S_j\right] &= i\hbar \sum_k \epsilon_{ijk} S_k\\
+    \left[ J_i, J_j \right] &= i\hbar \sum_k \epsilon_{ijk} J_k
+\end{align}
+
+We then have our propagator for rotations
+$$U(R) = \exp \left[ -i \sum_{i} \frac{\alpha_iJ_i}{\hbar} \right]$$
+
+We then have our ladder operators
+\begin{align}
+    J_+ \ket{j,m} \propto \ket{j,m+1}\\
+    J_- \ket{j,m} \propto \ket{j,m-1}
+\end{align}
+
+We note that $U(R)$ doesn't affect the $j$ index of the state, this means that in the basis only kets with $\abs{m} < \abs{j}$ are not annihilated by $U(R)$. This shows that $U(R)$ is block diagonal with blocks of increasing size, so one-by-one for $j=0$, two-by-two for $j=1/2$, three-by-three for $j=1$, etc.
+
+We then want to determine the constant of proportionality. We note then that $\bra{j,m} J_- J_+ \ket{j,m} = \dotp{J_+ j,m}{J_+ j,m} = \abs{C_+(j,m)}^2$. We however can also compute $J_- J_+ = J_x^2 + J_y^2 + i\left[ J_x, J_y \right] = J^2 - J_z^2 - J_z$, which finally yields the equality
+$$\abs{C_+(j,m)}^2 = \hbar^2 j(j+1) - \hbar^2 m^2 - \hbar^2 m$$
+
+which then gives coefficients
+\begin{align}
+    C_{+}(j,m) &= \hbar \sqrt{(j-m)(j+m+1)}\\
+    C_-(j,m) &= \hbar\sqrt{(j+m)(j-m+1)}
+\end{align}
+
+We also have $J^2\ket{j,m} = \hbar^2 j(j+1)\ket{j,m}$ and $J_z\ket{j,m} = \hbar m \ket{j,m}$.
+
+Suppose we want to compute the matrix elements of the non-$z$ generators. We can do
+\begin{align}
+    \bra{j',m'}J_x\ket{j,m} &= \bra{j',m'}\frac{J_+ + J_-}{2}\ket{j,m}\\
+    &= \frac{\hbar}{2}\delta_{j',j}\left\{ \delta_{m',m+1}\sqrt{(j-m)(j+m+1)} + \delta_{m', m-1} \sqrt{(j+m)(j-m+1)} \right\}
+\end{align}
+
+and similarly for $J_y$.
+
+Let's examine some case, namely $j=\frac{1}{2}, m = \pm \frac{1}{2}$. Our eigenbasis then becomes $\ket{\frac{1}{2}, \pm \frac{1}{2}}$. Let's then compute
+\begin{align}
+    \bra{\frac{1}{2}, \frac{1}{2}} J_i \ket{\frac{1}{2}, \frac{1}{2}} = [J_i]_{11}\\
+    \bra{\frac{1}{2}, \frac{1}{2}} J_i \ket{\frac{1}{2}, -\frac{1}{2}} = [J_i]_{12}\\
+    \bra{\frac{1}{2}, -\frac{1}{2}} J_i \ket{\frac{1}{2}, \frac{1}{2}} = [J_i]_{21}\\
+    \bra{\frac{1}{2}, -\frac{1}{2}} J_i \ket{\frac{1}{2}, -\frac{1}{2}} = [J_i]_{22}
+\end{align}
+
+We can thus plug and chug and solve for $J_i$, which are just
+\begin{align}
+    J_x &= \frac{\hbar}{2}\begin{pmatrix}0&1\\1&0\end{pmatrix}\\
+    J_y &= \frac{\hbar}{2}\begin{pmatrix}0&-i\\i&0\end{pmatrix}\\
+    J_z &= \frac{\hbar}{2}\begin{pmatrix}1&0\\0&-1\end{pmatrix}\\
+    \vec{J} &= \frac{\hbar}{2}\vec{\sigma}
+\end{align}
+
+If we then rotate about $\hat{n}$ by some angle $\abs{\vec{n}}$, then the rotation is given by
+\begin{align}
+    D^{1/2}[\vec{n}] &= \exp\left[ \frac{-i \vec{n}\cdot \vec{J}}{\hbar} \right]\\
+    &= \cos\left( \frac{\abs{\vec{n}}}{2} \right)I - i\hat{n}\cdot \vec{\sigma}\sin\left( \frac{\abs{\vec{n}}}{2} \right)
+\end{align}
+
+But the mind-boggling thing is that $D^{1/2}[2\pi\hat{n}] = -I$! This is a taste of what's to come in spin mechanics.
+
+Let's look now at orbital angular momentum. Let's make the change of coordinates into spherical. Our operators (thankfully not on HW sets) become
+\begin{align}
+    L_z &= -i\hbar \pd{}{\phi}\\
+    L_{\pm} &= \pm\hbar e^{i\phi}\left( \pd{}{\theta} \pm i\cot \theta \pd{}{\phi} \right)\\
+    L^2 &= -\hbar^2\left( \frac{1}{\sin\theta}\pd{}{\theta}\sin\theta\pd{}{\theta} + \frac{1}{\sin^2\theta} \ptd{}{\phi} \right)\\
+    \nabla^2 &= \frac{1}{r^2}\pd{}{r}r^2\pd{}{r} - \frac{L^2}{\hbar^2 r^2}
+\end{align}
+
+The solution to this then is solved by separation of variables and spherical harmonics.
+\chapter{11/15 - Spherical harmonics, spin particles}
+
+We recall that we have operators $J_z, J^2$ such that eigenvalues for rotation are $J^2\ket{j,m} = \hbar^2 j(j+1)\ket{j,m}, J_z\ket{j,m} = \hbar m \ket{j,m}$. Allowed values for $j$ are $n/2$ and $m$ is bound by $j$. Lastly,
+$$J_{\pm} \ket{j,m} = \hbar\sqrt{\left( j\mp m \right)\left( j\pm m + 1 \right)}\ket{j,m\pm 1}$$
+
+Let's do spherical harmonics. First, let's write our angular momentum operators
+\begin{align}
+    L_z &= -i\hbar \pd{}{\phi}\\
+    L^2 &= \hbar^2\left( \frac{1}{\sin\theta}\pd{}{\theta}\sin \theta \pd{}{\theta} + \frac{1}{\sin^2\theta}\ptd{}{\phi} \right)\\
+    \nabla^2 &= \frac{1}{r^2} \pd{}{r} r^2\pd{}{r} - \frac{L^2}{\hbar^2 r^2}
+\end{align}
+
+where we have $L_{\pm}$ earlier. We note the eigenvectors of $L_z\ket{j,m} = \hbar m \ket{j,m}$ is very simple, must be proportional to $e^{im\phi}$. We then seek the spherical harmonics, the functions that satisfy
+\begin{align}
+    L^2 Y_l^m\left( \theta,\phi \right) &= \hbar^2 l(l+1)Y_l^m(\theta,\phi)\\
+    L_z Y_l^m\left( \theta,\phi \right) &= \hbar m Y_l^m(\theta,\phi)
+\end{align}
+
+We thus can write based on our eigenvector solutions that $Y_l^m(\theta,\phi) = f_{l,m}(\theta)e^{im\phi}$. We can then plug through the Laplacian and find
+$$\left( \frac{1}{\sin\theta}\pd{}{\theta}\sin\theta\pd{}{\theta} - \frac{m^2}{\sin^2\theta} \right)f(\theta) = l(l+1)f(\theta)$$
+
+The spherical harmonics satisfy under notation $d\Omega = \sin\theta d\theta d\phi$ that
+$$\int d\Omega Y_{l'}^{m'}Y_{l}^{m} = \delta_{ll'}\delta^{mm'}$$
+
+We note that $Y_0^0 = \frac{1}{\sqrt{4\pi}}$ since $\int d\Omega = 4\pi$. We can then jot down some of the first few
+\begin{align}
+    Y_1^{\pm 1} &= \mp \sqrt{\frac{3}{8\pi}}\sin\theta e^{\pm i\phi}\\
+    Y_{1}^0 &= \sqrt{\frac{3}{4\pi}}\cos \theta\\
+    Y_2^{\pm2} &= \sqrt{\frac{15}{32\pi}} \sin^2\theta e^{\pm2i\phi}\\
+    Y_{2}^{\pm1} &= \mp \sqrt{\frac{15}{8\pi}} \sin \theta \cos \theta e^{i\phi}\\
+    Y_2^0 &= \sqrt{\frac{5}{16\pi}}\left( 3\cos^2\theta - 1 \right)
+\end{align}
+
+where $Y_0$ are the $s$ orbitals, $Y_1$ are the $p$, and $Y_2$ are the $d$. We can convert to Cartesian and find $Y_1^{\pm1} = -\sqrt{\frac{3}{4\pi}}\frac{x\pm iy}{\sqrt{2}r}, Y_1^0 = \sqrt{\frac{3}{4\pi}}\frac{z}{r}$.
+
+We need to discuss spin a lot more. We first discuss spin $\frac{1}{2}$ particles. We used to know that a particle in state $x,y,z,p_x, p_y, p_z$ could be represented as an eigenstate of position $\ket{x,y,z}$ or position. But when we add $S$, there's $S_x, S_y, S_z$. The eigenstates in this space are $\ket{s,m_s}$ and there are $2s+1$ of these ($m_s \in \left[ -s,s \right]$). Thus, we can write the tensor product for $J_k = L_k + S_k$
+$$J_k\ket{x,y,z}\otimes \ket{s,m_s} = \left( L_k\ket{x,y,z} \right)\otimes \ket{s,m_s} + \ket{x,y,z}\otimes \left( S_k \ket{s,m_s} \right)$$
+
+Let's look at the spin $1/2$ case now. There are two cases, $m_s = \pm \frac{1}{2}$. A general state $\psi(x,y,z) = \begin{pmatrix}\psi_+(x,y,z)\\ \psi_-(x,y,z)\end{pmatrix}$. If $\psi$ is then an eigenstate of $S_z$, then we have $S_z\psi =  \pm \frac{1}{2}\hbar \psi$, where we recall $\vec{S} = \frac{\hbar}{2}\vec{\sigma}$.
+
+Suppose we then seek a state with zero momentum. We first can write $\vec{P}\psi = \begin{pmatrix}\vec{P} \psi_+\\ \vec{P}\psi_-\end{pmatrix}$. Then each of these components must have gradient $0$.
+
+Let's then look to eigenstates of $L^2, L_z$. The corresponding eigenvectors can be written $\ket{l,m} = \begin{pmatrix} f_+(r) Y_l^m(\theta,\phi)\\f_-(r)Y_l^m(\theta,\phi)\end{pmatrix}$. If the eigenvector happens to have a definite spin value then one of $f_{\pm}(r) = 0$.
+
+One more thing about spin. We know how to compute our eigenvectors in our spin state, simply the eigenstates of $S_z$ and one is spin up and the other is spin down. But let's try something crazy, define our own axis $\hat{n}$ about which some arbitrary spin is defined. We then note that $\hat{n}_x = \sin\theta\cos\phi, \hat{n}_y = \sin\theta\sin\phi, \hat{n}_z = \cos \theta$. Then we see that
+$$\hat{n}\cdot \vec{S}\ket{\hat{n},\pm\frac{1}{2}} = \hbar\left( \pm\frac{1}{2} \right)\ket{\hat{n},\pm\frac{1}{2}}$$
+
+We can then write $\hat{n}\cdot \vec{S}$ explicitly to obtain
+$$\hat{n}\cdot \vec{S} = \begin{pmatrix}\cos \theta & \sin \theta e^{-i\phi}\\\sin\theta e^{i\phi} & -\cos \theta\end{pmatrix}$$
+
+We can solve the eigenproblem for our plus spin case as below or do the minus case and suffer (though it is similar):
+$$\ket{\hat{n},\frac{1}{2}} = \begin{pmatrix}\cos \frac{\theta}{2}e^{-i\phi/2} \\ \sin \frac{\theta}{2}e^{i\phi/2}\end{pmatrix}$$
+
+We then will start solving time evolution. We will start by setting things up in general, then we will do free particle (which is mostly done before), and then we will do the isotropic spherical harmonic oscillator, which we already know as well. Finally we will hit the Coulomb problem, which we will take slowly. 
+
+We note that the SE we want to solve is central and is
+$$\left[ -\frac{\hbar^2}{2m}\nabla^2 + V(r) \right]\psi = E\psi$$
+
+We go to spherical polar coordinates
+$$\left[ -\frac{\hbar^2}{2m}\left( \frac{1}{r^2}\pd{}{r}r^2\pd{}{r} - \frac{L^2}{r^2} \right)j+V(r) \right]\psi(r,\theta,\phi) = E\psi(r,\theta,\phi)$$
+
+We can write $\psi = R(r) Y_l^m(\theta,\phi)$ which we know to solve 
+$$\left[ -\frac{\hbar^2}{2m}\left( \frac{1}{r^2} \pd{}{r}r^2\pd{}{r} - \frac{l(l+1)}{r^2} \right) + V(r) \right]R(r) = ER(r)$$
+
+This is the differential equation we have to solve for $R(r)$. We note that only $l$ affects $R(r)$ and not $m$. There's of course a trick. First, the partials become regular derivatives. Secondly, we make the change of variables $R = \frac{U}{r}$. After doing out the math, we can rewrite the SE as
+$$\left[-\frac{\hbar^2}{2m}\left[ \ptd{}{r}-\frac{l(l+1)}{r^2} \right] + V(r)\right] U(r) = EU(r)$$
+
+This looks like a one-dimensional problem, but there is a caveat. Our coordinate is not $\left[ -\infty,\infty \right]$ though but $\left[ 0,\infty \right]$ so we can't just pull our results from 1D. 
+
+\chapter{11/18 - Free Particle, Harominic Oscillator in Spherical Coordinates}
+
+We want to solve time evolution for systems with rotational invariance. We know that if systems are rotationally invariant then $\left[ L_j,H \right] = \left[ L^2, H \right] = \left[ L^2, L_j \right] = 0$. We can make the separation of variables ansatz $\psi = R(r) Y_{lm}(\theta,\phi)$. We can then write our Hamiltonian in coordinate space
+$$H = -\frac{\hbar^2}{2m}\nabla^2 + V(R) \to \left\{-\frac{\hbar^2}{2m}\left[ \frac{1}{r^2}\rd{}{r}r^2\rd{}{r} - \frac{l(l+1)}{r^2} \right]+V(r)\right\}R_{E,l}(r) = ER_{E,l}(r)$$
+
+We make a substitution in $R(r) = U(r)/r$
+$$\left[ -\frac{\hbar^2}{2m}\left( \ptd{}{r} - \frac{l(l+1)}{r^2} \right) + V(r) \right]U_{E,l}(r) = EU_{E,l}(r)$$
+
+We make a slight digression. Examine $\nabla^2 \left( \frac{1}{r} \right)$
+$$\frac{1}{r^2}\pd{}{r}r^2\pd{}{r}\frac{1}{r} = \delta(r)$$
+
+This is a very tiptoe-y case, and we need to be careful while solving our SE, because naive differentiation yields $0$ (but we can think of this as a Coulomb charge to see the delta function).
+
+Back on track. Recall that $r \in \left[ 0,\infty \right]$ and so $0$ could be weird, and it also doesn't resolve nicely to the one-dimensional problem. We then seek bound states, i.e. normalizable. Note
+$$\displaystyle\int\limits_{0}^{\infty} r^2 \abs{\psi}^2\;dr = \displaystyle\int\limits_{0}^{\infty}r^2 \abs{R}^2\;dr = \displaystyle\int\limits_{0}^{\infty}\abs{U}^2\;dr$$
+so $U$ must vanish at infinity. 
+
+We can investigate the behavior of the SE as it goes near $r \to 0$. First, we rescale our problem and take the limit. Note that the $r^{-2}$ term is the most singular part of the expression so assuming our potential scales at less than $r^{-2}$ as $r \to 0$ (which is mostly valid in most potentials). 
+$$\left( \ptd{}{r} - \frac{l(l+1)}{r^2} \right) U_{E,l}(r) = 0$$
+
+(asked question why simplifies to this. Basically, these two terms are the terms that explode most quickly as $r \to 0$, and so we have to have these cancel otherwise the other terms ``can't keep up.'')
+
+We make ansatz $U = Ar^\alpha$ and find $\alpha(\alpha-1) = l(l+1)$ yielding roots $\alpha = l+1, -l$. We recall that $l \in \mathbb{N}$, and we can easily see that the root we want is $l+1$. The two boundary conditions for our bound state are then that it falls with $r^{l+1}$ and that it is bounded as $ r \to \infty$. 
+
+Let's examine the free particle. We first recall that the free particle has no bound states, so our condition $U$ is bound at infinity dies! We want to change our free particle solution $e^{i\vec{p}\cdot \vec{x}}$ from the $P_j$ basis to $P^2, L^2, L_z$ basis. We will sketch the solution.
+
+We need to solve the diffeq
+\begin{align}
+    \frac{\hbar^2}{2m}\left[ \rtd{}{r} - \frac{l(l+1)}{r^2} \right]U &= EU\\
+    \left[ \rtd{}{r} + k^2 - \frac{l(l+1)}{r^2} \right]U &= 0, \; k^2 = \frac{2mE}{\hbar^2}\\
+    \left[ \rtd{}{\rho} + 1 - \frac{l(l+1)}{\rho^2} \right]U(\rho) &= 0, \; \rho = kr
+\end{align}
+
+We can first examine the special case $l=0$. These are $\sin \rho, \cos \rho$. We note that $\rho \to 0$ produces $\cos \rho \to 1$, and that's the fraud that behaves like a delta function, so we have $U(\rho) = \sin \rho$. To solve for general $l$, we note that these are the spherical Bessel functions (OTL, just did this on a math set and have no idea). Two types of spherical Bessel functions, $j_l(\rho), \eta_l(\rho)$. Their behaviors near infinity go like $\frac{1}{\rho}\sin(\rho - l\pi/2), \frac{1}{\rho}\cos (\rho - l\pi/2)$ while they behave at zero (more importantly) as $\frac{\rho^l}{(2l+1)!!}, \frac{(2l-1)!!}{\rho^{l+1}}$ respectively, where the double factorial means every other term (???). We want $j_l$ because it's the well behaved one, and so we write (recalling that these are the solutions for $R = U/r$)
+$$\psi = j_l(kr) Y_l^m(\theta,\phi)$$
+
+Let's take our plane wave then $e^{i\vec{k}\cdot \vec{x}} = e^{ikr\cos \theta}$. We can expand this in the Legendre polymonials (FML) to write
+\begin{align}
+    e^{ikr\cos \theta} &= \sum_{l=0}^\infty i^{l}(2l+1)j_l(kr)P_l(\cos \theta)
+\end{align}
+where we then have $Y_l^0(\theta,\phi) = \sqrt{\frac{2l+1}{4\pi}} P_l(\cos \theta)$. 
+
+We now discuss the isotropic harmonic oscillator. We have
+$$H = -\frac{\hbar^2}{2m} \nabla^2 + \frac{1}{2}m\omega^2 r^2$$
+where $r^2 = x^2 + y^2 + z^2$. We know that the energy eigenvalues are $E = \hbar\omega (n_x + n_y + n_z + 3/2)$. But we will work through this in spherical coordinates. We first write $R = U/r$ as always and we write our SE (after re-uniting)
+$$\left[\rtd{}{r} + \frac{2m}{\hbar^2}\left( E - \frac{1}{2}m\omega^2 r^2 - \frac{l(l+1)\hbar^2}{2mr^2} \right)\right] U= 0$$
+
+We can make the change of variables $r = \sqrt{\frac{\hbar}{m\omega}}y, E = \lambda \hbar \omega$ which pretties us up to give
+
+$$\left[\rtd{}{y} + 2\lambda - y^2 - \frac{l(l+1)}{y^2}\right]U = 0$$
+
+We examine asymptotic behavior and require these terms vanish. First, as $r \to \infty$, we obtain 
+\begin{align}
+    \left(\ptd{}{y} - y^2\right) U &= 0\\
+    U \propto e^{\pm y^2/2}
+\end{align}
+
+We will then write $U = v(y)e^{-y^2/2}$ where $v(y)$ encaspulates this exploding solution (and we want bound states). We can then plug this through our simplified SE and get a function of $v$ and we finally end up with
+$$v'' - 2yv' + \left[ 2y -2\lambda -\frac{l(l+1)}{y^2} \right]U = 0$$
+
+Next step, check Arfkin (special functions book, $n$-th time Wise has told us to do this). We then try a trick, following the Hallowed Wise swiss army knife procedure, but we're too stoopid to find a trick. We then expand in a power series $v = \sum a_k y^k$. We know that $y \to 0$ must behave as $y^{l+1}$. 
+
+\chapter{11/19 - Rotational problems, Hydrogen atom}
+
+We recall that we discussed $\psi = R(r)Y(\theta,\phi)$, and making the substitution $R(r) = U(r)/r$. The differential equation we arrived at was
+$$\left[-\frac{\hbar^2}{2m} \left( \rd{}{r} - \frac{l(l+1)}{r^2} \right) + V(r)\right] U(r) = EU(r)$$
+
+We recall that this looked like a one-dimensional problem but with different boundary conditions because $r \in [0,\infty]$. We then require bound state
+$$\displaystyle\int\limits_{0}^{\infty}r^2\abs{R(r)}^2\;dr = \displaystyle\int\limits_{0}^{\infty}\abs{U(r)}^2\;dr < \infty$$
+
+where the first expression comes by the Jacobian going into spherical coordinates.
+
+We then recall that $V(r)$ doesn't diverge as $r \to 0$ as hard as $\frac{1}{r^2}$, so we examine the differential equation near $r=0$ as
+$$\left[ \rtd{}{r} - \frac{l(l+1)}{r^2}\right]U(r) = 0$$
+
+We can then make the ansatz $r^\alpha$ and obtained $\alpha = l+1, -l$, and since the latter isn't normalizable so $\alpha = l+1, l \in \mathbb{N}$. When $l=0$, $U$ behaves like a constant and produces the delta function in the Laplace equation, which we again don't want.
+
+We then solved the free particle not in the basis $P_{x,y,z}$ but in the basis $P_{P^2, L^2, L_z}$. We then introduced $k^2 = \frac{2mE}{\hbar^2}, \rho = kr$ and our SE became
+$$\left[ -\rtd{}{\rho} + 1 - \frac{l(l+1)}{\rho^2} \right]U(r) = 0$$
+which gives $U$ of form $ \sin \rho, \cos \rho$. The latter goes like a delta function near $r=0$ (because almost constant) and so we want $U(r) = \sin \rho$. We then found that general $l$ gave solutions in the spherical Bessel functions, one case of which was a bad case (producing delta functions), which finally gave our free particle wavefunction
+$$\psi(r,\theta,\phi) = j_r(kr)Y_l^m(\theta,\phi)$$
+
+We then worked on the harmonic oscillator, of potential $V(r) = \frac{1}{2}m\omega^2r^2$, where then $E = \lambda \hbar \omega, r = \sqrt{\frac{\hbar}{m\omega}}y$ and yielded SE
+$$\left[ \rtd{}{y} + 2\lambda - y^2 - \frac{l(l+1)}{y^2} \right]\psi = 0$$
+
+We examine the $y \to \infty$ term, which leaves only the derivative and $y^2$
+$$\left( \rd{}{y} - y^2 \right)U(y) = 0$$
+and we then solve $U(y) \sim e^{\pm y^2/2}$, and we want the negative case. Thus, we can write $U(y) = V(y) e^{-y^2/2}$. Again we require that $V(y)$ terminate in a power series like the one-dimensional case. Substituting this back we find
+$$v'' - 2yv' + \left[ 2\lambda - 1 - \frac{l(l+1)}{y^2} \right]v = 0$$
+
+We then plug in a power series solution $v = y^{l+1}\sum_{j=0}^\infty C_j y^j$, where we know the asymptotic solution from before and throw it in at the front. We can then plug in to our derivative above and find
+$$\sum_{j=0}^\infty \left[ C_j\left( (j+l+1)(j+l) - l(l+1) \right)y^{j+l-1} + C_j\left( -2(j+l+1) + 2\lambda - 1 \right)y^{j+l+1} \right] = 0$$
+
+Let's examine the behavior of the derivative in the power $y^{l-1}$. We note then $C_0\left( (l+1)l - l(l+1) \right) = 0$, so undetermined. Not much luck. Let's try examining $y^l$, which produces $C_1 = 0$ from again only examining the first term of the summation. Thus, we will rewrite starting with the second powers upwards (the ones we don't yet know) and we have
+$$\sum_{j=0}^\infty y^{j+l+1}\left( C_{j+2}\left( (j+l+3)(j+l+2) - l(l+1) \right) + C_j(2\lambda-1-2(j+l+1)) \right) = 0$$
+
+Recursion relations! We note that all odd $j$ are zero because $C_1 = 0$. Otherwise, we can solve out and obtain
+$$C_{j+2} = -C_j\frac{2\lambda - 1 - 2(j+l+1)}{(j+l+3)(j+l+2) - l(l+1)} - 2C_j\frac{j + l + 3/2 - \lambda}{(j+l+3)(j+l+2) - l(l+1)}$$
+
+We know we want these to terminate, otherwise we have bad asymptotic behavior. We can write $j = 2k$ since only even $j$ exist. We then note that $\lambda$ must go over values $\lambda = 2k + l + 3/2$. We are done, but we can continue a bit.
+
+People introduce the principal quantum number. We introduce $n = 2k + l$. We then write $\lambda = n + 3/2$. Then the total energy $E = \hbar \omega(n+3/2)$. Then, we note that $l$ ranges over $n-2k$ until it is $0,1$ (because $l$ is nonnegative). We note that there are degeneracies for the same energy value!
+
+Let's do examples. Let's first examine $n=0$, which allows only $l = 0$, which forces $m=0$ (WTF is $m$?). We then look at $n=1, l=1$ which allows $m=-1,0,1$. We recall that this is just having a single quantum of energy and putting it in either of the $x,y,z$ directions of the harmonic oscillator! Finally, one more example, $n=2$ produces $l=2,0$, the former producing $5$ degeneracies and the latter producing $1$ for a total of $6$.
+
+We then look to the hydrogen atom, one proton and one electron. We can separate into $\vec{r}_{cm}, \vec{r}$ the latter being the separation coordinate. We don't care about the former, so we will write
+$$\psi = \frac{\exp \left[ \frac{i\vec{p}_{cm} \cdot \vec{r}_{cm}}{\hbar} \right]}{(2\pi \hbar)^{3/2}}R(r)Y_l^m(\theta,\phi)$$
+
+We then note that $E_{TOT} = \frac{\vec{p}_{cm}^2}{2m} + E$, i.e. don't forget the contribution from the center of mass coordinate! Anyways, we don't care about that because it's just a plane wave, so we will focus on the SE for the difference coordinate. We thus write in the same substitutions we'd made before
+$$\left[\rtd{}{r} + \frac{2\mu}{\hbar^2}\left( E-\frac{e^2}{r} - \frac{l(l+1)\hbar^2}{2\mu r^2} \right)\right]U(r) = 0$$
+
+We know that $\mu$ is the reduced mass of the proton/electron, and so $\mu$ is approximately the electron's mass. We next try to pretty the system up a bit. We want to introduce $\rho = \left( -\frac{2\mu E}{\hbar^2} \right)^{1/2}r$, where we note that since we have a bound state $E < 0$. Doing a few algebraic cartwheels, we find
+$$\left[ \rtd{}{\rho} - 1 + \frac{2\mu e^2}{\hbar^2} \sqrt{\frac{-\hbar^2}{2\mu E}}\frac{1}{\rho} - \frac{l(l+1)}{\rho^2} \right]U(\rho) = 0$$
+
+We can make the definition $\lambda = \frac{2\mu }{\hbar^2} \sqrt{\frac{-\hbar^2}{2\mu E}} = \sqrt{\frac{2\mu}{-E\hbar^2}}$, and finally we can write
+$$\left[ \rtd{}{\rho} - 1 + \frac{\lambda e^2}{\rho} - \frac{l(l+1)}{\rho^2} \right]U(\rho) = 0$$
+
+We then examine asymptotic behavior! We want to look at $\rho \to \infty$. The ones with the denominator of $\rho$ fall out, so
+$$\left( \rtd{}{\rho} - 1 \right) U(\rho) = 0$$
+
+We then see $U(\rho) \sim e^{\pm \rho}$. We know that the plus sign is ``just crazy'' (:P). We can then write $U(\rho) = V(\rho) e^{-\rho}$. We note that $V(\rho)$ must be a power series with recursion relation that generates coefficients that produce behavior $V(\rho) \sim e^{2\rho}$ to force the asymptotic behavior. We could examine this, checking the relations for very large $n$, but we won't do that because again, we're too stupid.
+
+Plugging things back in, we have
+$$V'' - 2V' + \left[ \frac{e^2\lambda}{\rho} - \frac{l(l+1)}{\rho^2} \right]V = 0$$
+
+We already know the behavior as $V(\rho \to 0)$ just because it's similar to before (I think, he glossed over it), so we can write $V(\rho) = \sum_{k = 0}^{\infty} C_k \rho^{k+l+1}$ and go through our differential equation again (I swear, it's the same math, but I'm terrified I'll screw it up one day so I'll jot it down for reference)
+\begin{align*}
+    \sum_{k=0}^\infty \left[ C_k \left( (k+l+1)(k+l)  - l(l+1) \right)\rho^{k+l-1} + C_k\left[ e^2\lambda - 2(k+l+1) \right]\rho^{k+l}\right] &= 0
+\end{align*}
+
+We can again examine $C_0$ can be anything! This is good news. We shift the series then and obtain
+\begin{align*}
+    \sum_{k=0}^\infty \rho^{k+l} \left[ C_{k+1}\left( (k+l+2)(k+l+1) - l(l+1) \right) + C_k\left( e^2\lambda - 2\left( k + l + 1 \right) \right) \right] &= 0\\
+    -C_k \frac{e^2\lambda - 2(k+l+1)}{(k+l+2)(k+l+1) - l(l+1)} &= C_{k+1}
+\end{align*}
+
+So we see that $e^2\lambda= e^2\sqrt{\frac{2\mu}{E\hbar^2}} = 2(k+l+1)$. Solving, we find $E=-\frac{\mu e^4}{2\hbar^2(k+l+1)^2}$. Let's introduce principal quantum number again (Wise: -.-) $n = k+l+1$ and $l = n-1-k$ and we see that $l$ ranges over $\left[ 0,n-1 \right]$. We thus see $E = -\frac{\mu e^4}{2\hbar^2n^2} \approx -\frac{m_e^4 e^4}{2\hbar^2n^2} = -\frac{\mathrm{Ry}}{n^2}$ where Ry $ = 13.6$ eV. Woohoo, solved the hydrogen atom!
+
+\chapter{11/20 - Finishing Hydrogen, Spin}
+
+We recall that we did the hydrogen atom, $V = -\frac{e^2}{r}$ and made the unit substitution $\rho = \sqrt{\frac{-2\mu E}{\hbar^2}}, \lambda = \sqrt{\frac{2\mu}{-E\hbar}}^2$. We then examined asymptotic behavior, wrote some $U = Vf$ where $f$ is the asymptotic behavior, and we took a power series in $V$ and found
+$$\frac{C_{n+1}}{C_n} = -\frac{e^2\lambda - 2(k + l + 1)}{(k+l+2)(k+l+1)-l(l+1)}$$
+
+and we noted that $e^2\lambda = 2(k+l+1)$ if the series terminates. We then substituted back $\lambda$ in terms of energy and we found our allowed energies $E = -\frac{\mu e^4}{2\hbar^2(k+l+1)^2}$. We then introduced $n=k+l+1$ to write $E_n = -\frac{\mu e^4}{2\hbar^2n^2}$ where $n \in \mathbb{N}$, $l \in [0,n-k-1]$. 
+
+We can then substitute back $\rho = \left(-\frac{2\mu E}{\hbar^2}\right)^{\frac{1}{2}}r$ and we can obtain
+$$\rho = \frac{m_e e^2}{\hbar^2 n} = \frac{r}{a_0 n}$$
+
+with $a_0$ the Bohr radius $\scinot{5.29}{-11}$ m. Let's then look at some examples. Suppose $n=1$ then $l=0$. Then, if $n=2$ then $l$ ranges $0,1$, with $m = -1,0,1$ degenerate in the $l=1$. Lastly, if $n=3$, we have $l=2: m=-2,-1,0,1,2$, $l=1: m = -1,0,1$, and $l=0$. Thus, there is an $n^2$ pattern!
+
+We then have $V(\rho) \propto \rho^{l+1}L_{n-l-1}^{2l+1}$ with $L$ the Laguerre polynomials (homework problem) a few of which are
+\begin{align*}
+    \psi_{1,0,0} &= \sqrt{\frac{1}{\pi a_0^3}} e^{-r/a_0}\\
+    \psi_{2,0,0} &= \sqrt{\frac{1}{32\pi a_0^3}} \left( 2-\frac{r}{a_0} \right)e^{-r/a_0}\\
+    \psi_{3,1,0} &= \frac{1}{\pi a_0^3} \left( \frac{r}{a_0} \right)e^{-r/a_0}\cos \theta
+\end{align*}
+
+We then note multielectronic atoms. People usually cry upon trying to solve this exactly, so instead one writes the approximation/guess $V(r) = -\frac{e^2}{r}f(r)$. We look very near the nucleus (all other electrons vanish) so $f(r\to 0) \to z$ ($z$ nuclear charge) then very far from the nucleus $f(r \to \infty) \to 1$. One still cannot compute $f(r)$ explicitly, but using a computer we can see energy levels for which degeneracies are destroyed. That's about it for now.
+
+We can also pretend like all electrons obey these orbitals (lol), and that's the periodic table! Hydrogen goes into $1s^1$, Helium gets $1s^2$, and Lithium goes $1s^2 2s^1$ etc. So these are all just approximations!
+
+Let's talk more spin. We'll start by examining spin $1/2$ by looking to electrons. We then have our wavefunction in two components
+$$\psi(x,t) = \begin{pmatrix}\psi_+(x,t)\\ \psi_-(x,t)\end{pmatrix}$$
+
+We then have the spin operator $\vec{S} = \frac{\hbar}{2}\vec{\sigma}$ with the spin matricies, and $\vec{J} = \vec{L} + \vec{S}$ is the total angular momentum. 
+
+Let's look in a $\vec{B}$ field with a corresponding $\vec{A}$ and $\phi = 0$. We then have Hamiltonian (lol, HW set on this still isn't due yet haha, answers galore!)
+$$H = \frac{\left( \vec{p} - \frac{q}{c}\vec{A} \right)^2}{2m}$$
+
+Let's assume $c$ is big (never mind no answers! maybe\dots) then we can leave out the $c^{-2}$ term and write
+$$H = \frac{P^2}{2m} -\frac{q}{2mc}\left( \vec{P}\cdot \vec{A} + \vec{A}\cdot \vec{P} \right)$$
+
+We then think that it should be important to keep the order! But wait, we examine the last term $-i\hbar \nabla \cdot \vec{A}\psi + \vec{A}\cdot -i\hbar \nabla \psi$ (Mark goes back a bit, but I think we're okay because we product rule and $\nabla \cdot \vec{A} = 0$ and we recover classical result and HW result. Phew! Let's see if I'm right. Update: I think he said gauge invariance means we can choose $\vec{A}$ to satisfy this). In the particular case $\vec{B} = B\hat{z}, \vec{A} = \frac{B}{2}\left( x\hat{y} - y\hat{x} \right)$ and the divergence is indeed zero, so the Hamiltonian becomes
+$$H = \frac{p^2}{2m} - \frac{q}{mc}\vec{A}\cdot \vec{p}$$
+
+We recall on our homework set that this just becomes
+$$H = \frac{p^2}{2m} - \frac{qB}{2mc}L_z$$
+
+We then strip away the guess $\vec{B} = B\hat{z}$ and we can write
+$$H = \frac{p^2}{2m} - \frac{q}{2mc}\vec{B}\cdot \vec{L}$$
+
+We often write the second part $-\vec{\mu}\cdot \vec{B}$ with $\mu = -\frac{q\vec{L}}{2mc}$ the magnetic moment. This isn't quite spin, but we will be inspired and think that perhaps the spin also interacts with the $B$ field! We will hypothesize that $\vec{\mu} = \gamma \vec{S}$ the spin contribution. For an electron, $\gamma = g\left( -\frac{e}{2m_ec} \right)$ with $g = 2\left[ 1 + \frac{\alpha}{2\pi} +\dots\right]$ with $g$ computed from QFT. But for us, $g=2$ which is weird, not $1$ as we'd expect! 
+
+In other news, the $g_p, g_n$ for proton and neutron are $g_p = 5.6 \left( \frac{e}{2m_pc} \right), g_n = -3.8\left( \frac{e}{2m_nc} \right)$. 
+
+Let's look to time evolution and do dynamics with spin. Let's examine the fixed particle case, restricting it to zero degrees of freedom but allowing spin. We thus have that $\psi_+, \psi_-$ are numbers, so we have a two-state system. Thus
+$$\ket{\psi(t)}= U(t)\ket{\psi(0)}, U(t) = e^{-iHt/\hbar}$$
+
+We then recall that for spin the Hamiltonian goes $\gamma \vec{S}\cdot \vec{B}$, and so this is just a rotation propagator! The rotation goes about $\hat{B}$ with frequency $\omega_0 = -\gamma\norm{\vec{B}}$.
+
+Let's do a simple example $\hat{\vec{B}} = \hat{z}$. Thus, $U(t) = e^{\frac{i\omega_0 \sigma_z t}{2}}$ which is then just the straightforward exponential in our basis (coincidentally the eigenbasis)
+$$U(t) = \begin{bmatrix}e^{i\omega_0 t}&0\\0&e^{-i\omega_0 t}\end{bmatrix}$$
+
+Thus, we can define and compute
+\begin{align*}
+    \ket{\psi(0)} &= \begin{pmatrix} \cos \frac{\theta}{2} e^{-i\phi/2}\\\sin \frac{\theta}{2} e^{i\phi/2}\end{pmatrix}\\
+    \ket{\psi(t)} &= \begin{pmatrix} \cos \frac{\theta}{2} e^{-i/2(\phi - \omega_0 t)}\\\sin \frac{\theta}{2} e^{i/2(\phi - \omega_0 t)}\end{pmatrix}\\
+\end{align*}
+\chapter{11/22 - Solving spin}
+
+We recall that the $g$ factors for electron proton and neutron were $2,5.6,-3.8$ respectively. We can only determine these by experiment. We know how to represent these spin states, namely $\vec{S} = \frac{\hbar}{2}\vec{\sigma}$ the Pauli spin matricies.
+
+We then talked about the spin half particle, with two (possibly time-dependent) components $\psi_+, \psi_-$. We then computed out and found the net effect of a rotation of applying a $\vec{B} = B\hat{z}$ to a spin half particle, which produces rotations with frequency $\omega = \gamma \abs{\vec{B}}$. (I think that the spins are only within the degree of freedom of the spin, so the components oscillate rather than actually something spinning).
+
+We now examine a very famous example of spin. Let's write our magnetic field $\vec{B} = B\hat{z} + B'\cos \omega t \hat{x} - B'\sin \omega t \hat{y}$. We only examine the spin degree of freedom of the particle. We have our Hamiltonian $H = -\gamma \vec{B} \cdot \vec{S}$. 
+
+We want to represent our Hamiltonian as a $2\times2$ matrix so we can operate it on our two-state system. We thus have our Hamiltonian by plugging in the Pauli spin matricies
+$$H = -\frac{\gamma\hbar}{2}\begin{pmatrix} B & B'\cos \omega t + iB'\sin \omega t\\B' \cos \omega t - i\sin \omega t & -B\end{pmatrix} = -\frac{\gamma\hbar}{2}\begin{pmatrix} B & B'e^{i \omega t} \\ B'e^{-i\omega t} & -B\end{pmatrix}$$
+
+We then want to solve the SE $i\hbar \rd{\Psi}{t} = H\Psi$. But we cannot follow our usual methods $\Psi(t) = e^{-iHt/\hbar}\Psi(0)$ because $H$ is time dependent! Careful here, Mark will give you a zero if you try this.
+
+Instead, we will write out $\Psi$ in its time-dependent components and plug into the SE
+$$i\rd{}{t}\begin{pmatrix}\psi_+\\ \psi_-\end{pmatrix} = -\frac{\gamma}{2}\begin{pmatrix} B & B'e^{i \omega t} \\ B'e^{-i\omega t} & -B\end{pmatrix}\begin{pmatrix}\psi_+\\ \psi_-\end{pmatrix}$$
+
+The resulting system of diffeqs is is not comfortable due to the $e^{i\omega t}$, We make the inspired redefinition to eliminate the exponential by writing $\psi_+(t) = e^{i\omega t/2}C_+(t), \psi_-(t) = e^{-i\omega t/2}C_-(t)$. We note that this cancels our exponentials out. Careful to take the time derivative on the left hand side when we substitute and eliminating exponentials, we obtain
+\begin{align*}
+    i\dot{C}_+ - \frac{\omega}{2}C_+ &= -\frac{\gamma B}{2}C_+ - \frac{\gamma B'}{2}C_-\\
+    i\dot{C}_- + \frac{\omega}{2}C_- &= -\frac{\gamma B'}{2}C_+ + \frac{\gamma B}{2}C_-
+\end{align*}
+
+We know this differential equation! This is just the classical differential equation, with two normal modes and superposition and blah to solve it! We can first rewrite
+\begin{align*}
+    i\dot{C}_+  &= \left(-\frac{\gamma B}{2}+ \frac{\omega}{2}\right)C_+ - \frac{\gamma B'}{2}C_-\\
+    i\dot{C}_- &= -\frac{\gamma B'}{2}C_+ + \left(\frac{\gamma B}{2}- \frac{\omega}{2}\right)C_- 
+\end{align*}
+
+We note at this point that the solutions are $\begin{pmatrix} C_+\\C_-\end{pmatrix} = e^{i\alpha t}\begin{pmatrix}a_+\\a_-\end{pmatrix}$ with the $a$ constants! (Or maybe we're making the inspired and to-be-correct ansatz) We obtain
+\begin{align*}
+    \alpha a_+  &= \left(-\frac{\gamma B}{2}+ \frac{\omega}{2}\right)a_+ - \frac{\gamma B'}{2}a_-\\
+    \alpha a_- &= -\frac{\gamma B'}{2}a_+ + \left(\frac{\gamma B}{2}- \frac{\omega}{2}\right)a_- \\
+    \begin{pmatrix}0\\0\end{pmatrix} &= \begin{bmatrix}
+        \alpha + \left( -\frac{\gamma B}{2} + \frac{\omega}{2} \right) & -\frac{\gamma B'}{2}\\-\frac{\gamma B'}{2} & \alpha + \left( \frac{\gamma B}{2}-\frac{\omega}{2} \right)\end{bmatrix}\begin{pmatrix}a_+\\a_-\end{pmatrix}
+\end{align*}
+
+We then just set the determinant equal to zero to solve for $\alpha$ (similar to eigenvalue problem before moving $\alpha$'s over)
+\begin{align*}
+    \frac{\gamma^2 B'^2}{4} &= \alpha^2 - \left( \frac{\gamma B}{2} - \frac{\omega}{2} \right)^2\\
+    \alpha &= \pm \frac{\sqrt{(\gamma B - \omega)^2 + \gamma^2 B'^2}}{2}
+\end{align*}
+
+We can then solve the eigenvector problem. Since it's an eigenvector problem, we can set $a_+ = 1$ and then we can plug back into the diffeq to obtain
+\begin{align*}
+    \alpha   &= \left(-\frac{\gamma B}{2}+ \frac{\omega}{2}\right) - \frac{\gamma B'}{2}a_-\\
+    a^{(\pm)}_{-} &= \frac{\pm \alpha + \left( -\frac{\gamma B}{2} + \frac{\omega}{2} \right)}{\frac{\gamma B'}{2}}
+\end{align*}
+
+Plugging these all into our solution, we find
+$$\Psi(t) = A\begin{pmatrix}e^{i\omega t/2}e^{i\alpha t}\\e^{-i\omega t/2}e^{i\alpha t}a^{(+)}_{-}\end{pmatrix} + B\begin{pmatrix}e^{i\omega t/2}e^{-i\alpha t}\\e^{-i\omega t/2}e^{-i\alpha t}a^{(-)}_{-}\end{pmatrix}$$
+
+Let's now compute a little probability. Suppose a particle starts spin up at $t=0$. Find the probability of a spin flip after some time $t$. We plug through our initial conditions, namely that $\psi(t) = \begin{pmatrix}1\\0\end{pmatrix}$, which gives that $A+B=1$ and $a^{(+)}_- A + a^{(-)}_-B = 0$. Solving out, we find $A = \frac{a^{(-)}_-}{a^{(-)}_- - a^{(+)}_-}, B = -\frac{a^{(+)}_-}{a^{(-)}_- - a^{(+)}_-}$
+
+This then gives an all too painful solution
+$$\Psi(t) = \frac{a^{(-)}_-}{a^{(-)}_- - a^{(+)}_-}\begin{pmatrix}e^{i\omega t/2}e^{i\alpha t}\\e^{-i\omega t/2}e^{i\alpha t}a^{(+)}_{-}\end{pmatrix} -\frac{a^{(+)}_-}{a^{(-)}_- - a^{(+)}_-}\begin{pmatrix}e^{i\omega t/2}e^{-i\alpha t}\\e^{-i\omega t/2}e^{-i\alpha t}a^{(-)}_{-}\end{pmatrix}$$
+
+We want to find the probability of measuring the down spin, which is just the second component squared. Proceeding carefully, we obtain
+$$P_-(t) = \abs{\frac{a^{(-)}_-a^{(+)}_-}{a^{(-)}_- - a^{(+)}_-}}^2\underbrace{\abs{e^{i\alpha t} - e^{-\alpha t}}^2}_{4\sin^2 \alpha t}$$
+
+Plugging our values for $\alpha^{(\pm)}_-$, we note that their product is $-1$ and the rest of the algebra Mark is too lazy to show us (he has to run), so the answer is
+$$P_-(t) = \frac{\gamma^2 B'^2}{(\omega-\gamma B)^2 + \gamma^2 B'^2}\sin^2 \frac{\sqrt{(\omega - \gamma B)^2 + \gamma^2 B'^2}}{2} t$$
+
+Let's say then you can choose $\omega$ the frequency of the $B$ field, and we want to maximize $P_-(t)$. Then obviously we choose $\omega = \gamma B$. Then, at times $t = \frac{(2n+1)\pi}{\gamma B'}, n \in \mathbb{Z}_{\geq 0}$, we find the probability will at all these times go straight to $P_-(t) = 1$! So at these times the spin flip is guaranteed. (I swear this is NMR!!)
+
+\chapter{11/25 - Addition of Angular Momentum}
+
+We will put back the spatial degrees of freedom into spin now. We have then wavefunction $\ket{\psi} = \ket{\psi_0}\ket{\psi_s}$ so separation of variables. We will use the hydrogen atom, so $H = H_0 + H_s$ so $H_0$ is the coulmb potential, where $H_0, H_s$ commute. We then put the hydrogen atom in a magnetic field $\vec{B} = B\hat{z}$, producing Hamiltonian $H = H_{coulomb} - \left( -\frac{eB}{2m_e c} \right)L_z - 2\left( -\frac{eB}{2m_e c} \right)S_z$. We note that $H, L^2, L_z, S_z$ all commute! We know that $S^2$ the total spin commutes with everything, but we don't care about it here since it's just an electron of which we know the total spin so we don't care!
+
+We thus index our states $H \ket{n,l,m_l, m_s} = E\ket{n,l,m_l, m_s}$. We know $E$ already though, since everything is simultaneously diagonalized in the Hamiltonian, so we can just plug in all the disparate parts that we already now and we have energies
+$$E = \left[ -\frac{R_y}{n^2} + \frac{eB\hbar}{2m_e c}(m_l + 2m_s)\right]$$
+
+We note that this is just the result in the direction of the magnetic field, so we don't have to assume $B\hat{z}$ because we can just choose $z$! There's the hydrogen atom, in all of two seconds. 
+
+We discuss the Stern Gerlach experiment. We shoot a beam of electrons in the $\hat{y}$ and have a magnetic field $\vec{B} = -B(z)\hat{z}$ with a $z$ dependence. We note that the force that the beam experiences is $\vec{F} = -\nabla H$ the energy, which classically for the magnetic field is just $\vec{F} = u_z \pd{B}{z}\hat{z}$. We note that $\pd{B}{z} < 0, \mu_z < 0$. We want then to examine the beam after it passes through the field.
+
+We thus have a wavefunction $\psi_i = \psi_y(\vec{r}_{cm}) \psi_{100}(\vec{r}) \psi_+$ where we have the particle spin up in state $n=1, l=0, m=0$ and some radial function that only ges in the $y$ direction. We can then examine the final wavefunction $\psi_{out} = \psi_{y + \hat{z}}(\vec{r}_{cm})\psi_{100}(\vec{r})\psi_+$. We note that if all particles are spin down, they'll just deflect down instead of up. Then, if we have some inhomogenous initial beam, it will deflect some up and some down. This is how to generate polarized (in spin) electrons via an inhomogeneous magnetic field.
+
+Let's now discuss addition of angular momentum. We have two particles with spin $\frac{1}{2}$ with no other degrees of freedom. We thus have the states $\ket{s_1, m_i}\ket{s_2, m_2}$. If we examine $S_i^2$ acting on this state, we find $S_i^2 \ket{s_1, m_1}\ket{s_2, m_2} = \hbar^2(s_i)(s_i+1)\ket{s_1, m_1}\ket{s_2, m_2}$ and of course if we have $S_{iz}$ we obtain $\hbar m_i$ eigenvalues. 
+
+We then want to examine the sum of the spins. $\vec{S} = S_1 + S_2$. We also have the total spins along $x,y,z$, namely $\vec{S}_x, \vec{S}_y, \vec{S}_z$. We know that these have the same commutators as before, $i\hbar$ etc. We then have the total spin operator $\vec{S}^2$, which along with $\vec{S}_z$ has some set of simultaneous eigenvectors indexed by $\ket{s, m_s}$ and respective eigenvalues $\hbar^2 s(s+1), \hbar m_s$. We note that in general the $\ket{s_1, m_1}\ket{s_2, m_2}$ are not these eigenstates in general, so we want to find coefficients that create the linear combination required to become eigenstates of these total spin operators. We note that there's a total of $(2s_1 + 1)(2s_2+1)$ states, so we need the total number of states to stay constant, so this total spin operator and $\vec{S}_z$ should have that many eigenstates.
+
+Let's examine spin $1/2$ for now, which gives us $\ket{1/2, m_1}\ket{1/2, m_2}$. We can index these with $\ket{m_1, m_2}$, or the four $\ket{\pm, \pm}$. We then see by just applying across our entire Hilbert space (as each one contributes a part $\hbar/2$)
+\begin{align*}
+    S_z \ket{+,+} &= \hbar\ket{+, +}\\
+    S_z \ket{-,-} &= -\hbar\ket{-, -}\\
+    S_z \ket{+,-} &= 0\hbar\ket{+, -}\\
+    S_z \ket{-,+} &= 0\hbar\ket{-, +}
+\end{align*}
+
+We then want eigenstates of $\vec{S}^2 = (\vec{S}_1 + \vec{S}_2)^2$ which since these two commute (different Hilbert spaces) is just $\vec{S}_1^2 + \vec{S}_2^2 + 2\vec{S}_1 \cdot\vec{S}_2$. We note then that we can write in terms of ladder and $z$ operators we can write $\vec{S}_1\cdot \vec{S}_2 = S_{1z} S_{2z} + \frac{1}{2}\left( S_{1+}S_{2-} + S_{2+}S_{1-} \right) = S_{1z}S_{2z}$.
+
+Let's recall shortly that $J_{\pm}\ket{j,m} = \hbar\sqrt{\left( j\mp m \right)\left( j\pm m + 1 \right)} \ket{j, m\pm 1}$. We note moreover that $S_+ \ket{+,+} = S_- \ket{-,-} = 0$, while we can just plug into the above (noting that $L$ contributes nothing since we are only in spin) to write $S_+ \ket{+,-} = \hbar \ket{+,+}, S_- \ket{+, +} = \hbar \ket{+, -}$.
+
+We then examine in our two-degree of freedom hilbert space. Evidently $S_{1+} S_{2-} \ket{\pm, \pm} =S_{1-} S_{2+} \ket{\pm, \pm} = 0$ where the signs are the same. We can then compute the other two
+\begin{align*}
+    S_{1+}S_{2-}\ket{-,+} = \hbar^2 \ket{+, -}\\
+    S_{1-}S_{2+}\ket{+, -} = \hbar^2 \ket{-, +}
+\end{align*}
+
+We now have everything we need to compute $\vec{S}^2$ acting
+\begin{align*}
+    \vec{S}^2 &= S_1^2 + S_2^2 + 2S_{1z}S_{2z} + S_{1+} S_{2-} + S_{1-} S_{2+}\\
+    \vec{S}^2 \ket{+, +} &= \hbar^2 \left[ \frac{3}{4} + \frac{3}{4} + \frac{1}{2} + 0 + 0  \right]\ket{+, +}\\
+    &= \hbar^2(1)(1+1)\ket{+,+}
+\end{align*}
+
+We thus see that the element $\ket{1,1}$ in our total spin basis is the same as our $\ket{+,+}$ element in our two-particle hilbert space. Similarly for $\ket{-, -}$, we find $\ket{1,-1}$ in the new basis. We can then compute
+\begin{align*}
+    \vec{S}^2 \ket{+, -} &= \hbar^2\left[ \frac{3}{4}\cdot 2 - 2\left( \frac{1}{2} \right)\left( \frac{1}{2} \right) \right]\ket{+, -} + \hbar^2 \ket{-, +}\\
+    &= \hbar^2\left(\ket{+, -} + \ket{-, +}\right)\\
+    \vec{S}^2 \ket{-, +} &= \hbar^2\left(\ket{+, -} - \ket{-, +}\right)
+\end{align*}
+
+We then have eigenstates
+\begin{align*}
+    \ket{1,0} & \propto \left[ \ket{+, -} + \ket{-, +} \right]\\
+    \ket{0,0} &\propto \left[ \ket{+, -} - \ket{-, +} \right]
+\end{align*}
+
+We'll do this in general next class (crap, I have no idea what just happened\dots)
+
+\chapter{11/27 - Gordan-is-so-Clebsch coefficients}
+
+We wanted to compute the total spin operator operating some state $\ket{s, m_s}$ and we found that $\vec{S}^2\ket{s,m_s} = \hbar^2 s(s+1), S_z \ket{s,m_s} = \hbar m_s$. We can then construct the following state operators
+\begin{align*}
+    \ket{0,0} &= \frac{1}{\sqrt{2}} \left[ \ket{+,-} - \ket{-,+} \right]\\
+    \ket{1,1} &= \ket{+,+}\\
+    \ket{1,0} &= \frac{1}{\sqrt{2}}\left[ \ket{+,-} + \ket{-,+} \right]\\
+    \ket{1,-1} &= \ket{-,-}
+\end{align*}
+
+We note that zero spin can only be attained by antisymmetric states! Suppose then that we have two identical particles that we can place in a symmetric or antisymmetric combination $\ket{\omega_1, \omega_2; S}$ or $\ket{\omega_1, \omega_2; A}$. Then for Fermions, we can have $\ket{\omega_1, \omega_2; S} = \ket{0,0}$ whereas the antisymmetric combination can only be $\ket{\omega_1, \omega_2; A} = \ket{1,m_s}$ where $m_s$ ranges over $-1,1$. For Bosons, this is exactly mixed up, i.e. only antisymmetric combination is $\ket{0,0}$.
+
+Let's do this in general now. We have some set of eigenvectors $\ket{j_1, m_1} \ket{j_2, m_2}$ which has total $(2j_1+1)(2j_2+1)$ eigenvectors. However, we know that we can also write total spin operator $\vec{J} = \vec{J}_1 + \vec{J}_2$ with some set of eigenvectors $\ket{j,m}$, and we can construct $J^2, J_z$ in this basis. We note first that $\ket{j_1, m_1; j_2, m_2}$ are eigenstates of $J_z$, namely $J_z\ket{j_1, m_1; j_2, m_2} = \hbar(m_1 + m_2) \ket{j_1, m_1; j_2, m_2}$.
+
+We then examine $J^2$. We claim that all spin states with eigenvalues $j_1 + j_2\dots j_1 - j_2$ in increments of $1$, where we assume $j_1 \geq j_2$ (this is arbitrary, choose the larger one to be $j_1$). If we then take a summation over these values of $j$ and consider that each of these states have a degeneracy of $2j+1$, we find that there's indeed a total number of states $(2j_1+1)(2j_2+1)$! That's good. Let's find them now.
+
+We can construct the list of eigenstates. We'll first examine the $j = j_1 + j_2$ case, where $m$ ranges over $j_1 - j_2, j_1 + j_2$ (i.e. in the list of states we have $\ket{j_1 + j_2, j_1 + j_2}, \ket{j_1+j_2, j_1+j_2-1}\dots, \ket{j_1 + j_2, -j_1 - j_2}$. We can then examine the next cases similarly for $j = j_1 + j_2 - 1$, etc. We note that each time we down values of $j$ we lose two values of $m$, two degeneracies. Note that the smallest allowed value of $j$ is $j_1 - j_2$.  We want to construct each of these states as a linear combination of $\ket{j_1, j_1}, \ket{j_2, m_2}$. We know how to compute $\ket{j_1 + j_2, j_1 + j_2} = \ket{j_1, j_1}\otimes \ket{j_2, j_2}$. We can then construct $J_- = J_{1-} + J_{2-}$
+$$J_{\pm}\ket{j,m} = \hbar\left[ (j\mp m)(j\pm m+1) \right]^{1/2}\ket{j, m\pm 1}$$
+
+Of course we can start constructing from the bottom as well, $\ket{j_1 + j_2, -j_1 - j_2} = \ket{j_1, -j_1}\otimes \ket{j_2, -j_2}$ and raise a bajillion times. We'll choose going down. We then operate
+\begin{align*}
+    J_-\ket{j_1 + j_2, j_1 + j_2} &= \hbar\left[ \sqrt{2(j_1 + j_2)} \ket{j_1 + j_2, j_1 + j_2 -1} \right]\\
+    (J_{1-} + J_{2-})\ket{j_1 + j_2, j_1 + j_2} &= \hbar \left[ \sqrt{2j_1}\ket{j_1, j_1-1; j_2, j_2} + \sqrt{2j_2}\ket{j_1, j_1; j_2, j_2-1} \right]\\
+\end{align*}
+
+Setting these expressions equal, we find
+$$\ket{j_1 + j_2, j_1 + j_2 - 1} = \sqrt{\frac{j_1}{j_1 + j_2}}\ket{j_1, j_1-1; j_2, j_2} + \sqrt{\frac{j_2}{j_1 + j_2}}\ket{j_1, j_1; j_2, j_2-1}$$
+
+Woohoo! Of course we could finish this all the way down the column, but I'd bet my life that it'll show up on the final (note by Yubo, not Mark). Let's now try our hand at the next column. We know that $\ket{j_1 + j_2 - 1, j_1 + j_2 - 1} = \alpha \ket{j_1, j_1 -1; j_2, j_2} + \beta \ket{j_1, j_1; j_2, j_2-1}$ since no other kets have the correct values of $m$. We then compare to $\ket{j_1 + j_2, j_1 + j_2 -1}$ and note that the one we're interested in must be orthogonal! i.e. 
+\begin{align*}
+    0 &= \dotp{j_1 + j_2; j_1 + j_2 - 1}{j_1 + j_2 - 1; j_1 + j_2 - 1}\\
+    &= \alpha\sqrt{\frac{j_1}{j_1 + j_2}} + \beta\sqrt{\frac{j_2}{j_1 + j_2}}\\
+    \alpha &= -\sqrt{\frac{j_2}{j_1 + j_2}}\\
+    \beta &= \sqrt{\frac{j_1}{j_1 + j_2}}
+\end{align*}
+
+This then gives us our $\alpha,\beta$ since things must vanish, and we just normalize. We then can compute the rest of the column because we can keep a' lowerin'. We then examine the third column, starting with $\ket{j_1 + j_2 - 2, j_1 + j_2 - 2} = \alpha\ket{j_1, j_1; j_2, j_2 - 2} + \beta \ket{j_1, j_1 - 2; j_2, j_2} + \gamma\ket{j_1, j_1 - 1; j_2, j_2 - 1}$. This should be worrisome since we have three coefficients, but since we are normalized to both kets in the $j_1 + j_2, j_1 + j_2 - 1$ column, we have two orthogonality conditions and an orthogonality condition, which pins down $\alpha,\beta,\gamma$. We probably won't bother to compute this.
+
+We want then to express what we've done mathematically. These are called the Clebsch-Gordon (sp??) coefficients. We can first write
+$$\ket{j, m; j_1, j_2} = \sum_{m_1=-j_1}^{j_1} \sum_{m_2=-j_2}^{j_2} \ket{j_1, m_1; j_2, m_2}\underbrace{\dotp{j_1, m_1; j_2, m_2}{j, m;j_1, j_2}}_{\text{Clebsch-Gordon Coefficient}}$$
+
+These have a lookup table, but we know some properties. They are real numbers (obviously a phase convention). If $m_1 + m_2 = m$, then $\dotp{j_1, m_1; j_2, m_2}{j,m} \neq 0$. If $j_2 - j_1 \leq j \leq j_1 + j_2$, then $\dotp{j_1, m_1; j_2, m_2}{j,m} \neq 0$. Then $\dotp{j_1, j_1; j_2(j-j_1)}{j,j}$ is positive. Lastly, $\dotp{j_1, m_1; j_2, m_2}{j,m} = (-1)^{j_1 + j_2 - j}\dotp{j_1(-m_1); j_2(-m_2)}{j(-m)}$.
+\chapter{12/4 - WKB method}
+
+Consider a particle of mass $m$ in a 1D potential $V(x)$. For constant potential, we know that $\psi(x) = \psi(0) e^{\pm \frac{i}{\hbar}px}$ with $p = \sqrt{2m(E-V)}$, and the general solution is a superposition of the two plane waves. We know that the wavefunction oscillates with wavelength $\lambda = \frac{2\pi \hbar}{p} = \frac{2\pi \hbar}{\sqrt{2m(E-V)}}$.
+
+Now let's have a slowly varying potential. We can guess at the solution in these regions by simply replacing $px$ with $\int p(x) dx$. Let's see this more formally. We solve the SE
+$$\left[\ptd{}{x} + \frac{1}{\hbar^2}p^2(x)\right]\psi(x) = 0$$
+
+where we substitute $p^2 = 2m(E-V)$. If we then make the ansatz $\psi(x) = e^{\frac{i}{\hbar}p(x)}$ then we can take second derivative
+$$\ptd{\psi(x)}{x} = \left[ \frac{i}{\hbar}\phi''(x) - \frac{\phi'(x)}{\hbar^2} \right]e^{\frac{i}{\hbar}\phi(x)}$$
+and plugging into the SE gives
+$$-\frac{\phi'(x)^2}{\hbar^2} + \frac{i}{\hbar}\phi(x) + \frac{p^2(x)}{\hbar^2} = 0$$
+
+We expand $\phi(x) = \phi_0(x) + \hbar\phi_1(x) + \hbar^2 \phi_2(x) +\dots$. The WKB approximation then tells us to only keep up to first order in $\hbar$. Plugging back into our SE, we have
+$$\frac{\phi_0''(x)) - 2\phi_1'(x) \phi_0'(x)}{\hbar} + \frac{p^2(x) - (\phi_0'(x))^2}{\hbar^2} = 0$$
+keeping only lower order terms in $\hbar$. We then have $\phi_0'(x) = \pm p(x)$ which yields $\psi(x) = \psi(x_0) e^{\pm \frac{i}{\hbar}\int p(x') dx'}$, which is our intuitive guess!
+
+We need to take one step further by WKB though. We note the $\frac{1}{\hbar}$ term gives $\phi_0''(x) = -2\phi_1'(x) \phi_0'(x)$. Diving through by $\phi_0'(x)$ and recognizing $\phi_0''(x) / \phi_0'(x)$ we can rewrite $\log[\phi_0'(x)] = -2i\phi_1(x) + C$ which rearranges to give $\phi_1(x) = i\log[\sqrt{\phi_0'(x)}] + C$ and since $\phi_0'(x) = p(x)$ we have an expression for our next order term.
+
+Plugging this back into our ansatz we have
+$$\psi(x) = A\frac{1}{\sqrt{p(x)}} e^{\pm \frac{i}{\hbar}\int p(x') dx'}$$
+
+The initial condition is then $A = \psi(x_0) \sqrt{p(x_0)}$ which yields finally
+$$\psi(x) = \psi(x_0)\frac{\sqrt{p(x_0)}}{\sqrt{p(x)}} e^{\pm \frac{i}{\hbar}\int p(x') dx'}$$
+
+The WKB approximation makes the assumption $\abs{\frac{(\phi'(x))^2}{\hbar^2}} \gg \abs{\frac{\phi_0''(x)}{\hbar}}$ which one can check to be equal to the assumption $\abs{\rd{\lambda}{x}} \ll 1$ i.e. slowly varying potential.
+
+We then look at the quantum tunneling amplitude as an example of the WKB approximation. Let there be a particle confined in a well with finite wall height, and suppose the potential falls off from the edge towards zero exponentially. So we have a particle of energy $0 < E < V_{max}$ inside a well of potential $-V_0$. We then know that the particle can tunnel out for $E > 0$. Suppose that the point on the exponential decay with energy $E$ is $x_e$ and suppose the edge of the well is $x_0$.
+
+Using the WKB approximation, $\psi(x_e) = \psi(x_0) \exp\left[\pm \frac{i}{\hbar}\int_{x_0}^{x_e}i\sqrt{2m(v(x) - E)}dx\right]$. Using a bit of intuition, we know that the amplitude must decay, so we know that the probability of escape i.e. ratio of $\frac{\psi(x_e)}{\psi(x_0)}$ must be  $e^{-\gamma} = \exp\left[-\frac{2}{\hbar}\int_{x_0}^{x_e}\sqrt{2m(V(x) - E)}dx\right]$ where we define $\gamma$ (and for some reason there's that extra factor of $2$: it there because it represents the probability of decay, which goes with norm squared and not just ratio of probability densities).
+
+Let's try to examine inside the well now. We solve this semiclassically $v = \sqrt{\frac{2(E + v_0)}{m}}$. We thuss know that the particle hits the barriers (located at $0,x_0$) with frequency $f = \frac{v}{jj2x_0}$ so the probability of escape per unit time can be given by $R = fe^{-\gamma} = \sqrt{\frac{E+V_0}{2m}}\frac{1}{x_0}e^{-\gamma}$. The mean lifetime is then given by $\tau = \frac{1}{R} = \sqrt{\frac{2m}{E+v_0}}x_0 e^{\gamma}$ with $\gamma = \frac{2}{\hbar} \displaystyle\int\limits_{x_0}^{x_e}\sqrt{2m(V(x) - E)}\;dx$.
+
+Let's examine the example of alpha decay. We have a particle subject to nucleus $z = 90$ with $T_x = 4.2\mathrm{MeV}$. We then ask what the mean lifetime is? The particle's decay obviously falls off with the Coulomb potential beyond the barrier, which seems reasonable for the decay prperties. So the potential is given in terms of some barrier radius $r_0$ 
+$$V(r) = \begin{cases}0&r < r_0\\ \frac{2Ze^2}{r} & r > r_0\end{cases}$$
+
+We then note that some escape radius $r_e$ to be the point on the potential equal to the particle's energy within the barrier, and so the energy of the particle must be equal $E = \frac{2Ze^2}{r_e}$. We can then slap the WKB approximation on
+$$\gamma = \frac{2}{\hbar}\displaystyle\int\limits_{r_0}^{r_e}\sqrt{2m(V(r) - E)}\;dr = \frac{4\sqrt{mZe^2}}{\hbar}\displaystyle\int\limits_{r_0}^{r_e}\sqrt{\frac{1}{r} - \frac{1}{r_e}}\;dr$$
+
+We can make the substitution $r = r_e\cos^2 z$ which gives $dr \sqrt{\frac{1}{r} - \frac{1}{r_e}} = -dz\sqrt{r_e}(1-\cos 2z)$ (since Mathematica fails us for the first time ever; doesn't like some singularity). In any case, we can rewrite integral
+$$\gamma = \frac{4\sqrt{mZe^2}}{\hbar}\displaystyle\int\limits_{0}^{\arccos \sqrt{\frac{r_0}{r_e}}} dz(1-\cos 2z) = \frac{4\sqrt{mZe^2r_e}}{\hbar}\left[ \arccos\sqrt{\frac{r_0}{r_e}} - \sqrt{\frac{r_0}{r_e}}\left( 1-\frac{r_0}{r_e} \right) \right]$$
+
+Making then substitutions $y = \frac{r_0}{r_e}, E = \frac{mv^2}{2}$ we find
+$$\gamma = \frac{8ze^2}{\hbar v}\left[ \arccos\sqrt{y} - \sqrt{y(1-y)} \right]$$
+
+which gives mean lifetime $\tau = \sqrt{\frac{2mr_0^2}{E}}e^\gamma$. Plugging in values gives $\scinot{6}{9}\mathrm{yr}$ mean lifetime, whereas experimentally we observe $\scinot{4.5}{9}\mathrm{yr}$. Woohoo!
+\chapter{12/6 - Perturbation theory!}
+
+Let's start perturbation theory now. Best approximation methods allow you to compute bounds on error, but we will start with a simpler one, the variational method.
+
+Suppose we have some complicated $H$ with eigenstuff $H\ket{\psi_n} = E_n\ket{\psi_n}$. Let us have some $\psi$ with expectation value $E = \frac{\bra{\psi}H\ket{\psi}}{\dotp{\psi}{\psi}}$. We can then write $\psi = \sum_{n=0}^\infty a_n \ket{\psi_n}$. We can then plug this through and taking advantage of orthonormality of basis vectors we obtain
+$$E = \frac{\sum_{n=0}^\infty \abs{a_n}^2 E_n}{\sum_{n=0}^\infty \abs{a_n}^2}$$
+
+We then note that all $E_n \geq E_0$ since $E_0$ is the ground state. So we know that $E \geq E_0$ (but we knew that since ground state). This suggests a method. Suppose we have a qualitative sense of the ground state wavefunction $\ket{\psi_0}$ and can write an ansatz in terms of some parameters. If we then minimize the quotient of the sums above with respect to our parameters, we have a form for the wavefunction!
+
+Suppose that our guess then actually mispredicts by some amount $\ket{\psi} = \ket{\psi_0} + \sum_n \epsilon_n \ket{E_n}$. Then our expectation value becomes for our guess
+\begin{align*}
+    E &= \frac{E_0 + \sum_n \abs{\epsilon_n}^2 E_n}{1+\sum_n \abs{\epsilon_n}^2}\\
+    E &= \frac{E_0 + \sum_n \abs{\epsilon_n}^2 (E_n - E_0 + E_0)}{1+\sum_n \abs{\epsilon_n}^2}\\
+    &= E_0 + \sum_n \frac{\abs{\epsilon_n}^2 \left( E_n - E_0 \right)}{1+\sum_n \abs{\epsilon_n}^2}
+\end{align*}
+
+Note that this is actually quadratic in the error terms, which is why the method does surprisingly well for any reasonable ansatz! Let's try an example.
+
+Let's try the hydrogen atom $V = \frac{-e^2}{r}$ with $E_0 = -13.6\mathrm{eV}$. Usually, at this point we want asymptotic behaviors. Let's make a really crappy guess at our ground state. Let's guess $\psi = e^{-\alpha r^2}$. We note that this has piss poor asymptotic behavior which is why this should never be our ansatz, but for the sake of demonstration of accuracy we will proceed.
+
+We note radial Hamiltonian $H = -\frac{\hbar^2}{2m}\frac{1}{r^2}\rd{}{r} r^2 \rd{}{r} - \frac{e^2}{r}$. We then want the expectation values $\expvalue{T}, \expvalue{V}$. We can ignore radial parts since they'll cancel, so we just have
+\begin{align*}
+    \expvalue{T} &= -\frac{\hbar^2}{2m}\displaystyle\int\limits_{0}^{\infty}r^2 dr e^{-\alpha r^2}\left( \frac{1}{r^2}\rd{}{r}r^2 \rd{}{r}e^{-\alpha r^2} \right)\\
+    &= \frac{ -\hbar^2}{2m}\left( -2\alpha \right)\displaystyle\int\limits_{0}^{\infty}e^{-\alpha r^2}\rd{}{r}r^3 e^{-\alpha r^2}\;dr\\
+    &= \frac{\hbar^2}{2m} \left( 4\alpha^2 \right)\left( \frac{1}{\sqrt{\alpha}} \right)^5\displaystyle\int\limits_{0}^{\infty}z^4e^{-2z^2}\;dz\\
+    &= \frac{3}{16\sqrt{\alpha}}\frac{\hbar^2}{m}\sqrt{\frac{\pi}{2}}
+\end{align*}
+
+We note that $\expvalue{V}$ and the normalization are both very easy to compute and we can just write out 
+$$E = \frac{\expvalue{T} + \expvalue{V}}{\dotp{\psi}{\psi}} = \frac{3\hbar^2}{2m}\alpha - 2\sqrt{\frac{2}{\pi}\alpha}e^2$$
+
+We then want $\pd{E}{\alpha}\Big|_{\alpha_0} = 0$ the minimization condition, which then gives $\alpha_0 = \frac{8m^2e^4}{9\pi \hbar^4}$. If we then plug this back into the $E$ we can compute $E[\alpha_0] = -0.75\mathrm{Ry}$.
+
+Let's now do the Helium atom. We first need the Hamiltonian. We have two electrons zooming around which gives Hamiltonian $H = -\frac{\hbar^2}{2m}\left( \nabla_1^2 + \nabla_2^2 \right) - \frac{2e^2}{r_1} - \frac{2e^2}{r_2} + \frac{e^2}{r_{12}}$ with $r_{12}$ the separation coordinate. We note that we can solve this without the mutual interaction term, since it's just two electrons in the $s$ state for which we know the ground state. We thus have
+$$\psi_{100}(r) = \left( \frac{z^3}{\pi a_0^3} \right)^{1/2}e^{-2r/a_0}$$
+
+The first guess is just the product of $\psi_{100}(r_1), \psi_{100}(r_2)$. But there's no variational parameter. Since the electron interactions effectively screen $z$ though, let's treat $z$ as a variational parameter and expect slightly less than $2$! First, let's resolve the separation term. We note that $\frac{1}{\abs{\vec{r_1} - \vec{r_2}}} = \frac{1}{\sqrt{r_1^2 + r_2^2 - 2r_1r_2 \cos \theta}}$ and so our integral over the separation term (the rest we've done before and are easy) become
+$$\int d^3 r_1 \int d^3 r_2 = 4\pi(2\pi)\int r_1^2 dr_1 \int r_2^2 dr_2 \int d\cos\theta$$
+
+because the $\cos\theta$ is just a relative angle (he's just pulling the angular integrals out and separating one of the integrals since we can fix one axis). We can compute it out and find $z_0 = \frac{27}{16}$ which does have a shielding component. We know the true helium bond energy is $-78.6$ and our estimate gives $-77.5$. That's it! :)
+
+\end{document}

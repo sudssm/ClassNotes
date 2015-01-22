@@ -1,0 +1,309 @@
+\documentclass[10pt]{report}
+\usepackage{amsmath, amsthm, amssymb, tikz, mathtools, hyperref, enumerate, paracol}
+\usepackage{geometry}
+\newcommand{\scinot}[2]{#1\times 10^{#2}}
+\newcommand{\bra}[1]{\left<#1\right|}
+\newcommand{\ket}[1]{\left|#1\right>}
+\newcommand{\dotp}[2]{\left<#1\left.\right|#2\right>}
+\newcommand{\rd}[2]{\frac{d#1}{d#2}}
+\newcommand{\pd}[2]{\frac{\partial #1}{\partial#2}}
+\newcommand{\norm}[1]{\left|\left|#1\right|\right|}
+\newcommand{\abs}[1]{\left|#1\right|}
+\newcommand{\expvalue}[1]{\left<#1\right>}
+\newcommand{\rtd}[2]{\frac{d^2#1}{d#2^2}}
+\newcommand{\pvec}[1]{\vec{#1}^{\,\prime}}
+\let\Re\undefined
+\let\Im\undefined
+\DeclareMathOperator{\Re}{Re}
+\DeclareMathOperator{\Tr}{Tr}
+\DeclareMathOperator{\Im}{Im}
+\newcommand{\ptd}[2]{\frac{\partial^2 #1}{\partial#2^2}}
+\usepackage[labelfont=bf, font=scriptsize]{caption}
+\everymath{\displaystyle}
+
+\begin{document}
+
+\title{CS4 --- Functional Programming\\ Vanier}
+\author{Yubo Su}
+\date{}
+
+\maketitle
+\tableofcontents
+
+\chapter{05/01/15 --- Introduction}
+
+This class will be taught in Scheme (Racket dialect), Typed Racket (type checking) and Ocaml. Website is on Moodle. Course is not practical but conceptual programming course. Three types of programming are function, imperative, and object-oriented. Scheme is very similar to Javascript, and was initially intended to be Javascript until parentheses became a rightfully-deserved turn off. Haskell is the archetypal functional language, CS115; both Ocaml and Racket support functional programming.
+
+\section{Programming fundamentals}
+
+Let's first examine some fundamentals of programming
+\begin{enumerate}[1)]
+    \item Infix notation --- the binary operator is in the middle, such as \texttt{3+4}; we use parentheses to specify order. 
+    \item Assignment --- Assigning a variable a value, such as \texttt{y=4} or \texttt{x=y+z}.
+    \item Function --- Takes an argument and returns a value.
+    \item Prefix notation --- Just like functions, the operator proceeds the input, like \texttt{f(x,y)}. An alternative prefix notation separates with commas, like \texttt{(f 3 2)}.
+\end{enumerate}
+
+Scheme uses prefix notation such as \texttt{(+ 3 4)} or \texttt{(+ 3 (* 4 5))}. In fact you can write \texttt{(+ 2 3 4)}. Assignment goes \texttt{(define x 3)}.
+
+Lambda means ``this combination represents a function.'' Often we can write things like \texttt{(define a (lambda (r) (* pi (expt r 2))))}.
+
+Comments are proceeded with a semicolon and go until the end of the line. Next time we will talk about the substitution model of evaluation.
+
+\chapter{07/01/15 --- The Substitution Model, booleans and conditionals}
+
+We examine today how expressions are evaluated: the \emph{substitution model}. Recall \texttt{(operator operand1 operand2 \dots)} is the Scheme way. Thus, the three steps to evaluating such an expression are
+\begin{itemize}
+    \item Evaluate operator
+    \item Evaluate operand(s)
+    \item Apply operator procedure to operands
+\end{itemize}
+
+Notably, we specify that reading the \texttt{+} operator must call the \emph{primitive procedure} corresponding to addition. Note also that \emph{evaluating} the operands takes care of all the nested parentheses that we see all over the place.
+
+There is some special forms which evaluates differently from the above. One is the \texttt{define} protocol, which goes like \texttt{(define x 3)}. We evaluate only the second operand and associate it to the first operand. The \texttt{define} protocol returns the value assigned.
+
+Another is the \texttt{lambda} operator, which returns a procedure; \emph{none} of the operands are evaluated. A procedure can then be called, and the way we apply a procedure to its arguments is to simply evaluate its arguments and then substitute them for the variables in the function \emph{body}. 
+
+\begin{center}
+    Note the following \textbf{Syntactic Sugar}:
+
+    \texttt{(define f (lambda (x) (+ x 1)))} is equivalent to \texttt{(define (f x) (+ x 1))}
+\end{center}
+
+This is the end of the \emph{substitution model}, which is mechanical enough to be described in terms for a computer.
+
+\section{Booleans, Conditionals}
+
+We first introduce the \emph{boolean}, which contains either a true or false flag (\texttt{\#t} and \texttt{\#f}) respectively. Some functions evaluate to booleans, such as \texttt{(= 2 3)}. Moreover, other functions expect boolean operands such as \texttt{(and \#t \#f)}. 
+
+\begin{center}
+    Note that the \texttt{and}, \texttt{or} operators are smart but don't follow the standard evaluation protocol; they \emph{will} short-circuit. They can also take more than two operands.
+\end{center}
+
+A typical convention is for functions returning booleans to be named ending with a question mark, called \emph{predicates}. 
+
+The \texttt{if} conditional is the most powerful way to use booleans, comprising the form
+\begin{center}
+    \texttt{(if <boolean-expression> <true-case> <false-case>)}
+\end{center}
+
+Note that now that we have more than one data type, we must touch on types. Scheme does not type check before running code, so type errors show up at runtime.
+\chapter{09/01/15 --- Recursion and Iteration}
+
+Let's open with a small math problem; how do we turn a repeating decimal into a rational number? Alternatively, how do we sum an infinite series? Mathematically, this is very easy; the trick in both is to turn the problem into a recursive definition.
+
+\section{Recursion}
+
+Let's try to apply this sort of reasoning to a very simple problem, summing the first $N$ integers. Note that the sum of the first $N$ integers is simply $N + $ the sum of the first $N-1$ integers. Taking care to write in our base case, the full code to do this in Scheme is
+\begin{verbatim}
+(define (sum-integers n)
+    (if (= n 0)
+        0
+        (+ n (sum-integers (- n 1)))))
+\end{verbatim}
+
+In general, recursion requires a three step design pattern
+\begin{enumerate}[1.]
+    \item Test whether base case
+    \item Base case
+    \item Recursive case
+\end{enumerate}
+
+Proving that a recursive algorithm is correct usually invokes mathematical induction.
+
+To discuss the efficiency of this recursive algorithm, we note that evaluating for $N$ results in a chain of $N$ deferred operations and $N$ total function calls. This is called a \emph{linear recursive} process. A linear recursive process requires an amount of time and space both of which are linear in the size of the input. 
+
+\section{Iteratiion}
+
+Consider another algorithm, summing as we go:
+\begin{verbatim}
+(define (sum-int n)
+    sum-iter 0 n 0)
+(define (sum-iter current max sum)
+    (if (> current max)
+    sum
+    (sum-iter (+ 1 current) max (+ current sum))))
+\end{verbatim}
+
+Of course we still require $N$ total function calls, but how about the number of deferred operations? Constant! Compare
+\begin{paracol}{2}
+    \begin{verbatim}
+    (sum-integers 3)
+    (+ 3 (sum-integers 2))
+    (+ 3 (+ 2 (sum-integers 1)))
+    ...
+    (+ 3 (+ 2 (+ 1 0)))
+    \end{verbatim}
+    \switchcolumn
+    \begin{verbatim}
+    (sum-int 3)
+    (sum-iter 0 3 0)
+    (sum-iter 1 3 0)
+    (sum-iter 2 3 1)
+    ...
+    (sum-iter 4 3 6)
+    \end{verbatim}
+\end{paracol}
+
+The second algorithm is called a \emph{linear iterative process}. It still makes a linear number of calls but the state of computation is kept in a constant number of state variables, so it requires constant storage space. While both are recursive procedures, the algorithms differ in that recursive processes require pending operations while iterative ones don't. 
+
+Usually the iterative version of an algorithm is preferred, though the recursive is almost always easier to implement and prove correctness. Also, sometimes space isn't the constraining factor and so it proves okay to use the recursive implementation and be lazy. 
+
+Note above that we required a helper function \texttt{sum-iter} to keep track of the state of the program; we will see later how to put helper functions ``inside'' functions that use them.
+
+\section{Fibonacci Numbers}
+
+Consider the age-old Fibonacci numbers. We note that a recursive implementation requires two recursive calls per execution. This is called \emph{tree recursive} instead of linear because calls fan out in a tree. The number of calls is exponential in the size of the argument (the precise form is nontrivial since the tree is not symmetric). The inefficiency of the naive recursive implementation lies in the fact that numbers previously computed are recomputed; we will discuss more about optimizing this out and general asymptotic efficiencies next lecture!
+
+\chapter{12/01/15 --- }
+
+\section{Iterative Fibonacci}
+
+Let's finish the Fibbonacci problem we discussed earlier. Consider the code
+\begin{verbatim}
+(define (fib-iter fnext f cnt)
+    (if (= cnt 0)
+        f
+        (fib-iter (+ fnext f)
+            fnext
+            (- cnt 1))))
+\end{verbatim}
+
+Again, instead of an exponential growth we observe a linear growth. Recall that this is called a linear iterative process, so it requires $n+1$ calls and constant space to solve the problem. 
+
+\textbf{Blurb:} Note that we can use what is called \emph{memoization} to improve the highly inefficient tree-recursive Fibonacci procedure we saw last lecture by memorizing values so we don't have to recalculate. We won't discuss this now but maybe later.
+
+\section{Efficiency of algorithms}
+
+The most important quantifier of the efficiency of an algorithm is the runtime's dependence. We introduce \emph{Big O} notation, such that a function $g(n)$ is $O(f(n))$ if for some $n_0$, there exists $n > n_0, g(n) \leq C f(n)$ for some constant $C$. In other words, $g(n)$ grows no faster than $f(n)$ for sufficiently large $n$.
+
+Since big $O$ is a bound from above, we also need a bound from below, which is satisfied by $\Theta$, big theta notation. Usually we say ``big oh'' for $\Theta$, and we notate it like $O$ already, but technically they are different! $\Theta$ is the lower bound, $O$ is the upper. For example, the recursive Fibonacci algorithm is $O(2^n)$ but $\Theta(\varphi^n), \varphi = 1.618\dots$ the golden ratio.
+
+We care about this because, like in the case of the Fibonacci implementations, the recursive goes like $O(2^n)$ while the iterative goes merely like $O(n)$!.
+
+Note also that all logarithmic behaviors with different bases are equivalent up to a constant and so we don't care about the base in big O notation. 
+
+\section{Internal Procedures}
+
+Suppose we want to write a helper function, say to evaluate $(a + b) * c$, but don't want it to pollute the global namespace. Thus, we can write an internal procedure
+\begin{verbatim}
+(define (timesPlus a b c)
+    (define (plusPlus a b)
+        (+ a b))
+    (* (plusPlus a b) c))
+\end{verbatim}
+
+The advantage is that we have easier code to understand and to write variable names for, but it is generally harder to debug.
+
+\section{\texttt{cond} Evaluation}
+
+The functional way to do else ifs is the \texttt{cond} operator. It uses syntax
+\begin{verbatim}
+(cond (<test1> <expr1>)
+    (<test2> <expr2>)
+    (<test3> <expr3>)
+    (...)
+    (else <expr>)
+\end{verbatim}
+
+\chapter{14/01/15 --- Higher order functions}
+
+In math, we have seen functions as arguments. For example, when we write $\sum\limits_{i=0}^{n}f(n)$ the $\Sigma$ is actually a function taking $f(n)$ as an argument! We call this $\Sigma$ a \emph{higher-order function}, and in Scheme we are allowed to define such functions.
+
+Consider this exact problem. We will write the implementation
+\begin{verbatim}
+(define (sum f low high)
+    (if (> low high)
+        0
+        (+ (f low)
+            (sum f (+ low 1) high))))
+\end{verbatim}
+which is clearly a linear recursive process. Note that if we want, say, a sum of squares, we can call with 
+\begin{center}
+    \texttt{(sum (lambda (x) (* x x)) 2 4)}
+\end{center}
+
+We can also write up the iterative version, for which we will need extra state variables.
+
+Consider the slight extension of the above \texttt{sum} code, which gives the ability to specify the next number in the summation
+\begin{verbatim}
+(define (gsum f low fnext high)
+    (if (> low high)
+        0
+        (+ (f low)
+            (gsum f (fnext low) fnext high))))
+\end{verbatim}
+
+Now we can specify a whole class of summations simply by passing \texttt{lambda} functions into \texttt{f} and \texttt{fnext}. Lambda is all powerful!
+
+We can next study how to solve problems, such as sum of prime factors. The general approach will be to successively find the smallest prime factor, sum it, divide it, and repeat.
+
+\section{Lambda functions}
+
+One might wonder why we call these functions ``lambda functions.'' This is because back in 1930s, Alonzo Church saw lambda calculus, the theory of computation of the time, which was based on pure functions, and sought to eliminate as many kinds of data as possible. He kept only one type of data, \emph{functions}. There are then only three types of expressions: variables, functions of one argument, and function applications. Since lambda expressions also give higher-order procedures, it's possible to solve everything with just lambda expressions! That's all.
+
+\chapter{16/01/15 --- COOKIES}
+
+Cookies were brought to class. 
+
+\section{\texttt{Let} construct}
+
+Anyways, we can define something with very local scope with the \texttt{let} construct, via
+\begin{verbatim}
+(let ([x 10]
+    [y (- 2 4)])
+    (* x y))
+\end{verbatim}
+
+\texttt{x, y} will not have any more scope outside of the \texttt{let} construct. Neato!
+
+We note that this sort of substitution model is eerily reminiscent of functions; \texttt{let} is actually just another way of writing \texttt{lambda}! The following two pieces of code are equivalent
+\begin{verbatim}
+(let ( (<var1> <expr1>)
+    (<var2> <expr2>))
+    <body>)
+
+( (lambda (<var1> <var2) <body)
+    <expr1> <expr2>)
+\end{verbatim}
+
+We also exhibit the syntax \texttt{let*}, which turns into a bunch of nested \texttt{let}s. This is helpful if the later \texttt{let}s are dependent on the earlier ones.
+
+\section{\texttt{begin} clause}
+
+Sometimes, if you want multiple lines under the same execution block (curly braces in C, Java etc.) one can do so by enclosing in \texttt{begin}
+\begin{verbatim}
+(if (> x 10)
+    (begin
+        (display x)
+        (newline)
+        (* x 2))
+    (/ x 2))
+\end{verbatim}
+
+\texttt{begin} returns the result of the last line only. Note also we used \texttt{display}, \texttt{newline} to print things and to print a new line.
+
+\section{Returning functions}
+
+Now let's get onto the really interesting stuff. Can we return a function? Consider a general function to generate functions that add $n$
+\begin{verbatim}
+(define (make-addn n)
+    (lambda (x) (+ x n)))
+\end{verbatim}
+
+Then if we want a function that adds $2$, for example, we can just \texttt{(define add2 (make-addn 2))}.
+
+There becomes a bit of a subtlety here; you cannot substitute into a lambda function's own arguments. So for example, \texttt{(define (weird n) (lambda (n) (+ n n)))}, the \texttt{n} on the inner \texttt{lambda} is \emph{not} substituted! \texttt{lambda} protects its own arguments.
+
+We can obviously substitute multiple layers of lambdas as well; consider the function
+\begin{verbatim}
+(define multi-add
+    (lambda (a)
+        (lambda (b)
+            (lambda (c)
+                (+ a b c)))))
+\end{verbatim}
+which will return functions for the first few returns until the final one. Such functions are called \emph{curried} functions after logician Haskell Curry.
+
+\end{document}

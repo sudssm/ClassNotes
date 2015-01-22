@@ -1,0 +1,1406 @@
+\documentclass[10pt]{report}
+\usepackage{fancyhdr, amsmath, amsthm, amssymb, paracol, setspace, tikz}
+\usepackage[margin=0.5in]{geometry}
+\newcommand{\scinot}[2]{#1\times 10^{#2}}
+\newcommand{\bra}[1]{\left<#1\right|}
+\newcommand{\ket}[1]{\left|#1\right>}
+\newcommand{\dotp}[2]{\left<#1\left.\right|#2\right>}
+\newcommand{\rd}[2]{\frac{d#1}{d#2}}
+\newcommand{\pd}[2]{\frac{\partial #1}{\partial#2}}
+\newcommand{\norm}[1]{\left|\left|#1\right|\right|}
+\newcommand{\abs}[1]{\left|#1\right|}
+\newcommand{\expvalue}[1]{\left<#1\right>}
+\newcommand{\rtd}[2]{\frac{d^2#1}{d#2^2}}
+\newcommand{\curl}[0]{\vec{\nabla}\times}
+\newcommand{\grad}[0]{\vec{\nabla}}
+\newcommand{\pvec}[1]{\vec{#1}^{\,\prime}}
+\renewcommand{\div}[0]{\vec{\nabla}\cdot}
+\newcommand{\ptd}[2]{\frac{\partial^2 #1}{\partial#2^2}}
+\usepackage[labelfont=bf, font=scriptsize]{caption}
+\everymath{\displaystyle}
+
+\begin{document}
+
+%\doublespace
+% \pagestyle{fancy}
+% \rhead{Yubo Su - Ph125b - Mark Wise}
+%\setlength{\headheight}{15pt}
+
+\title{Physics 125!\\ Downs 107 MWF 10-11}
+\author{Yubo Su}
+\date{ }
+
+\maketitle
+\small
+\tableofcontents
+
+\chapter{Formula/Key Concepts}
+
+\begin{itemize}
+    \item Exhibit Hamiltonian $H = H^{(0)} + H^{(1)}$ with superscript denoting power in $\epsilon$. We have $E_n^{(1)} = \bra{n^{(0)}}H^{(1)}\ket{n^{(0)}}$ as the first-order correction in energy. We have 
+        $$\dotp{m^{(0)}}{n^{(1)}} = \frac{1}{E_n^{(0)} - E_{m}^{(0)}}\bra{m^{(0)}}H^{(1)}\ket{n^{(0)}}$$
+        as the components of the first order correction in eigenstates. This produces finally
+        $$
+        \ket{n} = \ket{n^{(0)}} + \sum_{m}^{m \neq n} \ket{m^{(0)}}\frac{\bra{m^{(0)}}H^{(1)}\ket{n^{(0)}}}{E_n^{(0)} - E_m^{(0)}}
+        $$
+    \item Second-order perturbation theory gives perturbed energy
+        $$E_n^{(2)} = \sum_{m \neq n}\frac{\abs{\bra{n^{(0)}}H^{(1)}\ket{m^{(0)}}}^2}{E_n^{(0)} - E_m^{(0)}}$$
+    \item Degenerate perturbation theory
+        \begin{align*}
+            E_n^{(1)} &= \bra{n^{(0)}}H^{(1)}\ket{n^{(0)}}\\
+            E_n^{(1)} &= \bra{n^{(0)}}H^{(1)}\ket{n^{(0)}}\\
+            \ket{n} &= \ket{n^{(0)}} + \sum_{m\neq n,k}\ket{m^{(0)}}\frac{\bra{m^{(0)}}H^{(1)}\ket{n^{(0)}}}{E_n^{(0)} - E_m^{(0)}}\\
+            \ket{k} &= \ket{k^{(0)}} + \sum_{m\neq k,k}\ket{m^{(0)}}\frac{\bra{m^{(0)}}H^{(1)}\ket{k^{(0)}}}{E_k^{(0)} - E_m^{(0)}}\\
+        \end{align*}
+        where we have to diagonalize $H^{(1)}$ in any subspaces degenerate in $H^{(0)}$ such that those terms vanish in the summation. 
+    \item Time dependent perturbation theory is given
+    \begin{equation}
+        d_f(t) = \delta_{fi}-\frac{i}{\hbar}\displaystyle\int\limits_{t_0}^{t}e^{i\omega_{fi}t'}\bra{f^{(0)}}H^{(1)}(t')\ket{i^{(0)}}\;dt' + \Theta(\epsilon^2)
+    \end{equation}
+    where $\ket{i^{(0)}}$ is the initial condition, arbitrary eigenstate (superimpose to obtain arbitrary initial condition). 
+    \item Fermi's Golden rule
+    \begin{align}
+        R_{fi} &= \frac{2\pi}{\hbar}\abs{\bra{f^{(0)}}H^{(1)}\ket{i^{(0)}}}^2\delta\left( E_f^{(0)} - E_i^{(0)} - \hbar\omega \right)
+    \end{align}
+    \item Next order time-dependennt perturbation theory under interaction picture propagator $U_I$
+        \begin{equation}
+            d_{fi}(t) = \bra{f^{(0)}}U_I(t)\ket{i^{(0)}}
+        \end{equation}
+    \item Given scattered wavefunction $\psi_k = e^{ikz} + f(\theta,\phi)\frac{e^{ikr}}{r}$ we can derive in the Born approximation (scattered wavefunction is big compared to incident).
+        \begin{equation}
+            f(\theta,\phi) = -\frac{\mu}{2\pi\hbar^2}\int e^{-i\vec{q}\cdot \vec{r}'}V(\vec{r}')d^3\vec{r}'
+        \end{equation}
+    \item Partial wave expansion is
+        \begin{align}
+                \psi_k = e^{ikz} + \sum_{l=0}^{\infty}(2l+1)\frac{e^{2i\delta_l(k)} - 1}{2ik}P_l(\cos\theta)\frac{e^{ikr}}{r}
+        \end{align}
+    \item Two scattering equations
+        \begin{align}
+                f(\theta,\phi) &= -\frac{\mu}{2\pi\hbar^2}\int e^{-i\vec{q}\cdot \vec{r}'}V(\vec{r}')d^3\vec{r}'\\
+                f(\theta)&= -\frac{2\mu}{\hbar^2}\int \frac{\sin qr'}{q}V(r') r' dr'
+        \end{align}
+        for $\hbar\vec{q} = \vec{p}_f - \vec{p}_i$ momentum transferred to the particle.
+\end{itemize}
+
+\chapter{1/6/14 - Time-independent perturbation theory}
+
+Mark Wise is adorkable. Future problem sets will have an extra review problem that will be on the easy side because we sucked last year.
+
+Systematic methods have quantifiable error because they give error as a function of a parameter in the Hamiltonian, which means the variational method isn't quite a systematic method and is suckier.
+
+We will start with time-independent perturbation theory. Exhibit some system with a time-independent Hamiltonian that we cannot solve exactly. Let this Hamiltonian be written $H = H^{(0)} + H^{(1)}$ with $H^{(0)}$ a Hamiltonian we can solve exactly (eigenvalues/eigenkets) and $H^{(1)}$ a small perturbation relative to $H^{(0)}$. We can then quantify the eigenkets $\ket{n}$ as perturbations of $\ket{n^{(0)}}$. Assume our eigenkets are normalized.
+
+What do we mean by $H^{(1)}$ is small? Let's suppose $H^{(1)} \propto\epsilon$ and determine our perturbation in $\epsilon$. Let's adopt the notation that the superscript denotes the order in $\epsilon$, so that $\ket{n} = \sum_i \ket{n^{(i)}}, E_n = \sum_j E_n^{(j)}$ and we omit the power of $\epsilon$. This is consistent with $H^{(0)}, H^{(1)}$. Writing this out, we have
+\begin{align}
+    \left( H^{(0)} + H^{(1)} \right)\left( \ket{n^{(0)}} + \ket{n^{(1)}} + \dots \right) &= \left( E_n^{(0)} + E^{(1)}_n +\dots \right)\left( \ket{n^{(0)}} + \ket{n^{(1)}} + \dots \right)
+\end{align}
+
+We can then match powers of $\epsilon$ to obtain
+\begin{align}
+    H^{(0)}\ket{n^{(0)}} &= E_n^{(0)}\ket{n^{(0)}}\\
+    H^{(1)}\ket{n^{(0)}} + H^{(0)}\ket{n^{(1)}} &= E_n^{(0)}\ket{n^{(1)}}+ E_n^{(1)}\ket{n^{(0)}}\\
+    H^{(1)}\ket{n^{(1)}} + H^{(0)}\ket{n^{(2)}} &= E_n^{(0)}\ket{n^{(2)}}+ E_n^{(1)}\ket{n^{(1)}} + E_n^{(2)}\ket{n^{(0)}}\\
+    \label{1.6.pertExp}
+    &\vdots
+\end{align}
+
+We want numbers instead of kets! Let's dot with $\bra{n^{(0)}}$. We then obtain
+\begin{align}
+    \bra{n^{(0)}}H^{(1)}\ket{n^{(0)}} + \bra{n^{(0)}}H^{(0)}\ket{n^{(1)}} &= E_n^{(0)}\dotp{n^{(0)}}{n^{(1)}}+ E_n^{(1)}\dotp{n^{(0)}}{n^{(0)}}\\
+    E_n^{(1)} &= \bra{n^{(0)}}H^{(1)}\ket{n^{(0)}}
+    \label{1.6.energy}
+\end{align}
+where we note that the first two terms cancel due to Hermiticity of $H^{(1)}$. Note that energy differences are what we want, so we want the energy relative to some energy; we usually use the ground state.
+
+We also want to solve for the perturbation in the states themselves though, not just the energies. Suppose we instead now dot both sides with $\bra{m^{(0)}}$ with $m \neq n$ (another eigenstate of the unperturbed Hamiltonian). This then gives
+\begin{align}
+    \bra{m^{(0)}}H^{(1)}\ket{n^{(0)}} + \bra{m^{(0)}}H^{(0)}\ket{n^{(1)}} &= E_n^{(0)}\dotp{m^{(0)}}{n^{(1)}}+ E_n^{(1)}\dotp{m^{(0)}}{n^{(0)}}\\
+    \dotp{m^{(0)}}{n^{(1)}} &= \frac{1}{E_n^{(0)} - E_{m}^{(0)}}\bra{m^{(0)}}H^{(1)}\ket{n^{(0)}}
+\end{align}
+which gives us the components of $\ket{n^{(1)}}$ in the $\ket{n^{(0)}}$ basis. This then tells us that $\ket{n} = \ket{n^{(0)}}\left( 1 + c\epsilon \right) + \sum_{m \neq n} \ket{m^{(0)}\frac{\bra{m^{(0)}H^{(1)}\ket{n^{(0)}}}}{E_n^{(0)} - E_m^{(0)}}}+ \Theta(\epsilon^2)$ for some complex $c$. We can then compute $\dotp{n}{n} = 1 + 2\Re(c\epsilon) + \Theta(\epsilon^2)$ but then by normalizations we find that $c \in \mathbb{I}$. 
+
+Note that we should expect a degree of freedom in the phase of our states! Let's see where this comes from. Let's write $c = ic_I$. Then technically we can write
+\begin{align}
+    \ket{n} &= e^{ic_I\epsilon}\left( \ket{n^{(0)}} + \sum_{m \neq n} \ket{m^{(0)}}\frac{\bra{m^{(0)}}H^{(1)}\ket{n^{(0)}}}{E_n^{(0)} - E_m^{(0)}} \right) + \Theta(\epsilon^2)
+\end{align}
+where we note that the extra term is of order $\epsilon^2$. Then of course the phase difference falls out by convention, and we obtain
+\begin{equation}
+    \ket{n} = \ket{n^{(0)}} + \sum_{m}^{m \neq n} \ket{m^{(0)}}\frac{\bra{m^{(0)}}H^{(1)}\ket{n^{(0)}}}{E_n^{(0)} - E_m^{(0)}}
+    \label{1.6.ket}
+\end{equation}
+for non-degenerate energies of $H^{(0)}$. 
+
+Now that we have first order corrections, we can discuss what it means for $H^{(1)}$ to be small. Let's examine Equation \ref{1.6.energy} and \ref{1.6.ket}. We want the correction to the energy to be small, which translates to
+\begin{align}
+    \frac{E_n^{(1)} - E_m^{(1)}}{E_n^{(0)} - E_m^{(0)}} &= \frac{\bra{n^{(0)}}H^{(1)}\ket{n^{(0)}} - \bra{m^{(0)}}H^{(1)}\ket{m^{(0)}}}{E_n^{(0)} - E_m^{(0)}} \ll 1\\
+    \frac{\bra{m^{(0)}}H^{(1)}\ket{n^{(0)}}}{E_n^{(0)}-E_m^{(0)}} &\ll 1
+    \label{1.6.small}
+\end{align}
+
+Let's do an example. Let's put an electron in a coulomb potential with some screening function $f(r)$. This then gives us Hamiltonian $H = -\frac{\hbar^2}{2m}\nabla^2 - \frac{e^2}{r}f(r)$ with $f(r \to \infty) \to 0, f(r \to 0) \to 1$. Let's suppose $f(r) = e^{-\lambda r}$. Let's see what happens next lecture.
+
+\chapter{1.8/14 - Examples, Degenerate + higher-order perturbation theory}
+
+Review, see above. Results are
+\begin{align}
+    E_n^{(1)} &= \bra{n^{(0)}}H^{(1)}\ket{n^{(0)}}\\
+    \ket{n^{(1)}} &= \sum_{m \neq n}\ket{m^{(0)}}a\frac{\bra{m^{(0)}}H^{(1)}\ket{n^{(0)}}}{E_n^{(0)} - E_m^{(0)}}
+\end{align}
+assuming that level $n$ is not generate in $H^{\left( 0 \right)}$.
+
+Let's restart the example from last class, a screened Coulomb potential. Let's write it differently though! Let our Hamiltonian be
+\begin{equation}
+    H = -\frac{\hbar^2}{2m}\nabla^2 - g^2\frac{e^{-\lambda r}}{r}
+    \label{1.8.screenedH}
+\end{equation}
+
+This reproduces the Coulomb potential when $g = e$. The scale for all atomic problems is the Bohr radius $a_0 = \frac{\hbar^2}{mg^2}$ for us. Then suppose $\lambda a_0 \ll 1$, then we can write our Hamiltonian
+\begin{equation}
+    H = \underbrace{-\frac{\hbar^2}{2m}\nabla^2 - \frac{g^2}{r}}_{H^{(0)}} - \frac{g^2}{r}\left( e^{-\lambda r} - 1 \right) = H^{(0)} + \lambda g^2 - \frac{\lambda^2 g^2 r}{2}
+    \label{1.8.perturbedH}
+\end{equation}
+
+Instead of this division though, it makes more sense to group $\lambda g^2$ into $H^{(0)}$ as a constant offset to the energy and call $H^{(1)} = -\frac{\lambda^2 g^2r}{2}$. We then want the first-order perturbation in energy, so we compute
+\begin{align}
+    \bra{\psi_{100}}H^{(1)}\ket{\psi_{100}} &= \iint d\Omega \frac{1}{\pi a_0^3}\displaystyle\int\limits_{0}^{\infty}dr \;r^3 e^{-2r/a_0}\\
+    E_{100}^{(1)} &= -\mathrm{Ry}_g\left( \frac{3}{2} \right)\xi^2
+    \label{1.8.perturbedSol}
+\end{align}
+where $\lambda = \frac{\xi}{a_0}$. 
+
+Let's discuss higher-order perturbation theory. Let's examine the $\epsilon^2$ term in our expansion from Equation \ref{1.6.pertExp}, namely
+\begin{equation}
+    H^{(0)}\ket{n^{(2)}} + H^{(1)}\ket{n^{(1)}} = E_n^{(0)}\ket{n^{(2)}} + E_n^{(1)}\ket{n^{(1)}} + E^{(2)}_n\ket{n^{(0)}}
+    \label{1.8.epsilon2}
+\end{equation}
+
+We will dot with $\bra{n^{(0)}}$ and obtain
+$$ \bra{n^{(0)}}H^{(1)}\ket{n^{(1)}} =  \underbrace{E_n^{(1)}\dotp{n^{(0)}}{n^{(1)}}}_{=0} + E_n^{(2)}$$
+
+We note that this term $=0$ by convention if we choose $\ket{n^{(1)}}$ phase carefully. We can then plug in our formula for $\ket{n^{(1)}}$ and obtain
+\begin{equation}
+    E_n^{(2)} = \sum_{m \neq n}\frac{\abs{\bra{n^{(0)}}H^{(1)}\ket{m^{(0)}}}^2}{E_n^{(0)} - E_m^{(0)}}
+    \label{1.8.order2pert}
+\end{equation}
+
+We then investigate degenerate perturbation theory. Suppose we have two states $\ket{n^{(0)}}, \ket{k^{(0)}}$ degenerate with all other states nondegenerate. Then if we try to apply our earlier equation \ref{1.6.ket} we have trouble when $m=k$. Instead, let's consider the matrix that represents the operation of $H^{(1)}$ on the subspace spanned by $\ket{n,k}$, so with entries
+\begin{equation}
+    H' = \begin{pmatrix} \bra{n^{(0)}}H^{(1)}\ket{n^{(0)}} & \bra{n^{(0)}}H^{(1)}\ket{k^{(0)}}\\ \bra{n^{(0)}}H^{(1)}\ket{k^{(0)}} & \bra{k^{(0)}}H^{(1)}\ket{k^{(0)}} \end{pmatrix} 
+    \label{1.8.subH}
+\end{equation}
+
+This matrix is easily diagonalizable, so let's choose $\ket{n^{(0)}}, \ket{k^{(0)}}$ such that $H'$ is diagonalized, i.e. $\bra{n^{(0)}}H^{(1)}\ket{k^{(0)}}$. Note that this helps us accidentally in Equation \ref{1.6.ket} because we end up with a $\frac{0}{0}$ for our contribution from the degenerate term in the summation rather than some $\frac{\neq 0}{0}$ which would explode. This is sensible!
+
+Let's start back with the first order $\epsilon$ equation after dotting through by $\bra{m^{(0)}}$
+$$E_m^{(0)}\dotp{m^{(0)}}{n^{(1)}} + \bra{m^{(0)}}H^{(1)}\ket{n^{(0)}} = E_n^{(0)}\dotp{m^{(0)}}{n^{(1)}}$$
+
+Let's then examine what happens when $m=k$, which produces $0=0$, which ``is at least true.''
+
+From here forwards let's make a super inspired ansatz and verify that it works. The set of equations (which we verify next class) is
+\begin{align}
+    E_n^{(1)} &= \bra{n^{(0)}}H^{(1)}\ket{n^{(0)}}\\
+    E_n^{(1)} &= \bra{n^{(0)}}H^{(1)}\ket{n^{(0)}}\\
+    \ket{n} &= \ket{n^{(0)}} + \sum_{m\neq n,k}\ket{m^{(0)}}\frac{\bra{m^{(0)}}H^{(1)}\ket{n^{(0)}}}{E_n^{(0)} - E_m^{(0)}}\\
+    \ket{k} &= \ket{k^{(0)}} + \sum_{m\neq k,k}\ket{m^{(0)}}\frac{\bra{m^{(0)}}H^{(1)}\ket{k^{(0)}}}{E_k^{(0)} - E_m^{(0)}}\\
+    \label{1.8.sol}
+\end{align}
+
+\chapter{1/10/14 - Selection rules, examples Time-independent}
+
+Recall what we did for degenerate pert theory. Given two degenerate states $\ket{n^{(0)}}, \ket{k^{(0)}}$, we choose a new basis $\ket{l^{(0)}}, \ket{m^{(0)}}$ under which the Hamiltonian is diagonal. These are of course still eigenstates, and also it is not necessarily true that $\ket{n^{(0)}}, \ket{k^{(0)}}$.
+
+We recall that the energy Equation \ref{1.6.energy} is fine, but the eigenket Equation \ref{1.6.ket} runs into division by zero. We then investigate starting back from the original Equation \ref{1.6.pertExp} and recall that it produces a truthism, $0=0$.
+
+We then want to figure out what happens in the summation in Equation \ref{1.6.ket}. Let's guess the solutions given by Equation \ref{1.8.sol}. This is equivalent to saying that $\bra{m^{(0)}}H^{(1)}\ket{n^{(0)}}$ is ``more zero'' than $E_m^{(0)} - E_n^{(0)}$ (assume we've already constructed such that the Hamiltonian is diagonal in the basis $\ket{m^{(0)}}, \ket{n^{(0)}}$).
+
+We can check our ansatz by plugging into Equation \ref{1.6.pertExp} as below
+\begin{align}
+    H^{(0)}\ket{n^{(1)} } + H^{(1)}\ket{n^{(0)}} &= E_n^{(0)}\ket{n^{(1)}} + E_n^{(1)}\ket{n^{(0)}}\\
+    \sum_{m \neq n,k} E_m^{(0)}\ket{m^{(0)}}\frac{\bra{m^{(0)}}H^{(1)}\ket{n^{(0)}}}{E_n^{(0)} - E_m^{(0)}} + H^{(1)}\ket{n^{(0)}} &= E_n^{(0)}\sum_{m \neq n,k} \ket{m^{(0)}}\frac{\bra{m^{(0)}}H^{(1)}\ket{n^{(0)}}}{E_n^{(0)} - E_m^{(0)}} + E_n^{(1)}\ket{n^{(0)}}\\
+    H^{(1)}\ket{n^{(0)}} &= \sum_{m\neq n,k} \ket{m^{(0)}}\bra{m^{(0)}}H^{(1)}\ket{n^{(0)}} + \ket{n^{(0)}}\bra{n^{(0)}}H^{(1)}\ket{n^{(0)}} + \underbrace{\ket{k^{(0)}}\bra{k^{(0)}}H^{(1)}\ket{n^{(0)}}}_{=0}\\
+    &= \sum_m \ket{m^{(0)}}\bra{m^{(0)}}H^{(1)}\ket{n^{(0)}}\\
+    &= H^{(1)}\ket{n^{(0)}}
+    \label{1.10.degensol}
+\end{align}
+where since we satisfy the correct expansion order we have a usable equation. 
+
+We will then discuss selection rules. Suppose we have an observable $\Omega$ that commutes with $H^{(1)}$. Suppose then that we have some basis of eigenstates $\ket{\alpha_k, \omega_j}$ with $\alpha_k$ all the rest of the values necessary to encompass a complete basis of states (i.e. like $\ket{n,l,m}$ for Hydrogen atom). We then know that $\bra{\alpha_u, \omega_2}H^{(1)}\ket{\alpha_k, \omega_i} = 0$ if $\omega_1 \neq \omega_2$; we can show this by computing $\bra{\alpha_u, \omega_2}\left[\Omega,H^{(1)}\right] \ket{\alpha_k, \omega_1}$.
+
+Let's consider $L_z$ as an example, such that it commutes with $H^{(1)}$. We know that $\left[ L_z, r^2 \right] = \left[ L_z, r\cdot p \right] = \left[ L_z p^2 \right] = \left[ L_z, \frac{(r^2)^{26}(p^2)^{16}}{1+(r\cdotp)^27} \right] = 0$ by rotational invariance! Let's recall why this is true. Consider rotation matrix $U[R] = \exp\left[ -i\sum_j \frac{\alpha_j L_j}{\hbar} \right] = 1-i\sum_j \frac{\alpha_j L_j}{\hbar} +\dots$. We recall then that $U[R]^\dagger X_j U[R] = x_j' = \sum_k R_{jk}x_k$. If we then consider $U[R^\dagger x\cdot p U[R] = U[R^\dagger xU[R]\cdot U[R]^\dagger p U[R] = x' \cdot p' = x\cdot p$ because orthogonal transformations preserve dot product. If we then plug in $U[R] = 1-i\sum_j \frac{\alpha_j L_j}{\hbar}$ we find that $[L_j, x\cdot p]=0$.
+
+We now move on to examples of perturbation theory. Let's start with the easiest thing we can, a perturbation to the harmonic oscillator $H^{(0)} = \frac{p^2}{2m} + \frac{1}{2}m\omega^2 x^2, H^{(1)} = -qfx$ with $f$ our small parameter. We note that this is a bad example since it is exactly solvable; completing the square takes $H = H^{(0)} + H^{(1)} = \frac{p^2}{2m} + \frac{1}{2}m\omega^2 z^2 - \frac{q^2f^2}{2m\omega^2}$ to a standard harmonic oscillator potential with some constant offset. We then note that we expect the first-order perturbation in energy to be zero, since the only perturbation is a second-order energy one.
+
+We recall $x = \sqrt{\frac{\hbar}{2m\omega}}\left( a+a^\dagger \right)$ with $a,a^\dagger$ the creation/annihilation operators. We then compute $E_n^{(1)} = \bra{n^{(0)}}-qfx\ket{n^{(0)}} = 0$ since $x$ makes the states go to orthonormal states and the dot product vanishes (that was terrible to explain).
+
+Let's check th esecond-order perturbation. $E_n^{(2)} = \sum_{m \neq n} \frac{\abs{\bra{m^{(0)}}H^{(1)}\ket{n^{(0)}}}^2}{E_n^{(0) - E_m^{(0)}}}$. We note that in the infinite summation only two terms are nonzero for when $m = n \pm 1$. Compute this out on your own time, you'll get the right answer!
+\chapter{1/13/14 - Fine Structure Hydrogen}
+
+Fine structure refers to relativistic corrections to hydrogen comprising three parts
+\begin{itemize}
+    \item Kinetic energy terms
+    \item Spin orbit term
+    \item Darwin
+\end{itemize}
+
+Corrections to kinetic energy term. The relatvistic kinetic energy is given $\sqrt{m^2c^4 + p^2c^2} -mc^2 \approx \frac{p^2}{2m} - \frac{p^4}{8m^3c^2}$. Note that $H_t^{(1)} = -\frac{p^4}{8m^3c^2}$ is rotationally invariant. This means that $H_T^{(1)}$ is diagonal in $\ket{nlm}$ basis, so (noting that $p^4 = 4m^2\left( \frac{p^2}{2m} \right)^2 = 4m^2\left( H^{(0)} + \frac{e^2}{r} \right)^2$)
+\begin{align}
+    E_T^{(1)} &= -\frac{1}{8mc^3c^2}\bra{nlm}p^4\ket{nlm}\\
+    &= \frac{-1}{2mc^2}\left[ (E_n^{(0)})^2 + 2E_n^{(0)}e^2\expvalue{\frac{1}{r}}_{nlm} + e^4\expvalue{\frac{1}{r^2}}_{nlm} \right]\\
+    \expvalue{\frac{1}{r}}_{nlm} &= 4\pi\int_0^\infty dr \frac{1}{\pi a_0^3}re^{-2r/a_0}\\
+    &= \frac{4}{a_0^3}\displaystyle\int\limits_{0}^{\infty}-\frac{a_0}{2}e^{-2r/a_0}\;dr\\
+    &= -\frac{2}{a_0^2}\left[ \frac{a_0}{2} \right]\\
+    &= \frac{1}{a_0}
+    \expvalue{\frac{1}{r^2}}_{100} &= \frac{4\pi}{\pi a_0^3}\displaystyle\int\limits_{0}^{\infty}e^{-2r/a_0}\;dr\\
+    &= \frac{2}{a_0^2}
+\end{align}
+
+For general $\expvalue{\frac{1}{r}}_{nlm}$ we use a trick. Consider Hamiltonian $H = H^{(0)} + \frac{\lambda}{r}$ with $H^{(0)}$ the Coulomb Hamiltonian. Then $E_{n}^{(1)} = \lambda\bra{\psi^{(0)}}\frac{1}{r}\ket{\psi^{(0)}}$, but we can also solve exactly for the energies by noting $H$ is just coulomb potential with $e'^2 = e^2-\lambda$, giving first order term $E_n^{(1)} = \frac{\lambda me^2}{\hbar^2 n^2}$ and so $\expvalue{\frac{1}{r}}_{nlm} = -2\frac{E_n^{(0)}}{e^2}$.
+
+Then we want general $\expvalue{\frac{1}{r^2}}_{nlm}$. We first note that $H^{(0)}$ contains a term $\frac{\hbar^2}{2m}\frac{l(l+1)}{r^2}$. We also know that $E^{(0)} = -\frac{me^4}{2\hbar^2 n^2}$. Let's then look at hydrogen with $l': l'(l' + 1) = l(l+1) + \frac{2m\lambda}{\hbar^2}$, i.e. perturb Hamiltonian with $\frac{\lambda}{r^2}$ term. Then for small $\lambda, l' = l + \delta$ we have $l'(l' + 1) \approx l(l+1) + \delta(2l+1)$ which yields $\delta = \frac{2m\lambda}{\hbar^2(2l+1)}$.
+
+Plugging this through the energy then gives $E^{(0)}(l \to l + \delta) = E^{(0)} + \frac{2m^2e^4}{\hbar^4 n^3(2l+1)}\lambda$, which then matching terms with our expectation value produces $\expvalue{\frac{1}{r^2}}_{nlm} = \frac{4n(E_n^{(0)})^2}{\left( l+\frac{1}{2} e^4 \right)}$. Combining these expressions finally we have
+\begin{equation}
+    E_T^{(1)} = -\frac{mc^2}{2}\alpha^4\left[ -\frac{3}{4n^4} + \frac{1}{n^3\left( l+\frac{1}{2} \right)} \right]
+    \label{1.13.fs}
+\end{equation}
+with $\alpha = \frac{e^2}{\hbar c}$ the fine structure constant.
+
+\chapter{1/15/14 - Hydrogen atom example}
+
+Let's do another example of time-independent perturbation theory, Suppose we have an external electric potential $\phi$ acting on the Hydrogen atom, so our perturbing Hamiltonian becomes $H^{(1)} = -e\phi(\vec{r}_e) + e\phi(\vec{r}_p)$. We Taylor expand about the center of mass and obtain $H^{(1)} = e\vec{r}\cdot \vec{E}$. Here we usually introduce dipole moment $\vec{\mu}_e = -e \vec{r}$ so the Hamiltonian looks like $H^{(1)} = -\vec{\mu}\cdot \vec{E}$.
+
+Let's now take a constant electric field along the $z$ axis $\vec{E} = \epsilon \hat{z}$ so $H^{(1)} = ez\epsilon$. Then to compute the perturbation we compute the matrix elements $\bra{n',l',m'}H^{(1)}\ket{n,l,m}$. We note that the state is rotationally invariant about the $z$ axis ($[H^{(1)},L_z] = 0$), so we know that matrix elements are nonzero only when $m = m'$, selection rules. If our $H^{(1)}$ then is fully rotationally invariant we know that $l=l'$ as well, but we don't know that.
+
+Let's then look at the $E^{(1)}_{100} = \bra{100}ez\epsilon\ket{100}$. In the coordinate basis this is $\int d\cos\theta \frac{1}{\sqrt{\pi a_0^3}} r\cos \theta e^{-2r/a_0} = 0$. We can then compute the next-order perturbation
+$$E^{(2)}_{100} = \sum'_{n,l,m} e^2\epsilon^2 \frac{\abs{\bra{nlm}z\ket{100}}^2}{E_{100}^{(2)} - E_{nlm}^2}$$
+
+This sum is difficult to do. We first note though that $E_{100}^{(2)} - E_{nlm}^{(2)} = -\frac{e^2}{2a_0}\left( 1-\frac{1}{n^2} \right)$, so we can rewrite our sum
+\begin{align}
+    E^{(2)}_{100} &= \sum'_{n,l,m} \left( -2\epsilon^2 a_0 \right) \abs{\bra{nlm}z\ket{100}}^2\left( \frac{n^2}{n^2 - 1} \right)\\
+    &\approx \sum'_{n,l,m} \left( -2\epsilon^2 a_0 \right) \abs{\bra{nlm}z\ket{100}}^2\\
+    &= -2\epsilon^2 a_0 \bra{100}z^2\ket{100}
+\end{align}
+where we can simply use completeness when expanding the magnitude squared. We thus obtain $E^{(2)}_{100} \approx -2\epsilon^2 a_0^3$. A more careful calculation where we don't assume $\frac{n^2}{n^2 - 1} = 1$ gives $-\frac{9}{4}\epsilon^2 a_0^3$. 
+
+Onto $n=2$, we have to use degenerate perturbation theory as $\ket{2,0,0}, \ket{2,1,\pm 1}, \ket{2,1,0}$. W then want to look at the degenerate subspace to check for nonzero elements. The only nonzero elements are $\bra{210}H^{(1)}\ket{200} = -3e\epsilon a_0$ and its adjoint. Then obviously the diagonalizing basis comprises $\ket{2,1,\pm 1}, \ket{200}\pm \ket{210}$ up to normalization. Then let $\ket{a} = \ket{200} + \ket{210}, \ket{b} = \ket{200} - \ket{210}, \ket{c} = \ket{211}, \ket{d} = \ket{21-1}$, and we can compute $\bra{a}H^{(1)}\ket{a} = -3e\epsilon a_0, \bra{b}H^{(1)} \ket{b} = 3e\epsilon a_0$ and the others are $0$. 
+\chapter{1/17/14 - Finite nuclear size, time independent perturbation theory}
+
+Finite nuclear size effects. Note that the nucleus isn't actually a point charge, there is a distribution $\rho(r)$ as a function of $r$. Then let us consider this as a perturbation $H^{(1)} = -Ze^2\int d^3r' \frac{\rho(r')}{\abs{r-r'}} + \frac{Ze^2}{r}$. This technically can just straight up get plugged in for matrix elements, but maybe we can go a little further!
+
+Nucleus radius is very small compared to electron cloud. We should have a way of seeing this; intuitively the perturbation should be able to be expanded as a delta function, which is very localized! To get this, we define a Fourier transform
+$$\tilde{\rho}(q) = \int d^3r e^{-i\vec{q}\cdot \vec{r}}\rho(r)$$
+with $q$ a generic position coordinate. We can then evaluate $\tilde{\rho}(0) = 1$. We can then expand, noting that the first-order term vanishes because it is spherically antisymmetric, and obtain
+$$\tilde{\rho}(q) = 1-\frac{1}{2}\sum_{ij}q_iq_j\int d^3r r^ir^j \rho(r)$$
+
+We then note that for $i \neq j$ we have $\int d^3r r^i r^j \rho(r)$ vanishes by asymmetry. Then for $i=j$ we have $\expvalue{r^2}$, and our expansion takes on form
+$$\tilde{\rho}(q) = 1-\frac{\expvalue{r^2}}{6}q^2$$
+and our Hamiltonian
+\begin{align}
+    H^{(1)} &= -Ze^2\int d^3r' \frac{\abs{\rho(r') - \delta^3(r')}}{\abs{r-r'}}\\
+    &= -Ze^2 \int d^3r' \int \frac{d^3q}{(2\pi)^3} e^{i\vec{q}\cdot \vec{r}'}\frac{\tilde{\rho}(q) - 1}{r-r'}\\
+    &= -Ze^2 \int \frac{d^3q}{(2\pi)^3} (\tilde{\rho}(q) - 1)e^{i\vec{q}\cdot \vec{r}}\int d^3 r'\frac{e^{-i\vec{q(r-r')}}}{\abs{r-r'}}
+    \label{1.17.one}
+\end{align}
+
+We want to integrate the latter integral first, which can be written 
+\begin{align}
+    I(q) &= \int d^3x\frac{e^{-i\vec{q}\cdot \vec{x}}}{\abs{\vec{x}}}\\
+    &= 2\pi\displaystyle\int\limits_{0}^{\infty}dx\; x \displaystyle\int\limits_{-1}^{1}dv\;e^{-iqxv}\\
+    &= 2\pi\displaystyle\int\limits_{0}^{\infty}dx\;x\left( \frac{-1}{iqx} \right)\left[ e^{-iqx} - e^{iqx} \right]
+\end{align}
+
+At this point, we introduce an auxiliary function $e^{-mx}$ in the limit $m \to 0$ and we expect our limit will be nice (since as it stands the integral is singular), so
+\begin{align}
+    I(q) &= \frac{2\pi}{iq}\lim_{m \to 0}\displaystyle\int\limits_{0}^{\infty}dx\;\left( e^{iqx} - e^{-iqx} \right)e^{-mx}\\
+    &= \frac{2\pi}{iq}\lim_{m \to 0}\left[ -\frac{1}{iq-m} + \frac{1}{-iq-m} \right]\\
+    &= \lim_{m \to 0}\frac{4\pi}{q^2 + m^2}\\
+    &= \frac{4\pi}{q^2}
+\end{align}
+
+We then plug this waaaay back into our Hamiltonian Equation \ref{1.17.one} and we obtain
+\begin{align}
+    H^{(1)} &= \frac{4\pi Ze^2}{6} \int \frac{d^3q}{(2\pi)^3} e^{i\vec{q}\cdot \vec{r}}{\abs{r-r'}}\\
+    &= \frac{2\pi}{3}Ze^2\expvalue{r^2}\delta^3(\vec{r}
+    \label{1.17.done}
+\end{align}
+
+Then the first order energy perturbation looks great $E^{(1)}$ is just an integral over a delta function, which is super easy to do. The energy shift is then
+$$E^{(1)}_{nlm} = \frac{2\pi}{3}Ze^2\expvalue{r^2}\abs{\psi_{nlm}(0)}^2$$
+
+This then splits the energy levels so that $s$ is no longer degenerate with $p$ orbitals!
+
+Let's see this split in action. In reality, this splitting is very hard to observe in hydrogen and so we usually examine muonic hydrogen where $m_\mu \approx 200 m_e$. This then gives
+\begin{align}
+    E^{(1)}_{100} &= \frac{2\pi}{3}e^2\expvalue{r^2}\frac{1}{\pi a_0^3}\\
+    &= \left( \frac{4}{3} \right)\left( \frac{\expvalue{r^2}}{a_0^2} \right)\mathrm{Ry}
+\end{align}
+
+We can then plug in some values, for hydrogen $\expvalue{r^2}_p \approx\scinot{0.877}{-13}$ and for muonic hydrogen $\expvalue{r^2}_\mu \approx \scinot{0.8413}{-13}$. That's it for time independent perturbation theory. 
+
+Since the next lecture is next Friday, we will talk in very general about time-dependent perturbation theory. There is a time dependent Hamiltonian $H(t) = H^{(0)} + H^{(1)}(t)$ that is perturbed only very little in time. First it is difficult to solve the SE in the first place. But there are two interesting limits we work with, one is the instantaneous perturbation and one is the adiabatic (in the adiabatic approximation, if you are in a state of the Hamiltonian that varies slowly the adiabatic theorem says you stay in that state).
+
+Let's begin by supposing there is some state $\ket{\psi(t)}$ that evolves in time. Consider then $\ket{n^{(0)}}$ the eigenbasis of the $H^{(0)}$. We will set this up as $\ket{\psi(t)} = \sum_n C_n(t)\ket{n^{(0)}}$ and we want a formula for $C_n(t)$. We note that in the absence of $H^{(1)}(t)$ we observe a time dependence $e^{-iE_n^{(0)}t/\hbar}$, so let's express instead
+$$\ket{\psi(t)} = \sum_n d_n(t)e^{-iE_n^{(0)}t/\hbar}\ket{n^{(0)}}$$
+
+We continue some other day.
+
+\chapter{1/24/14 - Time Dependent Perturbation Theory}
+
+We begin with $H = H^{(0)} + H^{(1)}(t)$ with eigenstates $E_n^{(0)}\ket{n^{(0)}}$. This means that we can write our states $\ket{\psi} = \sum_n c_n(t)\ket{n^{(0)}}$. Then for $H^{(1)} = 0 \Rightarrow c_n(t) = e^{-iE_n^{(0)}t/\hbar}$, so we express
+\begin{equation}
+    \ket{\psi(t)} = \sum_n d_n(t)e^{-iE_n^{(0)}t/\hbar}\ket{n^{(0)}}
+    \label{1.24.state}
+\end{equation}
+
+We then dot this through the SE and obtain
+\begin{align}
+    \left(i\hbar\rd{}{t} - H^{(0)} - H^{(1)}(t)\right)\ket{\psi(t)} &= 0\\
+    \sum_n\left[ i\hbar \dot{d}_n + E_n^{(0)}dn - E_n^{(0)}dn - H^{(1)}(t)d_n \right]e^{-iE_n^{(0)}t/\hbar}\ket{n^{(0)}} &= 0\\
+    i\hbar \dot{d}_f(t)e^{-iE_f^{(0)}t/\hbar} &= \sum_n \bra{f^{(0)}}H^{(1)}(t)\ket{n^{(0)}}d_n(t)e^{-iE_n^{(0)}t/\hbar}\\
+    i\hbar\dot{d}_f(t) &= \sum_n d_n(t)e^{i(E_f^{(0)}-E_n^{(1)})t/\hbar}\bra{f^{(0)}}H^{(1)}(t)\ket{n^{(0)}}
+    \label{1.24.perturb}
+\end{align}
+
+But then we note that the dot product is small, so we expand perturbatively! We must expand $d_n(t) = d_n^{(0)}(t) + d_n^{(1)}(t) +\dots$ and define $\omega_{fn}\frac{E_f^{(0)}-E_n^{(0)}}{\hbar}$ to write
+\begin{equation}
+    i\hbar\dot{d}_f^{(1)} = \sum_n d_n^{(0)}e^{i\omega_{fn}t}\bra{f^{(0)}}H^{(1)}(t)\ket{n^{(0)}}
+\end{equation}
+
+Suppose then we start at some time $t=0$ in some state $\ket{i^{(0)}}$ an eigenstate so $d_n^{(0)} = \delta_{ni}$. Then we have
+\begin{equation}
+    d_f(t) = \delta_{fi} -\frac{i}{\hbar}\displaystyle\int\limits_{t_0}^{t}e^{i\omega_{fi}t'}\bra{f^{(0)}}H^{(1)}(t')\ket{i^{(0)}}\;dt' + \Theta(\epsilon^2)
+    \label{1.24.tdep}
+\end{equation}
+
+Example time! Let's perturb the 1D harmonic oscillator with a uniform electric field $\vec{E} = \varepsilon \hat{x}e^{-t^2/\tau^2}$. Then the Hamiltonian is $H^{(1)}(t) = -e\varepsilon xe^{-t^2/\tau^2}$. We then want to see how the coefficients evolve over all time $(-\infty,\infty)$, so (starting in the ground state)
+\begin{align}
+    d_n^{(1)}(\infty) &= -\frac{i}{\hbar}\displaystyle\int\limits_{-\infty}^{\infty}-e\varepsilon\underbrace{\bra{n}x\ket{0}}_{x \propto a+a^\dagger}e^{-t^2/\tau^2}e^{in\omega t}\;dt\\
+    d_1^{(1)}(\infty)&= \frac{ie\varepsilon}{\hbar}\sqrt{\frac{\hbar}{2m\omega}}\displaystyle\int\limits_{-\infty}^{\infty}e^{-t^2/\tau^2 + i\omega t}\;dt\\
+    &= ie\varepsilon\sqrt{\frac{1}{2m\hbar\omega}}\tau\displaystyle\int\limits_{-\infty}^{\infty}e^{-z^2+i\omega\tau z}\;dz\\
+    &= ie\varepsilon\sqrt{\frac{1}{2m\hbar\omega}}\tau\displaystyle\int\limits_{-\infty}^{\infty}e^{-\left(z-\frac{i\omega\tau}{2}\right)^2}e^{-\omega^2\tau^2/4}\;dz\\
+    &= \frac{ie\varepsilon\sqrt{\psi}}{\sqrt{2m\eta\hbar}}\tau e^{-\omega^2\tau^2/4}
+    \label{1.24.ex}
+\end{align}
+
+There is then some probability that the state shifts from the ground state into the first excited state given by $P_{0\to1}\abs{d_1}^2$. We note some characteristics about small and large $\tau$ corresponding to sudden and long perturbations respectivel, namely that both yield $P_{0\to1} = 0$. These correspond to sudden and adiabatic perturbations respectively. In the adiabatic limit the state function must remain in an eigenstate of the Hamiltonian at all times $t$. Sudden perturbations (instantaneous) will preserve the state of the particle. 
+
+We first discuss sudden perturbations. Then plugging into the SE we have
+\begin{equation}
+    \ket{\psi\left( \frac{\epsilon}{2} \right)} - \ket{\psi\left( -\frac{\epsilon}{2} \right)} = -\frac{i}{\hbar}\displaystyle\int\limits_{-\epsilon/2}^{\epsilon/2}H(t)\ket{\psi(t)}\;dt
+    \label{1.24.sudden}
+\end{equation}
+
+Intuitively then if the Hamiltonian doesn't explode then the difference should be zero! But time has units, so we have to deterine exactly what dimensionless quantity is small to determine what $\epsilon \to 0$ means. Let's examine an example of what needs to be small. 
+
+Suppose a $1s$ electron is bound to a nuclear charge $Z$ when a neutron in the nucleus decays. This ejects a relativistic electron so assume $v \approx c$, and so the timescale of this must be $\frac{a_0}{Zc}$. Compare this to the velocity of the $1s$ bound electron, which is $\frac{a_0/Z}{\sqrt{\expvalue{p^2/m^2}}} \sim \frac{a_0 \hbar}{z^2e^2}$, so if $\frac{Ze^2}{\hbar c} \ll 1$ then we can treat the perturbation as sudden. Thus, if the timescale of the perturbation is small compared to the characteristic timescale of the problem then we are okay!
+
+We can then set up an adiabatic perturbation example, as we are running out of time. Let's write our Hamiltonian $H(t) = H^{(0)} + e^{t/\tau}H^{(1)}$ so that at $t=-\infty, H = H^{(0)}$ while at $t=0, H = H^{(0)} + H^{(1)}$. 
+
+\chapter{1/27/14 - Adiabatic theorem, Fermi's golden rule}
+
+Recall that we started with $H = H^{(0)} + H^{(1)}(t)$ and wrote the states $\ket{\psi(t)} = \sum_n d_n(t) e^{-E_n^{(0)}t/\hbar}\ket{n^{(0)}}$ in terms of the unperturbed eigenstates. We solved for the perturbation under the assumption that the state starts in some eigenstate $\ket{i^{(0)}}$ and we got the components
+\begin{equation}
+    d_n(t) = \delta_{fi} -\frac{i}{\hbar} \displaystyle\int\limits_{}^{t}dt' e^{i\omega_{fi}t'} \bra{f^{(0)}}H^{(1)}(t')\ket{i^{(0)}}
+    \label{1.27.sol}
+\end{equation}
+where $\omega_{fi} = \frac{E_f^{(0)} - E_i^{(0)}}{\hbar}$. We then solved an example and showed an example of instantaneous perturbation.
+
+We then started our adiabatic perturbation example. Let's look over time interval $\left[ -\infty,0 \right]$ with Hamiltonian $H = H^{(0)} + e^{t/\tau}H^{(1)}$; note that $H^{(1)}$ is time-independent, the time-dependent perturbation is is the coefficient $e^{t/\tau})$. Then for large $\tau$ (large compared to what? we'll see; I think characteristic time scale) we have an adiabatic approximation. We start in some state $\ket{n^{(0)}}$ and
+\begin{align}
+    d_m(0) &= \delta_{mn}-\frac{i}{\hbar}\displaystyle\int\limits_{-\infty}^{0}\bra{m^{(0)}}H^{(1)(t)}\ket{n^{(0)}}e^{i\omega_{mn}t}\;dt\\
+    &= \delta_{mn}-\frac{i}{\hbar}bra{m^{(0)}}H^{(1)}\ket{n^{(0)}}\displaystyle\int\limits_{-\infty}^{0}e^{\frac{1}{\tau} +i\omega_{mn}t}\;dt\\
+    &= -\frac{i\delta_{mn}}{\hbar}\bra{m^{(0)}}H^{(1)}\ket{n^{(0)}}\left( \frac{1}{\frac{1}{\tau} + i\omega_{mn}} \right)
+\end{align}
+
+This then tells us what $\frac{1}{\tau}$ must be small compared to (or $\tau$ large) for the adiabatic approximation! Clearly $\frac{1}{\tau}\ll i\omega_{mn}$. Then we note that our expression reduces to
+\begin{align}
+    d_m(0) &= \delta_{mn}\frac{\bra{m^{(0)}}H^{(1)}\ket{n^{(0)}}}{E_n^{(0)} - E_m^{(0)}}
+    \label{1.27.adiabaticfin}
+\end{align}
+
+We then recognize this to be $\ket{n}$, and so under the adiabatic approximation we stay in an eigenstate of $H$. Note that if we're computing and eigenstate trajectories cross then the adiabatic approximation obviously no longer holds past the intersection, since the trajectory could end up going either way at the split.
+
+Next onto periodic perturbations. Let's write $H^{(1)}(t) = H^{(1)e^{i\omega t}}$ and examine the perturbation over $t \in \left[ -\frac{T}{2}, \frac{T}{2} \right]$ and compute in the limit $T \to \infty$ to determine the effect over all time. But then a transition between eigenstates occurs with exploding possibility, since the perturbation perturbs with undiminishing intensity over all time! So what we're going to want to calculate is a \emph{rate} (Charlie gets a quarter for this answer). We will now see this in action.
+
+Let's start in $\ket{i^{(0)}}$ and want to compute transition into $\ket{f^{(0)}}$ so integrate ($f \neq n$)
+\begin{align}
+    d_f\left( \frac{T}{2} \right) &= -\frac{i}{\hbar}\displaystyle\int\limits_{-T/2}^{T/2}\bra{f^{(0)}}H^{(1)}\ket{i^{(0)}}e^{i\left( \omega_{fi} - \omega\right)t}\;dt\\
+    &= -\frac{i}{\hbar}\bra{f^{(0)}}H^{(1)}\ket{i^{(0)}}\left[ \frac{e^{i(\omega_{f}i - \omega)(T/2)} - e^{-i(\omega_{fi}-\omega)(T/2)}}{i(\omega_{fi} - \omega)} \right]\\
+    &= -\frac{i}{\hbar}\bra{f^{(0)}}H^{(1)}\ket{i^{(0)}}\left[ \underbrace{\frac{e^{i(\omega_{f}i - \omega)(T/2)} - e^{-i(\omega_{fi}-\omega)(T/2)}}{i(\omega_{fi} - \omega)\left( \frac{T}{2} \right)2}}_{\sin} \right]T\\
+    \lim_{T \to \infty}\frac{P_{i\to f}(T/2)}{T} &= \lim_{T \to \infty} \frac{\abs{d_f(t)}^2}{T}\\
+    &= \frac{1}{\hbar^2}\abs{\bra{f^{(0)}}H^{(1)}\ket{i^{(0)}}}^2\lim_{T \to \infty}\left[ \frac{\sin\left((\omega_{fi}-\omega)(T/2)\right)}{\left( \omega_{fi}-\omega \right)(T/2)} \right]^2T\\
+    \label{1.27.periodAns}
+\end{align}
+
+Let's define $f(z) = \lim_{T \to \infty}\left[ \frac{\sin(zT/2)}{Zt/2} \right]^2T$ to help us see what this expression is doing. We note that $f(0) = \infty, f(z \neq 0) = 0$! This would seem to be a delta function, but we must integrate it to see what the ``heght'' of the delta function is. So
+\begin{align}
+    \displaystyle\int\limits_{-\infty}^{\infty}f(z)\;dz &= \lim_{T \to \infty}\displaystyle\int\limits_{-\infty}^{\infty}\frac{\sin^2(zT/2}{(zT/2)^2}\;dz\\
+    &= \lim_{T \to \infty}2\displaystyle\int\limits_{-\infty}^{\infty}\frac{\sin^2y}{y^2}\;dy\\
+    &= 2\pi
+    \label{1.27.fermiprime}
+\end{align}
+which yields for our rate expression
+\begin{align}
+    R_{fi} &= \frac{2\pi}{\hbar^2}\abs{\bra{f^{(0)}}H^{(1)\ket{i^{(0)}}}}^2\delta(\omega_{fi} - \omega)\\
+    &= \frac{2\pi}{\hbar}\abs{\bra{f^{(0)}}H^{(1)}\ket{i^{(0)}}}^2\delta\left( E_f^{(0)} - E_i^{(0)} - \hbar\omega \right)
+    \label{1.27.fermi}
+\end{align}
+
+This is Fermi's golden rule! Usually you end up summing over the states $\bra{f^{(0)}}$ which is why this $\delta$ function actually makes some sense. Sometimes one can even assume $\omega = 0$. and throw this into time-independent stuff! Super powerful.
+
+We will do some examples to apply Fermi's golden rule. First example is the freaking photoelectric effect. We will assume EM wave knowledge (Mark Wise flips out for a minute or two that Ph106 teaches chaos before EM waves). Exhibit a vector potential $A = \vec{A}_0\cos\left( \vec{k}\cdot \vec{r} - \omega t \right)$ with $\omega = ck$. We'll finish this on Wednesday. 
+
+\chapter{1/29/14 - Application fermi's golden rule (photoelectric effect)}
+
+Recall that to apply Fermi's golden rule we have to turn our problem into an integral to stop the delta function. We examine the photoelecteric effect.
+
+Suppose we have an atom and apply an electromagnetic wave $\vec{A}_0 \cos(\vec{k}\cdot \vec{r}  \omega t) = \frac{\vec{A}_0}{2}\left( e^{i(\vec{k}\cdot \vec{r} - \omega t} + e^{-i\left( \vec{k}\cdot \vec{r} - \omega t \right)} \right)$. We consider hydrogen atom and neglect the potential to obtain $H^{(0)} = \frac{p^2}{2m}, \ket{f^{(0)}} = \ket{p}_f$. Then using the electromagnetic Hamiltonian $H = \frac{e}{mc}\vec{A}\cdot \vec{P}$ we can write $H^{(1)}(t) = \frac{e}{2mc}e^{i\vec{k}\cdot \vec{r}}\vec{A}_0 \vec{P}e^{-i\omega t}$ where wwe recall that only the growing exponential contributes to the Fermi integral. Then going to coordinate space we have
+\begin{align}
+    \bra{f^{(0)}}H^{(1)}\ket{i^{(0)}}\frac{e}{2mc}\frac{1}{\sqrt{2\pi\hbar}^{3/2}}\sqrt{\frac{1}{\pi a_0^3}}\displaystyle\int\limits_{}^{}e^{-i\vec{p}_u\cdot \vec{r}/\hbar}e^{i\vec{k}\cdot \vec{r}}\vec{A}_0(-i\hbar\nabla)e^{-r/a_0}\;d^3\mathbf{r}
+\end{align}
+
+Since we are working nonrelativistically, we recall that $k = \frac{\omega}{c} \to 0$ so we set the corresponding exponent to zero
+\begin{align}
+    \bra{f^{(0)}}H^{(1)}\ket{i^{(0)}} &= \frac{e}{2mc}\frac{1}{\sqrt{2\pi\hbar}^{3/2}}\sqrt{\frac{1}{\pi a_0^3}}\displaystyle\int\limits_{}^{}e^{-i\vec{p}_u\cdot \vec{r}/\hbar}\vec{A}_0(-i\hbar\nabla)e^{-r/a_0}\;d^3\mathbf{r}\\
+    &= \frac{e}{2mc}\frac{1}{\sqrt{2\pi\hbar}^{3/2}}\sqrt{\frac{1}{\pi a_0^3}}(\vec{p}_f \cdot \vec{A}_0)\int e^{-i\vec{p}_f\cdot \vec{r}/\hbar}e^{-r/a_0}\;d^3\mathbf{r}
+\end{align}
+
+We then choose to align the $z$ axis with $\vec{p}_f$ and go to polar coordinates to write $\vec{p}_f\cdot \vec{r} = p_f r \cos \theta$. Then our integral becomes (let $u = \cos \theta$)
+\begin{align}
+    \int e^{-i\vec{p}_f\cdot \vec{r}/\hbar}e^{-r/a_0}\;d^3\mathbf{r}&= 2\pi\displaystyle\int\limits_{-1}^{1}du\displaystyle\int\limits_{0}^{\infty}r^2 e^{-ip_frv/\hbar}e^{-r/a_0}\;dr\\
+    &= \left( \frac{2\pi \hbar}{-ip_f} \right)\displaystyle\int\limits_{0}^{\infty}r\;dre^{-r/a_0}\left( e^{-rp_f/\hbar} - e^{irp_f/\hbar} \right)\\
+    &= \frac{8\pi a_0^3}{\left[ 1+\left( \frac{p_f^2a_0^2}{\hbar^2} \right) \right]^2}\\
+    R_{fi} &= \frac{2\pi}{\hbar}\left( \frac{e}{2mc} \right)^2\frac{1}{(2\pi \hbar)^3}\left( \frac{1}{\pi a_0^3} \right)\left( \vec{p}_f\cdot \vec{A}_0 \right)^2\frac{64\pi^2 a_0^6}{\left[ 1 + \left(\frac{p_fa_0}{\hbar}\right)^2 \right]^4}\delta\left( E_f^{(0)} - E_i^{(0)} - \hbar\omega \right)
+\end{align}
+
+We then note that this expression doesn't work due to the delta function. So we will want to take a sum over all ending states $\bra{f}$. Then recalling completeness we note that this sum is essentially $\int d^3\mathbf{p}$, but we satisfy completeness so long as we integrate over all $p$ components; we can integrate a fraction of the solid angle.
+
+Then let's write $\delta\left( \frac{p_f^2}{2m} - (E_i^{(0)} + \hbar\omega) \right) = \frac{m}{p_f}\delta(p_f - \sqrt{2m(E_i^{(0)} + \hbar\omega)})$ and so we know that an integral over $p_f$ will pull out the vaule of $p_f$ given above. Then we compute the probability of a transition with respect to some solid angle $d\Omega$
+\begin{align}
+    R_{i -> d\Omega} &= \frac{2\pi}{\hbar}\left( \frac{e}{2mc} \right)^2\frac{1}{(2\pi\hbar)^3}\left( \frac{1}{\pi a_0^3} \right)(\vec{p}_f \cdot \vec{A}_0)^2 \frac{64\pi^2 a_0^6}{\left[ 1 + \left( \frac{p_f a_0}{\hbar} \right)^2 \right]^4}\left(\frac{m}{p_f}\right) p_f^2 d\Omega\\
+    \rd{R}{\Omega} &= \frac{8a_0^3p_f^3A_0^2\cos^2\theta}{\pi m\hbar^4c^2\left[ 1 + \left(\frac{p_fa_0}{\hbar}\right)^2 \right]^4}\\
+    R = \int \rd{R}{\Omega}d\Omega &= \frac{32 a_0^3 p_f^3A_0^2}{3m\hbar^4c^2\left[ 1 + \left( \frac{p_fa_0}{\hbar} \right)^2 \right]^4}
+\end{align}
+
+Note that $R$ is the rate at which the electron makes a state transition, i.e. rate at which electrons leave the target!
+
+\chapter{1/31/14 - Scattering}
+
+Let's next look into energy loss! Energy loss from a charged particle $Qe$ scattered off a hydrogen atom in ground state. Suppose hydrogen atom fixed at origin, charged particle comes in $\hat{z}$ at some impact parameter $b$ that is large (so can use perturbation theory). Then the projectile particle can excite the hydrogen atom, in which case the energy must be lost by the particle. Note that the perturbing Hamiltonian is function of time because particle is moving. Setup is
+\begin{figure}[!h]
+    \centering
+    \begin{tikzpicture}[scale=0.5]
+        \draw[<->] (-4,0) -- (4,0);
+        \node[right] at (4,0) {$x$};
+        \draw[<->] (0,-4) -- (0,4);
+        \node[above] at (0,4) {$y$};
+        \node[left] at (0,1) {$\theta$};
+        \draw[->, domain = 0:4] plot(\x, {\x*\x/8 + 2});
+        \draw[->] (-4,2) -- (0,2);
+        \draw (0,0) -- (-2,2);
+        \node at (-4,1) {$b$};
+    \end{tikzpicture}
+    \caption{Setup for scattering}
+    \label{1.31.setup}
+\end{figure}
+
+Let's write down the perturbing Hamiltonian $H^{(1)}(t) = \frac{Qe^2}{\abs{\vec{R}(t) - \vec{r}}}$ with $\vec{R}$ distance from particle to hydrogen. Let's operate under $\frac{r}{R} \ll 1$, so $\abs{\vec{R} - \vec{r}} = \sqrt{R^2 - r^2 - 2\vec{R}\cdot \vec{r}} = R\left( 1 - \frac{\vec{R}\cdot \vec{r}}{R^2} \right)$. Then Hamiltonian becomes
+\begin{equation}
+    H^{(1)}(t) = \underbrace{\frac{Qe^2}{R}}_{\text{irrelevant}} + \frac{Qe^2}{R^3}\vec{r}\cdot \vec{R}
+    \label{1.H}
+\end{equation}
+
+We note then that $\bra{f}\frac{1}{R}\ket{i} = \frac{1}{R}\delta_fi$ so we only care about the second term above since we are only interested in the probability of energy loss/change of state. We can then rewrite the dot product $\frac{\vec{r}\cdot \vec{R}}{R^3} = \frac{\cos \theta}{R^2}z + \frac{\sin \theta}{R^2}x$. We then have
+\begin{align}
+    H_{fi}^{(1)} &= H_{fi}^{(cos)} + H_{fi}^{(sin)}\\
+    &= \frac{Qe^2}{R^2}\left( \cos \theta \bra{f}z\ket{i} + \sin \theta \bra{f}z\ket{i} \right)\\
+    d_{f1}(t) &= -\frac{i}{\hbar}\displaystyle\int\limits_{-\infty}^{t}\bra{f^{(0)}}H_{fi}(\tau)\ket{i^{(0)}}e^{i\omega_{fi}t}\; d\tau
+\end{align}
+
+We then approximate that timescale of atom is very much faster than the scattering timescale and $e^{i\omega_{fi}t} \approx 1$. We will then futz around with the integral until we can integrate $d\theta$. We examine $\vec{R} = (R\sin \theta, 0, R\cos \theta)$ and $\dot{\vec{R}} = (\dot{R}\sin \theta + R\cos \theta \dot{\theta}, 0, \dot{R}\cos\theta - R\sin\theta\dot{\theta})$. Then examining the cross product angular momentum
+$$l =\abs{\vec{R}\cdot m\dot{\vec{R}}} = -mR^2\dot{\theta}$$
+
+We then note that $\rd{\theta}{t} = -\frac{l}{mR^2} = -\frac{vb}{R^2}$. We can then conveniently note that
+\begin{align}
+    \displaystyle\int\limits_{-\infty}^{\infty}\frac{\cos \theta(t)}{R(t)}\;dt &= 0\\
+    \displaystyle\int\limits_{-\infty}^{\infty}\frac{\cos \theta(t)}{R(t)}\;dt &= \frac{2}{bv}\\
+    d_{fi}(\infty) = -\frac{2iQe^2}{\hbar bv}\bra{f^{(0)}}x\ket{i^{(0)}}
+    \label{1.31.penultimateFormula}
+\end{align}
+
+The energy loss is then given
+\begin{equation}
+    \Delta E = \frac{4Q^2e^4}{\hbar^2 b^2 v^2}\sum_f \left( E_f^{(0)} - E_i^{(0)} \right)\abs{\bra{f^{(0)}}x\ket{i^{(0)}}}^2
+\end{equation}
+
+We can then introduce the Thomas-Reiche-Khun sum rule. Suppose we have an atom with many electrons, then if you include all interactions in the Hamiltonian we obtain 
+\begin{equation}
+    \sum_n (E_n^{(0)} - E_i^{(0)})\abs{\bra{n^{(0)}}x\ket{i^{(0)}}}^2 = \frac{\hbar^2}{2m}
+    \label{1.31.TRK}
+\end{equation}
+
+Let's derive this. We are back to using commutators and complete sets of states. Let's then examine $[x, H^{(0)}]$ for our ``incredibly complicated Hamiltonian'' with many electrons. Then assuming $V$ doesn't depend on velocity we have $[x, H^{(0)}] = \left[ x, \frac{p^2}{2m} \right] = \frac{p_x i\hbar}{m}$. Then, what if we consider $[x, [x, H^{(0)}]] = -\frac{\hbar^2}{m}$. Let's then write this out explicitly
+\begin{align}
+    \frac{\hbar^2}{m} &= \left[ xH^{(0)} - H^{(0)}x, x \right]\\
+    &= 2x H^{(0)}x - H^{(0)}x^2 - x^2H^{(0)}\\
+    \bra{i^(0)}\left[ \left[ x, H^{(0)} \right], x \right]\ket{i^{(0)}} &= \frac{\hbar^2}{m}\\
+    &= 2\bra{i^{(0)}}xH^{(0)}x\ket{i^{(0)}} - 2E_i^{(0)}\bra{i^{(0)}}x^2\ket{i^{(0)}}
+\end{align}
+
+Then the second term, if we insert a complete set of states between the $x^2$ obviously reproduces Equation \ref{1.31.TRK}. Then if we examine the first term instead and we instert the complete set of states between $H^{(0)}$ and $x$ we pull out $E^{(0)}_n$ by operating on the set of states with $H^{(0)}$ and we obtain Equation \ref{1.31.TRK}.
+
+\chapter{2/3/14 - Higher order time dependent perturbation theory}
+
+We've been working under the formulation that the observables are time independent and the state vectors are time dependent evolving according to the Schrodinger equation. Note that probabilities must be invarant of formulation!
+
+Let's then look to our SE
+\begin{equation}
+    i\hbar \rd{}{t}\ket{\psi(t)} = \left( H^{(0)} + H^{(1)}(t) \right)\ket{\psi}
+    \label{2.3.pert}
+\end{equation}
+
+To then verify with experiment we can measure probability, but to do that we have to diagonalize the Hamiltonian! It's much easier to verify expectation value with experiment $\bra{\Omega} = \bra{\psi}\Omega\ket{\psi}$, or $i\hbar \rd{}{t}\expvalue{\Omega} = \bra{\psi}\Omega\ket{\psi}$.
+
+We then note that time evolution is governed by a time-dependent unitary operator $\ket{\psi} = U(t) \ket{\psi_0}$. We can construct a differential equation for our propagator
+\begin{align}
+    i\hbar \rd{}{t}\ket{\psi} &= \left( i\hbar \pd{}{t} U(t) \right)\ket{\psi_0}\\
+    &= H(t)\ket{\psi}\\
+    &= H(t) U(t) \ket{\psi_0}\\
+    i\hbar \pd{}{t}U(t) = H(t) U(t)
+\end{align}
+
+We then note that $U(t_0) = I$, so we have an IVP to solve.
+
+We then define the interaction picture state vector $\ket{\psi_I(t)} = U^{(0)\dagger}(t) \ket{\psi_s(t)}$ where $\ket{\psi_s}$ is the Schrodinger state vector. We then see that if $U$ corresponds to $H^{(0)}$ the nonperturbing part then $\ket{\psi_I(t_0)} = \ket{\psi_s(t_0)}$. Then we note that probabilities go $P = \abs{\dotp{\omega_s}{\psi_s}}^2 = \abs{\dotp{\omega_I}{\psi_I}}^2$. Then under the requirement observables look the same we require $\Omega_I = U^{(0)\dagger}(t) \Omega_sU^{(0)}(t)$. 
+
+We then have
+\begin{align}
+    i\hbar \rd{}{t}\ket{\psi_I(t)} &= \left[ i\hbar \pd{}{t}U_S^\dagger(t) \right]\ket{\psi_s(t)} + U_s^\dagger(t) \left[ H^{(0)} + H^{(1)}(t) \right]\\
+    &= U_s^\dagger(t)\left( -H^{(0)} \right)\ket{\psi_s(t)} + U_s^{(0)}\left[ H^{(0)} + H^{(1)}(t) \right] \ket{\psi_s(t)}\\
+    &= U_s^\dagger(t)H_s^{(1)}(t)\ket{\psi_s(t)}\\
+    &= U_s^\dagger(t)H_s^{(1)}(t)U_s(t)\ket{\psi_I(t)}
+\end{align}
+
+We then see it is natural to define $H_I^{(1)}(t) = U_s^\dagger(t)H_s^{(1)}(t)U_s(t)$ so that our SE in the interaction picture looks the exact same, bt with only the interaction Hamiltonian! i.e.
+\begin{align}
+    \ket{\psi_I(t)} &= U(t) \ket{\psi_I(t_0}\\
+    i\hbar \pd{}{t}U_I(t) &= H_I^{(1)}(t) U_I(t)\\
+    U_I(t) &= I - \frac{i}{\hbar}\displaystyle\int\limits_{t_0}^{t}H_I^{(1)}(t') U_I(t')\;dt'
+\end{align}
+
+We note that the above equation yields easily to perturbation theory, i.e. to order $\epsilon$ we have $U_I(t) = 1 - \frac{i}{\hbar}\displaystyle\int\limits_{t_0}^{t}H_I^{(1)}(t')\;dt'$. Then if we want to go to order $\epsilon^2$ we just take our order $\epsilon$ equation and stick it in, i.e.
+\begin{equation}
+    U_I(t) = U^{(1)}_I(t) + \frac{i}{\hbar}\displaystyle\int\limits_{t_0}^{t}dt'\;\displaystyle\int\limits_{t_0}^{t'}dt''\;H_I^{(1)}(t')H_I^{(1)}(t'')
+    \label{2.3.2order}
+\end{equation}
+
+We then recall that we defined $d_{fi}$ from time dependent pert theory to be $d_{fi} = \dotp{f_s^{(0)}(t)}{i_s(t)}$ where we can define $\ket{f_s^{(0)}(t)} = e^{-iE_f^{(0)}(t-t_0)/\hbar}\ket{f_s^{(0)}}$ to account for phase evolution over time, and $\ket{i_s(t)} = U(t) \ket{i^{(0)}_s}$. We then see that
+$$d_{fi} = \bra{f^{(0)}}U_s^\dagger(t) U_s(t)\ket{i^{(0)}}$$
+
+Then we can find that
+\begin{align}
+    \ket{\psi_I(t)} &= U_s^{(0)\dagger}(t)\ket{\psi_s(t)}\\
+    &= U_s^{(0)\dagger}(t) U_s(t)\ket{\psi_s(t_0)}\\
+    &= U_s^{(0)\dagger}(t)U_s(t)\ket{\psi_I(t_0)}
+\end{align}
+
+is the interaction state propagator, so we just have $d_{fi} = \bra{f^{(0)}}U_I(t)\ket{i^{(0)}}$. 
+
+\chapter{2/5/14 - Interaction/Heisenberg picture}
+
+Recall that $\ket{\psi}_I(t_0) = \ket{\psi}_S(t_0)$. Then there is a time-dependence of $\ket{\psi_I(t)} = U_I(t)\ket{\psi_I(t_0)}$ when $H = H^{(0)} + H^{(1)}(t), H^{(1)} \neq 0$. Then we have integral equation
+\begin{equation}
+    U(t,t_0) = 1 - \frac{i}{\hbar} \displaystyle\int\limits_{t_0}^{t}H^{(1)}_I(t')\; dt' + \left( \frac{i}{\hbar} \right)^2\displaystyle\int\limits_{t_0}^{t}H_I^{(1)}(t') \displaystyle\int\limits_{t_0}^{t'}H_I^{(1)}(t'')\;dt''
+    \label{2.5.nextOrd}
+\end{equation}
+
+We then wanted the components of $i_s(t)$ along $f^{(0)}(t)$ with $\ket{i_s(t)} = U_s(t)\ket{i_s(t_0)}$ the Schr\"odinger wavefunction components. We then pulled out a phase phase $\ket{f^{(0)}(t)} = e^{-iE_f^{(0)}(t-t_0)/\hbar}\ket{f^{(0)}} = U_s^{(0)}(t)\ket{f^{(0)}}$ which then gave
+\begin{equation}
+    d_{fi}(t) = \bra{f^{(0)}}U_I(t)\ket{i^{(0)}}
+    \label{2.5.components}
+\end{equation}
+
+Note $d^{(0)}_{fi}(t) = \delta_{fi}$! We then keep checking
+\begin{align}
+    d_{fi}^{(1)}(t) &= \bra{f^{(0)}}\left( -\frac{i}{\hbar} \right)\displaystyle\int\limits_{t_0}^{t}H_I^{(1)}(t')\; dt'\ket{i^{(0)}}\\
+    &= \left( -\frac{i}{\hbar} \right)\displaystyle\int\limits_{t_0}^{t}\bra{f^{(0)}}U^{(0)\dagger}(t')H_s^{(1)}(t')U^{(0)}(t')\ket{i^{(0)}}\; dt'\\
+    U^{(0)}(t') \ket{n^{(0)}} &= e^{-iE_n^{(0)}(t'-t_0)/\hbar}\ket{n^{(0)}}\\
+    d_{fi}^{(1)}(t) &= -\frac{i}{\hbar}\displaystyle\int\limits_{t_0}^{t}d'\;e^{i(E_f^{(0)} - E_i^{(0)})(t' - t_0)/\hbar}\bra{f^{(0)}}H_s^{(1)}(t')\ket{i^{(0)}}
+\end{align}
+
+Note that this is the exact first order correction we found before! Let's try the second-order
+\begin{align}
+    d_{fi}^{(2)} &= \left( -\frac{i}{\hbar} \right)^2 \displaystyle\int\limits_{t_0}^{t}dt'\;\displaystyle\int\limits_{t_0}^{t'}dt''\;\bra{f^{(0)}}H_I^{(1)}(t')H_I^{(1)}(t'')\ket{i^{(0)}}\\
+    &= \left( -\frac{i}{\hbar} \right)^2 \displaystyle\int\limits_{t_0}^{t}dt'\;\displaystyle\int\limits_{t_0}^{t'}dt''\;\sum_n\bra{f^{(0)}}H_I^{(1)}(t')\ket{n^{(0)}}\bra{n^{(0)}}H_I^{(1)}(t'')\ket{i^{(0)}}\\
+    &= \left( -\frac{i}{\hbar} \right)^2 \displaystyle\int\limits_{t_0}^{t}dt'\;\displaystyle\int\limits_{t_0}^{t'}dt''\;\sum_ne^{i(E_f^{(0)} - E_n^{(0)})t'/\hbar}e^{i(E_n^{(0)}-E_i^{(0)})t''/\hbar}\bra{f^{(0)}}H_s^{(1)}(t)\ket{n^{(0)}}\bra{n^{(0)}}H_s^{(1)}(t)\ket{i^{(0)}}
+    \label{2.5.2ord}
+\end{align}
+
+We will never have to actually use this formula! I hope I heard that correctly. 
+
+Recall then that $\ket{\psi(t)} = U_s^{(0)}(t)^\dagger\ket{\psi_s(t)}$ and $\Omega_I(t) = U_s^{(0)\dagger}(t)\Omega_sU_s^{(0)}(t)$ so that we take out the time-independent evolution by substituting all $s\to I$. Then we can also remove all time evolution as in the Heisenberg picture, or via
+\begin{align}
+    \ket{\psi_H(t)} &= U_s^\dagger(t) \ket{\psi_s(t)}\\
+    \Omega_I(t) &= U_s^\dagger(t) \Omega_sU_s(t)
+\end{align}
+
+Then let's suppose we have two observables in Schr\"odinger picture $A_{s}, B_s: [A_s, B_s] = ic_s$ (we note the negative sign must exist if we take adjoint of the commutator of Hermitians, as sign flip), then we note that correspondingly $[A_H, B_H] = ic_H$ with each related by $A_H = U_s^\dagger A_s U_s$ etc. We can also show that $i\hbar \rd{}{t}\Omega_H = [\Omega_H, H_H]$ as for Schr\"odinger equation too.
+
+Let's try the Harmonic Oscillator in Heisenberg picture. We convert our Hamiltonian by multiplying Schr\"odinger one on both sides by $U^\dagger, U$ and we find $H_H = \frac{P_H^2}{2m} + \frac{1}{2}m\omega^2 X_H^2$. We note that we can compute $i\hbar\dot{x}_H = [x_H, H_H]$ and compute $\dot{x}_H = p_H/m, \dot{p}_H = -\pd{V}{x}$. That's it for time-dependent perturbation theory and pictures! We will start scattering theory soon. 
+
+\chapter{A few days\dots - Scattering Theory}
+
+Makeup notes don't work; I'm going to read Shankar.
+
+The scattering problem for a rotationally symmetric potential is very much like its one-dimensional counterpart. Consider the one-dimensional problem of a particle starting at $-\infty$ with some wavefunction $e^{ikx}$ and we wish to find what fraction will get transmitted over some potential $V(x)$ as $x \to \infty$. The 3D problem is very similar, with an incident wavefunction but with some scattering amplitude as a function of $\theta,\phi$. Let's see how this plays out. 
+
+Let's then consider the incident wavefunction to be along the $z$ axis, then the total wavefunction must be $\psi_k = e^{ikz} + \psi_{sc}(r,\theta,\phi)$. Then futzing around a bit with the free-particle solution in spherical coordinates and the requirement that we have an outgoing wave, we can write
+\begin{equation}
+    \psi_k = e^{ikz} + f(\theta,\phi)\frac{e^{ikr}}{r}
+\end{equation}
+
+Then we can compute the incoming probability current (due only to $e^{ikz}$ term because $\frac{1}{r}$ factor) to be $\abs{j_{inc}} = \abs{\frac{\hbar}{2\mu i}\left( e^{-ikz}\nabla e^{ikz} - e^{ikz}\nabla e^{-ikz} \right)} = \frac{\hbar k}{\mu}$. The outgoing probability then we can consider only the second term, and note that $\nabla \approx \hat{r}\pd{}{r}$ when $r \to \infty$ and compute $\vec{j}_{sc} = \frac{\hat{r}}{r^2}\abs{f}^2\frac{\hbar k}{\mu}$. Then since probability flows into solid angle $d\mathbf{\Omega}$ at rate $R(d\mathbf{\Omega}) = \vec{j}_{sc}\cdot \hat{r}r^2d\mathbf{\Omega}$ and arrives at rate $j_{inc}$ we find
+\begin{align}
+    \rd{\sigma}{\Omega}d\Omega &= \frac{R(d\Omega)}{j_{inc}}\\
+    \rd{\sigma}{\Omega} = \abs{f(\theta,\phi)}^2
+    \label{scat.timeD}
+\end{align}
+
+Let's then examine the time-dependent picture, the \emph{Born approximation} (more technically, assuming that only the incident wavefunction is being scattered rather than the entire wavefunction). We want to examine the probability of a particle scattering into a detector in direction $(\theta,\phi)$. Defining then the $S$ matrix $S = U(-\infty,\infty)$, we want to find the components along all $\vec{p}$ states going towards $\theta,\phi$ within some solid angle of $S\ket{p_i}$. In other words,
+\begin{equation}
+    P(d\Omega) = \sum_{\vec{p}_f \in d\Omega}\abs{\bra{p_f}S\ket{p_i}}^2
+\end{equation}
+
+We can then treat $V$ the scattering potential as a perturbation and apply Fermi's golden rule to also find rate
+\begin{align}
+    R(d\Omega) &= \frac{2\pi}{\hbar}\left[ \displaystyle\int\limits_{0}^{\infty}\abs{\bra{p_f}V\ket{p_i}}^2\delta\left( \frac{p_f^2}{2\mu} - \frac{p_i^2}{2\mu} \right)p_i^2\;dp_f \right]d\Omega\\
+    &= \frac{2\pi}{\hbar}\abs{\bra{p_f}V\ket{p_i}}^2\mu p_i^2 d\Omega
+\end{align}
+
+Then if we want to compute $\rd{\sigma}{\Omega}$ rate of discovering particle in some angle $d\Omega$, we have $\rd{\sigma}{\Omega}d\Omega = \frac{R(d\Omega)}{j_{inc}}$, or
+\begin{equation}
+    \rd{\sigma}{\Omega} = \abs{\frac{\mu}{2\pi\hbar^2}\int e^{-i\vec{q}\cdot \vec{r}'}V(\vec{r}')d^3\vec{r}'}^2
+\end{equation}
+for $\hbar\vec{q} = \vec{p}_f - \vec{p}_i$ the momentum transferred to the particle. Comparing this equation and \ref{scat.timeD} we find that
+\begin{equation}
+    f(\theta,\phi) = -\frac{\mu}{2\pi\hbar^2}\int e^{-i\vec{q}\cdot \vec{r}'}V(\vec{r}')d^3\vec{r}'
+\end{equation}
+where the phase factor anticipates a later result. Then if we take a spherically symmetric potential, we can compute the integral easily
+\begin{align}
+    f(\theta,\phi) &= -\frac{\mu}{2\pi\hbar^2}\int e^{-iqr'\cos\theta'}V(r')d(\cos \theta') d\phi' r'^2 dr'\\
+    &= -\frac{2\mu}{\hbar^2}\int \frac{\sin qr'}{q}V(r') r' dr' \label{scat.radial}
+\end{align}
+and find it has no $\phi$ dependence, so it is insensitive to rotations about the $z$ axis, which makes sense since the incoming wavefunction and potential both have no rotational dependence.
+
+Let's do an example, the \emph{Yukawa potential}. Then we can plug into \ref{scat.radial} and obtain
+\begin{align}
+    f(\theta) &= -\frac{2\mu g}{\hbar^2 q}\displaystyle\int\limits_{0}^{\infty}\sin qr' e^{-\mu_0 r'}\;dr'\\
+    &= -\frac{2\mu g}{\hbar^2(\mu_0^2 + q^2)}
+\end{align}
+
+If we then set $g=Ze^2, \mu_0 = 0$ we obtain the Coulomb scattering result $\rd{\sigma}{\Omega} = \frac{(Ze^2)^2}{16E^2\sin^4 \frac{\theta}{2}}$ which is the classical result exactly! Note that the reason we couldn't use the straight-up Coulomb potential is because $rV(r), r \to \infty$ doesn't vanish for the Coulomb problem. 
+
+Let's then look at a different way to apply the Born approximation. Given again $\psi_k$ the total wavefunction including scattering, we want to find solutions to the full SE in the form $\psi_k = e^{i\vec{k}\cdot \vec{r}} + \psi_{sc}$ with the correct asymptotic behavior on $\psi_{sc}$ (angular distribution times plane wave). To do this, we will find the Green's function to solve the SE
+\begin{align}
+    (\nabla^2 + k^2)G^{0}(\vec{r}, \vec{r}') = \delta^3(\vec{r} - \vec{r}')
+\end{align}
+in terms of which the general solution is
+\begin{align}
+    \psi_k = \psi_0 + \frac{2\mu}{\hbar}\int G^0(\vec{r}, \vec{r}')V(\vec{r}') \psi_k(\vec{r}')d^3\vec{r}'
+\end{align}
+with $\psi_0$ a free-particle solution to the (homogeneous) SE. Suppose that we've fonud this Green's function $G^0$, then we can feed back in our zero-th order approximation for $\psi_k \approx e^{i\vec{k}\cdot \vec{r}}$. Let's now try to find $G^0$. Since the SE is translationally invariant, we can solve the $\vec{r}' = 0$ case and translate it to obtain the Green's function for all $\vec{r}'$. So we expect a rotationally invariant Green's function, and it turns out that $G^0(r) = -\frac{e^{ikr}}{4\pi r}$ through some logic-ing in Shankar yields what we want (purely outgoing, etc.). Carefully approximating, we find 
+\begin{align}
+    \frac{e^{ik\abs{\vec{r} - \vec{r}'}}}{\abs{\vec{r} - \vec{r}'}} &\approx \frac{e^{ikr}}{r}e^{i\vec{k}_f\vec{r}'}
+\end{align}
+and to first order then
+\begin{align}
+    f(\theta,\phi) = -\frac{2\mu}{4\pi\hbar^2}\int e^{-i\vec{k}_f\cdot \vec{r}'}V(\vec{r}')e^{i\vec{k}_i\cdot \vec{r}'}d^3\vec{r}'
+\end{align}
+
+\chapter{2/14/14 - Valentine's day scattering}
+
+We derived the Born's approximation last week, a particularly important part being solving the Green's function that satisfied the SE
+\begin{align}
+(\nabla^2 + k^2)G^0(\vec{r}, \vec{r}') = \delta^3(\vec{r}, \vec{r}')
+\label{2.14.SE}
+\end{align}
+
+Then we will find another way to find the Green's function; translational invariance often lends itself to Fourier transforms. First take out the $\vec{r}'$ by translational invariance, and define our Fourier transforms
+\begin{align}
+    G^0(\vec{r}) &= \int \frac{d^3q}{(2\pi)^3}e^{i\vec{q}\cdot \vec{r}}G^0(\vec{q})\\
+    \delta(\vec{r}) &= \int \frac{d^3q}{(2\pi)^3}e^{i\vec{q}\cdot \vec{r}}
+\end{align}
+
+Plugging then these two equations into \ref{2.14.SE} we obtain
+\begin{align}
+    \int \frac{d^3q}{(2\pi)^3}\left[ (-q^3 + k^2)\tilde{G}^0(q) - 1 \right]e^{i\vec{q}\cdot \vec{r}} = 0
+\end{align}
+
+Then obviously $\tilde{G}^(0)(q) = \frac{1}{k^2 - q^2}$, and we can inverse Fourier transform
+\begin{align}
+    G^0(r) &= \int \frac{d^3q}{(2\pi)^3}e^{i\vec{q}\cdot \vec{r}}\frac{1}{k^2 - q^2}\\
+    &= \frac{2\pi}{(2\pi)^3}\displaystyle\int\limits_{-1}^{1}d\cos\theta \displaystyle\int\limits_{0}^{\infty}dq\;q^2e^{iqr\cos\theta}\frac{1}{k^2 - q^2}\\
+    &= \frac{1}{4\pi^2}\displaystyle\int\limits_{0}^{\infty}dq\;q^2\frac{1}{iqr}\left[ e^{iqr} - e^{-iqr} \right]\frac{1}{k^2 - q^2}\\
+    &= \frac{1}{4\pi^2 ir}\displaystyle\int\limits_{0}^{\infty}dq\;q\left[ e^{iqr}- e^{-iqr} \right]\frac{1}{k^2 - q^2}
+\end{align}
+
+Let's then examine the second term in the above integral, of form
+\begin{align}
+    \displaystyle\int\limits_{0}^{\infty}dq\;q(-e^{-iqr})f(q^2) &= \displaystyle\int\limits_{0}^{-\infty}dp\;p\left( -e^{ipr} \right)f(p^2)\\
+    &= \displaystyle\int\limits_{-\infty}^{0}pe^{ipr}f(p^2)\;dp
+\end{align}
+where we can then note that $p$ is a dummy variable so we can put $q$ back in and rewrite
+\begin{align}
+    G^0(r) &= \frac{1}{4\pi^2 ir}\displaystyle\int\limits_{-\infty}^{\infty}dq\;qe^{iqr}\frac{1}{k^2 - q^2}
+\end{align}
+
+We then evalulate this using complex integrals (Note that it's in perfect form for Jordan's Lemma already!). Err, I lied, not yet, we first define some
+\begin{align}
+    G^0_\epsilon(r) = \frac{1}{4\pi^2 ir}\displaystyle\int\limits_{-\infty}^{\infty}dq\;qe^{iqr}\frac{1}{k^2 - q^2 + i\epsilon}
+\end{align}
+
+Then there are obviously two poles at $\pm \sqrt{k^2 + i\epsilon}$. We then close the integral in the upper half plane, apply the residue theorem to the one singularity, take the limit, and we find
+\begin{align}
+    G^0(r)= -\frac{1}{4\pi r}e^ikr
+\end{align}
+
+We could have also done indented contours.
+
+What we can apply this to do though, is the partial wave expansion. Recall that the scattering potential is at the origin. Then let's think about a shell coming in from negative infinity, its top end moving with momentum $\vec{p}$ at distance $\vec{r}$ and height $\rho$ above the axis. Then we can compute angular momentum $\mathcal{l} = \abs{\vec{r}\times \vec{p}} = \rho\hbar k$, and define $l = \hbar \mathcal{l} = \rho k$. Then supposing that our potential has a finite range $r_0$, then there exists some maximum $l$ that is scattered, so we only need to solve parts of the problem as we go to lower $k$, since the lower $k$ are not scattered!
+
+Let's then look back at $\psi_k = e^{ikz} + f(\theta,\phi)\frac{e^{ikr}}{r}$. We then recall that $f(\theta,\phi)$ can be written as solutions to the bessel equations
+\begin{align}
+    f(\theta,\phi) &= \sum_{l,m} (-i)^l(-B_{lm})Y_ll^m(\theta,\phi)\\
+    &= \sum_l (-i)^l (-B_{l0})Y_l^0(\theta,\phi)
+\end{align}
+where we know $m=0$ because we want rotational invariance. Then expressing in terms of the Legendre polynomialss we have
+\begin{align}
+    f(\theta) = \sum_{l=0}^{\infty}(2l+1)a_l(k)P_l(\cos\theta)
+\end{align}
+Recall then that the asymptotic behavior for $H\psi_k = \frac{\hbar^2 k^2}{2m}\psi_k$ must look like
+\begin{align}
+    R_l(r) =\frac{U_l(r)}{r}= A_l\frac{\sin(kl - l\pi/2 + \delta_l(k))}{r}
+\end{align}
+where we combine the superposition of the sine like and cosine like terms into a single sine function with a phase shift. We then want to be able to take out the $e^{ikz}$ dependence from this asymptotic behavior, to find the behavior of the $f(\theta,\phi)$ term. Expressing $e^{ikz}$ in terms of Legendre polynomials yields
+\begin{align}
+    e^{ikz} = \sum_{l=0}^{\infty}i^l(2l+1)j_l(kr)P_l(\cos\theta)
+\end{align}
+with $j_l$ the spherical Bessel function again. Then we want to examine in the large $r$ limit, which gives
+\begin{align}
+    j_l(kr) &= \frac{\sin(kr - l\pi/2)}{kr}\\
+    i^l &= e^{il\pi/2}\\
+    e^{ikz} &= \frac{1}{2ik}\sum_l(2l+1)\left( \frac{e^{ikr} - e^{-i(kr - l\pi)}}{r} \right)P_l(\cos\theta)
+\end{align}
+
+Then we can also note expansion $\psi_k(r) = \sum_l R_l(r)P_l(\cos\theta)$ or
+\begin{align}
+    \psi_k &= \sum_l A_l\frac{e^{i(kr-l\pi/2 + \delta_l(k))} - e^{-i(kr - l\pi/2 + \delta_l(k))}}{2ir} P_l(\cos\theta)
+\end{align}
+
+We then note that the second term must come from the incoming wave, because the scattered wave is only outgoing! Matching coefficients we obtain
+\begin{align}
+    A_l = \frac{2l+1}{k}e^{i\left( \frac{l\pi}{2} + \delta_l(k) \right)}
+\end{align}
+
+Then if we substitute this back into $\psi_k$ and subtract out $\psi_{inc}$ then we have the scattered wavefunction in terms of some parameter $\delta_l(k)$ the phase shift. This then gives us after some algebra
+\begin{align}
+    \psi_k = e^{ikz} + \sum_{l=0}^{\infty}(2l+1)\frac{e^{2i\delta_l(k)} - 1}{2ik}P_l(\cos\theta)\frac{e^{ikr}}{r}
+\end{align}
+
+\chapter{Makeup: Hard Sphere scattering, Dirac Equation}
+
+We can apply our scattering theory to a hard sphere potential, $V(r < r_0) = \infty, V(r > r_0) = 0$. Inside the sphere the wavefunction must vanish, and outside it must be given by free particle wavefunction $R_l(r) = A_lj_l(kr) + B_ln_l(kr)$. We have boundary condition $R_l(r_0) = 0$ to ensure continuity. We know then the BC and asymptotic behavior of $j_l, k_l$ force
+\begin{align}
+    \frac{B_l}{A_l} &= -\frac{j_l(kr_0)}{n_l(kr_0)}\\
+    R_l\left( r\to\infty \right) &= \frac{1}{kr}\left[ A_l\sin\left( kr - l\pi/2 \right) - B_l\cos\left( kr - l\pi/2 \right) \right]\\
+    &= \frac{\sqrt{A_l^2 + B_l^2}}{kr}\sin\left( kr - \frac{l\pi}{2} + \delta_l \right)\\
+    \delta_l &= \arctan \frac{-B_l}{A_l} = \arctan\frac{j_l(kr_0)}{n_l(kr_0)}
+\end{align}
+
+For instance the phase shift $\delta_l$ in the $l=0$ case is given
+\begin{align}
+    \delta_l &= \arctan \frac{j_0 = \sin(kr_0)/kr_0}{n_0 = -\cos(kr_0)/kr_0}\\
+    &= -kr_0
+\end{align}
+
+We note that since the sphere pushes out the wavefunction it naturally results in a negative phase shift (repulsive potentials generally do this).
+
+We can then examine the phase shift as $k \to 0$. Using that $j_l(x\to0) = \frac{x^l}{(2l+1)!!}, n_l(x\to0) = -\frac{x^{-(l+1)}}{(2l-1)!!}$ we have
+\begin{align}
+    \lim_{k\to 0}\tan \delta_l \propto (kr_0)^{2l+1}
+\end{align}
+
+This makes intuitive sense that at low energies there should be negligible scattering for high angular momentum states, large $l$ (I think this is equivalent to a slow particle moving far from the potential). 
+
+Next lecture: Dirac Equation. Basically, we start with the relativistic Hamiltonian
+\begin{equation}
+    H = \sqrt{c^2p^2 + m^2c^4}
+\end{equation}
+
+If we can then express the quantity under the square root as a perfect square then we can get rolling. It turns out that we need larger than $2\times2$ matricies, and the ones we will use are $4\times4$
+\begin{align}
+    \mathbf{\alpha} &= \begin{bmatrix} 0 & \mathbf{\sigma} \\ \mathbf{\sigma} & 0 \end{bmatrix} \\
+    \beta &= \begin{bmatrix} I &0 \\ 0 & -I \end{bmatrix} \\
+    i\hbar\pd{}{t}\ket{\psi} &= \left( c\mathbf{\alpha}\cdot \mathbf{P} + \beta mc^2 \right)
+\end{align}
+
+Let's apply this to the Dirac Particle, the hydrogen atom. The natural Hamiltonian is
+\begin{align}
+    H &= \sqrt{\left( \mathbf{p} - q\mathbf{a}/c \right)^2c^2 + m^2c^4} + q\phi\\
+    i\hbar\pd{\psi}{t} &= \left( c\mathbf{\alpha}\cdot\left( \mathbf{P} - q\mathbf{A}/c \right) + \beta mc^2 + q\phi \right)\psi
+\end{align}
+
+Let's then derive electron spin and magnetic moment. We will work with $\phi = 0$ and we seek energy $\psi(t) = \psi e^{-iEt/\hbar}$ we have
+\begin{align}
+    E\psi &= \left( c\mathbf{\alpha}\cdot \mathbf{\pi} + \beta mc^2 \right)\psi
+\end{align}
+for $\mathbf{\pi} = \mathbf{P} - q\mathbf{A}/c$. We can write the four-component $\psi$ as two two-component spinors $\psi = \begin{bmatrix} \chi\\ \Phi \end{bmatrix} $. Writing out $\mathbf{\alpha},\beta$ explicitly we have
+\begin{align}
+    \begin{bmatrix} E-mc^2 & -c\mathbf{\sigma}\cdot \pi\\-c\mathbf{\sigma}\cdot \mathbf{\pi} & E + mc^2 \end{bmatrix} \begin{bmatrix} \chi\\ \Phi \end{bmatrix} &= 0\\
+    \left( E - mc^2 \right)\chi - c \mathbf{\sigma}\cdot \mathbf{\pi} \Phi &= 0\label{Dirac.one}\\
+    \left( E+mc^2 \right)\Phi - c\mathbf{\sigma}\cdot \mathbf{\pi}\chi &= 0 \label{Dirac.two}
+\end{align}
+
+The second equation then in nonrelativistic approximation yields
+\begin{align}
+    \Phi &= \left( \frac{c\mathbf{\sigma}\cdot \mathbf{\pi}}{E + mc^2} \right)\chi\\
+    &\approx_{E \approx mc^2} \frac{\mathbf{\sigma}\cdot \mathbf{\pi}}{2mc}\chi
+\end{align}
+
+Then plugging this into \ref{Dirac.one} we have the time-independent version of the \emph{Pauli equation}
+\begin{align}
+    E_s\chi &= \frac{\left( \mathbf{\sigma}\cdot \mathbf{\pi} \right)\left( \mathbf{\sigma}\cdot \mathbf{\pi} \right)}{2m}\chi
+\end{align}
+with $E_s$ the Schrodinger energy $E_s = E - mc^2$. Working some wizardry with dot product identity $\mathbf{\sigma}\cdot \mathbf{A}\mathbf{\sigma}\cdot \mathbf{B} = \mathbf{A}\cdot \mathbf{B} + i\mathbf{\sigma}\cdot \mathbf{A}\times\mathbf{B}$ and $\mathbf{\pi} \times \mathbf{\pi} = \frac{iq\hbar}{2}\mathbf{B}$ we have
+\begin{align}
+    \left[ \frac{\left( \mathbf{P} - q\mathbf{A}/c \right)^2}{2m} - \frac{q\hbar}{2mc}\mathbf{\sigma}\cdot \mathbf{B} \right]\chi = E_s\chi
+\end{align}
+
+This is then obviously a SE for a spin-$\frac{1}{2}$ particle with $g=2$. 
+
+\chapter{2/24/14 - Fully relatistic hydrogen atom}
+
+Today we will discuss the hydrogen fine structure constant in its other corretions other than the kinetic energy term. We will examine our Dirac equation with $\vec{A} = 0, V = e\phi = -\frac{e^2}{r}$. We then have Dirac equation for the spinor $\dot{\ket{\psi}} = \rd{}{t}\begin{pmatrix} \ket{\chi}\\ \ket{\phi} \end{pmatrix}$ (where conventionally $\psi$ is the particle and $\phi$ is the antiparticle which has flipped spins)
+\begin{align}
+    \left( E-V-mc^2 \right)\ket{\chi} - c\vec{\sigma}\cdot \vec{p}\ket{\phi} &= 0\\
+    \left( E-V+mc^2 \right)\ket{\phi} - c\vec{\sigma}\cdot \vec{p}\ket{\chi} &= 0\\
+    \ket{\phi} &= \frac{1}{E + mc2 - V}c\vec{\sigma}\cdot \vec{p}\ket{\chi}\\
+    \left( E-V-mc^2 \right)\ket{\chi} &= c\vec{\sigma}\cdot \vec{p}\left( \frac{1}{E+mc^2-v} \right)c\vec{\sigma}\cdot \vec{p}\ket{\chi}
+\end{align}
+where we just solved for $\ket{\phi}$ and plugged in. We can check our relativistic limits by noting $E-mc^2$ is the Schrodinger energy, that $\vec{\sigma}\cdot \vec{p}\approx p^2, \frac{1}{E+mc^2-V} \approx \frac{1}{mc^2}$ to see that the equation reduces to $\left( E-V \right)\ket{\chi} = \frac{p^2}{2m}\ket{\chi}$! Yay. Let's expand the full relativistic expression, rewriting $E-V+mc^2 = E_s-V+2mc^2$ and expanding in small $E_s - V$
+\begin{align}
+    \frac{1}{E_s - V + 2mc^2} &= \frac{1}{2mc^2}\left( \frac{1}{1+\frac{E_s - V}{2mc^2}} \right)\\
+    &= \frac{1}{2mc^2} - \frac{E_s - V}{4m^2c^4}\\
+    \left( E_s - V \right)\ket{\chi} &= \left[ \frac{p^2}{2m} - \frac{\vec{\sigma}\cdot \vec{p}\left( E_s - V \right)\vec{\sigma}\cdot \vec{p}}{4m^2c^4} \right]\ket{\chi}
+\end{align}
+
+We note that this is of same order as the fine structure of hydrogen we discussed earlier, namely $O\left( \frac{v^2}{c^2} \right)$! It had better be, but we expect it to contain more corrections than just the kinetic term, and we will only keep terms up to this order. Let's rewrite
+\begin{align}
+    \left( E_s - V \right)\vec{\sigma}\cdot \vec{p}\ket{\chi} &= \vec{\sigma}\cdot \vec{p}\left( E_s - V \right)\ket{\chi} + \vec{\sigma}\cdot\left( E_s - V\vec{p} \right)\ket{\chi}\\
+    &\approx \vec{\sigma}\cdot \vec{p}\frac{p^2}{2m}\ket{\chi} + \vec{\sigma}\cdot\left[ \vec{p}, V \right]\ket{\chi}\\
+    \vec{\sigma}\cdot \vec{p}\left( E_s-V \right)\vec{\sigma}\cdot \vec{p}\ket{\chi} &= \frac{p^4}{2m}\ket{\chi} + \left( \vec{\sigma}\cdot \vec{p} \right)\left( \vec{\sigma}\cdot \left[ \vec{p},V \right] \right)\ket{\chi}
+\end{align}
+with $\left[ \vec{p},V \right]$ the commutator. We continue
+\begin{align}
+    E_s\ket{\chi} &= \left( \frac{p^2}{2m} + V \right)\ket{\chi} - \frac{p^4}{8m^3c^2}\ket{\chi} - \frac{\left(\vec{\sigma}\cdot \vec{p}\right)\left( \vec{\sigma}\left[ \vec{p},V \right] \right)}{4m^2c^2}\ket{\chi}
+\end{align}
+
+We then whip out identity $\left( \vec{\sigma}\cdot \vec{A} \right)\left( \vec{\sigma}\cdot \vec{B} \right) = \vec{A}\cdot \vec{B} + i\vec{\sigma}\cdot \left( \vec{A}\times\vec{B} \right)$ which gives
+\begin{align}
+    \left( \vec{\sigma}\cdot \vec{p} \right)\left( \vec{\sigma}\cdot \left[ \vec{p},V \right] \right) &= \vec{p}\cdot \left[ \vec{p},V \right] + i\vec{\sigma}\cdot\left( \vec{p}\times\left[ \vec{p},V \right] \right)\\
+    E_s\ket{\chi} &= \left( \frac{p^2}{2m} + V - \frac{p^4}{8m^3c^2} - \frac{\vec{p}\cdot \left[ \vec{p},V \right]}{4m^2c^2} - i\vec{\sigma}\cdot \frac{\left( \vec{p}\times\left( \left[ \vec{p}, V \right] \right) \right)}{4m^2c^2} \right)\ket{\chi}\\
+    -i\vec{\sigma}\left( \vec{p}\times\left[ \vec{p},V \right] \right) &= -i\vec{\sigma}\cdot\left( \vec{p}\times \left[ -i\hbar\grad ,-\frac{e^2}{r} \right] \right)\\
+    \left[ \vec{\grad }, \frac{1}{r} \right]f(r) &= -\frac{\vec{r}}{r^3}f(r)
+\end{align}
+where we can show the last thing in coordinate basis. We then start slowly plugging back in
+\begin{align}
+    -i\vec{\sigma}\cdot \left( \vec{p}\times\left[ \vec{p},V \right] \right) &= -e^2\hbar \vec{\sigma}\vec{p}\times\frac{\vec{r}}{r^3}\\
+    &= \vec{\sigma}\cdot\frac{e^2}{r^3}\hbar\underbrace{ \vec{r}\times\vec{p}}_{\vec{L}}\\
+    &= \frac{e^2}{r^3}\vec{S}\cdot \vec{L}
+\end{align}
+
+This term is called the spin-orbit interaction and arises because electrons are spin one half. We go back
+\begin{align}
+    E_s\ket{\chi} &= \left( \frac{p^2}{2m} + V -\frac{p^4}{8m^3c^2} + \frac{e^2}{2m^2c^2}\frac{\vec{L}\cdot \vec{S}}{r^3} - \frac{\vec{p}\cdot\left[ \vec{p},V \right]}{4m^2c^2} \right)\ket{\chi} = H\ket{\chi}
+\end{align}
+
+We note though that the right hand side isn't Hermitian, so if we want to solve for these wavefunctions we need to make sure our Hamiltonian is Hermitian. The reason that we screwed up is because our wavefunction is normalized but not our spinor! Note that $\dotp{\psi}{\psi} = 1 = \dotp{\phi}{\phi} + \dotp{\chi}{\chi}$ and $\ket{\phi} = \frac{\vec{\sigma}\cdot \vec{p}}{2mc}\ket{\chi}$, which gives new normalization condition
+\begin{align}
+    \dotp{\chi}{\chi} + \bra{\chi}\frac{p^2}{4m^2c^2}\ket{\chi} &= 1\\
+    \ket{\chi} &= \left( 1 - \frac{p^2}{4m^2c^2} \right)\ket{\chi_S}
+\end{align}
+where we denote $\ket{\chi_S}$ the new state we need to be using. This plugs in to give
+\begin{align}
+    E_s\ket{\chi_S} &= \left( 1 + \frac{p^2}{8m^2c^2} \right)H\left( 1 - \frac{p^2}{8m^2c^2} \right)\ket{\chi_S}\\
+    &\approx \left( H + \frac{1}{8m^2c^2}\left[ p^2,H \right] \right)\ket{\chi_S}\\
+    &= H\ket{\chi_S} + \frac{1}{8m^2c^2}\left( \vec{p}\cdot \left[ \vec{p},V \right] + \left[ \vec{p},V \right]\cdot \vec{p} \right)\ket{\chi_S}
+\end{align}
+
+Now this is the full Hamiltonian acting on the normalized eigenstates $\ket{\chi_S}$! The full Hamiltonian $H_s$ is
+\begin{align}
+    H_s &= \underbrace{\left( \frac{p^2}{2m} + V \right) - \frac{p^4}{8m^3c^2} + \frac{e^2}{2m^2c^2}\frac{\vec{L}\cdot \vec{S}}{r^3}}_{H_1} - \frac{\vec{p}\cdot \left[ \vec{p},V \right]}{4m^2c^2} + \frac{1}{8m^2c^2}\vec{p}\cdot \left[ \vec{p},V \right] + \frac{1}{8m^2c^2}\left[ \vec{p},V \right]\cdot \vec{p}\\
+    &= H_1 - \frac{1}{8m^2c^2}\left[ \vec{p}, \left[ \vec{p},V \right] \right]\\
+    &= H_1 + \frac{\hbar^2}{8m^2c^2}\underbrace{\nabla^2 V}_{-4\pi e^2\delta}\\
+    &= H_1 + \frac{\pi \hbar^2e^2}{2m^2c^2}\delta(r)
+\end{align}
+
+This last term is the Darwin term. Writing everything out we have
+\begin{align}
+    H_s &= \left( \frac{p^2}{2m} + V \right) - \frac{p^4}{8m^3c^2} + \frac{e^2}{2m^2c^2}\frac{\vec{S}\cdot \vec{L}}{r^3} + \frac{e^2\hbar^2 \pi}{2m^2c^2}\delta(r)
+\end{align}
+
+Incidently the full solution to the Dirac equation is given
+\begin{align}
+    E_{nj} = \frac{mc^2}{\sqrt{1 + \left( \frac{\alpha}{n - \left( j + \frac{1}{2} \right) + \sqrt{\left( j+\frac{1}{2} \right)^2 - \alpha^2}} \right)}}
+\end{align}
+where I probably butchered that really hard. We aren't expected to know that though! The reason that the spin coupling arose is because at the beginning we used the Dirac equation which is tailored for spin $\frac{1}{2}$ particles, and we see that the spin coupling fell out naturally! Answer to student quetion.
+
+\chapter{2/26/14 - Second Quantization}
+
+Let's start as simple as possible, with $N$ identical bosons with spin $0$ in one dimension. We have Hamiltonian $H = \sum_{n=1}^{N}T(x_n) + \frac{1}{2}\sum_{i \neq j}^{}V(x_i, x_j)$ with $T(x_n) = -\frac{\hbar^2}{2m}\rtd{}{x_n}$. The $\frac{1}{2}$ arises because there is some double counting going on (else we use $i < j$). We then want to compute evolution $\psi(x_1\dots x_N; t)$ using
+\begin{align}
+    i\hbar\rd{}{t}\psi(x_i; t) = H\psi(x_i;t)
+\end{align}
+
+We want to expand in some basis $\psi_{q_k}(x_k)$ for each particle such that $\int \psi^*_{q'}\psi_q = \delta_{qq'}$. We can then expand in this basis
+\begin{align}
+    \psi(x_i;t) = \sum_{q_i}C(q_i';t) \psi_{q1}(x_1)\psi_{q2}(x_2)\dots \psi_{qN}(x_N)
+\end{align}
+
+Then we multiply by $\psi^*$ and integrate for our dot product.
+
+We then plug into the SE and we obtain
+\begin{align}
+    i\hbar\pd{}{t}C(q_i; t) = \sum_{n=1}^{N}\sum_{Q = q_k}\int dx_k \psi^*_{qk}(x_k) T(x_k) \psi_Q(x_k) C(q_1\dots q_{k-1},Q, q_{k+1}\dots q_N;t) + V_{\text{terms}}
+\end{align}
+where some cross terms are eliminated because delta functions? I didn't quite catch it.
+
+Now we use the fact that these are identical bosons, so up to exchange in $x_i, x_j$ both $\psi, C$ must be invariant. We thus know that if quantum number $i$ occurs $m_i$ times then all $C$s can be swapped around until the coordinates are ordered by quantum number; all $C$ are equal to this one! Then we can label $\bar{C}$ with just the occupations of each quantum number, called occupation number labeling, which looks like $\bar{C}(m_1, m_2\dots m_N; t)$. We note that $\sum_{i}^{}m_i = N$. 
+
+We can then rewrite the normalization condition as a sum over $m_\infty$ occupation numbers. There will be some combinatorial balls and urns stuff to account for how many $C$ are the same given identical particle exchange between particles in the same quantum state. We will guess this combinatorial factor to be $\frac{N!}{m_1!m_2!\dots m_\infty!}$. Handy trick is to try with a super simple example $N=3$ with state $C(1,2,2)$ and $\bar{C}(1,2,0,0\dots)$. There are three $C$s that correspond to the same $\bar{C}$ and we see our expression makes sense! We then have our normalization condition
+\begin{align}
+    1 &= \sum_{m_i}^{}\abs{\bar{C}(m_i; t)}^2\left( \frac{N!}{m_1!m_2!\dots m_\infty!} \right)\\
+    &= \sum_{m_i}^{}\abs{f(m_i; t)}^2
+\end{align}
+with $f = \sqrt{\frac{N!}{m_i!}}$ renormalizing. 
+
+We can then convert our wavefunction to the $f$s as well! Let's write
+\begin{align}
+    \psi(x_i; t) &= \sum_{q_i}C(q_i;t) \psi_{q_i}(x_i)\\
+    &= \sum_{q_i}\bar{C}(m_i; t) \psi q_i(x_i)\\
+    &= \sum_{m_i}f(m_i; t)\sqrt{\frac{m_i!}{N!}} \sum_{q_i}\psi_{q_i}(x_i)
+\end{align}
+
+The properly normalized occupation number basis wavefunction pops out! Let's define these
+\begin{align}
+    \Phi_{m_i}(x_i) &= \sqrt{\frac{m_i!}{N!}}\sum_{i}^{}\psi_{q_i}(x_i)\label{2.26.ONWF}\\
+    \psi(x_i; t) &= \sum_{m_i}f(m_i; t) \Phi_{m_i}(x_i)
+\end{align}
+
+Since then the $f$ are normalized, so are the $\Phi$! 
+
+Let's go back to the SE and try to get it into occupation number basis. We then have
+\begin{align}
+    i\hbar\pd{}{t}C(q_i; t) &= \sum_{n=1}^{N}\sum_{Q = q_k}\bra{q_{k}}T\ket{Q} C(q_1\dots q_{k}-1,Q, q_{k}+1\dots q_N;t) + V_{\text{terms}}\\
+    i\hbar \pd{}{t}C(q_i; t) &= i\hbar \pd{}{t}\bar{C}\\
+    T &= \sum_{n=1}^{N}\sum_{Q = q_k}\bra{q_{k}}T\ket{Q} C(q_1\dots q_{k}-1,Q, q_{k}+1\dots q_N;t)\\
+    &= \sum_{q}^{}\sum_{Q}^{}m_q\bra{q}T\ket{Q}\bar{C}(m_1\dots m_{q}-1 \dots m_{Q}+1\dots m_\infty; t)
+\end{align}
+\chapter{2/28/14 - Finishing occupation state basis}
+
+We review everything we did last time. Then we ended up getting SE
+\begin{align}
+    i\hbar \pd{}{t}\bar{C}(m_i; t) &= \sum_{q,\alpha}^{}m_q\bra{q}T\ket{Q}\bar{C}(m_1\dots m_{q-1},m_{Q+1}\dots m_\infty; t)\label{2.28.uglySE}
+\end{align}
+
+We reindex using $ij$ and split our summation into $i=j, i \neq j$ cases
+\begin{align}
+    \hbar\sqrt{\frac{m_i!}{N!}}i\hbar\pd{}{t}f(m_i; t) &= \sum_{i \neq j}^{}\bra{i}T\ket{j} m_i \left[ \frac{m_1!\dots(m_i-1)!\dots (m_j+1)!\dots m_\infty}{N!} \right]^{1/2}f(\dots m_{i} - 1, m_j + 1\dots ; t) + \sum_{i = j}^{}\bra{i}T\ket{j}m_i \left[ \frac{m_i!}{N} \right]^{1/2}\\
+    i\hbar\pd{}{t}f(m_i; t) &= \sum_{i \neq j}^{}\sqrt{m_i(m_j + 1)}\bra{i}T\ket{j}f(m_1\dots m_i - 1, m_j + 1\dots m_\infty; t) + \sum_{i=j}^{}m_i \bra{i}T\ket{j}f(m_i; t)
+\end{align}
+
+Now we are completely in the occupation number basis! Let's then label our eigenstates $\ket{m_i}$ as defined in \eqref{2.26.ONWF}. They are normalized $\bra{m_i'}\ket{m_i} = \prod \delta_{m_im_i'}$. Then $\ket{\psi(t)} = \sum_{m_i}^{}f(m_i; t)\ket{m_i}$ such that $\sum m_i = N$. 
+
+Let's do some thinking then, trying to expand our Hilbert space to arbitrary numbers of particles! Just a note, realize that $C(0 \dots 0)$ is the vacumn! Then let's construct some operator $B_k$ that removes a particle of state $m_k$ so $B_k \ket{m_i} = \sqrt{m_k}\ket{m_i\dots, m_k - 1, m_i}$ adopting the convention of the raising/lowering operators. We will use the notation $B_k\ket{m_k} = \sqrt{m_k}\ket{m_k - 1}$. Then let's see what $B^\dagger$ does
+\begin{align}
+    \dotp{m_k'}{B_km_k} &= \dotp{B^\dagger_k m_k}{m_k}\\
+    \sqrt{m_k}\delta_{m_k'm_{k-1}} &= \\
+    \dotp{m_k}{B^\dagger_k m_k'} &= \delta_{m_k'm_{k-1}}\sqrt{m_k}\\
+    \dotp{m_k'}{B^\dagger_k m_k} &= \sqrt{m_k+1}\delta_{m_k'm_{k + 1}}\\
+    B^\dagger\ket{m_k} &= \sqrt{m_k + 1}\ket{m_k + 1}
+\end{align}
+
+Let's then form the operator $B^\dagger_k B_k\ket{m_k} = m_k\ket{m_k}$ the counting operator of particles with quantum number $k$. Note moreover that all states are eigenstates. Then we can define some $N = \sum_{k}^{}B_k^\dagger B_k$ that counts total particles. We then note commutation relations $[B_k, B^\dagger_k] = \delta_{kk'}$. 
+
+These ladder operators end up being pretty important. We want to modify \eqref{2.28.uglySE} to operate on our $\ket{m_k}$ Hilbert space. We claim then that $\mathcal{T} = \sum_{i,j}^{}B_i^\dagger \bra{i}T\ket{j}B_j$, such that the then becomes $i\hbar \pd{}{t}\ket{\psi(t)} = \mathcal{T}\ket{\psi(t)}$ ignoring potential terms. How do we check whether this is the correct expression? We plug in a general wavefunction
+\begin{align}
+    \ket{\psi(t)} &= f(m_i'; t)\ket{m_i'}
+\end{align}
+into the SE and we expect to recover \eqref{2.28.uglySE}. We note that the left hand side checks out pretty trivially, but the right hand side is another story! We'll check anyways
+\begin{align}
+    \mathcal{T}\ket{\psi(t)} &= \sum_{m_i', i, j}^{} B_i^\dagger\bra{i}T\ket{j}B_j\ket{m_i}f(m_i; t)\\
+    &= \sum_{m_i', i \neq j}^{}\sqrt{(m_i' + 1)m_j}\bra{i}T\ket{j}f(m_i'; t)\ket{\dots m_i' + 1, m_j-1\dots } + \sum_{m_i', i}^{}\bra{i}T\ket{i}m_if(m_i; t)\ket{m_i'}\\
+    &= \bra{m_i}T\ket{\psi(t)} = \sum_{i \neq j}^{}\sqrt{m_i(m_j+1)}\bra{i}T\ket{j}f(\dots m_i - 1\dots m_j + 1\dots; t) + \sum_{i}^{}m_i\bra{i}T\ket{i}f(m_i; t)
+\end{align}
+
+Let's construct the operators $\phi(x) = \sum_{k}^{}B_k\psi_k(x), \phi^\dagger(x) = \sum_{k}^{}B_k^\dagger \psi_k^*(x)$. This is the beginning of quantum field theory, because they construct and annihilate particles at position $x$ in some superposition of quantum states $k$. 
+
+\chapter{3/3/14 - Bisu day! 3D Quantum Fields}
+
+7 years ago a Revolutionist arose, sadly noe do today.
+
+Recall that we went to our occupation state basis basis where
+\begin{align}
+    \dotp{m_i'}{m_i} &= \delta_{m_i'}\\
+    \ket{\psi(t)} &= f(m_i; t) \ket{m_i}
+\end{align}
+
+We then considered ladder operators that allowed us to add and remove particles to our system $b_k \ket{m_k} = \sqrt{m_k}\ket{m_{k}}$ (other quantum numbers omitted for brevity) and $b_k^\dagger = \sqrt{m_k + 1}\ket{m_k + 1}$. Of course $b_k\ket{m_k = 0} = 0$. We then defined $\hat{T} = \sum_{i,j}^{}b_i^\dagger \bra{i}T\ket{j}b_j$ the kinetic energy operator in the occupation state basis.
+
+We now start Quantum fields! Consider $\phi(x)$ an operator acting on the $x$ operator corresponding to an arbitrary location in space. Then $\phi(x) = \sum_{k}^{}\psi_k(x)b_k, \phi^\dagger(x) = \sum_{k}^{}\psi_k^*(x)b_k^\dagger$. Note that this is not an observable; it will add a particle into space with exactly what properties we will discuss in a second.
+
+We talk about a short aside, completeness relation. Let's examine the completeness relation on the one-particle subspace $I = \sum_{k}^{}\ket{k}\bra{k}$ for $\dotp{x}{k} = \psi_k(x)$. We can then multiply both sides by $\bra{x}, \ket{y}$ and obtain
+\begin{align}
+    \bra{x}I\ket{y} &= \sum_{k}^{}\dotp{x}{k}\dotp{k}{y}\\
+    \delta(x-y) = \sum_{k}^{}\psi_k(x)\psi_k^*(y)
+\end{align}
+
+We can then write $\left[ \phi(x), \phi(y) \right] = 0$ and 
+\begin{align}
+    \left[ \phi(x), \phi^*(y) \right] &= \sum_{k,k'}^{}\psi_k(x) \psi_{k'}^*(y)\left[ b_k, b_k^\dagger \right]\\
+    &= \sum_{k}^{}\psi_k(x) \psi_k^*(y)\\
+    &= \delta(x-y)
+\end{align}
+
+We then claim that $\phi^\dagger(x)$ inserts a single particle in quantum state $x$. We demonstrate this by computing
+\begin{align}
+    \bra{y}\phi^\dagger(x)\ket{0} &= \sum_{k}^{}\psi_k^*(k)\dotp{y}{k}\\
+    &= \sum_{k}^{}\psi_k^*(k)\psi_k(y)\\
+    &= \delta(x-y)
+\end{align}
+
+There's furthermore easy information; we can find our kinetic energy operator in terms of the fields!
+\begin{align}
+    \hat{T} &= \int dx\; \phi^\dagger(x)T(x)\phi(x)
+\end{align}
+for $T = -\frac{\hbar^2}{2m}\rtd{}{x}$. We continue
+\begin{align}
+    \hat{T} &= \int dx \sum_{k,l}^{}b_k^\dagger\psi_k^*(x)T(x)\\
+    &=\sum_{k,l}^{}b_k^\dagger\bra{k}T\ket{l}b_l
+\end{align}
+
+We then start 3D case! We will go with the ``mom eigenstate'' basis (momentum) to facilitate perturbation theory (eigenstates of simple Hamiltonian). This seems difficult since we've only ever worked with normalizable states, so we will start our computations inside a box (so normalizable states). The Hamiltonian is then
+\begin{align}
+    H &= \sum_{k}^{}-\frac{\hbar^2}{2m}\nabla ^2_k\\
+    &= \int d^3x \phi^\dagger(\vec{x}) \left( -\frac{\hbar^2}{2m}\nabla ^2_x \right)\phi(\vec{x})\\
+    \psi_k(\vec{x}) &= \frac{e^{i\vec{k}\cdot \vec{x}}}{\sqrt{L^3}}, \vec{k} = \frac{2\pi}{L}(n_1, n_2, n_3) = \frac{2\pi \vec{n}}{L}\\
+    \phi(\vec{x}) &= \sum_{\vec{n}}^{}b_{\vec{k}}\psi_k(x)
+\end{align}
+
+We will first take $L$ large and eventually have $L$ go to infinity. To change summation to integral we can write
+\begin{equation}
+    \sum_{\vec{n}}^{} = \sum_{\vec{n}}^{}\left( \Delta n \right)^3 = \int d^3n = \left( \frac{L}{2\pi} \right)^3\int d^3k
+\end{equation}
+
+We redefine a $b(k) = \sqrt{L^3}b_k$ that we hope will ``be a good little operator.'' Under this we end up with quantum field operator
+\begin{equation}
+    \phi(x) = \int \frac{d^3k}{(2\pi)^3}e^{i\vec{k}\cdot \vec{x}}b(\vec{k})
+\end{equation}
+
+We still are trying to get rid of the $L$ dependence though, so let's think a bit harder about how to get rid of the $L$ from $b$. We note
+\begin{align}
+    \left[ b_{\vec{k}}, b^\dagger_{\pvec{k}} \right] &= \delta_{\vec{n}, \pvec{n}}\\
+    \left[ b(\vec{k}), b^\dagger(\pvec{k}) \right] &= \delta_{\vec{n}, \pvec{n}}L^3
+\end{align}
+
+Let's then examine the integral
+\begin{align}
+    \int d^3k \left[ b(\vec{k}), b^\dagger(\pvec{k}) \right] &= \left( \frac{2\pi}{L} \right)^3\sum_{\vec{n}}^{}\delta_{\vec{n}, \pvec{n}}L^3\\
+    &= (2\pi)^3
+\end{align}
+
+Hey look! We now have a simple normalization $\left[ b(\vec{k}), b^\dagger(\pvec{k}) \right] = (2\pi)^3\delta^3(\vec{k} - \pvec{k})$. If we ten examine $\dotp{b^\dagger(\pvec{k})0}{b^\dagger(\vec{k})0}$ with $\ket{0}$ the vacuum we can insert some zeroes and obtain
+\begin{align}
+    \bra{0}\left[ b(\pvec{k}), b^\dagger(\vec{k}) \right]\ket{0} = (2\pi)^3\delta^3(\vec{k} - \pvec{k})
+\end{align}
+
+We can then write our Hamiltonian (I swear this kid with the afro in front of me who keeps swaying back and forth\dots)
+\begin{align}
+    H &= -\frac{\hbar^2}{2m}\int d^3x\; \phi^\dagger(\vec{x}) \nabla ^2\phi(\vec{x})\\
+    &= -\frac{\hbar^2}{2m}\int d^3x \int \frac{d^3k}{\left( 2\pi \right)^3}\int \frac{d^3k'}{(2\pi)^3} e^{i\vec{k}\cdot \vec{x}}b^\dagger(\vec{k})(i\pvec{k})^2e^{i\pvec{k}\cdot \vec{x}}b(\pvec{k})\\
+    &= \int \frac{d^3k}{(2\pi)^3} b^\dagger(\vec{k})\left( \frac{\hbar^2k^2}{2m} \right)b(\vec{k})
+\end{align}
+
+At this point we need a little trick we can compute like so: 
+\begin{align}
+    b^\dagger(\vec{k})\ket{0} &= \ket{\vec{k}}\\
+    b(\vec{k})\ket{\pvec{k}} = C\delta(\vec{k} - \pvec{k})\ket{0}\\
+    \bra{0}b(\vec{k})\ket{\pvec{k}} &= C\delta^3(\vec{k} - \pvec{k})\\
+    \dotp{B^\dagger(\vec{k})0}{\pvec{k}} &= \dotp{\vec{k}}{\pvec{k}}\\
+    &= (2\pi)^3\delta^3(\vec{k} - \pvec{k})
+\end{align}
+which gives $C = (2\pi)^3$.
+
+Finally this gives
+\begin{align}
+    H\ket{\vec{k}} &=\int \frac{d^3k}{(2\pi)^3} b^\dagger(\vec{k})\left( \frac{\hbar^2k^2}{2m} \right)b(\vec{k})\ket{\vec{k}}\\
+    &=\int \frac{d^3k}{(2\pi)^3} b^\dagger(\vec{k})\left( \frac{\hbar^2k^2}{2m} \right)(2\pi)^3\delta(\vec{k} - \pvec{k})\ket{0}\\
+    &= \frac{\hbar^2k^2}{2m}\ket{\vec{k}}
+\end{align}
+\chapter{3/5/14 - Finish QFT}
+
+Today we will finish QFT and we will eventually learn how to compute rates for spontaneous phenomena (such as $n=2$ Hydrogen emitting a photon to $n=1$).
+
+We first discussed identical bosons, where $\ket{m_i}$ the occupation state basis was constructed such that $\sum_{}^{}m_j = N$ and we could expand the normal wavefunction in terms of the occupation state basis. We then constructed ladder operators $b_k, b_k^\dagger$ that annihilate and create particles with quantum number $k$ respectively. Then a natural extension is the counting operator $\hat{N} = \sum_{k}^{}b_k^\dagger b_k$, and we can also write operators such as kinetic energy as $T = \sum_{i,j}^{}b_j^\dagger\bra{j}T\ket{i}b_i$.
+
+We then discussed the idea of a quantum field, something that takes on values in space. Then we constructed the field operators $\phi(x) = \sum_{k}^{}\psi_k(x)b_k, \phi^\dagger(x) = \sum_{k}^{}\psi_k^\dagger(x)b_k^\dagger$ which creates a single particle at $x$ (we can easily replace $x \to \vec{x}$ and generalize to multiple dimensions). Note that the $\phi$ create/destroy particles in space while $b$ create/destroy in quantum number. We could then write operators $\hat{T} = \int dx \phi^\dagger T(x)\phi$.
+
+We can also construct the number density operator $n(x) = \sum_{k=1}^{N}\delta(x - x_k)$ a delta function at each particle. Then we can take this to $\hat{n}(y) = \int dx \phi^\dagger \delta(y-x) \phi(x) = \phi^\dagger(y)\phi(y)$.
+
+We then wanted to work with momentum eigenstates and so we started in a box of side length $L$ and took the $L \to \infty$ limit and we found
+\begin{align}
+    \phi(\vec{x}) &= \int \frac{d^3k}{(2\pi)^3}b(\vec{k})e^{i\vec{k}\cdot \vec{x}}\\
+    b^\dagger(\vec{k})\ket{0} &= \ket{\vec{k}}
+\end{align}
+
+The states $\dotp{\vec{k}}{\pvec{k}} = (2\pi)^3 \delta^3(\vec{k} - \pvec{k})$ and the ladder operators $[b(\vec{k}), b^\dagger(\pvec{k})] = (2\pi)^3\delta^3(\vec{k} - \pvec{k})$. We then transformed our Hamiltonian
+\begin{align}
+    H &= -\frac{\hbar^2}{2m}\int dx \phi^\dagger \nabla ^2 \phi\\
+    &= \int \frac{d^3x}{(2\pi)^3}\frac{\hbar^2 k^2}{2m}b^\dagger b\\
+    H\ket{k} &= \frac{\hbar k^2}{2m}\ket{k}
+\end{align}
+
+Phew, that's all review. We then want to discuss how the Lagrangian enters into this. In the nonrelativistic Lagriangian we have a bunch of $q_i$ whereas our QFT which relies on the $\phi(x)$ that aren't even observables! How can we reconcile these in the interest of getting a Lagrangian? We begin with the free particle Hamiltonian
+\begin{align}
+    H &= \int dx \phi^\dagger T(x) \phi\\
+    &= \frac{\hbar^2}{2m} \int dx \left( \frac{\phi}{x} \right)^\dagger\left( \frac{\phi}{x} \right)
+\end{align}
+
+We then discretize space (since $q_i$ are discrete so it makes sense) and obtain
+\begin{align}
+    H &= \frac{\hbar^2}{2m}\sum_{i}^{}(\Delta x) \left( \frac{\phi(x_i)}{x} \right)^\dagger\left( \frac{\phi(x_i)}{x} \right)
+\end{align}
+
+Then we can just throw out a Lagrangian and show that it works
+\begin{align}
+    L &= \int dx \left( \phi^\dagger(x) i\hbar \dot{\phi}(x) - \frac{\hbar^2}{2}\left( \rd{\phi}{x} \right)^\dagger\left( \frac{\phi}{x} \right) \right)\\
+    &= \sum_{i}^{}\Delta x \left( \phi^\dagger(x_i) i\hbar \dot{\phi}(x_i) - \frac{\hbar^2}{2m}\left( \rd{\phi(x_i)}{x} \right)^\dagger\left( \rd{\phi(x_i)}{x} \right) \right)\\
+    p_i = \pd{L}{\dot{\phi}(x_i)} &= i\hbar \phi^\dagger(x_i)\Delta x\\
+    H &= \sum_{i}^{}p_i \dot{\phi}(x_i) - L\\
+    &= \frac{\hbar^2}{2m}\sum_{i}^{} \rd{\phi^\dagger(x_i)}{x}\rd{\phi(x_i)}{x}\Delta x
+\end{align}
+
+Of course the Lagrangian is particularly important because we obtain EOMs from it. We can obtain the time evolution of the $\phi$ by checking out the Lagrangian
+\begin{align}
+    \pd{L}{\phi} - \rd{}{t}\pd{L}{\dot{\phi}} &= 0\\
+    L &= \int dx \left( \phi^\dagger(x) i\hbar \dot{\phi}(x) - \frac{\hbar^2}{2}\left( \rd{\phi}{x} \right)^\dagger\left( \rd{\phi}{x} \right) \right)
+\end{align}
+
+We use integration by parts to obtain another $\phi$ dependence in the second term, and so 
+\begin{align}
+    \frac{\hbar^2}{2m}\rtd{\phi^\dagger}{x}(x) - i\hbar\dot{\phi}^\dagger &= 0\\
+    \frac{\hbar^2}{2m}\rtd{}{x}\phi + i\hbar\dot{\phi} &= 0\\
+    \phi_s(x) &= \int\frac{dk}{2\pi} e^{ikx}b(k)\\
+    \phi_H(x,t) &= \int \frac{dk}{2\pi}e^{i \left( kx - \frac{E_k}{\hbar}t \right)}
+\end{align}
+for $E_k = \frac{\hbar^2 k^2}{2m}$. We can verify that the $\phi_H$ Heisberg picture state vectors satisfy the EOM.
+
+We are now done with all the OFT theory (about time, I'm completely lost), so now we will discuss the application of the spontaneous emission of photons. Photons are the quanta of light with both a wavenumber and an orientation, so our wavefunctions are indexed instead $\ket{k, \lambda}$; just take two summations.
+
+We know that photons obey EM propagation with Maxwell's equations in absence of sources. We can describe this with $(\vec{A}, \phi)$ the potential 4-vector, and we will choose gauge $\phi = 0, \div \vec{A} = 0$. This then generates $\vec{B} = \curl \vec{A}, \vec{E} = -\frac{1}{c}\rd{A}{t}$. Eventually then our Hamiltonian should look like $E = \frac{1}{8\pi}\int d^3x (E^2 + B^2)$.
+
+We will treat $\vec{A}$ as our dynamical variable. We will guess then that $\vec{A} = \phi + \phi^\dagger$ a real observable, and it will all work out. We definitely need the Heisenberg picture state vectors and eventually we will get an energy that should go with the number operator at each wavenumber times the Planck energy $\hbar \omega$. Let's try this.
+
+We index our states $\ket{\vec{k}, \lambda}$ with $\lambda$ our polarization. There are only two independent polarizations (left/right circular for example). They will be normalized $\dotp{k', \lambda'}{k, \lambda} = \delta_{\lambda' \lambda}\delta^3\left( \vec{k}, \pvec{k} \right)$. We then need creation/annihilation operators $a^{(\dagger)}(\vec{k, \lambda}$ that commute normalized to $1$ again as well (as opposed to $2\pi^3$ before).
+
+We then want to find Hamiltonian $H\ket{\vec{k}, \lambda} = \hbar \omega_k \ket{\vec{k}, \lambda}$ and $\vec{P}\ket{\vec{k}, \lambda} = \hbar k \ket{\vec{k}, \lambda}$. We want eventually that
+\begin{equation}
+    \sum_{\lambda}^{}\int d^3k \hbar\omega_k a^\dagger(k,\lambda)a(k, \lambda)
+\end{equation}
+
+We then have the Heisenberg picture wavefunctions
+\begin{align}
+    \vec{A}_H(\vec{r},t) &\propto \int \frac{d^3k}{\sqrt{\omega_k}}\left[ a(\vec{k},\lambda) \vec{\epsilon}(\vec{k},\lambda)e^{i\left( \vec{k}\cdot \vec{r} - \omega_k t \right)} + a^\dagger(\vec{k},\lambda)\vec{\epsilon}^*(\vec{k},\lambda)e^{-i\left( \vec{k}\cdot \vec{r} - \omega_k t \right)} \right]
+\end{align}
+
+($\vec{\epsilon}$ are the basis vectors, I forgot to jot this down earlier) The way we arrive at this is to just plug this into the Maxwell equations and aim for the correct Hamiltonian. $N$ ends up being $N = \frac{\hbar c^2}{4\pi^2}$. 
+
+\chapter{3/7/14 - QFT Example}
+
+Final will be one Fermi's Golden Rule and 2 Scattering with a bit of spin. 
+
+Recall that $\phi(x) = \int \frac{d^3k}{(2\pi)^3} e^{i\vec{k}\cdot \vec{x}}$ and everything is normalized funnily to $2\pi$. 
+
+Let's then consider photons. We know that photons have energy $E = \hbar \omega_k$. Let's then consider an operator $a(\vec{k},\lambda)$ that creates a photon with wave vector $\vec{k}$ and polarization $\lambda$. Then there is some polarization operator $\vec{\epsilon}(k,\lambda)$ from EM, and lastly since we want $\vec{A}$ real we add Hermitian conjugate $a^\dagger$ which gives our $A$ (normalized to $1$ again)
+\begin{equation}
+    \vec{A}_s(\vec{x}) = \sqrt{\frac{c^2\hbar}{4\pi^2}}\sum_{\lambda}^{}\int \frac{d^3k}{\omega_k} \left[ \vec{\epsilon}(k,\lambda)\left(a(k,\lambda)e^{i\vec{k}\cdot \vec{x}} + a^\dagger(k,\lambda)e^{-i\vec{k}\cdot \vec{x}}\right)  \right]\label{3.7.A}
+\end{equation}
+producing Hamiltonian
+\begin{equation}
+    H = \sum_{\lambda}^{}\int d^3k \hbar\omega_k a^\dagger a
+\end{equation}
+
+This is all we really need for photons. Keep in mind commutation relations $\left[ a, a^\dagger \right] = \delta^3(\vec{k} - \pvec{k})\delta_{\lambda \lambda'}$ and orthonormality of $\dotp{k\lambda}{k'\lambda'} = \delta_{\lambda\lambda'}\delta^3(\vec{k}-\pvec{k})$.
+
+We will then compute the rate that some hydrogen atom state decays from $\ket{Z,l,m}$ to $\ket{1,0,0}$ with some $\gamma$ photon emission. Then we can treat our perturbation Hamiltonian $H^{(1)} = \frac{e}{mc}\vec{A}(\vec{r})\cdot \vec{P}$. To compute this rate of transition we use Fermi's Golden Rule for $\omega \to 0$. This is then
+\begin{align}
+    R_{fi} &= \frac{2\pi}{\hbar}\abs{\bra{f^{(0)}}H^{(1)}\ket{i^{(0)}}}^2\delta\left( E_f^{(0)} - E_i^{(0)} \right)
+\end{align}
+
+Then noting $H^{(0)} = \frac{p^2}{2m} - \frac{e^2}{r} + H_\gamma^{(0)}$ we have our initial state $\ket{i^{(0)}} = \ket{2,l,m}\ket{0}_\gamma$ and final state $\ket{f^{(0)}} = \ket{1,0,0}\ket{k, \lambda}$. Thus we have enough to do the calculation, since we have $A$ given \eqref{3.7.A} which acts on the photonic part of the Hilbert space and $P$ which operates on the $\ket{n,l,m}$ part of the Hilbert space. Recall that with Fermi's Golden Rule we eventually need to end wth some integral; we will integrate over all final $\ket{k,\lambda}$ to make the delta function go away. We then start the algebra with the dot product
+\begin{align}
+    \bra{f^{(0)}}H^{(1)}\ket{i^{(0)}} &= \sum_{\lambda}^{}\sqrt{\frac{\hbar c^2}{4\pi^2}}\int \frac{d^3k'}{\sqrt{\omega_{k'}}}\bra{k,\lambda}a^\dagger(k',\lambda')\ket{0}\vec{\epsilon}(k',\lambda') \bra{1,0,0}\frac{e}{mc}e^{-i\pvec{k}\cdot \vec{r}}\cdot \vec{P}\ket{2,l,m}
+\end{align}
+
+Recall that we can approximate $e^{-i\pvec{k}\cdot \vec{r}} \approx 1$ the \emph{dipole approximation} since $\pvec{k}$ goes with $\frac{1}{c}$. Then the first dot product looks like $\delta^3(\vec{k} - \pvec{k})\delta_{\lambda \lambda'}$ and so we have
+\begin{align}
+    \bra{f^{(0)}}H^{(1)}\ket{i^{(0)}} &= \sqrt{\frac{\hbar c^2}{4\pi^2\omega_k}}\frac{e}{mc}\bra{1,0,0}\vec{\epsilon}(\vec{k}, \lambda)\cdot \vec{P}\ket{2,l,m}\\
+    R_{fi} &= \frac{2\pi}{\hbar}\abs{\bra{f^{(0)}}H^{(1)}\ket{i^{(0)}}}^2 \delta\left( E_{100}^{(0)} + \hbar\omega_k - E_{2,l,m}^{(0)} \right)
+\end{align}
+where we are careful to include $\hbar \omega_k$ the energy of the outgoing photon. We then have to focus on the matrix element in the dot product. We will note that $\left[ \vec{r}, H^{(0)} \right] = \frac{i\hbar}{m}\vec{P}$ so we can rewrite
+\begin{align}
+    \frac{m}{i\hbar}\bra{1,0,0}\vec{\epsilon}(\vec{k},\lambda)\cdot \left[ \vec{r},H^{(0)} \right]\ket{2,l,m} &= \frac{m}{i\hbar}\left( E_1^{(0)} - E_2^{(0)} \right)\vec{\epsilon}(\vec{k},\lambda)\bra{1,0,0}\vec{r}\ket{2,l,m}\\
+    &= \frac{m\omega_k}{i}\vec{\epsilon}(\vec{k},\lambda)\bra{1,0,0}\vec{r}\ket{2,l,m}\\
+    R_{fi} &= \frac{\omega_k e^2}{2\pi}\abs{\bra{1,0,0}\vec{\epsilon}(\vec{k},\lambda)\cdot \vec{r}\ket{2,l,m}}^2\delta\left( E_{2}^{(0)} - E_{1}^{(0)} - \hbar\omega_k \right)
+\end{align}
+
+We recall that $\vec{r}$ is a linear combination of the $Y_{l}^{m*}$ while $\bra{1,0,0}$ goes with $Y_{0}^0$. Then it is evident that by orthogonality of $Y_l^m$ that only the $\ket{2,1,m}$ contribute to the summation over $l$. This is because $Y_1 Y_1 Y_0$ does not vanish, but $Y_0Y_0Y_1$ under the integral can be viewed as $\frac{1}{\sqrt{4\pi}}\int Y_0Y_1 = 0$. 
+
+\chapter{3/10/14 - QFT finish example, Wigner-Eckhard Theorem}
+
+We then want to compute the rate at which $\ket{2,l,m}\ket{0}_{\gamma} = \ket{1,0,0}\ket{k,\lambda}_\gamma$. We used Fermi's Golden Rule with $\omega \to 0$ with $H^{(1)} = \frac{e}{mc}\vec{A}(\vec{r})\cdot \vec{P}$ and the simple dipole approximation to obtain
+\begin{equation}
+    R_{fi} = \frac{\omega_ke^2}{2\pi}\abs{\bra{1,0,0}\vec{\epsilon}(k,\lambda) \cdot \vec{r}\ket{2,l,m}}^2\delta\left( E_2^{(0)} - E_1^{(0)} - \hbar\omega_k \right)
+\end{equation}
+
+We then also need to use
+\begin{align}
+    x &= \sqrt{\frac{4\pi}{3}}\left( -Y_{1}^1 + Y_1^{-1} \right)\frac{r}{\sqrt{2}} & y &= \sqrt{\frac{4\pi}{3}}ir\frac{Y_1^1 + Y_1^{-1}}{\sqrt{2}} & z &= r\sqrt{\frac{4\pi}{3}}Y_1^0
+\end{align}
+recalling that $Y_1^{-1} = -Y_1^{1*}$. Then
+\begin{equation}
+    \vec{\epsilon}\cdot \vec{r} = \sqrt{\frac{4\pi}{3}}r\left[ \epsilon_2Y_1^{0*} - \epsilon_- Y_1^{-1*} - \epsilon_+Y_1^{1*} \right]
+\end{equation}
+where $\epsilon_+ = \frac{\epsilon_x + i\epsilon_y}{\sqrt{2}}, \epsilon_- = \frac{-\epsilon_x + i\epsilon_y}{\sqrt{2}}$ where we deviate a bit from our usual sign to simplify future calculations. This then becomes
+\begin{equation}
+    \bra{1,0,0}\vec{\epsilon}\cdot \vec{r}\ket{2,l,m} = \frac{\delta_{l1}}{\sqrt{4\pi}}\underbrace{\displaystyle\int\limits_{0}^{\infty}dr\;r^3R_{10}(r)R_{21}(r)}_{I_r} \cdot \sqrt{\frac{4\pi}{3}}\left[ \epsilon_z\delta_{m0} - \epsilon_{-}\delta_{m(-1)} - \epsilon_+\delta_{m1} \right]
+\end{equation}
+
+Let's then try to compute the average rate
+\begin{align}
+    \bar{R}_{if} = \frac{1}{3}\sum_{m}^{}R_{if} &= \left( \frac{\omega_k e^2}{2\pi} \right)\frac{1}{3}\left[ \frac{1}{3} I_r^2\left( \abs{\epsilon_z}^2 + \abs{\epsilon_-}^2 + \abs{\epsilon_+}^2 \right)\delta\left( \Delta E^{(0)} - \hbar \omega_k \right) \right]
+\end{align}
+
+We can then sum over all possible photonic wavelengths and obtain
+\begin{align}
+    \sum_{\lambda}^{}\int dk\; k^2d\Omega_k\bar{R}_{if} = 2\cdot 4\pi \int \frac{dk}{\hbar c} \hbar^2 \delta\left( \frac{\Delta E}{\hbar c} - k \right)\bar{R}_{if}\\
+    &= \frac{8\pi}{\hbar c}\left( \frac{\Delta E}{\hbar c} \right)^2\left( \frac{\Delta E}{\hbar} \right)\frac{e^2}{2\pi}\frac{1}{q}
+    &= \frac{4\alpha}{q}\frac{(\Delta E)^3}{\hbar^3 c^2}I_r^2
+\end{align}
+with $\alpha = \frac{e^2}{\hbar c}$. We can solve other rates as long as we know $\vec{A}$ by \eqref{3.7.A}.
+
+We can talk about the \emph{Wigner Eckhart Theorem}. We can first look at the generator of rotations $U = \exp\left[ \frac{-i\theta_k J_k}{\hbar} \right]$ with $J_i$ the angular momentum and $\theta_k$ magnitude of the direction of rotation. Then we recall
+\begin{align}
+    J^2\ket{j,m} &= \hbar^2j(j+1)\ket{j,m}& J_z \ket{j,m} &= \hbar m\ket{j,m}
+\end{align}
+
+Then for a given $j$ there are $2j + 1$ states $\ket{j,m}$. We can then construct the matrix rotation group $D$ such that
+\begin{equation}
+    U[\vec{\theta}]\ket{j,m} = \sum_{m=-j}^{j}D^{(j)}[\vec{\theta}]_{m'm}\ket{j,m'}
+\end{equation}
+
+Note that the $D$ obey property that $U_1U_2$ is just multiplication of their respective $D$s in their summation (these are the block diagonal rotation matricies of $U$ if we recall from Shankar, and so it makes sense that they are in some sense orthogonal). 
+
+Then for some arbitrary operator $S$ then we can write with some weird notation that maybe someday we will understand (the prime means rotated)
+\begin{equation}
+    S_{j_1\dots j_p}' = \sum_{k_1 = 1}^{3} \dots \sum_{k_p = 1}^{3}R_{j_1k_1}\dots R_{j_pk_p}S_{k_1\dots k_p}
+\end{equation}
+
+This is related to the cartesian tensor, the operators $\left\{ S_1, S_2, S_3 \right\}$ such that $U[R]^\dagger S_j U[R] = \sum_{k=1}^{3}R_{jk}S_k$. There are also the spherical tensor operators. Exhibiting then a vector $\ket{k,q}, q \in [-k,k]$ then the tensor operator $T$ is such that
+\begin{align}
+    U[R]T_k^qU[R]^\dagger &= \sum_{q}^{}D_{q'q}^{(k)} T_q'q^{(k)}T_k^{q'}\\
+    T_1^i &= rY_1^i
+\end{align}
+
+A few more confused looks later, let's jot down the Wigner Eckhard Theorem
+\begin{equation}
+    \bra{\alpha_2, j_2,m_2}T_{(k)}^q\ket{\alpha_1, j_1, m_1} = \dotp{j_2, m_2}{k, q_2; j_1, m_1}\bra{\alpha_2j_2}\abs{T_{(k)}}\ket{\alpha_1j_1}
+\end{equation}
+with the double bars meaning that this is a reduced matrix element\dots
+
+\chapter{3/12/14 - Total derivatives in QM, Bohm-Aharnov effect}
+
+Let's discuss total derivatives in classical and QM today, as well as the Bohm-Aharnov effect.
+
+We'll begin with total derivatives. Consider a simple Lagrangian $L = \frac{1}{2}m\dot{q}^2 + \theta \dot{q} - V(q)$ with $\dot{q}$ the total derivative and $\theta$ some constant. Then classically we can examine the action and note that it is an integral $\int dt \; L$ and so the derivative just contributes to the action by some $\theta(q_f - q_i)$ term. Additionally, if we examine the Euler-Lagrange EOMs we find that the EOM obeys $\theta = 0$ EOMs. That's the end of the classical story.
+
+Let's look at the QM story in the path integral context instead. Recall then that
+\begin{equation}
+    \bra{q_f}e^{-iHt/\hbar}\ket{q_i} = \int dq\; e^{iS/\hbar}
+\end{equation}
+
+We know how the classical action changes, so we can then write
+\begin{equation}
+    \bra{q_f}e^{-iHt/\hbar}\ket{q_i} = \int dq\; e^{iS_{\theta = 0}}e^{i\theta(q_f - q_i)}
+\end{equation}
+
+Then since we are ultimately concerned with the norm-squared of the matrix element (for probabilities) we note that the $e^\theta$ term is just a phase shift that cancels itself. Yet again not particularly interesting.
+
+However, let's now look for note position eigenstate matrix elements but perhaps any general matrix element
+\begin{align}
+    \bra{b}e^{iHt/\hbar}\ket{a} &= \displaystyle\int\limits_{}^{}dq_f\displaystyle\int\limits_{}^{}d_qi\;\psi_b(q_f)^*\bra{q_f}e^{-iHt/\hbar}\ket{q_i}\psi_a(q_i)\\
+    &= \displaystyle\int\limits_{}^{}dq_fdq_i\;\psi_b^*(q_f)\psi_a(q_i)e^{iq(q_f - q_i)/\hbar}\mathcal{U}(q_i, q_f;t)\Big|_{\theta = 0}
+\end{align}
+
+Then the norm squared doesn't vanish immediately, since when we square it there are cross terms with phase differences! Mark Wise pretends like he was confused when examining this expression, and tells us to see this in a different light. Let's try a different example then, with $\ket{a}$ a position eigenstate, so $\psi_a(q_i) = \delta(q_i)$, and let's just try a harmonic oscillator in this formalism $L = \frac{m\dot{q}^2}{2} + \theta \dot{q} - \frac{1}{2}m\omega^2 q$. Let's then look for a theta dependence of $\bra{b}$, so that perhaps it will cancel the theta exponential. 
+
+We then will want to construct the Hamiltonian from the Lagrangian. We note the conjugate momentum is $p = m\dot{q} + \theta$ and so $H = pq-L = \frac{(p-\theta)^2}{2m} + \frac{1}{2}m\omega^2q^2$. Then we can write out our SE in coordinate space and obtain
+\begin{equation}
+    \frac{1}{2m}\left[ -i\hbar\rd{}{q} - \theta \right]^2\psi_b + \frac{1}{2}m\omega^2\psi_b = E\psi_b
+\end{equation}
+
+We then know how $\psi_b$ should depend on $\theta$, so let's ``pretend'' $\psi_b(q) = e^{i\theta q/\hbar}\tilde{\psi}_b(q)$ (i.e. make an ansatz that will make the $\theta$ dependence vanish). This gives us
+\begin{align}
+    -i\hbar\rd{}{q}\psi_b(q) &= e^{i\theta q/\hbar}\left[ q - i\hbar \rd{}{q} \right]\tilde{\psi}_b(q)\\
+    \left[ -i\hbar \rd{}{q} - \theta \right]\psi_b(q) &= e^{i\theta q/\hbar}\left[ -i\hbar \rd{}{q}\tilde{\psi} \right]\\
+    \frac{1}{2m}\left( -i\hbar \rd{}{q} \right)\tilde{\psi}_b + \frac{1}{2}m\omega^2 \tilde{\psi}_b &= E\tilde{\psi}_b
+\end{align}
+
+So we recover the Harmonic Oscillator SE, at least when the starting state is a position eigenstate. So $\theta$ won't actually impact QM! At least we know it shouldn't; he doesn't have a proof, so \$20 bucks for whoever shows him a fully generalized proof of this (i.e. starting with a general state as well)!
+
+Let's now discuss observing a particle at some point on the other side of two slits. This is pretty simple to compute, in theory; we just path integral along the two paths. However, let's then consider a magnetic field localized in between the two slits, such that it doesn't reach the slits. Our Lagrangian then looks like $\frac{1}{2}mv^2 + q\vec{v}\cdot \vec{A}$ without the potential term.
+
+Digression! Note that the action in classical mechanics has little meaning; it's the EOMs that are derived from them that are powerful. However, in QM we note that it is part of the path integral formulation and so has a much bigger role. Recall moreover that $\vec{A}$ is defined with respect to some gauge $\Lambda$ such that
+\begin{align}
+    \phi \to \phi + \frac{1}{2}\pd{}{t}\Lambda\\
+    \vec{A} \to \vec{A} - \vec{\nabla}\Lambda
+\end{align}
+
+We should learn this in E\&M. We will then look at how the action transforms under this gauge transformation
+\begin{align}
+    S \to S_\Lambda &= S_{\Lambda = 0} - \displaystyle\int\limits_{t'}^{t}dt''\;\frac{q}{c}\left( \vec{V}\cdot \vec{\nabla}\Lambda + \pd{\Lambda}{t} \right)\\
+    &= S_{\Lambda = 0} + \displaystyle\int\limits_{t'}^{t}dt''\;\frac{q}{c}\left( \Lambda\left( \vec{r}(t''),t'' \right) + \Lambda(\vec{r}(t'),t') \right)
+\end{align}
+
+We note that this is again just an offset in classical physics, which doesn't affect dynamics, but once again in QM there arises a phase change. Let's see how this looks in QM. We won't have to change the classical path of our path integral. The matrix elements then look like (with $P_1, P_2$ the paths taken by the two particles, and constant $\vec{B}$ field)
+\begin{align}
+    \dotp{\vec{r},t}{\pvec{r},t'} &= N\sum_{}^{}e^{iS_{cl}/\hbar}\\
+    \psi_{P_1}(\vec{r} &= e^{\frac{iq}{c}\displaystyle\int\limits_{P_1}^{}dt''\;\vec{V}\cdot \vec{A}(\vec{r}^{\,''})} \psi_{P_1}^{(\vec{B = 0)}}(\vec{r})\\
+    \psi_{P_2}(\vec{r} &= e^{\frac{iq}{c}\displaystyle\int\limits_{P_2}^{}dt''\;\vec{V}\cdot \vec{A}(\vec{r}^{\,''})} \psi_{P_2}^{(\vec{B = 0)}}(\vec{r})\\
+    \psi(\vec{r}) &= e^{\frac{iq}{c}\displaystyle\int\limits_{P_1}^{}dt''\;\vec{V}\cdot \vec{A}(\vec{r})}\left[ \psi_{P_1}^{(\vec{B} = 0)}(\vec{r}) + e^{\frac{iq}{c}\displaystyle\int\limits_{P_2 - P_1}^{}dt''\;\vec{V}\cdot \vec{A}(\vec{r}^{\,''}}\psi_{P_2}^{(\vec{B} = 0)}(\vec{r} \right]
+\end{align}
+
+Note then that $P_2 - P_1$ is a closed path! Let's write this as $\oint\limits_P$. Then we obtain
+\begin{align}
+    \oint\limits_P \vec{V}\cdot \vec{A}dt'' &= \oint\limits_P \frac{d\vec{r}}{dt''}\cdot \vec{A}dt''
+\end{align}
+
+Cancelling the $dt''$ we obtain
+\begin{align}
+    \oint\limits_P \vec{V}\cdot \vec{A}dt'' &= \oint\limits_P \vec{A}\cdot d\vec{r}\\
+    &= \displaystyle\int\limits_{}^{}\vec{\nabla}\times\vec{A}\;d\vec{S}
+    &= \Phi
+\end{align}
+
+So this doesn't vanish. Good luck kids! (Mark, we'll miss you D:)
+\end{document}

@@ -1,0 +1,46 @@
+\contentsline {chapter}{\numberline {1}10/09/14 --- Overview of condensed matter}{3}{chapter.1}
+\contentsline {chapter}{\numberline {2}10/09/14 --- PC 1 --- Energy bands}{5}{chapter.2}
+\contentsline {section}{\numberline {2.1}Tight-binding}{5}{section.2.1}
+\contentsline {section}{\numberline {2.2}Bloch's Theorem}{6}{section.2.2}
+\contentsline {chapter}{\numberline {3}17/09/14 --- Bravais/reciprocal lattice, electrons in periodic potential, Bloch theorem}{8}{chapter.3}
+\contentsline {section}{\numberline {3.1}Bravais Lattice}{8}{section.3.1}
+\contentsline {section}{\numberline {3.2}Reciprocal lattice}{8}{section.3.2}
+\contentsline {section}{\numberline {3.3}Bloch Theorem}{9}{section.3.3}
+\contentsline {section}{\numberline {3.4}Blurb on weak periodic potentials}{9}{section.3.4}
+\contentsline {chapter}{\numberline {4}17/09/14 --- PC 2 --- Electrons in a nearly-free periodic potential}{10}{chapter.4}
+\contentsline {section}{\numberline {4.1}Re-proving Bloch's theorem}{10}{section.4.1}
+\contentsline {section}{\numberline {4.2}Periodic Potentials}{10}{section.4.2}
+\contentsline {section}{\numberline {4.3}Weak potential}{11}{section.4.3}
+\contentsline {chapter}{\numberline {5}01/10/14 --- Bloch recap, Deteriming crystal structure}{13}{chapter.5}
+\contentsline {section}{\numberline {5.1}Recap of everything so far}{13}{section.5.1}
+\contentsline {section}{\numberline {5.2}Determining crystal structure of a material}{14}{section.5.2}
+\contentsline {chapter}{\numberline {6}01/10/14 --- PC 3 --- Direct/Reciprocal Lattice}{15}{chapter.6}
+\contentsline {section}{\numberline {6.1}Vocabulary}{15}{section.6.1}
+\contentsline {section}{\numberline {6.2}Reciprocal lattice and xray diffraction}{15}{section.6.2}
+\contentsline {chapter}{\numberline {7}08/10/14 --- Makeup:Multiple electrons}{17}{chapter.7}
+\contentsline {section}{\numberline {7.1}Fermi Level}{17}{section.7.1}
+\contentsline {section}{\numberline {7.2}Density of States}{17}{section.7.2}
+\contentsline {chapter}{\numberline {8}08/10/14 + 15/10/14 --- PC 4 + 5 --- Graphene}{18}{chapter.8}
+\contentsline {chapter}{\numberline {9}15/10/14 --- More band structures, semiconductors}{23}{chapter.9}
+\contentsline {section}{\numberline {9.1}Band structures of various types of structures}{23}{section.9.1}
+\contentsline {section}{\numberline {9.2}Semiconductors}{23}{section.9.2}
+\contentsline {section}{\numberline {9.3}Computing number of charge carriers}{24}{section.9.3}
+\contentsline {chapter}{\numberline {10}22/10/14 --- Makeup: Electronic Transport, conductivity}{26}{chapter.10}
+\contentsline {section}{\numberline {10.1}Drude Model}{26}{section.10.1}
+\contentsline {section}{\numberline {10.2}Quantum Mechanical Treatment}{27}{section.10.2}
+\contentsline {chapter}{\numberline {11}22/10/14 --- PC 6 --- Density of states and suseptibility}{28}{chapter.11}
+\contentsline {section}{\numberline {11.1}Density of states}{28}{section.11.1}
+\contentsline {section}{\numberline {11.2}Specific Heat}{29}{section.11.2}
+\contentsline {section}{\numberline {11.3}Magnetic Susceptibility}{29}{section.11.3}
+\contentsline {chapter}{\numberline {12}05/11/14 --- Introduction to superconductivity}{31}{chapter.12}
+\contentsline {section}{\numberline {12.1}Measuring Superconductivity}{31}{section.12.1}
+\contentsline {section}{\numberline {12.2}Superconductors are not simply perfect conductors}{31}{section.12.2}
+\contentsline {section}{\numberline {12.3}Quantum Mechanical interpretation of London's Equation}{32}{section.12.3}
+\contentsline {chapter}{\numberline {13}05/11/14 --- PC 7 --- Josephson Junctions!}{33}{chapter.13}
+\contentsline {chapter}{\numberline {14}19/11/14 --- PC 8 --- The Debye Model}{35}{chapter.14}
+\contentsline {section}{\numberline {14.1}1D phonon crystal}{35}{section.14.1}
+\contentsline {section}{\numberline {14.2}3D}{35}{section.14.2}
+\contentsline {chapter}{\numberline {15}26/11/14 --- PC 9 --- Spin Waves, Magnons}{37}{chapter.15}
+\contentsline {section}{\numberline {15.1}Spin waves}{37}{section.15.1}
+\contentsline {section}{\numberline {15.2}Quantification of spin waves, magnons}{38}{section.15.2}
+\contentsline {section}{\numberline {15.3}Thermodynamics of spin waves, 3D}{38}{section.15.3}

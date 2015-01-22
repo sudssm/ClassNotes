@@ -1,0 +1,54 @@
+\documentclass[12pt]{article}
+\usepackage{fancyhdr, amsmath, amsthm, amssymb, hyperref, paracol, graphicx, setspace}
+\usepackage[margin=1in]{geometry}
+\usepackage[version=3]{mhchem}
+\newcommand{\scinot}[2]{#1\times 10^{#2}}
+\usepackage[labelfont=bf]{caption}
+
+\begin{document}
+
+\doublespace
+\pagestyle{fancy}
+\lhead{Yubo Su - Ph12bNotes}
+\setlength{\headheight}{15pt}
+
+\section{April 4 - Entropy/Irreversibility}
+
+For a closed system, all accessible microscopic states are equally likely. Then, given the multiplicity $g$ of a state $s$, the probability of thate state is $P(s) \propto \frac{1}{g}$, such that $\sum{P} = 1$. If we then have for example, a binomial distribution of multiplicities $g(N,s) =\frac{N!}{N_{1}!N_{2}!}$ where $N$ is the total number of particles and $1,2$ are the respective states, the Stirling approximation gives that $g(N,s) \approx \sqrt{\frac{2}{\pi N}}2^Ne^{-2s^2/N}$, a Gaussian, as we expect. We note that the width of this Gaussian is $\propto \sqrt{N}$. This was discussed last week.
+
+We then investigate a system of temperature flow. We construct a pair of systems of certain particles $N_1, N_2$ of energies $U_1, U_2$ yielding multiplicities $g_1, g_2$. The total multiplicity of the combined system is then $g = g_1g_2$. We then consider the transfer of energy when $U = U_1 + U_2$ energy is conserved; note that we will not allow particles to transfer. We then note that the new $g'$ after transfer is given by $g' = \sum{g_1(N_1,U_1)g_2(N_2,U-U_1)}$, where we sum over all values of $U_1$. In general, $g' > g$. Note that $g' = g_1g_2$ is a Gaussian centered at some energy $\hat{U}_1$, which is denoted the most probable configuration or the equilibrium configuration. We can then solve for this peak. We differentiate $g_1g_2$:
+
+\begin{align*}
+	0 &= dg\\
+	&= \left(\left.\frac{\partial g_1}{\partial U_1}\right|_{N_1}\right)g_2dU_1 + g_1\left(\left.\frac{\partial g_2}{\partial U_2}\right|_{N_2}\right)dU_2\\
+	&= \left(\left.\frac{\partial g_1}{\partial U_1}\right|_{N_1}\right)g_2 - g_1\left(\left.\frac{\partial g_2}{\partial U_2}\right|_{N_2}\right)\\
+	\frac{\partial}{\partial U_1}\left(\left.\ln g_1\right|_{N_1}\right) &= \frac{\partial}{\partial U_2}\left(\left.\ln q_2\right|_{N_2}\right)
+\end{align*}
+
+where we take advantage of the fact that $dU_1 = -dU_2$. We then define entropy $\sigma(N,U) = \ln g(N_U)$. Note that entropies are additive: $g = g_1g_2\cdots g_n$, $\sigma = \sigma_1 + \sigma_2 +\cdots + \sigma_n$. We then note that the equilibrium condition from the last line then becomes
+
+\[ \left. \frac{\partial \sigma_1}{\partial U_1} \right|_{N_1} = \left.\frac{\partial\sigma_2}{\partial U_2}\right|_{N_2}\]
+
+This then shows that when the two terms are not equal, energy flows. If the left term is larger, then energy flows from system 1 to system 2, and if the right term is larger, then vice versa. We then define temperature $\tau = \left. \frac{\partial \sigma}{\partial U}\right|_{N}$. This then gives the following expression: $d(\sigma_1 + \sigma_2) = \left(\frac{1}{\tau_1} - \frac{1}{\tau_2}\right)dU_1$. At equilibrium then, it is clear that $\tau_1 = \tau_2$. But if $\tau_2 \neq \tau_1$, then heat will flow from the higher $\tau$ to the lower.
+
+We then note that $\tau = k_B T$ where $T$ is the conventional temperature in $^\circ K$ and $k_B = \scinot{1.4}{-23}\mathrm{J/K}$ is the Boltzmann constant.
+
+We then note that we can write $g(N,s) = g(N,0)e^{-2s^2/N}$. We can also find that $\sigma = \ln(g_1g_2) = C - \frac{2s_1^2}{N_1} - \frac{2s_2^2}{N^2}$ and so substituting $s_2 = s - s_1$ and forcing our constaint $\frac{\partial \sigma}{\partial s_1} = -\frac{4s_1}{N_1} + \frac{4(s-s_1)}{N_2}$, we find that the equilibria $\hat{s}$ give $\frac{\hat{s}_1}{N_1} = \frac{\hat{s}_2}{N_2} = \frac{s}{N}$. 
+
+We then investigate the likelihood of fluctuations $s_1 = \hat{s}_1 + \delta$. This gives $\sigma = C - \frac{2}{N_1}(\hat{s}_1 + \delta)^2 - \frac{2}{N_2}(s-\hat{s}_1 - \delta)^2$, which if we group the $\hat{s}_1$ terms into the $C$ gives $\sigma = C + 0\delta - \frac{2}{N_1}\delta^2 - \frac{2}{N_2}\delta^2$, where we know that the coefficient is $0$ because we have minimized $\sigma$. Then $g_1g_2 = e^{\sigma_1 + \sigma_2} = Ce^{-2\left(\frac{1}{N_1} + \frac{1}{N_2}\right)\delta^2}$. Then when $N_1 = N_2$, we find $g_1g_2 = Ce^{8\delta^2/N}$. We finally find that $\delta \sim \sqrt{N}$. 
+
+If we perform a back-of-the-envelope calculation, giving $N \sim 10^{22}$, we find that $\delta \sim 10^{11}$. We then ask the probability that $\delta$ varies as high as $10^{12}$? It can easily be calculated that given $\delta = 10^{12} \Rightarrow g_1g_2 \sim e^{-400} = 10^{-174}$. In comparison, the age of the universe is $10^{61}$ planck times.
+
+The second law of thermodynamics can then be seen here, because entropy never decreases when two systems are brought into contact. This means that almost all processes are irreversible.
+
+We then discuss open systems. We first examine a quantum system with a spectrum of eigenstates. We then would like to compute, for two eigenstates, $\frac{P(\varepsilon_1)}{P(\varepsilon_2)} = \frac{g_R(U_0 - \varepsilon_1)}{g_R(U_0 - \varepsilon_2)}$, where the equality is because the difference in energies is drawn from the reservoir, so we calculate degeneracies of the reservoir. This then gives:
+
+\begin{align*}
+	\text{ratio} &= e^{\sigma_R(U_0-\varepsilon_1) - \sigma_R(U_0-\varepsilon_2)}\\
+	&= \mathrm{Exp}(\sigma(U_0) - \varepsilon_1\left. \frac{d\sigma}{dU}\right|_{U = U_0} +\dots + \sigma(U_0) - \varepsilon_2\left.\frac{d\sigma}{dU}\right|_{U=U_0} +\dots)
+\end{align*}
+
+	We note that the smaller order terms are negligible, and the constant terms cancel, so we find that the ratio is $= \mathrm{Exp}(-\frac{\varepsilon_1 - \varepsilon_2}{T})$ where $T$ is the temperature of the reservoir. This then gives that $P(\varepsilon) \propto e^{-\varepsilon/T}$. This formula is called the Boltzman factor, the probability of being in a state of energy $\varepsilon$ when in reservoir at temperature $T$. We then normalize this by requiring that these probabilities sum to $1$. 
+
+\end{document}
+

@@ -1,0 +1,1109 @@
+\documentclass[10pt]{report}
+\usepackage{fancyhdr, amsmath, amsthm, amssymb, hyperref, paracol, graphicx, setspace}
+\usepackage[margin=1in]{geometry}
+\usepackage[version=3]{mhchem}
+\newcommand{\scinot}[2]{#1\times 10^{#2}}
+\newcommand{\rtd}[2]{\frac{d^2#1}{d#2^2}}
+\newcommand{\ptd}[2]{\frac{\partial^2 #1}{\partial#2^2}}
+\newcommand{\bra}[1]{\left<#1\right|}
+\newcommand{\ket}[1]{\left|#1\right>}
+\newcommand{\dotp}[2]{\left<#1\left.\right|#2\right>}
+\newcommand{\rd}[2]{\frac{d#1}{d#2}}
+\newcommand{\pd}[2]{\frac{\partial #1}{\partial#2}}
+\newcommand{\norm}[1]{\left|\left|#1\right|\right|}
+\newcommand{\abs}[1]{\left|#1\right|}
+\newcommand{\Log}[0]{\mathrm{Log} }
+\newcommand{\Arg}[0]{\mathrm{Arg} }
+\newcommand{\Res}[0]{\mathrm{Res} }
+\usepackage[labelfont=bf, font=scriptsize]{caption}
+\everymath{\displaystyle}
+
+\begin{document}
+
+%\doublespace
+% \pagestyle{fancy}
+% \rhead{Yubo Su - ACM95a - Niles Pierce}
+%\setlength{\headheight}{15pt}
+\title{ACM95 - KRK 119 - MWF 11-12}
+\author{Yubo Su}
+\date{ }
+
+\maketitle
+
+\tableofcontents
+
+\chapter{Key Concepts of the study of parking garages}
+
+\section{Complex functions and their properties}
+\begin{itemize}
+	\item Complex numbers of form $z=x+iy, w=u+iv$ can also be written in \emph{polar form} $re^{i\theta}$ (powers and roots are taken $z^n=r^ne^{in\theta}$ as per \emph{DeMoivre's Theorem})
+	\item $e^{i\theta}=\cos\theta+i\sin\theta$ is \emph{Euler's Formula}, giving rise to the definitions of the trig functions:
+		\begin{align*}
+			\sin\theta &= \frac{e^{i\theta}-e^{-i\theta}}{2i} & \cos\theta&= \frac{e^{i\theta}+e^{-i\theta}}{2}
+		\end{align*}
+	\item We define the complex logarithm $\log z = \log|z| + i\arg z$. Principal argument is $\Arg z = \arg z + 2\pi$ subject to some bounds, principal log is $\Log z =\log|z| + i\Arg z$. 
+	\item \emph{Multivalued functions} yield multiple values for a single input (complex log).
+	\item \emph{Periodic functions} are period (complex exponential)
+	\item General complex exponential $z^{p/q}$ is $n$-valued, but irrational/complex exponent gives infinte valued.
+	\item \emph{Reimann Surfaces} turn multivalued into singly valued over many ``sheets'' of complex plane.
+	\item Trig was defined by exponential, inverse trig (infinitely valued, infinite Reimann surfaces) defined by log:
+		$$\sin^{-1}z=-i\log\left[ iz+\left( 1-z^2 \right)^{1/2} \right]$$
+	\item \emph{Point at infinity} is same point regardless of direction, i.e. $\lim_{|z| \to\infty} z = \infty$ regardless of $\Arg z$. 
+	\item \emph{Stereographic projection} gives projection of complex plane onto unit sphere, infinity is North pole (single point), 0 is South.
+	\item \emph{Branch cuts} are a restriction on complex plane that gives single valuedness.
+	\item \emph{Branch points} are endpoints of branch cuts; infinity is a branch point, branch points come in pairs. 
+\end{itemize}
+
+\section{Differential and Integral Calculus}
+\begin{itemize}
+	\item \emph{Domain} is open connected set. A \emph{Region} is the domain plus some (or all (closed region), or none) boundary points. 
+	\item Limits are required to be same in all directions, derivative then follows same formal definition as single variable, just with more powerful limit (see 10/11)
+	\item Cauchy-Reimann equations are necessary and sufficient condition for differentiability. As long as below partials are continuous, satisfaction of the below guarantees differentiability
+		$$\pd{v}{y} = \pd{u}{x} , \pd{v}{x}=-\pd{u}{y}$$
+		where $f'(z) = \frac{\Delta u + i\Delta v}{\Delta x + i\Delta y}$. We abbreviate these equations C-R equations. 
+	\item A function is \emph{analytic} at a point $z_0$ if $f(z)$ is differentiable in the neighborhood around $z_0$. Analytic in a region if analytic at every point in region. Analytic over all $\mathbb{Z}_{\neq \infty}$ is \emph{entire}.
+	\item A function differentiable over a domain is analytic over that domain, but not true in general for regions.
+	\item Functions that cannot be written in terms of $z$ alone (not real/imaginary/conjugate parts) are never analytic, and vice versa for can be written. This will be proven later.
+	\item Derivatives of $V = \Arg z$:
+		$$V_x = -\frac{y}{x^2 + y^2}, V_y = \frac{x}{x^2 + y^2}$$
+	\item The furdamental theorem of calculus follows to complex:
+		$$\displaystyle\int\limits_{a}^{b}f(t)\;dt = \displaystyle\int\limits_{a}^{b}u(t) + iv(t)\;dt = \left.F(t)\right|_a^b$$
+	\item A \emph{contour} is just a joining of smooth arcs. A \emph{simple} contour means it doesn't self-intersect, and a \emph{closed} contour means initial equals final. For simple closed countours, the positive direction is such that the bounded interior is on the left.
+	\item The ML bound states that $\int_C f(z)\; dz$ is bounded by the quantity $ML$ where $M$ is the maximum modulus of $f(z)$ and $L$ is the arclength of the contour.
+	\item Fundamental theorem of contours: $\int_C f(z) dz = F(z_2) - F(z_1)$
+	\item Equivalence theorem: The following are equivalent. $f$ has an antiderivative in $D$, every closed contour integral of $f$ in $D$ vanishes, and contour integrals of $f$ in $D$ are independent of path. Moreover, due to Cauchy-Goursat below, if $f$ is analytic over some simply connected $D$, all of these hold, though doesn't hold other way.
+	\item \emph{Cauchy-Goursat Theorem}: If $f(z)$ is analytic on and inside a simple closed surface $C$, then $\int_C f(z) dz = 0$. Alternatively, if $f(z)$ is defined over a simply connected domain $D$, then any contour integral lying within $D$ vanishes. For any multiply connected domain, we merely subtract out the integrals over the ``holes'' in our domain and we still obatin $0$.
+	\item \emph{Deformation of contours}: If $C_1,C_2$ are positive simple closed contours with $C_2$ interior and $f(z)$ is analytic on and between the contours, then the two contours are equal.
+	\item Cauchy Integral Formula: if $f(z)$ is analytic inside a positive simple closed contour $C$ with $z_0$ interior to $C$, then 
+		$$f(z_0) = \frac{1}{2\pi i}\int_C \frac{f(z)}{z-z_0} dz$$
+		This generalizes to the derivative as well
+		$$f'(z) = \frac{1}{2\pi i} \int_C \frac{f(s)}{(s-z)^2}ds$$
+	\item Handy chart:
+		\begin{itemize}
+			\item $\int_C f(z) dz  = 0$ - Cauchy-Goursat
+			\item $\int_C \frac{dz}{z-z_0}  dz= 2\pi i$ - Deformtion of contours
+			\item $\int_C \frac{f(z)}{z-z_0} dz = 2\pi i f(z_0)$ - Cauchy Integral formula
+		\end{itemize}
+	\item Analytic functions have infinitely many derivatives all of which are analytic! Goursat is a hero. The explicit formula is given via the Generalized Cauchy Integral Formula
+	$$f^{(n)}(z_0) = \frac{n!}{2\pi i} \int_C \frac{f(z)}{(z-z_0)^{n+1}}dz$$
+\end{itemize}
+
+\section{Sequences and series}
+\begin{itemize}
+	\item Convergence is defined normally for both sequences and series: An infinite sequence $S_1\dots S_n$ has a limit $S$ if for any $\epsilon > 0, \exists N_\epsilon$ such that $\abs{S-S_n} < \epsilon$ when $n > N_\epsilon$. An infinite series converges if its sequence of partial sums converges
+	\item \emph{Uniform} convergence occurs when $N_\epsilon$ is independent of $z$ in a power series.
+	\item Analytic function $f(z)$ is represented uniformly by its Taylor series about $z_0$ within some radius $\rho$. Most importantly, Taylor series converge within the largest disc (open neighborhood) of analyticity about $z_0$. 
+	\item If two functions $f(z), g(z)$ are both analytic on some domain $D$ and are equal in some neighborhood within $D$ or some arc within $D$, then they are equal throughout $D$. 
+	\item \emph{Weierstrass M-test} If the series $\sum M_k$ converges and $\abs{C_k(z)} \leq M_k$ in a region $R$ then the series $f(z) = \sum C_k(z)$ converges uniformly in $R$.
+	\item If a power series converges at some point $z_1 \neq z_0$ where the series is expanded about $z_0$, then it will converge everywhere within the open disc of radius $\rho < \abs{z_1 - z_0}$
+	\item Power series converge only within some circle of radius $R \in [0,\infty]$ and diverge outside.
+	\item \emph{Ratio test} is given for power series $\sum a_kz^k$ by
+		$$\lim_{k \to \infty} \abs{\frac{a_{k+1}z^{k+1}}{a_kz^k}} = q$$
+		then the power series diverges for $q > 1$, converges for $q < 1$, and is inconclusive for $q = 1$.
+	\item A power series sums uniquely to an analytic function within its circle of convergence. Differentiation within circle of convergence is term-by-term, and integration term-by-term is alright as well.
+	\item Power series manipulations keep the radius of convergence of the smallest radius contributor.
+	\item Laurent Series extend power series to expanding at singularity: If $f(z)$ is analytic in the open annulus $D: R_1 < |z-z_0| < R_2$, then $f(z) = \sum_{k=-\infty}^{\infty}a_k(z-z_0)^k$ where $a_k = \frac{1}{2\pi i} \int_C \frac{f(\xi)}{(\xi-z_0)^{k+1}}d\xi$ and $C$ is a positive simple closed contour in $D$.
+	\item Laurent series become Taylor series for no $R_1$, lose all positive powers for no $R_2$, and can be manipulated term-by-term within $D$. Laurent series are unique within $D$.
+	\item If $f(z)$ is analytic at $z_0$ then $f$ is a zero of order $m$ iff $f$ can be written $f(z) = (z-z_0)^mg(z)$ where $g(z)$ is analytic at $z_0$ and $g(z_0) \neq 0$. We can then use this to prove that zeroes are isolated in analytic functions. 
+	\item Three classes of \emph{isolated} singularities ($f(z)$ is analytic around but not at $z_0$). Classify using Laurent series
+		\begin{itemize}
+			\item Removable: Laurent series has no negative powers of $z-z_0$, so looks like a Taylor series. Defining $f(z_0) = a_0$ removes the singularity. Always do this if possible.
+			\item Pole: Laurent series will have $m$ negative powers of $z-z_0$ ($a_{<-m} = 0$). We call this the order $m$ of the Laurent series. Furthermore, order $m$ singularity at $z_0$ for $f(z)$ yields (biconditionally) Laurent series $f(z) = \frac{g(z)}{(z-z_0)^m}$ with $g(z)$ analytic at $z_0$, $g(z_0) \neq 0$. 
+			\item Essential Singularities: In each neighborhood of an essential singularity $z_0$ of a function $f(z)$, $f(z)$ assumes every complex number with possibly one exception.
+		\end{itemize}
+    \item A necessary and sufficient condition for an isolated singularity of $f(z)$ at $z_0$ to be a pole is $\abs{f(z)} \to \infty$ as $z \to z_0$.
+    \item Singularities examined at $f(z \to \infty)$ are characterized by $f\left( \frac{1}{w \to 0} \right)$ and applying everything.
+    \item Also nonisolated singularities, i.e. $f(z)$ is not analytic in the deleted neighborhood $z_0$. Branch points one example, nonisolated essential singularities other type. 
+\end{itemize}
+
+\section{Residue Calculus}
+\begin{itemize}
+    \item If we integrate analytic $f(z)$ on and inside a positive simple closed contour $C$ except for an isolated singularity at $z_0$, then $\int_{C} f(z) dz = 2\pi i a_{-1}$ where $a_{-1}$ the \emph{residue} is the $-1$-th term in the Laurent expansion termed $\mathrm{Res}(f)$.
+    \item Cauchy's Residue Theorem: Consider a function $f$ analytic on and inside a positive simple closed contour $C$ except for $n$ isolated singularities $z_j$ in $C$. We can then deform $C$ into contours about each singularity $z_j$. Then
+        $$\int_C f(z)\; dz = 2\pi i\sum_{j=1}^n \mathrm{Res}(z_j)$$
+    \item We have a way to compute residues for poles
+        $$\Res(z_0) = a_{-1} = \lim_{z \to z_0}\frac{1}{(m-1)!} \frac{d^{m-1}}{dz^{m-1}}\left[ (z-z_0)^mf(z) \right]$$
+    \item Take $f$ that can be written $f(z) = p(z)/q(z)$, $p,q$ are analytic at $z_0$, $p(z_0) \neq 0$, $q(z_0)$ has simple zero. In this case, we can write the residue
+        $$\Res(f;z_0) = \frac{p(z_0)}{q'(z_0)}$$
+    \item We call the Cauchy principal value (denoted by $P$) to be
+        $$P\left[ \displaystyle\int\limits_{-\infty}^{\infty}f(x)\;dx \right] = \lim_{R \to \infty} \displaystyle\int\limits_{-R}^{R}f(x)\;dx$$
+        If the doubly improper integral above converges, then the Cauchy principal value exists and is equal to the convergence. However, the converse is not true!! This is true when the integrand is even though. Principal value of odd function is zero.
+    \item If $f(z) = \frac{p(z)}{q(z)}$ with $p,q$ polynomials and the degree of $q$ is at least two greater than the degree of $P$, then $\int_{C_R}f(z) \; dz = 0$.
+    \item Jordan's Lemma: On $C_R$ we say $f(z) \to 0$ uniformly as $R \to \infty$ if $\abs{f(z)} < K_R$ with $K_R \to 0$ ($K_R$ constant in $\theta$) as $R \to \infty$. If this holds, then the following four integrals
+        \begin{itemize}
+            \item $\lim_{R \to \infty}\int_{C_R}e^{-imz}f(z) \; dz = 0, m > 0$, arc closes down from real axis.
+            \item $\lim_{R \to \infty} \int_{C_R}e^{mz}f(z) \; dz = 0, m > 0$, arc closes left from imaginary axis.
+            \item $\lim_{R \to \infty}\int_{C_R}e^{imz}f(z) \; dz = 0, m > 0$, arc closes up from real axis.
+            \item $\lim_{R \to \infty} \int_{C_R}e^{-mz}f(z) \; dz = 0, m > 0$, arc closes right from imaginary axis.
+        \end{itemize}
+    \item Cauchy Principal Value for discontinuous integrands ($f(c), a < b < c$ is a singularity)
+        $$\displaystyle\int\limits_{a}^{b}f(x)\;dx = \lim_{\epsilon \to 0}\left(\displaystyle\int\limits_{a}^{c-\epsilon}f(x)\; dx \displaystyle\int\limits_{c+\epsilon}^bf(x)\; dx\right)$$
+    \item Suppose $f(z)$ has a simple pole at $z = z_0$. If a circular arc $C_\epsilon$ of radius $\epsilon$ centered at $z_0$ intercepts an angle $\alpha$ in the counterclockwise direction, then
+        $$\lim_{\epsilon \to 0}\int_{C_\epsilon} f(z) \; dz = \alpha i\Res(z_0)$$
+\end{itemize}
+
+\section*{Miscellaneous}
+\begin{itemize}
+    \item Winding number of contour $C$ with respect to $z_0$ is 
+        $$N(C,z_0) = \frac{1}{2\pi i}\int_C \frac{dz}{z-z_0} = \frac{1}{2\pi}\arg (z-z_0)\Big|_C$$
+    \item If $f(z)$ is meromorphic on and inside a positive simple closed contour $C$ with no poles and zeroes on $C$, then ($Z$ is number of orders of zeros and $P$ is number of orders of poles)
+        $$Z-P = \frac{1}{2\pi}\arg f(z) \Big|_C$$
+        This is also saying that $Z-P$ is the winding number of $C^*$ the image of $C$ under $f(z)$ about the origin $w=0$. 
+    \item Functions can be continued analytically, and this continuation is unique.
+    \item Let $f(z)$ be analytic in a disc $D_0$ contained in a simply connected domain $D$. If $f(z)$ can be continued analytically along every polygonal line in $D$ then the continuation leads to a single-valued function in $D$.
+    \item The mapping $w=f(z)$ is \emph{conformal} at a point $z_0$ if $f$ is analytic at $z_0$ and $f'(z_0) \neq 0$. The local scale of the mapping is $\abs{f'(z_0)}$ independent of direction. 
+    \item A mapping $f(z)$ at a zero $f(z_0) = 0$ will magnify the angle between smooth arcs intersecting at $z_0$ by the order of $z_0$ of $f$.
+\end{itemize}
+
+\chapter{9/30 - Introductions are for the weak; complex numbers}
+
+The reason we have in class exams is because two years ago 24 students cheated, and the data say that many honor code violations means that we should have in class exams. The exams will be short and sweet, though students say the exams are harder than psets, pset questions come out of old exams. The exams will not go over three hours. There will usually be five macroscopic problems and parts to each, so a little shorter than psets.
+
+Introductory material is on a handout; PSets due every Friday at 3PM on the North side of Steele House. Website is \url{http://www.piercelab.caltech.edu/people/niles/teaching/acm95a}.
+
+We start with complex variables, a review. We will grow to love $z:z=x+iy$ with $x,y\in\mathbb{R}$, with all the typical properties (equality means equality of real and imaginary parts).
+
+Complex algebra is really cool in that there is always a geometric interpretation. Consider the complex plane (can't draw fml), where $z=x+iy$ can be drawn as a vector with modulus $|z|=\sqrt{x^2+y^2}$. We define the complex conjugate $\bar{z}=x-iy$, and then we find $z\bar{z}=\abs{z}^2$. We also have the geometric interpretation of the triangle inequality: $\abs{z_1+z_2}\leq \abs{z_1}+\abs{z_2}$.
+
+We then introduce the polar form, which is the same one we always know, $x+iy=re^{i\theta}$. This uses Euler's result, which dates to 1740. We call $r$ the modulus of $z$ ($r=\abs{z}$) and we call $\theta$ the argument of $z$. We call the principal argument of $z$ the $\theta$ value that lies within our bounds of choice, whether $[-\pi,\pi]$ or $[0,2\pi]$. We call the principal argument $\Arg{z}$. We then define equality $z_1=z_2: r_1=r_2, \theta_1=\theta_2+2\pi k$. 
+
+We then discuss complex exponentials, which is $e^{iz}$ as opposed to $e^{i\theta}$, only imaginary exponential. We define the property $e^{z_1 + z_2}=e^{z_1}e^{z_2}$, so $e^{z}=e^xe^{iy}$. Complex multiplication can then be seen as $z_1z_2=r_1r_2e^{i(\theta_1+\theta_2)}$. This allows us to define division and also $z^{-1} = \frac{1}{r}e^{-i\theta}$.
+
+We then define the trigonometric functions from Eulers formula: $\sin\theta=\frac{e^{i\theta} - e^{-i\theta}}{2i}, \cos\theta=\frac{e^{i\theta}+e^{-i\theta}}{2}$. We can then obviously define for complex arguments $\sin z, \cos z$ as per these expressions. We can then examine our familiar trig identities:
+
+\begin{itemize}
+	\item $\sin^2z + \cos^2z=1$ is still true
+	\item $\abs{\cos z} \leq 1$ is false; $\abs{\cos iy} \geq 1$, so no inequality about $\abs{\cos z}$ can be shown.
+\end{itemize}
+
+We'll stop here.  
+
+\chapter{10/2 - Complex Powers and Logs}
+
+We will examine our behavior of functions in the complex plane. We begin by examining integer powers of complex numbers. We write $z=re^{i\theta}$ to take our power. So then $z^n = r^ne^{ni\theta}$ for all $n\in\mathbb{N}$. We want to check this result for all $m\in -\mathbb{N}$, which is done by a simple substitution $n=-m$. We can then extend this to all integers by using both, covering the zero case by multiplying the positive and negative case.
+
+This formula for $r=1$ gives $\left( e^{i\theta} \right)n = e^{in\theta}$, called DeMoivre's Result. If we instead write it as $\left( \cos\theta + i\sin\theta \right)^n = \cos n\theta + i\sin n\theta$, this is the much cooler looking version of the earlier formula. Keep in mind that this applies only for $n\in\mathbb{Z}$. This allows us to compute problems like $\left( \sqrt{3} + i \right)^7$ using polar form rather than binomial expansion. 
+
+What if we then examine integer roots (i.e. $z^{1/n}, n \in \mathbb{Z}$)? We define these roots $z_i$ to be the numbers such that $z_i^n=z$. We see that the requisite conditions are such that $r_i^n=r, n\theta_i = \theta + 2\pi k, k \in \mathbb{N}$, yielding $r_i=r^{1/n}, \theta_i=\frac{\theta}{n}+\frac{2\pi k}{n}$, giving us our roots $z_i = r_0^{1/n}e^{i\left( \theta/n+2k\pi/n \right)}$. This shows that each number has $n$ distinct roots.
+
+Example, roots of unity are $z=e^{i\frac{2\pi k}{n}}$. 
+
+We then look at the complex logarithm. Define it to be $w=\log z:z=e^w$. Since $e^w \neq 0$, we see $z \neq 0$. Let $w=u+iv, z=re^{i\theta}$, and we find that $re^{i\theta}=e^{u+iv} \Leftarrow u=\log \abs{z}, v=\arg z$. We define this to be the principal value of the logarithm. Just as Arg is the principal value of arg, Log is the principal value of log. 
+
+For example, what is $\log(1+i)$? Obviously $\log 2 + \frac{i\pi}{4}+2\pi k, k \in \mathbb{Z}$. But then $\Log (1+i)$ doesn't have the $2\pi k$ term.
+
+Recalling our log rules, $\abs{z_1 z_2} = \abs{z_1}\abs{z_2}$. Then $\log z_1z_2 = \log \abs{z_1z_2} + i\Arg(z_1z_2) = \log z_1 + \log z_2$, so we're good. Note that using Log doesn't hold, because something like $\pi + \pi = 2\pi \neq 0$ (that is $\left[0,2\pi\right)$ is not closed under addition). Consider a ``walk'' around the complex plane then, starting at some point $\log z$. If we enclose the origin in our path, then the log increases by $2\pi i$, while if we don't, the log returns to the same value. This increase by $2\pi i$ is called a new \emph{branch} of the \emph{multivalued} function. In our case, the logarithm is infinitely valued and has infinitely many branches. 
+
+A function is then defined as \emph{periodic} with period $\alpha$ if $f(z+\alpha) = f(z)$. If we then examine the exponential, $z=e^w$, we find that the exponential is periodic with period $2\pi i$. Then, the logarithm is multivalued, and the exponential is periodic. Then, examining, $e^{\log z}$, we find that it maps to a single number, so multivalued functions and periodic functions ``cancel out.''
+
+\chapter{10/4 - Fully generalized complex exponential/Visualising complex functions}
+
+We fully generalize the complex exponent now. Take $z^n, z\in\mathbb{C},n\in\mathbb{Z}$. Then $z^n=\left( e^{\log z} \right)^n = e^{n\log z}$. We thus define the complex exponent as a function of $z$ (note that for any single value of $z$ the function is always well valued, we only examine for arbitrary $z$). 
+
+$$z^\alpha=e^{\alpha \log z}$$
+
+This is illuminating because the various branches of $\log z$ could produce multiple solutions, and thus the above equality is a set equivalence. For example, $z^i = e^{i\log z} = e^{i\Log \abs{z}}e^{-\Arg z - 2\pi k}$, and so there must be infinitely many branches because of the real exponent.
+
+We then check to see what conditions allow $z^\alpha$ maps to a finite number of branches. We write again $z^\alpha=e^{\alpha\left( \Log\abs{z}+i\Arg z + 2\pi i k \right)}$. Examining this, we see that if for $k_1 \neq k_2$ we find $\alpha k_1 = \alpha k_2+ n$ since $2\pi i$ is the periodicity of the exponential. Solving for $\alpha$, we find that only real, rational values yield a finite number of solutions to $z^\alpha$. 
+
+Now, let $\alpha=m/n$, how many values are there? 
+\begin{align*}
+	z^{m/n} &= e^{\frac{m}{n}\Log\abs{z}}e^{i\frac{m}{n}\left( \Arg z + 2\pi k \right)}\\
+	&= r^{m/n}e^{i\frac{m}{n}\left( \Arg z + 2\pi k \right)}
+\end{align*}
+We thus see that $k=n$ returns us to our original value, just like our earlier result about the number of roots. 
+
+We've been overlooking an important mindbending aspect. Complex functions map complex $z$ to complex $w$, so it is a four dimensional function. We try to visualise this in many ways. First, we examine them as mappings. Firstly, it is impossible to draw a 2D function of two variables, obviously, but we can examine the image in $w$ as $z$ varies to get an idea of how the function maps. We can get some terminology out of the way by calling a mapping $f(z)$ one-to-one if $f(z_1)=f(z_2)$ implies $z_1=z_2$. We use some examples:
+\begin{itemize}
+	\item $w=z^2=r^2e^{i2\theta}$ Take the ``quarter disc'' $S$ in $z$ such that $r<r_0,\theta\in[0,\pi/2]$. This then maps to $r'<r_0^2,\theta'\in[0,\pi]$ in the $w$ plane. One-to-one over our quarter disc, but not one-to-one over entire $z$ plane.
+	\item $w=\sqrt{z} = \sqrt{r}e^{i\Arg z/2 + i\pi k}$ Multivalued by $k=0,1$. Inverse to above example, so since above not one-to-one over entire plane, explains why present is multivalued.
+\end{itemize}
+We can also examine via Reimann surfaces, where we ``take a walk'' in the complex plane and increase the number of ``levels'' to our walk per multivalued point. Let's take $\sqrt{z}$ as one example. If we start at some point $z_0$ and traverse the circle circling the origin, we eventually return to $z_0$, but it maps to a different $w$! So we do another loopidyschoop, and suddenly we're back to $z_0$. We then see that we've traversed two ``levels'', and therefore that the function is doubly multivalued. This sort of surface, the union of the two ``levels'' is considered a Reimann surface, each level over which the function is single valued.
+
+So now we're going to draw a Reimann surface, defying our stipulation above that one cannot draw 2D plot of two variable function. I can't draw it here :( But the reason it is difficult to visualise is because it is in four dimensions, of course, periodic in four dimensions. Note that when we map $w$ onto the Reimann surface of $z$, it becomes one-to-one, because points on the Reimann surface that have the same coordinates in $z$ are still different points if they are on different ``sheets.''
+
+On the other hand, if we draw the Reimann surface for a function like $\log z$, we have infinitely many ``sheets'' in our spiral. $\log z$ becomes a singly-valued function on that surface. 
+
+\chapter{10/7 - Inverse trig, infinity, stereographic projections, branch points/cuts}
+
+Let's examine the relationships between elementary functions. We have the inverses relationship between exponentials and logs, and the exponential functions define the trig functions. We will soon find that we can derive inverse trig functions from the inverse of the exponential function, namely the complex logarithm. Let's define $w=\sin^{-1}z$ such that $z=\sin w$. We can then quickly derive that
+$$e^{2iw}-2ize^{iw}-1=0$$
+We thus find that $w=\sin^{-1}z=-i\log\left[ iz+\left( 1-z^2 \right)^{1/2} \right]$. While the infinitely many valued logarithm may make this function a little sary, we've been dealing with infinite valued inverse sines all along, such as $\arcsin\frac{1}{2}$, which has two solutions and then $2\pi$'s. However, the Reimann surface is a poopface to draw, because there's infinite levels.
+
+Useful stuff:
+$$\cos^{-1}z = i\ln\left( z-i(1-z^2)^{1/2} \right), \tan^{-1}z = \frac{1}{2i}\log\frac{i-z}{i+z}$$
+
+Usually, we will not solve on entire Reimann surfaces, but sometimes we will restrict our solutions to a single sheet of the Reimann surface, a single branch of the function, which will help eliminate some multivaluedness.
+
+Let's define a ``point at infinity.'' This is the quantity as the modulus of $z$ approaches infinity, or as you go infinitely far from the origin in \emph{any} direction (i.e. all infinities are alike). Let's examine $w=\frac{1}{z}$ and examine $f\left( \frac{1}{w} \right), w\to 0$. We call the complex plane including the ``point'' at infinity the \emph{extended} complex plane. We then introduce a projection called the \emph{stereograpic projection} which maps all points onto the unit sphere. We center the sphere at the origin of course, such that half the sphere is above the complex plane and half is below. We project numbers $z$ by drawing a line from the point to the North pole of the sphere (farthest point from the complex plane), and the point of intersection on the sphere is the point to which it is mapped. Note that numbers $|z|>1$ map to northern hemisphere, $|z| < 1$ maps to southern hemisphere, and $|z|=1$ maps to the equator. Then, it is clear that the ``point'' at infinity is the north pole!
+
+We introduce branch cuts, where we can restrict multivalued functions to being single valued by preventing transition from one branch to another. For example, let's look at $\log z = \Log|z|+i\theta$. We know that this function is multivalued with period $2\pi$. So we can define a restriction such as $-\pi < \theta \leq \pi$, which then turns this function single valued over this branch cut. There's obviously an infinite number of such branch cuts, not necessarily straight (such a cut also forces the Reimann surface to a single sheet). There are ``special points'' for multivalued functions, such as in the case of $\log z$, where we cannot circle the origin without entering a new branch. We will examine the properties of these points and identifications next.
+
+\emph{Branch points} are what we call these points that we just identified, and the technical definition is that the function is discontinuous after a small circuit around the point, small being mathematically defined. We can check the point at infinity first, because that sounds like a lot of fun. There are two options: we can check $z=\frac{1}{w}$ and check whether $w=0$ is a branch point. Equivalently, we could draw a \emph{huge} loop such that it circles the entire $Z$ plane and includes all finite branch points, and check if that produces a discontinuity.
+
+As an example, let's look at $\log z$ again. We've already noticed that $z=0$ is a branch point of the function. We note that there are no other finite branch points for $\log z$: the argument is defined with respect to the origin, so $\log z = \Log|z|+i\arg z$ obviously produces non-branch point by a property of the $\arg$ function. We then check the point at infinity. We use our first way, $f\left( \frac{1}{w} \right) = -\log w$, which clearly has a branch point at $w=0$ (that was disgustingly beautiful), so $\log$ has a branch point at $\infty$.  Secondly, since we know $0$ is the only finite branch point, our circle around $0$ also is a circle around all finite branch points and thus since it is discontinuous $\infty$ is discontinuous as well.
+
+We see from this a bigger principle: no function can have only one branch point, as once we circle a single branch point and identify a discontinuity, by definition, the circle must either circle infinity or exclude another branch point! We then see our branch cut cuts from a branch point to another branch point in the case of $\log z$, from $0$ to infinity! This is true for all branch cuts. 
+
+We can then investigate our branch cuts for $\log z$ in the stereographic projection. We see that the branch cut constitutes half of a greater circle along the sphere, pole to pole. We thus see that a range of $\theta$ yields a branch cut and selects a single Reimann surface. We will investigate these more in depth next class. 
+
+\chapter{10/9 - Branch cut examples}
+
+Branch cut examples! Let's have $f(z)=z^{1/2}$. This is a multiple valued function, so we anticipate being able to use a branch cut. We note that $0$ is clearly a branch point around $z=0$. No other finite point is a branch point, by simple analysis, and so there must be a second branch point at $z=\infty$. We can specify a branch cut then $0\leq \arg z < 2\pi$ that connects our branch points. 
+
+We now inspect $f(x)=(z-1)^{1/2}(z+1)^{1/2}$. We know that each term individually has branch points at $\pm1$ respectively. We can examine for $x=1/w$, so
+$$f\left( \frac{1}{w} \right) = \frac{(1-w)^{1/2}(1+w)^{1/2}}{w}\approx\frac{1}{w}$$
+when $w \to 0$. We note that this is not a multivalued function, so $z=\infty$ is not a branch point.
+
+We now select a branch of the function, changing the function to polar form to define the branch in terms of angles. We define the polar form with respect to either branch point, so $f(z)=(r_1r_2)^{1/2}e^{i/2(\theta_1+\theta_2}$, where $r_1,r_2,\theta_1,\theta_2$ are the respective radii and angles with respect to the branch points. Let's choose the branch cut $0 \leq \theta_1,\theta_2 > 2\pi$. We will then take a ``walk'' in our complex plane. Note that we keep our eye out for a discontinuity in the function rather than anything else.
+
+We start to the right of both branch points, and find $\theta_1=\theta_2=0$. Then, as we go in between the two (going above the real axis), we can find more values, and then we can go to the left of $-1$ and then back under the real line to where we started, finding our $\theta_i$ values all along. At the end of our analysis (where we have assigned $\theta$ values to the top and bottom of the real number line at all three intervals $<-1,>1$ and in between), we find a branch cut between $x=-1,1$. 
+
+Let's try a different branch cut, $0 \leq \theta_1 < 2\pi, -\pi < \theta_2 \leq \pi$. If we perform the same analysis for this new set of ranges to check how the function is affected when crossing the real axis, we find that the region between $1,-1$ is actally well-behaved while the function is discontinuous outside the two points. Then, for this choice of angles we have a different branch cut, namely going from $1$ to $-1$ while passing through the point at infinity. The stereographic projection shows both of these branch cuts to be virtually identical. 
+
+We try one more example! Quickly Niles, gogogo (5 minutes left). $f(z)=\arctan z \frac{1}{2i}\log \frac{i-z}{i+z}=\frac{1}{2i}\left[ \log (i-z) - \log(i+z \right]$. We expect branch points at $\pm i$, and we expect no other branch points due to a simple local analysis around general complex point. We note then that $f\left( \frac{1}{w} \right) \approx \log (-1)$ as $w \to 0$, and so $\infty$ is not a branch point. The branch cut then goes from/to $\pm i$ via a path dependent on our constraints of polar angles. We find then that $F(z) = \frac{1}{2i}\Log \abs{\frac{i-z}{i+z}} + \frac{\theta_1-\theta_2}{2}$, and so drawing our analysis out we see that a jump in either $\theta_1$ or $\theta_2$ (but if both jump in a way that the difference is continuous, we're good) yields a discontinuity in the function. I can't draw this out but I think it's clear.
+
+\chapter{10/11 - Differential Calculus}
+
+\emph{Domain} is open connected set. A \emph{Region} is the domain plus some (or all (closed region), or none) boundary points. Limits are defined in the complex plane the same way as a traditional single dimensional definiton, but note that the absolute value is now much more powerful (paraphrased from class handout). 
+
+We will now examine how derivatives work in the complex plane. Formally:
+\begin{center}
+	For an $f(z)$ defined in an $\epsilon$-neighborhood of $z_0$, then the derivative of $f$ at $z_0$ is given by
+	$$f'(z_0) = \lim_{z \to z_0} \frac{f(z)-f(z_0)}{z-z_0}$$
+	if the limit exists
+\end{center}
+
+Note that the limit must exist in every direction. We can of course simplify that notation with the conventional $\Delta z = z-z_0$. We can also set $\Delta w = f(z+\Delta z)  f(z)$, and write $f'(z) = \lim_{\Delta z \to 0}\frac{\Delta w}{\Delta z}$. 
+
+Let's first examine the simple example $f(z)=z^2$. We want to evaluate the limit as $\Delta z \to 0$ of $\frac{(z+\Delta z)^2 - z^2}{\Delta z} = 2z + \Delta z$ which gives our expected result (no complex limit involved).
+
+Let's now try $f(z) = \bar{z}$. We want to take $\Delta z\to 0, \frac{\bar{z+\Delta z}-\bar{z}}{\Delta z} = \frac{\bar{\Delta z}}{\Delta z}$. We examine this in very simple limits, $\Delta z \in \mathbb{R}$ produces limit $1$, while $\Delta z \in \mathbb{I}$ produces limit $-1$, so the limit obviously doesn't exist. 
+
+We'd thus like to figure out necessary and sufficient conditions for a derivative to exist. These conditions are called the Cauchy-Reimann equations. Start by supposing that the limit $\frac{\Delta u + i \Delta v}{\Delta x + i \Delta y}$ exists for any direction $\Delta x \to 0, \Delta y \to 0$. We choose two possible limiting directions, $\Delta x = 0, \Delta y = 0$. The former case produces conditions $\pd{u}{x} + i\pd{v}{x}$ while the latter case then produces $-i\pd{u}{y} + \pd{v}{y}$ for the expression of the limit. In order for these two to be equal, we see that a necessary condition for existence must be
+$$\pd{v}{y} = \pd{u}{x} , i\pd{v}{x}=-i\pd{u}{y}$$
+
+We now discuss differentiation rules below:
+\begin{itemize}
+	\item $(f+g)' = f'+g'$
+	\item $(fg)' = f'g + g'f$
+	\item $(\frac{f}{g})' = \frac{gf'-fg'}{g^2}$
+	\item $f'(g(z)) = f'(g(z)) g'(z)$
+\end{itemize}
+We are much more concerned than differentiability about analyticity: a function is \emph{analytic} at a point $z_0$ if $f(z)$ is differentiable in the neighborhood around $z_0$. If a function is differentiable over a domain then the function is analytic over the domain. If we want to determine analyticity of a function over some closed region, then we have to deonstrate differentiability over some open region of which the closed region is a subset.
+
+We examine analyticity examples. $f(z) = e^z$. We can rewrite $e^z = e^xe^{iy} = e^x\cos y + i e^x\sin y$, which then gives our $u,v$ in terms of $x,y$. The partials satisfy C-R equations. We can then evaluate $f'(z) = \pd{u}{x} + i\pd{v}{x} = e^z$. Thus, we see that $e^z$ is entire.
+
+\chapter{10/14 - More Analyticity, Integral Calculus!!}
+
+Recall that analyticity implies differentiability in a neighborhood. 
+
+Let's examine $f(z) = |z|^2$, yielding $u = x^2 + y^2, v = 0$ real and imaginary parts of $f$. Recall that C-R requires $U_x = V_y, V_x = -U_y$, where this is shorthand for partals. This is only satisfied in our case for $x=y=0$. This function is then only differentiable at $x=y=0$ and nowhere analytic.
+
+Let's next examine $f(z) = \bar{z}$. We already saw that this was nowhere differentiable, so it is nowhere analytic.
+
+There's a curious result: Functions that cannot be written in terms of $z$ alone (not real/imaginary/conjugate parts) are never analytic, and vice versa for can be written. This will be proven later. We can think of this as ``respecting the complex nature of $z$.'' So $x+3iy$ is not analytic, while $3x + 3iy$ is.
+
+We know that $\sin z, \cos z$ are entire because $e^{\pm iz}$ are entire. However, $\tan z$ is not entire because it is discontinuous when $\cos z$ vanishes.
+
+We will talk now about $\log z = \Log \abs{z} + i\arg z$. Let's focus on a specific branch $-\pi < \arg z < \pi$ and exclude the negative real axis, also keeping our function singly valued. This is a bit tricky, because we need to find a differentiable formulation for $\arg z$. We will use the $\arctan$ function. We will restrict its range to $\left( -\frac{\pi}{2},\frac{\pi}{2} \right)$, and we know $\rd{}{x}\arctan x = \frac{1}{1+x^2}$. Then, over the first and fourth quadrants of the complex plane we can write $\Arg z = \arctan \frac{y}{x}$. We want two more overlapping half planes, so that the values coincide in overlapping regions. Thus, for our third and fourth quadrants we can write $\Arg z = -\arctan \frac{x}{y} - \frac{\pi}{2}$, and for our first and second quadrants we can write $\Arg z = -\arctan \frac{x}{y} + \frac{\pi}{2}$. FInally, we can eliminate the $\arctan$ from our equations, and using our C-R conditions we can find 
+$$U_x = \frac{x}{x^2 + y^2}, U_y = \frac{y}{x^2 + y^2}, V_x = -\frac{y}{x^2 + y^2}, V_y = \frac{x}{x^2 + y^2}$$
+so C-R is satisfied. We note that we don't need to worry about the origin because it is not in our cut plane. Thus, the derivative of the log function is $f'(z) = \frac{x-iy}{x^2 + y^2} = \frac{1}{x+iy} = \frac{1}{z}$ in the cut plane. Woopee!
+
+Next example, $f(z) = z^\alpha$. We can write 
+\begin{align*}
+	\rd{}{z}z^\alpha &= \rd{}{z}\left( e^{\alpha\log z} \right)\\
+	&= e^{\alpha\log z} \rd{}{z}\alpha \log z\\
+	&= \frac{\alpha}{z}e^{\alpha \log z} = \alpha \frac{z^\alpha}{z}
+\end{align*}
+so $\rd{}{z}z^\alpha = \alpha \frac{z^\alpha}{z}$ in the cut plane for each branch of $z^\alpha$. Alternatively, $\rd{}{z}z^\alpha = \alpha z^{\alpha-1}$, where both sides use the same branch of $\log z$, which was used in the derivation.
+
+Time to go on to integral calculus. Eventually, we want to be able to integrate along contours in the complex plane. A big first approach is to parameterize our contours with respect to some real variable $t$ and integrate by $t$. A second approach is to define antiderivatives in the complex plane and use the endpoints of the values. A third approach, the final approach, is to do integrals without antiderivatives using residue calculus.
+
+We will start with the first method. Consider a complex function $f(t), t \in \mathbb{R}$. Consider $f(t) = u(t) + iv(t)$. We then note that $u(t),v(t)$ are real, and so we can just integrate these as real functions! Familiar grounds. This gives $f'(t) = u'(t) + iv'(t)$. Say that $f(t)$ is integrable iff $u,v(t)$ are integrable, then we can define $\int f(t) dt = \int u(t) dt + i\int v(t) dt$. If $f(t)$ is continuous on some interval and there exists some antiderivative $F(t)$, then we can write $\int f(t) dt = F(b) = F(a)$, an extension of the fundamental theorem of calculus for reals. 
+
+Let's examine $\int_0^\pi e^{it} dt = \left.\frac{e^{it}}{i}\right|_0^\pi = 2i$. We note that the hidden steps are that $e^{it}$ is continuous over $t\in[0,\pi]$, and the antiderivative can be checked by differentiating the antiderivative.
+\chapter{10/16 - Contour Integration}
+
+Parameterize an arc in the complex plane with a real variable $t$ such that $z(t) = x(t) + iy(t)$, where $t \in \left[ a,b \right]$. Call a smooth arc one that has a continuous nonzero derivative on $\left[ a,b \right]$, which gives the arclength $L = \displaystyle\int\limits_{a}^{b}|z'(t)|\;dt$. There are always many admissible parameterizations for the same path. Suppose we want the line from $0$ to $1+i$. We can write one such as $z(t) = t+it$, or $\sqrt{2}\left( \sin t + i \sin t \right)$
+
+A \emph{contour} is just a joining of smooth arcs. A \emph{simple} contour means it doesn't self-intersect, and a \emph{closed} contour means initial equals final. The positive direction is such that the bounded interior remains on the left. We will define the integral along $C$ to be using some admissable parameterization $z(t)$ such that $\int_C f(z) dz; = \int f(z(t)) z'(t) dt$, which then reduces to the real-parametered integrals we did last class. If $f(z(t))$ is piecewise continuous, then the integral exists since by definition of countour $z'(t)$ is piecewise continuous. Let's do our first contour integral.
+
+Consider $\int_C f(z) dz$ for $f(z) = \frac{1}{z-z_0}$. Let $C$ be the closed countour $|z-z_0| = r_0$. Let us paramaterize $z(t) = z_0 + r_0e^{it}$ over $t \in [0,2\pi]$. We thus obtain
+\begin{align*}
+	\int_C f(z)\; dz &= \displaystyle\int\limits_{0}^{2\pi}f(z(t)) z'(t)\;dt\\
+	&= \displaystyle\int\limits_{0}^{2\pi}\frac{ir_0 e^{it}}{z_0 + r_0e^{it}-z_0}\;dt\\
+	&= i\displaystyle\int\limits_{0}^{2\pi}\;dt
+\end{align*}
+Thus, $\int_C \frac{dz}{z-z_0} = 2\pi i$.
+
+We will discuss bounding contour integrals, but first we discuss the lemma: if $f(t)$ is continuous, then we know $\abs{\int f(t)\; dt} \leq \int \abs{f(t)} \; dt$. This is a straightforward lemma: expressing $\int f(t) \; dt = re^{i\theta}$, we find $r = \abs{\int f(t)\; dt}$. If we then move $e^{-i\theta}$ inside the integral (cancelling the one on the RHS), we can use that $r \in \mathbb{R}$ that $r = \int \Re e^{-i\theta}f(t)\; dt$. We note that the real part is bounded by $\abs{f(t)}$, as the real is less than the modulus of the whole which is bounded by the modulus of $f(t)$, and so we verify that $\abs{\int f} \leq \int\abs{f}$. 
+
+We then look at the ML bound. By our previous lemma, $\abs{\int_C f(z)\; dz} \leq \displaystyle\int\limits_{a}^{b}\abs{f(z(t))z'(t)}\;dt$. If then we can bound $\abs{f(z)} \leq M$, then we know $\abs{\int_C f(z) \; dz} \leq M \displaystyle\int\limits_{a}^{b}\abs{z'(t)}\;dt = ML$, where $L$ is the arclength.
+
+Let's examine the conuter integral $\int_C \frac{\sqrt{z}}{z^2 + 1}\; dz$ where $C$ is the half-circle about and above the origin as the radius approaches infinity. We pick the branch $\sqrt{z} = \sqrt{r} e^{i\theta/2}, \theta \in \left( -\frac{\pi}{2},\frac{\pi}{2} \right]$. We can bound $\abs{z^{1/2}} = \sqrt{R}$, $|z^2+1| \geq R^2 - 1$, where $R$ is the radius of the contour. Thus, we compute $M = \frac{\sqrt{R}}{R^2 - 1}$, and so we know our integral is bounded by $ML = \frac{\pi R \sqrt{R}}{R^2 - 1}$, and so we know that this integral goes to $0$ as $R$ goes to infinity, because its bound goes to $0$. 
+
+\chapter{10/18 - Fundamental theorem of contours}
+
+We first discuss the Fundamental theorem for countours: If $f(z)$ is continuous in a domain $D$ and has antiderivative $F(z)$, then $\int_C f(z) dz = F(z_2) - F(z_1)$. We can prove this by straightforward parameterization.
+
+We will try some contour from $-i$ to $i$ that remains nonpositive in real part that is integrated over $\frac{1}{z}$. We will make the branch cut $0 < \arg z < 2\pi$ in the antiderivative $F(z)$. This then yields straightforwardly our integral $\int_C \frac{dz}{z} = -i\pi$. Simple.
+
+Let's try the same thing for a contour going over the arc with nonnegative real parts (i.e. counterclockwise). Our branch cut then becomes $-\pi < \arg z < \pi$. and we obtain the value of the integral to be $i\pi$.
+
+If we try to take the integral along the entire unit circle however, the branch cut intersects the contour, at which point $F(z)$ is not defined. Hence, we cannot evaluate with antiderivative directly (we know the answer is $2\pi i$ from parameterization technique discussed earlier). 
+
+Equivalence theorem: The following are equivalent. $f$ has an antiderivative in $D$, every closed contour integral of $f$ in $D$ vanishes, and contour integrals of $f$ in $D$ are independent of path.
+
+Examples (he proved some stuff I left out b/c forgot a problem on HW). $\int_C \frac{1}{z^7} dz$ yields a clean antiderivative and thus the integral is $-\frac{1}{6}\left[ \frac{1}{z_2^6} - \frac{1}{z_1^6} \right]$. Of course, if $C$ is closed then the integral is $0$. Of course, if $C$ is closed then the integral is $0$.
+
+\chapter{10/21 - Cauchy-Goursat Theorem}
+
+The \emph{Cauchy-Goursat Theorem} says that if $f$ is analytic and interior to $z(t)$. We can then write parameterize $z=x+iy$  and $f(z) = f(u+iv)$ to write
+\begin{align*}
+	\int_C f(z) dz &= \int ux' - vy' dt + i\int vx' + uy' dt\\
+	&= \int_C u\; dx - v\; dy + i\int_C v\;dx + u\; dy
+\end{align*}
+
+We can then apply Green's theorem:
+\begin{align*}
+	\int_C f(z) dz = \iint_R \left( -\pd{v}{x} - \pd{u}{y} \right)dx dy + i\iint_R\left( \pd{u}{x} - \pd{v}{y} \right)dx dy
+\end{align*}
+
+where $R$ is the area bounded by $C$. Noticing that these are the Cauchy-Reimann conditions, we note that $\int_C f(z) dz$. Thus, formally:
+\begin{center}
+	If $f(z)$ is analytic on and inside a simple closed surface $C$, then $\int_C f(z) dz = 0$.
+\end{center}
+
+We then examine the case if the countour is not simple (self-intersecting). Define a \emph{simply-connected} domain $D$ to be one such that any contour in $D$ encloses only points in $D$. We can then extend the Cauchy-Goursat theorem to simply connected domains: if $f(z)$ is analytic on a simply-connected domain $D$, then for any $C$ in $D$ the line integral vanishes.
+
+We then examine the equivalence theorem in the light of the Cauchy-Goursat theorem. Recall that one equivalence theorem aspect is that if closed contour integrals vanish then everything else. Cauchy-Goursat then tells us that if $f$ is analytic over a simply connected $D$, then everything in the equivalence theorem is true!
+
+Let's try an example: Take $\int_C \frac{e^z}{z^3-8}dz$. We note the singularities occur at $z^3-8=0$. We can consider the domain, that bounded by $|z| < 2$, and note that the integrand is analytic over this simply connected domain. Thus, if $C$ lies within this domain we are done immediately. 
+
+We examine C-G over multiply connected domains. Let there be some positive simple closed contour $C$ and negative simple closed contours $C_i$ interioer to $C$. Then we can extend very simply:
+$$\int_C f(z) dz + \sum \int_C f(z) dz = 0$$
+
+\chapter{10/23 - Deformation of Integrals, Cauchy Integral Formula, Example by lima bean}
+
+We will take the mulitply connected regions last time and get some more mileage out of it. We will examine \emph{deformation of contours}: If $C_1,C_2$ are positive simple closed contours with $C_2$ interior and $f(z)$ is analytic on and between the contours, then the two contours are equal. This allows us to replace complicated contours with more convenient ones. Example time. 
+
+Let's take the contour $\int_C \frac{dz}{z-z_0}$ over the ``lima bean'' (I don't know why this is so funny, but I can't stop laughing) about $z_0$. We can then apply deformation of contours and turn this lima bean into a smaller circle (something about Niles Pierce and lima beans steals my heart), and we've already taken the integral over a small circcle, and we know that the integral is $2\pi i$. 
+
+Another example, $\int_C \frac{dz}{z^2-9} = \frac{1}{6(z-3)} - \frac{1}{6(z+3)}$. Suppose we have a contour that surrounds $z=-3$ but not $z=3$. We can then deform the contour to a small circle about $z=-3$. The $\frac{1}{z-3}$ term goes to $0$ by Cauchy-Goursat, and we already know how to solve the other one, namely $-\pi i/3$. 
+
+Cauchy Integral Formula: if $f(z)$ is analytic inside a positive simple closed contour $C$ with $z_0$ interior to $C$, then $f(z_0) = \frac{1}{2\pi i}\int_C \frac{f(z)}{z-z_0} dz$. The proof is instructive. First, we can deform our contour $C$ into a small circle $C_0$ surrounding $z_0$, because the integrand is analytic everywhere but $z=z_0$ by definition. We can then rewrite the integrand as $\int_{C_0} \frac{f(z_0)}{z-z_0} + \frac{f(z) - f(z_0)}{z-z_0} dz$. The first term is just $2\pi i$ by our previous work, so we focus on the latter. 
+
+We can bound the numerator of the second term because $f$ is continuous, so for all $\epsilon > 0, \exists \delta > 0$ such that $\abs{f(z) - f(z_0)} < \epsilon, \abs{z-z_0 < \delta}$ (by definition of continuity). Choose the radius of the circle $\rho < \delta$, which then under the $ML$ bound shows that the integral of this integrand is $< \epsilon/\rho = 2\pi \epsilon$, and thus this term vanishes for sufficiently small $C_0$. Rewriting then, we have
+$$\int_C \frac{f(z)}{z-z_0} dz = \int_{C_0} \frac{f(z_0)}{z-z_0} + \frac{f(z) - f(z_0)}{z-z_0} = 2\pi if(z_0)$$
+
+which completes our proof. Let's make a review over the integral formulations we've learned. Given some $f(z)$ analytic on and insside psoitive simple closed contour $C$ with $z_0$ inside $C$:
+\begin{itemize}
+	\item $\int_C f(z) dz  = 0$ - Cauchy-Goursat
+	\item $\int_C \frac{dz}{z-z_0}  dz= 2\pi i$ - Deformtion of contours
+	\item $\int_C \frac{f(z)}{z-z_0} dz = 2\pi i f(z_0)$ - Cauchy Integral formula
+\end{itemize}
+
+Example time! $\int_C \frac{e^z}{z^2+4}dz$, where $C$ is a lima bean about $2i$. We note that $e^z$ is entire, and we have singularities at $\pm 2i$. We then proceed not by separation of variables but by rewriting $\int_C \frac{e^z/(z+2i)}{z-2i}dz$. The top is still analytic over our lima bean, so we can apply Cauchy Integral now, which is just $2\pi i \frac{e^{2i}}{2i + 2i} = \frac{\pi/2}{e^{2i}}$.
+
+Let's do the same example but for a contour that encloses both singularities. We can deform into two separate integrals about each of the singularities (I think Cauchy-Goursat states this is allowable too, no?), and then it's just a straightforward application. We obtain $\pi i \sin 2$. 
+
+Let's do something real-worldy/stupid! Let's try to solve the integral $\displaystyle\int\limits_{-\infty}^{\infty}\frac{dx}{x^2+4}$. Consider the semi-circular contour of radius $R$ on the real axis (i.e. semi circle with diamater along eral axis). We thus compute the integral $\int_C \frac{dz}{z^2+4}$. We know how to solve this integral via Cauchy Integral Formula, which is $\pi/2$. We then split the integral into the two parts of the semicircle $C_R$ and the real axis. We want to bound the $C_R$ contribution via the $ML$ bound. We note one such bound can be $\abs{\int_{C_R} \frac{dz}{z^2+4}} \leq \frac{1}{R^2-4} \cdot \pi R$, which vanishes as $R \to\infty$ by the ML bound. We win! The integral must then be $\frac{\pi}{2}$. 
+
+\chapter{10/25 - Generalized Cauchy Integral Formula}
+
+We examine derivatives of analytic functions. Suppose $f$ is analytic on and inside a positive simple closed contour $C$, then by Cauchy Integral
+$$f(z) = \frac{1}{2\pi i}\int_C \frac{f(s)}{s-z}ds$$
+
+The derivative of this expression is then
+$$g(z) = \frac{1}{2\pi i} \int_C \frac{f(s)}{(s-z)^2}ds$$
+
+This is a straightforward proof by plugging in the Cauchy Integral formula to the definition of derivative. An ML bound will be necessary. The proof is left as an exercise to the reader.
+
+We can do this again to find $f"(z)$ (no, Niles doesn't want to do it again, so he is just going to assert this one). This then yields
+$$f"(z) = \frac{1}{\pi i} \int_C \frac{f(s)}{(s-z)^3} ds$$
+
+This allows us to note: if $f$ is analytic at a point $z$, then $f"$ exists in a neighborhood of $z$ and so $f'$ is analytic at $z$. Apply ad infinitum! This is the power of the Cauchy-Goursat theorem, because even not presupposing analyticity of the derivative we can prove it using the formula. This yields the super powerful theorem
+\begin{center}
+	If $f$ is analytic on a domain $D$ then its derivatives exist and are analytic in $D$. 
+\end{center}
+
+We will call this the Generalized Cauchy Integral Formula: Suppose $f$ is analytic on and inside a positive simple closed contour $C$ with $z_0$ inside $C$. Then
+$$f^{(n)}(z_0) = \frac{n!}{2\pi i} \int_C \frac{f(z)}{(z-z_0)^{n+1}}dz$$
+
+Proof is just inductive. Let's try some examples. Simplest one! $\int_C \frac{dz}{(z-z_0)^{n+1}}$ with some stupid $C$ enclosing $z_0$. Cauchy Integral formula tells us then that
+$$\int_C \frac{dz}{(z-z_0)^{n+1}} = \frac{2\pi i}{n!}f^{(n)}(z_0)$$
+
+where $f(z) = 1$. Thus, for $n=0$ we have our classic case $2\pi i$. Interesting, all other values of $n$ are $0$. 
+
+Let's examine another example $\int_C \frac{e^z}{z^5}dz$. We can easily use Cauchy Integral for $f(z) = e^z$ and find $\int_C \frac{e^z}{z^5}dz = \frac{2\pi i}{4!}f^{(4)}(0) = \pi i/12$.
+
+Let's try the following example: $\int_C \frac{z^3 + 2z}{(z-1)(z+2)^2} dz$, where $C$ is a figure eight enclosing both. First we can deform into two separate integrals suurrounding either singularity; call these $C_1$ for the one surrounding $z=1$ and $C_2$ for the one negatively surround $z=-2$. We then have two contour integrals
+$$\int_C \frac{z^3+2z}{(z-1)(z+2)^2} = \int_{C_1} \frac{(z^3+2z)/(z+2)^2}{z-1}dz - \int_{C_2} \frac{(z^3+2z)/(z-1)}{(z+2)^2} dz$$
+
+which gives Cauchy Integral form for both of these. Evaluation is easy, and yields $\frac{22\pi i}{3}$.
+
+Let's try something realistic: $\displaystyle\int\limits_{-\infty}^{\infty}\frac{e^{ix}}{\left( \pi^2+x^2 \right)^2}\;dz$. Let's try to consider this as a contour integral, with positive semicircle again (on the real axis). We will try to ML bound the arc portion and leave the real axis portion as the actual integral. We note that our contour integral is in Cauchy Integral form for $f(z) = e^{iz}/(z+\pi i)^2$ for $n=2$. This yields answer $\frac{e^{-\pi}(1+\pi)}{2\pi^2}$.
+
+We then ML bound the complex semicircle. We recall that our contour is over $y \geq 0$, so $e^{iz} \leq 1$, and then this gets an easy $M=\frac{1}{(R^2-\pi^2)^2}$, which then gets bound by the ML bound very easily to go to $0$, and so we obtain that the contour contribution is $0$ and so our above answer is the original integral we sought. 
+
+\chapter{10/28 - Petite results before midterm}
+
+We will cover some petite results before the midterm. The first is Morera's Theorem: Since the derivatives of an analytic function are analytic, if $f(z)$ has an antiderivative in $D$, then $f(z)$ is analytic in $D$. We can connect this to the equivalence theorem and obtain: if $f$ is continuous and every closed contour integral vanishes, then $f(z)$ is analytic in $D$.
+
+We then jump to Cauchy's Inequality (it's a wonder they find so many things to tack onto the end of Cauchy's name), which states: if $f$ is analytic on and inside the positive circle of radius $|z-z_0| = \rho$ with $\abs{f(z)} \leq M$ (possible because $f(z)$ is analytic and thus boundable on a finite set), then $\abs{f^{(n)}(z_0)} \leq \frac{n!M}{\rho^n}$. This is an easy proof with ML bound and Cauchy Integral Formula. We prove this but I don't want to take notes on this.
+
+We then come to Liouville's Theorem: If $f(z)$ is entire and bounded thet $f(z)$ is constant. We can demonstrate this one (interesting) by applying Cauchy's Inequality to the derivative $\abs{f(z)} \leq M, \abs{f'(z)} \leq M/\rho$. We note that any $\rho$ is allowed since the function is entire, so the bound vanishes, and $f'(z_0)=0$. But then $z_0$ is arbitrary as well, so $f'(z) = 0$ and we are done.
+
+We can do an example using Liouville's Theorem: suppose $f(z)$ is entire with $\abs{f'(z)} \leq M$. We then know that $f'(z)$ is constant, and we can integrate the analytic derivative and obtain a linear function in $f(z)$. 
+
+We now discuss Harmonic functions, which is a real valued function that satisfies the Laplace equation in some domain. The Laplace equation is simply $\nabla^2 f = 0$. Consider the C-R equations $\pd{u}{x} = \pd{v}{y},\pd{v}{x} = -\pd{u}{y}$. Taking second partials and assuming continuity of the partials, then we arrive at the equations
+$$\ptd{u}{x} + \ptd{u}{y} = 0, \ptd{v}{x} + \ptd{v}{y} = 0$$
+
+We can then continue to apply C-R to these equations and obtain that all partials of an analytic function over some domain $D$ are continuous. This then gives that $f(z) = u(x,y) + iv(x,y)$ have $u,v$ harmonic in $D$!
+
+We pose the problem then: if $u(x,y)$ is harmonic, can we find a harmonic conjugate $v$ such that $f = u+iv$ is analytic in $D$? Suppose we have some function $u(x,y) = x^3 - 3xy^2$. We note that this function is harmonic by taking derivatives, and we can also apply C-R to construct partials of $v$ and integrate to find $f$. 
+\chapter{10/30 - Makeup: Orthogonal level curves, potential flow}
+
+Orthogonal level curves: If $f(z)$ is analytic, then level curves $u(x,y) = C_1$ and $v(x,y) = C_2$ are orthogonal where $f'(z) \neq 0$. A proof follows by using C-R to simplify $\nabla u \cdot \nabla v$.
+
+We can then examine potential flows for the Laplace equation $\nabla^2 \phi = 0$. We then know that the velocity $\vec{q}$ at various points is orthogonal to the level curves $\phi = C$. Moreover, level curves of the harmonic conjugate are stream lines
+$$\Phi(z) = \phi(x,y) + i\psi(x,y)$$
+where $\Phi$ is the complex potential, $\phi$ is the velocity potential, and $\psi$ is the stream function. If $\psi_{1,2}$ are harmonic then we can use superposition to build up a solution since Laplace is linear. All analytic functions are solutions to some flow.
+
+Let's do a quick example, $\Phi(z) = az$. We then know this to be $\Phi(z) = ax + iay$, and so this gives us $\phi(x,y) = ax, \psi(x,y) = ay$. This then shows that $\psi = Cy$ are the fluid flow lines because the fluid flow lines are orthogonal to the level curves $\phi = ax = C, x = C$. 
+
+By definition then, we know that the flow must be equal to the gradient of the velocity potential, so we can just take the gradient in this case and obtain $a\hat{x}$ for our flow as we expect. 
+
+We note that the gradient of the velocity potential is the velocity. Stream lines cannot intersect except where the velocity is zero. Stream lines don't necessariy have constant velocity along, but no fluid enters/leaves (because grad points along stream line). Velocity potential and stream function are by definition perpendicular.
+
+\chapter{11/1 - Midterm Review}
+
+Let's define some $z = i+xy = \abs{z}e^{i\Arg z}$ and some function $w = f(z) = u(x,y) + iv(x,y)$. This is just notation. Multivaluedness admits more than one $w$ for a given argument $z$, such as $\sqrt{4} = \pm 2$. In the complex plane, logarithms form the basis of multivaluedness.
+
+We see that multivaluedness is ascribed to a change in $w$ upon a small circuit about some branch point $z$. In a small traversal about the branch point, the argument about that branch point increases by $2\pi$ and so we can use this to demonstrate branch points.
+
+Define a \emph{branch} a single-valued, continuous region constructed by choosing an interval of width $2\pi$ around each branch point. This creates lines that when traversed create discontinuity. Removing these lines creates our branch. 
+
+As an example, let's examine $w=\log(z^2 + i)$. We know that the logarithm has branch points at $0,\infty$, so we will first set the argument of the logarithm equal to these points. This produces $z = \infty, \pm (-i)^{1/2}$, or $z=e^{i3\pi/4}, e^{i7\pi/4}$. Now we can factor (letting the two roots be $z_{1,2}$). Let's denote $z-z_1 = r_1e^{i\theta_1}, z-z_2 = r_2e^{i\theta_2}$. Then
+$$w = \Log\abs{r_1 r_2} + i\left( \theta_1 + \theta_2 \right)$$
+
+A simple analysis then shows that adding $2\pi$ to either of $\theta_{1,2}$ produces $w' = w+2\pi i \neq w$ and so these are both branch points. We can then check the point at Infinity by encircling all branch points. This produces change $4\pi i$ and clearly is still a branch point, so infinity is a branch point. We can also check $w(1/z)$ for branch point at $z=0$, but in this case the former method is easier. We can then define our branch to be $\theta_1 \in \left[ -\frac{5\pi}{4},\frac{3\pi}{4} \right]$ and $\theta_2 \in \left[ -\frac{\pi}{4},\frac{7\pi}{4} \right]$, and we can verify that this creates no more discontinuities upon not crossing the line. 
+
+We can then discuss differentiability conditions. Necessary condition is C-R equations, sufficient is that they exist/continuous. Analyticity is then differentiability in a neighborhood. We can examine $f(z) = \log z = \log |z| + i\theta$. We can confirm that the C-R polar equations are satisfied easily for everything but $r=0$, the point at which the partial does not exist. We then see that $\log z$ is analytic everywhere but $0,\infty$, and the branch cut (because the function is not defined on the branch cut). Note that functions are never analytic at their branch points/cuts/arbitrary stupid constructs! 
+
+We can make a claim about composition functions' analyticity: $f(g(z))$ is analytic where $g(z)$ is analytic and where $w = g(z)$ is such that $f(w)$ is analytic. If we then plug in $\rd{}{z} \log z$ to the C-R equations, then we obtain that the derivative is $1/z$. We can compute the derivative of $f(z) = \log (z^2 + i)$ easily via chain rule.
+
+We then discuss integrations. Fundamental theorem of contours - If $F(z)$ is analytic, $f(z) = F'(z)$ is continuous on domain $D$ and for any contour in $D$ we have $F(z_2) - F(z_1) = \int_C f \; dz$ where $z_2, z_1$ are the endpoints of contour $C$. E.g. for $I = \int_C \frac{z}{z^2 + i}\; dz$, we can just $\log(z^2 + i)\Big|_{z_1}^{z_2}$. A few subtleties, make sure that the antiderivative is analytic over the domain $D$, consider branch cuts (or redefine them). 
+
+Other useful theorems to know for $f$ analytic on and inside $C$:
+\begin{itemize}
+	\item Cauchy-Goursat
+	\item Generalized Cauchy Integral Formula
+\end{itemize}
+
+Glhf!
+
+\chapter{11/4 - Series/Sequences}
+
+Scumbag Niles, introduces new topic day of the midterm, not review, sad face.
+
+Let us define a the limit of a sequence. An infinite sequence $S_1\dots S_n$ has a limit $S$ if for any $\epsilon > 0, \exists N_\epsilon$ such that $\abs{S-S_n} < \epsilon$ when $n > N_\epsilon$. Straightforward.
+
+Then an infinite series $\sum c_k(z)$ converges to a function $f(z)$ in a region $R$ if the sequence of partial sums converges to $f(z)$ at every point in $R$.  If the series does not converge we say it diverges. If $N_\epsilon$ is independent of $z$, then a series converges uniformly to $f(z)$. 
+
+We first investigate Taylor Series; if $f(z)$ is analytic for $\abs{z-z_0} < R$ then $f(z)$ is represented uniformly in $\abs{z-z_0} \leq \rho < R$. The proof is given in a handout (FML). I will copy this down!
+
+Consider positive circular contour about $z$ with radius $\rho_0$. Let $h(z) = \sum \frac{f^{(k)}(z_0)}{k!}z^k$. We can then use Cauchy integral formula to write
+$$h(z) = \frac{1}{2\pi i}\int_{C_0} \frac{h(\xi}{\xi - z} d\xi$$
+
+If we then expand out in terms of geometric series $\frac{1}{\xi - z} = \sum \frac{z^n}{\xi^n}$ (ish), we can have an explicit solution for our error term. We can expand as 
+$$h(z) = \frac{1}{2\pi i}\left[ \int_{C_0} \frac{h(\xi)}{\xi}d\xi + \dots + z^{n-1} \int_{C_0} \frac{h(\xi)}{\xi^n}d\xi \right] + z^n h_n(z)$$
+
+We can then apply Generalized Cauchy Integral Formula and write
+$$h(z) = h(0) + h'(0)z + \dots+ \frac{h^{(n-1)}(0)}{(n-1)!}z^{n-1} + z^n h_n(z)$$
+
+To show that this converges we have to show that the error term (the last term) becomes uniformly small in the disc $\abs{z} \leq \rho$. Then basically, we can ML bound obtain a $\left( \frac{\rho}{\rho_0} \right)^n$ term, which since by supposition $\rho < \rho_0$ the term vanishes for large $n$ and convergence is uniform! Yippee.
+
+Why is this theorem important/attractive? Firstly, it shows that any analytic function can be expressed solely in terms of its complex argument $z$ and no $x,y,\bar{z}$. This is a curiosity, one hinted at before, but we have more powerful results. Most importantly, Taylor series converge within the largest disc of analyticity about $z_0$. 
+
+Let's do examples. Consider $f(z) = \frac{1}{1-z}$ about $z_0 = 0$. We know our derivatives to be $k!(1-z)^{-k-1}$, so $f^{(n)}(0) = n!$ and 
+$$\frac{1}{1-z} = \sum z^k$$
+which is geometric series. Woohoo! We can then note that since we expand about the origin and the first point of non-analyticity is at $z=1$, we see that it is valid within the open disc of radius $1$, and this checks out with our old algebraic intuition as well! This is awesomely convenient.
+
+Let's try one more, $f(z) = e^z$ about $z_0 = 0$. We note that $f^{(n)}(0) = 1$, and so the taylor series goes
+$$e^z = \sum \frac{z^n}{n!}$$
+
+We note that since $e^z$ is entire, the series converges everywhere! That's freaking awesome - Transcriber's note. 
+
+Taylor series actually help us make a claim about the uniqueness of analytic functions! Firstly, we can prove a little lemma. If $f(z) = 0$ in a neighborhood $N$ of $z_0$, then it is $0$ in any neighborhood about $z_0$ where $f(z)$ is analytic. We can show this by just applying our prior theorem, because within any neighborhood the Taylor series is $0$, and then all neighborhoods over which $f(z)$ is analytic then all are zero by Taylor series.
+
+A small generalization of the above, if an arc passing through $z_0$ rather than a neighborhood about $z_0$ is where $f(z) = 0$ the theorem still holds.
+
+Suppose that we have then some function $f(z) = g(z)$ within some domain contained within a domain $D$ where $f(z),g(z)$ are analytic. Suppose we have some function $h(z) = f(z) - g(z) = 0$. We can then expand about some $z_0$ within the initial domain and then we can choose any point within this initial domain, where $h(z)$ still is $0$. Thus, we can expand about some new $z_1$, and so on and so forth until we've covered the entire domain of mutual analyticity!
+
+Example, let's examine $f(z) = \sin^2z + \cos^2z, g(z) = 1$. They are both entire. We already know that $f(x) = g(x), x \in \mathbb{R}$. We then note that they are equal on an arc that passes through the complex plane, and so they are equal throughout the complex plane! Therefore, $\sin^2 z + \cos^2 z = 1$ everywhere. 
+\chapter{11/6 - Convergence power series}
+
+Let's examine a general power series $\sum a_k(z-z_0)^k$. When does this converge? We have the Weierstrass M-test. If the series $\sum M_k$ converges and $\abs{C_k(z)} \leq M_k$ in a region $R$ then the series $f(z) = \sum C_k(z)$ converges uniformly in $R$. This is basically a direct comparison test.
+
+Moreover, if a power series converges at some point $z_1 \neq z_0$ where the series is expanded about $z_0$, then it will converge everywhere within the open disc of radius $\rho < \abs{z_1 - z_0}$. This can be proven via an M-test on the tail of the infinite series.
+
+We then have the theorem about the circle of convergence, such that all power series only converge within some radius $R$ about $z_0$ and diverges outside this radius.
+
+We will then examine some other tests for convergence. Consider the power series $\sum a_kz^k$. We can examine the ratio test, which is the same thing as before. \emph{Ratio test} is given for power series $\sum a_kz^k$ by
+$$\lim_{k \to \infty} \abs{\frac{a_{k+1}z^{k+1}}{a_kz^k}} = q$$
+then the power series diverges for $q > 1$, converges for $q < 1$, and is inconclusive for $q = 1$.
+
+We can use the ratio test to find the radius of the circle of convergence! This is clearly the case when the ratio $q = 1$. We can see via a clever manipulation
+\begin{align*}
+	\lim_{k \to \infty} \abs{\frac{a_{k+1}z^{k+1}}{a_kz^k}} &= 1\\
+	\lim_{k \to \infty} \abs{\frac{a_{k+1}}{a_k}} \abs{z} &= 1\\
+	\abs{z} &= R = \lim_{k \to \infty} \abs{\frac{a_k}{a_{k+1}}}
+\end{align*}
+
+Thus, when this limit exists, we have the radius of the circle of convergence.
+
+Example, find the radius of convergence for $\sum \frac{n}{2^n}(z-i)^n$. We can examine only the coefficients term and find that the radius of convergence is $2$. Thus, we have convercgence for $\abs{z-i} < 2$ and divergence for $\abs{z-i} > 2$. 
+
+We then have two theorems on our way to connection to analyticity. A power series $\sum a_k (z-z_0)^k$ represents a continuous function $f(z)$ inside its circle of convergence. Secondly, if $C$ is a contour inside the circle of convergence of $f(z) = \sum a_k (z-z_0)^k$ and $g(z)$ is continuous on $C$ then $\int_C g(z)f(z) dz = a_k \sum \int_C g(z)(z-z_0)^k dz$
+
+We can then make a connection to analyticity at last! Any power series sums to an analytic function within its circle of convergence. Suppose we have some power series $f(z) = \sum a_k (z-z_0)^k$ and $C$ is a closed contour inside the circle of convergence. We have from our earlier theorem that we can write
+$$\int_C f(z) dz = \sum a_k \int_C (z-z_0)^k dz$$
+
+We note that all of the contour integrals are $0$ by Cauchy-Goursat! Suddenly, we know that $\int_C f(z) dz = 0$ for every closed contour contained within the circle of convergence. Then, suddenly, Morera's Theorem pops back out of the blue and finishes our proof for us, telling us that $f(z)$ is analytic. Thus, the power series sums to an analytic function. 
+
+\chapter{11/8 - Differentiation Power series, Laurent Series}
+
+We can differentiate power series at each point interior to the circle of convergence of a power series term-by-term, such that
+$$f(z) = \sum a_k z^k, f'(z) = \sum ka_kz^{k-1}$$
+
+The proof is straightforward application of Generalized Cauchy Integral Formula. We first write $f'(z) = \frac{1}{2\pi i} \int_C \frac{f(z)}{(\xi - z)^2}d\xi$. We can then substitute in our power series representation of $f(z)$ and we know we can integrate this term-by-term, and so we're done.
+
+It turns out that the power series doesn't just sum to an analytic function, it's unique! Given an analytic function with a power series expansion, this series expansion is unique! More awesome proofs; I won't take these down because the proofs aren't interesting by themselves, only in the eyes of a Niles admirer $<$3
+
+We then want to look at the radius of convergence of the product of power series. We note that the smaller radius of convergence of two power series is a lower bound on the radius of the product.
+
+Niles Pierce is going HAM. Let's expand a power series not far from its singularity, but at the singularity! These are called Laurent Series. Suppose $z_0$ is an isolated singularity of $f(z)$ such that $f(z_0)$ is not analytic and the Taylor series cannot be expanded. We can then include negative powers in the Laurent Series.
+
+If $f(z)$ is analytic in the open annulus $D: R_1 < |z-z_0| < R_2$, then $f(z) = \sum_{k=-\infty}^{\infty}a_k(z-z_0)^k$ where $a_k = \frac{1}{2\pi i} \int_C \frac{f(\xi)}{(\xi-z_0)^{k+1}}d\xi$ and $C$ is a positive simple closed contour in $D$.
+
+We note that all negative powers vanish when we eliminate the lower bound because of Cauchy Goursat, recovering Taylor series! Moreover, if we eliminate the upper bound then the positive powers vanish! Lastly, we can still do all term by term manipulations on Laurent Series within $D$. Lastly, Laurent series are unique within $D$. 
+
+Let's calculate our first Laurent series example! Consider $f(z) = \frac{2}{z(z-1)z-2)}$. Let's expand about the origin for simplicity. Note that there are three Laurent series! We can use $R_2 = 1$ or $R_1 = 1, R_2 = 2$ or $R_1 = 2$! We will compute about the mddle case. Let's first decompose partial fractions $f(z) = \frac{1}{z} - \frac{2}{z-1} + \frac{1}{z-2}$. We then examine the Laurent series for each term.
+
+We know that the Laurent series for the first term $\frac{1}{z}$ is just itsel! $\frac{1}{z}$ is its own Laurent series and is convergent in our annulus.
+
+Let's rewrite the second term out as a geometric series $\frac{2}{1-z} = 2\sum_{k=0}^{\infty} z^{k}$, but this doesn't converge in our annulus! It converges only for $\abs{z} < 1$. Let's rewrite instead $-\frac{2/z}{1-\frac{1}{z}}$, which then yields the geometric series $-\frac{2}{z}\sum_{n=0}^{\infty}\left( \frac{1}{z} \right)^n$, which converges! Woohoo, hero Niles :D
+
+We have one last term, and we will use a similar trick $\frac{1}{z-2} = \frac{-1/2}{1-\frac{z/2}{}}$, which then gives geometric series $-\frac{1}{2}\sum \left( \frac{z}{2} \right)^k$ which converges for $\abs{z} < 2$ which is our annulus as well. Thus, our first Laurent series is valid over the annulus
+$$f(z) = \frac{1}{z} - \frac{2}{z}\left( \sum_i \left( \frac{1}{z} \right)^i \right) - \frac{1}{2}\left( \sum_i\left( \frac{z}{2} \right)^i \right)$$
+
+and is the unique Laurent series!
+
+\chapter{11/11 - Classifying zeroes and singularities}
+
+Let's examine the zeroes of analytic functions. Let's define the order $m$ of a zero to be the number of derivatives of $f$ we can take such that the zero is still a zero. Suppose we examine $\sin z$. We know that it has zeroes at $z=n\pi$, but since the derivative doesn't have zeroes at these points we find that all of these zeroes are \emph{simple}.
+
+We then see that a Taylor series expanded about a zero of order $m$ has the form
+$$f(z) = \sum_{i=m}^\infty a_i(z-z_0)^i = (z-z_0)^m\left[ a_m + a_{m+1}(z-z_0) +\dots \right]$$
+
+We then have a theorem. If $f(z)$ is analytic at $z_0$ then $f$ is a zero of order $m$ iff $f$ can be written $f(z) = (z-z_0)^mg(z)$ where $g(z)$ is analytic at $z_0$ and $g(z_0) \neq 0$.
+
+This then yields corrolary: the zeroes of a nonconstant analytic function $f$ are isolated. Consider $f(z)$ as a power series about $z_0$. Unless all $a_k$ are zero then we can pull out $m$ factors of $(z-z_0)$ and write $f(z) = (z-z_0)^mg(z)$ by our previous theorem. Since $g(z)$ is analytic and nonzero at $z_0$ we know that in the near neghborhood of $z_0, g(z) \neq 0$. In that neighborhood, since $(z-z_0)^m$ doesn't vanish (except at $z_0$), we know that $f(z) \neq 0$ in the neighborhood and we win!
+
+Isolated singularities of analytic functions are defined then as follows. A singularity is isolated if $f$ is analytic in a deleted neighborhood (i.e. neighborhood around but not including $z_0$) of $z_0$ but not at $z_0$. We can use Laurent expansion to classify isolated singularities. We can then Laurent expand $f(z)$ into some Taylor series and the \emph{principal part} of the Laurent expansion. 
+
+There are then three cases. First is removable singularities; all $a_k = 0$ for $k < 0$. The series then has form $f(z) = \sum_k a_k (z-z_0)^k$, which means we can just define $f(z_0)$ to remove the singularity; think ``hole'' in real functions. The correct definition is of course $f(z_0) = a_0$. 
+
+For example, if we examine $f(z) = \frac{\sin z}{z}$, we note that it is undefined at $z_0 = 0$, but if we examine the Laurent series we have $\frac{1}{z}\left( z - \frac{z^3}{3!} +\dots \right)$ which then gives $f(0) = 1$. So if we define the function $f(0) = 1, f(z \neq 0) = \frac{\sin z}{z}$ then the singularity is removed.
+
+Second case is poles: a finite number of $a_{k < 0} = 0$. We can then discuss the order $m$ of a pole such that all $a_{<-m} = 0$. Let's examine examples. Suppose we have $f(z) = \frac{e^z}{z^2}$. We can make a Laurent expansion
+$$\frac{e^z}{z^2} = \frac{1}{z^2}\left( 1+z+\frac{z^2}{2!}+\dots \right) = \frac{1}{z^2} + \frac{1}{z} + \frac{1}{2!} +\dots$$
+
+which then clearly gives a pole of order $2$. Another example, $f(z) = \frac{\sin z}{z^2}$. Examining the Laurent series the same way as we did for the removable case shows a pole of order $1$. 
+
+We can then write the analogous case from zeroes to poles: We can write $f(z) = (z-z_0)^{-m}g(z)$ for a pole at $z_0$ of order $m$ where $g(z)$ is analytic at and around $z_0$.
+
+Third case is one that we talk about later.
+
+\chapter{11/13 - Nonisolated singularities, Residues!!!!!!!}
+
+We first discuss a theorem, a necessary and sufficient condition for an isolated singularity of $f(z)$ at $z_0$ to be a pole is $\abs{f(z)} \to \infty$ as $z \to z_0$.
+
+We then examine the third type of singularity, an essential singularity, infinite number of $a_k \neq 0$ for $k < 0$. Consider $e^{1/z}$. We can manipulate
+\begin{align*}
+    f(z) &= e^{1/z}\\
+    &= e^{1/r\left( \cos \theta - i\sin \theta \right)}\\
+    &= \exp\left[ \frac{\cos \theta}{r}\left( \cos \frac{\sin \theta}{r} - i\sin \frac{\sin \theta}{r} \right) \right]
+\end{align*}
+
+This is ugly as balls. This is to be expected because this is a very rich case, with so many coefficients. Long story short, by traversing along the path $r(\theta) = C^{-1} \cos \theta$ very carefully, we find that $f(z)$ traverses all complex numbers infinitely many times as we approach $z=0$!! Mind, meet blown. 
+
+This is Picard's Theorem. In each neighborhood of an essential singularity $z_0$ of a function $f(z)$, $f(z)$ assumes every complex number with possibly one exception. Niles Pierce: ``Needless to say, we will not prove this. There exists a proof in Markeskevitch Vol. 3. I have never found this'' Epic.
+
+We can then examine singularities at the point at infinity by simply examining $f(1/w)$ as $w = 0$ and apply the same definitions. Let's do examples!
+
+Let's examine $f(z) = \frac{z^2}{2}$. We know that $f(1/w) = \frac{1}{w^2} + 2$ which is a pole of order $2$ at infinity.
+
+Let's then examine $f(z) = \cos z$. If we then look to $f(1/w)$, we have infinitely many negative powers of $w$, so it must be an essential singularity at $z_{\infty}$.
+
+Let's then examine nonisolated singularities, where we do not have analyticity in the deleted neighborhood. The first of the nonisolated singularities is branch points!! Welcome back bud. $f(z)$ isn't analytic in the deleted neighborhood about a branch point because it is multiply valued.
+
+We also have nonisolated essential singularities\dots in stark contrast to isolated ones. These are the significantly cooler ones because they have buddies while the latter are loners. The nonisolated essential singularities are just a cluster of singularities so close that no neighborhood about any singularity is analytic.
+
+We examine $f(z) = \frac{1}{\sin \frac{1}{z}}$. Obviously very contrived, notes Niles. Simple poles at $z=\frac{1}{k\pi}, k \in\mathbb{Z}$. We can then see that the origin has infinitely close poles, so the origin is a nonisolated essential singularity of $f(z)$. 
+
+Let's examine residues now, cue EPIC FREAKING MUSIC (in my head). But totally, Niles Pierce's voice totally climaxed when he said ``residues.'' God he loves his work. Anyhow. Consider $f(z)$ analytic on and inside a positive simple closed contour $C$ except for an isolated singularity at $z_0$ contained in $C$. 
+
+Now, consider a contour $C$ really ugly (worse than a lima bean) and we want to evaluate $\int_C f(z)\; dz$. We know that $f(z)$ has a Laurent expansion convergent in a deleted neighborhood of $z_0$. Deformation of contours then allows us to deform $C$ to a contour $C_0$ within this neighborhood on which the Laurent expansion converges. We then have 
+$$f(z) = \sum_{k=-\infty}^\infty a_k\left( z-z_0 \right)^k$$
+
+We can then examine the integral
+$$\int_C f(z) dz = \int_{C_0}f(z) dz = \sum_{k=-\infty}^\infty a_k \int_{C_0} (z-z_0)^k$$
+
+We then know that if $k \geq 0$, the contour integral is $0$ by Cauchy-Goursat. We also know that if $k=-1$ we have $2\pi i$ from our parameterization example from years and years ago. We lastly know that if $k \leq -2$ we have $0$ by the Generalized Cauchy Integral Formula. Therefore, only one term in the Laurent expansion matters, $a_{-1}$. We term this coefficient the \emph{residue}. 
+
+Let's do an example. $\int_C ze^{3/z}\; dz$. We note that somehow $z=0$ is an isolated essential singularity (why??), but so we can apply residue calculus. We write out our Laurent series for each individually, and we find
+$$f(z) = z\left[ 1 + \frac{3}{z} + \frac{1}{2!}\left( \frac{3}{z} \right)^2 +\dots \right]$$
+which converges $0 < \abs{z} < \infty$. We find the coefficient of the $z^{-1}$ term, gives $9/2$. Thus, the integral is just $9\pi i$. 
+
+\chapter{11/15 - Residue Calculus}
+
+We can take a slight generalization of our discussion on residues from last lecture via Cauchy's Residue Theorem:
+\begin{center}
+    Consider a function $f$ analytic on and inside a positive simple closed contour $C$ except for $n$ isolated singularities $z_j$ in $C$. We can then deform $C$ into contours about each singularity $z_j$. Then
+    $$\int_C f(z)\; dz = 2\pi i\sum_{j=1}^n \mathrm{Res}(z_j)$$
+\end{center}
+
+Let's do an example! Consider $f(z) = \frac{e^{-z}}{z(z-1)}$ along circle of radius $2$. We can throw the residue theorem at it (don't even need to mention deformation) to find the integral to be $I = 2\pi i\left[ \mathrm{Res}(f;0) + \mathrm{Res}(f;1) \right]$. We first determine the Laurent series about the origin. We know the series for all three pretty easily, given below
+\begin{align*}
+    e^{-z} &= 1-z+\frac{z^2}{2!} \mp\dots\\
+    \frac{1}{z-1} = \frac{-1}{1-z} &= -\left( 1+z+z^2+\dots \right)\\
+    \frac{1}{z} &= \frac{1}{z}
+\end{align*}
+and we can just multiply and pick out the $z^{-1}$ term.
+$$f(z) = -\frac{1}{z}\left( 1+z+z^2+\dots \right)\left( 1-z+\frac{z^2}{2!}\mp\dots \right)$$
+
+which then gives us the residue $\Res(0) = -1$. We can compute the other residue similarly. We have a slightly trickier expansion. Let's write these out
+\begin{align*}
+    e^{-z} = e^{-1}e^{-(z-1)} &= \frac{1}{e}\left( 1-(z-1) + \frac{(z-1)^2}{2}\mp\dots \right)\\
+    \frac{1}{z-1} &= \frac{1}{z-1}\\
+    \frac{1}{z} = -\frac{1/(z-1)}{1-\frac{1}{z-1}} &= 1-(z-1) + \left( z-1)^2 \mp\dots \right)
+\end{align*}
+which then gives us
+$$f(z) = \frac{1}{z-1}\left[ 1-(z-1)+(z-1)^2\mp\dots \right]$$
+
+which again gives us residue $\frac{1}{e}$. Thus, our contour integral becomes $I = 2\pi i\left( \frac{1}{e} - 1 \right)$. This is a very grungy computation, and we will learn how to never have to compute the residue by hand again. 
+
+First we examine how to compute residues at poles. If $f$ has a pole of order $m$ at $z_0$, then 
+$$f(z) = (z-z_0)^{-m}\left( a_{-m} + \dots + a_0(z-z_0)^m + \dots\right)$$
+
+We then compute $m-1$ derivatives
+$$\frac{d^{m-1}}{dz^{m-1}}\left[ (z-z_0)^mf(z) \right] = (m-1)!a_{-1} + m!a_0(z-z_0) +\dots$$
+
+If we then take $z \to z_0$, we have
+$$\Res(z_0) = a_{-1} = \lim_{z \to z_0}\frac{1}{(m-1)!} \frac{d^{m-1}}{dz^{m-1}}\left[ (z-z_0)^mf(z) \right]$$
+
+For a simple pole,
+$$\Res(z_0) = \lim_{z\to z_0} (z-z_0)f(z)$$
+
+Let's revisit our earlier problem $I = \int_C \frac{e^{-z}}{z(z-1)}$. We thus compute $\Res(0) = \lim_{z\to0} \frac{ze^{-z}}{z(z-1)} = -1$. Similarly, $\Res(1) = \frac{1}{e}$. 
+
+Even more powerful result time! Let's consider only simple poles. Take $f$ that can be written $f(z) = p(z)/q(z)$, $p,q$ are analytic at $z_0$, $p(z_0) \neq 0$, $q(z_0)$ has simple zero. In this case, we can write the residue
+$$\Res(f;z_0) = \frac{p(z_0)}{q'(z_0)}$$
+
+The proof of this is simple. We write $q(z) = (z-z_0)h(z)$ with $h$ analytic at $z_0$, $h(z_0) \neq 0$. Then using our earlier formula $\Res(z_0) = \frac{f(z_0)}{h(z_0)}$. But $q'(z_0) = h(z_0)$ (differentiate $q(z) = (z-z_0)h(z)$ at $z_0$) and we're done.
+
+Let's redo our example one last time. We write $p(z) = e^{-z}, q(z) = z(z-1)$, and we note that both are analytic at $0$, $p(0) \neq 0$, and $q(0)$ is a simple zero (be sure to clarify these on exams, says Niles!). The denominator differentiates easily then, and we can compute both trivially.
+
+Let's try one more example to illustrate the power of this method. Suppose we're trying to evaluate $f(z) = \cot z = \frac{\cos z}{\sin z}$. We note that all zeroes of $\sin z$ are simple (i.e. dosen't vanish in derivative), so $f(z)$ has simple poles at $z=n\pi$. We use $p=\cos z, q = \sin z$. We note that $p,q$ are entire so are analytic at all poles, we note that $p$ is nonzero at the simple zeroes of $q$. Thus, all residues are just given by $\Res(n\pi) = \frac{p(n\pi)}{q'(n\pi)} = 1$. 
+
+One more example, $f(z) = \frac{1}{z^3(z+4}$ over the $C: \abs{z} = 1$. We thus note that we only want the residue at $z=0$, which is a triple pole, so we have to use the differentiation method. We compute
+\begin{align*}
+    \Res(0) &= \lim_{z \to 0} \frac{1}{2!} \frac{d^2}{dz^2}\left( \frac{z^3}{z^3(z+4)} \right)\\
+    &= \lim_{z \to 0} \frac{1}{2} \frac{2}{(z+4)^3}\\
+    &= \frac{1}{64}
+\end{align*}
+
+which gives our contour integral $\frac{\pi i}{32}$. Weekend!
+
+\chapter{11/18 - Applications of complex integrals}
+
+We will first examine evaluating trigonometric integrals. We first consider real integrals of form
+$$\displaystyle\int\limits_{0}^{2\pi}f(\cos \theta, \sin \theta)\;d\theta$$
+where $f$ is some rational function of $\cos \theta, \sin \theta$ and we will assume that $f$ is well behaved for $\theta \in \left[ 0,2\pi \right]$. We will recast it as a contour integral using $z = e^{i\theta}$. So as $\theta: 0\to 2\pi$, $z$ traverses the unit circle. We then must compute the conversions
+\begin{align*}
+    \cos \theta &= \frac{e^{i\theta} + e^{-i\theta}}{2}\\
+    &= \frac{z + \frac{1}{z}}{2}\\
+    \sin \theta &= \frac{z - \frac{1}{z}}{2i}\\
+    d\theta &= -ie^{-i\theta} dz\\
+    &= \frac{1}{iz} dz
+\end{align*}
+
+Plugging into the original problem, we have
+$$\displaystyle\int\limits_{0}^{2\pi}f(\cos \theta, \sin \theta)\;d\theta = \int_C f\left( \frac{z + \frac{1}{z}}{2}, \frac{z - \frac{1}{z}}{2i} \right) \frac{dz}{iz}$$
+
+which is just some rational integrand in $z$.  
+
+Let's do a basic example. Let's compute $I = \displaystyle\int\limits_{0}^{2\pi}\frac{1}{5 + 4\cos \theta}\;d\theta$. We can just plug and chug and find
+$$\displaystyle\int\limits_{0}^{2\pi}\frac{1}{5 + 4\cos \theta}\;d\theta = \int_C \frac{dz/iz}{5+4\left(\frac{z+\frac{1}{z}}{2}  \right)} = \frac{2}{i}\int_C \frac{dz}{4z^2 + 10z + 4}$$
+
+where $C$ is just the positive contour about the unit circle (note this is by choice; $C$ can be anything, the unit circle just happens to make a prettier substitution). We can then just pull residues out of our rears and attack the integrand. We note simple poles at $z = -2, -\frac{1}{2}$. We don't care about $z=-2$ because it's not inside $C$, but we do want to compute the $\Res(-1/2)$. We recall that
+\begin{align*}
+    \Res\left( f; -\frac{1}{2} \right) &= \frac{2/i}{(4z^2 + 10z + 4)'}
+\end{align*}
+
+where this is just the $p/q'$ method of finding residues. We check requisites (writing all these out for full credit) that $p(z_0) \neq 0$ and is analytic, $q$ has simple zero. So we can compute straightforwardly $\Res(-1/2) = -\frac{1}{3i}$ and thus $I = -\frac{2\pi i}{3i} = \frac{2\pi}{3}$. 
+
+We then look at improper integrals over the real axis! (Welcome back old buddy). If $f(z)$ is continuous for $x \geq 0$, the improper integral
+$$\displaystyle\int\limits_{0}^{\infty}f(x)\;dx = \lim_{R \to \infty} \displaystyle\int\limits_{0}^{R}f(x)\;dx$$
+is \emph{convergent} if the limit exists. If $f(x)$ is continuous for all $x$ the improper integral
+$$\displaystyle\int\limits_{-\infty}^{\infty}f(x)\;dx = \lim_{R \to \infty} \displaystyle\int\limits_{-R}^{0}f(x)\;dx + \lim_{R \to \infty} \displaystyle\int\limits_{0}^{R}f(x)\;dx$$
+is convergent if both limits exist. 
+
+We call the Cauchy principal value of the above integral to be 
+$$P\left[ \displaystyle\int\limits_{-\infty}^{\infty}f(x)\;dx \right] = \lim_{R \to \infty} \displaystyle\int\limits_{-R}^{R}f(x)\;dx$$
+
+If the doubly improper integral above converges, then the Cauchy principal value exists and is equal to the convergence. However, the converse is not true!! We will usually deal only with converging infinite integrals. 
+
+Let's have an example. $I = \displaystyle\int\limits_{-\infty}^{\infty}x\;dx$ obviously doesn't converge, but the Cauchy principal value is $0$! We see that neither limit exists however. This is just to scare you guys, let's have another property.
+
+We note that odd functions have Cauchy principal value $0$. Moreover, for odd functions the Cauchy principal value is just twice each individual integral above, which means hat the converse of the above is true now; Cauchy principal value existing implies limits existing. Note that in all of our previous solutions for these infinite integrals we've been computing the Cauchy principal value, since we take integral $\left[ -R,R \right]$ and so we take the simultaneous limit. This has been alright, but now we have a language to discuss this.
+
+Let's do example! $I = \displaystyle\int\limits_{-\infty}^{\infty}\frac{x^2}{1+x^4}\;dx$. Let's consider $f(z) = \frac{z^2}{1+z^4}$. We draw semicircle $C$ with diameter $2R$ and call the non-real-axis arc $C_R$. We note $4$ singularities in the integrand on the unit circle, two of which are inside $C$. Then by Cauchy Residue, if we take $\int_C f(z)\; dz$ we can just compute the residues at the two we care about (since $C$ is big and the singularities are inside). We thus have
+$$\int_C f(z) \; dz = 2\pi i \sum \Res = \underbrace{\displaystyle\int\limits_{-R}^{R}\frac{x^2}{1+x^4}\;dx}_{\text{Cauchy Principal Value}} + \underbrace{\int_{C_R} f(z)\; dz}_{\text{ML bound}}$$
+
+We compute residues first using $p/q'$. We note $p,q'$ are analytic at the singularities, $p$ is continuous, $q'$ is simple zero, so we can apply. Thus $\Res(z_0) = \frac{z_0^2}{4z_0^3} = \frac{1}{4z_0}$ so the two residues at the singularities are $\Res(e^{i\pi/4}) = \frac{e^{-\pi i/4}}{4}, \Res(e^{3i\pi/4}) = \frac{e^{-3\pi i/4}}{4}$. Thus
+$$\int_C f(z)\; dz = \frac{\pi i}{2}\left( e^{-i\pi/4} + e^{-3\pi i/4} \right) = \frac{\pi}{\sqrt{2}}$$
+
+We then ML bound $C_R$ contribution. We can triangle inequality the bottom and end up
+\begin{align*}
+    \abs{\int_{C_R}f(z)\; dz} &\leq \frac{R^2}{R^4 + 1} \pi R\\
+    & \leq \frac{ \pi R^3}{R^4 + 1}
+\end{align*}
+
+which vanishes as $R \to \infty$. This then gives us the Cauchy Principal value of the real integral, namely $\frac{\pi}{\sqrt{2}}$. We can notate this as
+$$\lim_{R \to \infty} \displaystyle\int\limits_{-R}^{R}\frac{x^2}{1+x^4}\;dx = P\displaystyle\int\limits_{-\infty}^{\infty}\frac{x^2}{1+x^4}\;dx = \frac{\pi}{\sqrt{2}}$$
+
+Then, since the integrand is even, we know that the Cauchy principal value exists and is equal to the actual integral (without forcing both bounds to go outwards evenly). Thus we know that the actual value of the real integral is $\frac{\pi}{\sqrt{2}}$. Note that the evenness of the function means we could have solved over $[0,\infty]$. 
+
+Let's now codify the ML bound a bit so we don't have to triangle inequality the integrand every time (about time Niles\dots). If $f(z) = \frac{p(z)}{q(z)}$ with $p,q$ polynomials and the degree of $q$ is at least two greater than the degree of $P$, then $\int_{C_R}f(z) \; dz = 0$. We will prove this by simply examining $\abs{f(z \to \infty)} \leq \frac{k}{z^2}$. We note then that the length of $C_R$ is $\pi R$ and so ML bounding we are done. 
+
+We're going to do one more example. $I = \displaystyle\int\limits_{-\infty}^{\infty}\frac{x^2 + 3}{(x^2 + 1)(x^2 + 4)}\;dx$. We consider the typical contour integral $I' = \int_C \frac{z^2 + 3}{z^4 + 5z^2 + 4} dz$, $C$ being the semicircular arc with radius $R$ (again in the positive half of plane, though negative is the same). We instantly see that the Lemma gives us that the ML bound vanishes on $C_R$, so we just need to compute a few residues. We need them at $x=i, 2i$. These are simple poles. We like $p/q'$ method for residues, and we like full credit (from Niles the Pierce), so we first note $p,q$ are analytic, $p \neq 0$ at our singularities and $q$ has simple zero. Thus, we can compute residues $\Res(i) = \frac{1}{3i}, \Res(2i) = \frac{1}{12i}$. Thus, our contour integral evaluates to $\frac{5\pi}{6}$. Then, since $ML$ bound vanishes and integrand is even so Cauchy principal value is equal to the actual integral, we finally obtain $\frac{5\pi}{6}$ as our real integral. 
+
+\chapter{11/20 - Integrating $f(x) e^{\pm imx}$, Jordan's Lemma}
+
+Improper integrals involving trig functions, useful for Fourier/Laplace transforms. First, we consider the three integrals
+\begin{align*}
+    I_1 &= P\displaystyle\int\limits_{-\infty}^{\infty}f(x)\cos mx\;dx\\
+    I_2 &= P\displaystyle\int\limits_{-\infty}^{\infty}f(x)\sin mx\;dx\\
+    I_3 &= P\displaystyle\int\limits_{-\infty}^{\infty}f(x) e^{\pm imx}\;dx
+\end{align*}
+
+Let's write $f(x) = \frac{\alpha(x)}{\beta(x)}$ real rational function continuous everywhere. Let's suppose for convenience the degree of $\beta$ is at least twice greater than that of $\alpha$. Our strategy for any of these is of course our semicircular arc, and we can compute the behavior along $C_R$ or the behavior for $z=Re^{i\theta}$. We will first examine $I_3$. The integrand then becomes along $C_R$
+\begin{align*}
+    \abs{e^{\pm imz}} &= \abs{e^{\pm imRe^{i\theta}}} = \abs{e^{\pm imR(\cos \theta + i\sin \theta)}}\\
+    &= e^{\mp mR\sin \theta} = e^{\mp my}
+\end{align*}
+
+We can then examine $\cos mz, \sin mz$ in terms of their exponential formulations to note that regardless of whether we close our arc over the positive or negative imaginaries one of the terms in each of these blows up, so we cannot choose an arc straightforwardly to tackle $I_{1,2}$. 
+
+We will first figure out $I_3$. We've noted that we've written $\abs{e^{\pm imz}} \leq 1, \pm y \geq 0$, so we can choose contours accordingly (i.e. choose positive imaginaries for the plus case). Thus, we note that on contour closes in the negative direction, and so we can write
+$$I_{3 \pm} = \pm 2\pi i\sum \left( \text{Res in } C_{R\pm} \right)$$
+as $R \to \infty$. 
+
+We can then then use this to compute $I_1, I_2$ by just writing $I_{3\pm} = I_1 \pm iI_2$ and so $I_1 = \Re (I_{3\pm}), I_2 = \pm\Im (I_{3\pm})$ 
+
+Let's do an example! Woohoo :D Compute 
+$$P\displaystyle\int\limits_{-\infty}^{\infty}\frac{e^{imx}}{a^2+x^2}\;dx$$
+
+Let's then consider $f(z) = \frac{1}{a^2 + z^2}$ and note that the degree of the denominator exceeds that of the numerator by $2$. We then draw our singularities and find them at $z=\pm ia$ as simple poles. Thus, we can use $p/q'$ to find the residue. Since $e^{imx}$ has positive exponent, we close over the positive imaginaries and so we want the residue at $z=ai$ of $f(x)$ which is computable via $p/q'$ (don't forget to assert all necessary conditions!) to be $\frac{1}{2ia}e^{-ma}$. Then contribution on $C_{R \to \infty} \to 0$ and we can write
+$$P\displaystyle\int\limits_{-\infty}^{\infty}\frac{e^{imx}}{a^2+x^2}\;dx = \frac{\pi}{a} e^{-ma}$$
+
+We can then note that if we wanted to compute for $\cos mx$ instead of $e^{imx}$ then we can just define the auxiliary integral above, solve it, then take real part. Note moreover that we'd be computing not just the Cauchy Principal Value but the actual integral since $\cos mx$ is even. Also, if we wanted to compute with $\sin mx$ then we could take imaginary part of the above and find $0$, but we already knew this since the integrand would then be odd. Woohoo!
+
+We will next demonstrate Jordan's Lemma. On $C_R$ we say $f(z) \to 0$ uniformly as $R \to \infty$ if $\abs{f(z)} < K_R$ with $K_R \to 0$ ($K_R$ constant in $\theta$) as $R \to \infty$. 
+
+We can then show that if $f(z) \to 0$ uniformly on the circular arc $C_R$ as $R \to \infty$ then
+$$I = \int_{C_R} e^{imz} f(z)\; dz = 0$$
+
+Note that ML bound fails because there's an extra factor of $R$ which doesn't vanish anymore! We can prove this via $\abs{f(z)} \leq K_R$. We note that $\abs{dz} = Rd\theta$, and so we can write
+\begin{align*}
+    \abs{\int_{C_R} f(z) e^{imz}\; dz} &\leq \displaystyle\int\limits_{0}^{\pi}k_R e^{-mR\sin \theta}R\;d\theta
+\end{align*}
+where the bounds are $[0,\pi]$ since we are in positive imaginaries by definition (sorry, forgot to define $C_R$ when Niles did). We note that $\sin \theta$ is symmetric about $\pi/2$, so we can moreover write
+\begin{align*}
+    \displaystyle\int\limits_{0}^{\pi}k_R e^{-mR\sin \theta}R\;d\theta &= 2k_R R\displaystyle\int\limits_{0}^{\pi/2}e^{-mR\sin \theta}\;d\theta
+\end{align*}
+
+Lastly, we make a geometric argument (shatballs, I can't draw this). We note that over $[0,\pi/2]$ we can draw the line connecting the endpoints of $\sin \theta$ (of slope $2\theta/\pi$) which is a lower bound on $\sin \theta$ and therefore this is an upper bound on $e^{-mR\sin \theta}$. Thus, we can plug this in
+$$2k_R R\displaystyle\int\limits_{0}^{\pi/2}e^{-mR\sin \theta}\;d\theta \leq 2k_R R\displaystyle\int\limits_{0}^{\pi/2}e^{-2mR\theta/\pi}\;d\theta$$
+
+We can then just evaluate this integral
+\begin{align*}
+    2k_R R\displaystyle\int\limits_{0}^{\pi/2}e^{-2mR\theta/\pi}\;d\theta &= 2k_rR \left[ -\frac{\pi}{2mR}e^{-2mR\theta/\pi} \right]_0^{\pi/2}\\
+    &= \frac{\pi k_R}{m}\left( 1-e^{-mR} \right)\\
+\end{align*}
+
+Taking the limit $R \to \infty$, we have then $k_R \to 0$ and our integral vanishes as we'd hoped.
+
+Jordan's Lemma also holds for quotients of two polynomials $f(x) = \frac{\alpha(x)}{\beta(x)}$ with degree of $\beta$ at least one (inclusive now!) greater than degree of $\alpha$. 
+
+Corollaries follow. If $f(z) \to 0$ uniformly on the circular arc $C_R$ as $R \to \infty$ then
+\begin{itemize}
+    \item $\lim_{R \to \infty}\int_{C_R}e^{-imz}f(z) \; dz = 0, m > 0$, arc closes down from real axis.
+    \item $\lim_{R \to \infty} \int_{C_R}e^{mz}f(z) \; dz = 0, m > 0$, arc closes left from imaginary axis.
+    \item $\lim_{R \to \infty}\int_{C_R}e^{imz}f(z) \; dz = 0, m > 0$, arc closes up from real axis.
+    \item $\lim_{R \to \infty} \int_{C_R}e^{-mz}f(z) \; dz = 0, m > 0$, arc closes right from imaginary axis.
+\end{itemize}
+
+Let's do an example, $I_1 = \displaystyle\int\limits_{-\infty}^{\infty}\frac{x\sin x}{1+x^2}\;dx$. We define $I_2 = P\displaystyle\int\limits_{-\infty}^{\infty}\frac{e^{ix}x}{1+x^2}\;dx$. We note that since our original integrand was even, we can take the real part of this Cauchy principal value and obtain the Cauchy Principal value of $I_1$ and therefore the actual value!
+
+We first notice that Jordan's lemma gives $\abs{\int_{C_R}\frac{ze^{iz}}{1+z^2}\; dz} \to 0$ as $R \to \infty$ because the degree of the denominator is exactly one greater than the numerator, and by Jordan's lemma on quotientsn of polynomials (above), we are good on bounding the $C_R$.
+
+We then compute the actual contour integral via residues. $\frac{e^{iz}z}{1+z^2}$ has simple poles at $z = \pm i$, and since we close our arc in the positive (never mentioned it this time Niles D:$<$), we compute the residue $\Res(i) = \frac{1}{2e}$ and so $I_2 = \frac{\pi i}{e}$ which then yields the answer to our original integral as $\frac{\pi}{e}$. 
+
+\chapter{11/22 - Poles on contour}
+
+We will do one more quick example on Jordan's Lemma. Consider an $LR$ circuit with voltage source $V(t)$. The current in the circuit is then given by 
+$$I = \frac{A}{2\pi}P\displaystyle\int\limits_{-\infty}^{\infty}\frac{e^{i\omega t}}{R+ i\omega L}\;d\omega$$
+which is just the response to a delta function pulse of magnitude $A$ at $t=0$. We will solve for $t > 0$, the physical solution. We will thus close in the upper half plane
+$$\frac{A}{2\pi}P\displaystyle\int\limits_{-\infty}^{\infty}\frac{e^{i\omega t}}{R+ i\omega L}\;d\omega + \frac{A}{2\pi}\int_{C_R} \frac{e^{izt}}{R + izl}dz = 2\pi i \Res$$
+
+We note our singularity $z =  \frac{iR}{L}$ so we calculate a single residue. We note that the integrand vanishes as $R \to \infty$ and so we note contribution from the real part vanishes. We compute the residue by using the $p/q'$, noting all prerequisites (be sure to state these! Niles corrected himself and added it in!). We thus have our solution after computing out an easy residue
+$$I(t) = \frac{A}{L}e^{Rt/L}$$
+
+That's the physical solution. What if $t < 0$? Physically, this should be zero because the pulse hasn't been applied yet! We note that we close our contour in the bottom half of the complex plane, and since we don't enclose our singularity by literally any of sixteen thousand theorems we can claim that the countour integral is zero, and then plus Jordan's lemma we find that $I(t) = 0$. 
+
+Let's now consider a thorny case; what if there's a pole on our contour? Improper integrals with singularities. We again define a Cauchy principal value of these improper integrals. Suppose $f(c), a < c < b$ is a singularity. Then we usually define
+$$\displaystyle\int\limits_{a}^{b}f(x)\;dx = \lim_{\epsilon_1 \to 0}\displaystyle\int\limits_{a}^{c-\epsilon_1}f(x)\; dx + \lim_{\epsilon_2 \to 0}\displaystyle\int\limits_{c+\epsilon_2}^bf(x)\; dx$$
+
+The Cauchy principal value is then defined analogously
+$$\displaystyle\int\limits_{a}^{b}f(x)\;dx = \lim_{\epsilon \to 0}\left(\displaystyle\int\limits_{a}^{c-\epsilon}f(x)\; dx \displaystyle\int\limits_{c+\epsilon}^bf(x)\; dx\right)$$
+
+Suppose we now examine an ``indented contour.'' Consider $I = \displaystyle\int\limits_{-\infty}^{\infty}\frac{\sin x}{x}\;dx$. Our usual methods would give us integrand $\frac{e^{iz}}{z}$, but this introduces a simple pole at $z=0$. We will instead make a small ``indentation'' about $z=0$. Consider the following family of four paths that forms a contour that avoids $z=0$
+\begin{itemize}
+    \item $C_R$ a semicircular arc of radius $R$ above the real axis
+    \item $C_-$ a line along the negative real axis $[-R,-\epsilon]$
+    \item $C_+$ a line along the negative real axis $[\epsilon,\infty]$
+    \item $C_\epsilon$ a semicircular arc of radius $\epsilon$ above the real axis
+\end{itemize}
+
+We want to examine what happens on $C_\epsilon$ as $\epsilon \to 0$. But first, we will prove a quick lemma. Suppose $f(z)$ has a simple pole at $z = z_0$. If a circular arc $C_\epsilon$ of radius $\epsilon$ centered at $z_0$ intercepts an angle $\alpha$ in the counterclockwise direction, then
+$$\lim_{\epsilon \to 0}\int_{C_\epsilon} f(z) \; dz = \alpha i\Res(z_0)$$
+
+Note that in the $\alpha = 2\pi$ closed contour case we recover residue theorem! We prove this using the Laurent series. Since $f(z)$ has a simple pole at $z_0$, we can write $f(z) = \frac{\Res(z_0)}{z-z_0} + g(z)$ where we can define $g(z)$ to be analytic and hence bounded. We note that the contribution of $g(z)$ in the integral over $C_\epsilon$ goes to zero. This is a straightforward ML bound argument; analytic functions are bound over their domain of analyticity, and so $\abs{g(z)} < M$, and since $L$ vanishes we're done. Thus, we have
+\begin{align*}
+    \int_{C_\epsilon} f(z)\; dz &= \int_{C_\epsilon} \frac{\Res(z_0)}{z-z_0}dz
+\end{align*}
+
+Who knew, this is easiest to evaluate via parameterization! (I totally called that one). We can just factor out the residue since it's a constant, and we use the parameterization $z = z_0 + \epsilon e^{i\theta}$ and obtain
+\begin{align*}
+    \Res(z_0)\int_{C_\epsilon}\frac{dz}{z-z_0} &= \Res (z_) \displaystyle\int\limits_{\theta_0}^{\theta_0 + \alpha}\frac{i\epsilon e^{i\theta}}{\epsilon e^{i\theta}}\;d\theta\\
+    &= \alpha i\Res (z_0)
+\end{align*}
+
+We return to our indented contour. Note that when the contour itself is positive, the indented portion $C_\epsilon$ is actually negative! Now let's complete our example of $\frac{\sin x}{x}$.
+
+Now, recall we wanted to compute $\displaystyle\int\limits_{-\infty}^{\infty}\frac{\sin x}{x}\;dx$ (Note to self: this is actually a sensical integral in $\mathbb{R}$ because this integrand is canonical L'Hopital's example and evaluates to $1$ at origin). We then wanted to construct our indented contour above the real axis. Over $C_R$ the contribution is $0$ by Jordan's Lemma. We then note that over $C_\epsilon$ the contribution by application of our lemma is $-i\pi \Res(0) = -i\pi$ (the residue is easiest evaluated by taking the limit of multiplication of the integrand). Lastly, we note that since the entire contour includes no singularities, the total integral must be $0$, so we note that
+$$\lim_{R\to \infty, \epsilon \to 0}\displaystyle\int\limits_{-R}^{-\epsilon}\frac{e^{ix}}{x}\;dx + \displaystyle\int\limits_{\epsilon}^{R}\frac{e^{ix}}{x}\;dx = P\displaystyle\int\limits_{-\infty}^{\infty}\frac{e^{ix}}{x}\;dx= \pi i$$
+
+We then note that we want the imaginary part since our original integrand was $\sin$, so we note that the Cauchy Principal value is $\pi$, and since the integrand is odd we can remove the principal value and obtain
+$$\displaystyle\int\limits_{-\infty}^{\infty}\frac{\sin x}{x}\;dx = \pi$$
+
+Let's consider when we have a branch point rather than just a pole on the contour of integration. Let's do this by example, $\displaystyle\int\limits_{0}^{\infty}\frac{x^{m-1}}{x+1}\;dx, 0 < m < 1$. We consider $f(z) = \frac{z^{m-1}}{z+1}$. We analyze the function and find branch points (what are those again? OTL) at $z=0,z_\infty$ and a simple pole at $z=-1$. 
+
+For some weird reason, Niles Pierce is going to define the branch cut $\Arg z \in (0,2\pi)$ (positive real axis) and then we will define a $C_R$ that goes from $\theta = \epsilon$ to $\theta = 2\pi - \epsilon$. We will close this contour by pulling two lines from the endpoints of this arc to the center, and then draw a small almost-closed contour about the origin as well. Thus, it avoids all parts of the branch cut and the singularity at the branch point. The residue theorem then suggests (rather than claims, since we're pushing the bound of analyticity of our integrad)
+$$\displaystyle\int\limits_{\epsilon}^{R}\frac{r^{m-1}}{r+1}\;dr + \int_{C_R} f(z)\; dz + \displaystyle\int\limits_{R}^{\epsilon}\frac{(re^{2\pi i})^{m-1}}{re^{2\pi i} + 1}\;e^{2\pi i} dr + \int_{C_\epsilon} f(z)\; dz = 2\pi i \Res(-1)$$
+
+We will first focus on bounding the $C_R$ contribution. We cannot use Jordan's Lemma because the contour is not closed, but we can just use an ML bound since $\abs{\int_{C_R}\frac{z^{m-1}}{z+1}\; dz} \leq \frac{R^{m-1}}{R-1}2\pi R$ which vanishes as $R \to \infty$ because $0 < m < 1$.
+
+We can do similarly for $\abs{\int_{C_\epsilon} \frac{z^{m-1}}{z+1}\; dz} \leq \frac{\epsilon^{m-1}}{1-\epsilon}2\pi \epsilon$ which vanishes as $\epsilon \to 0$. Lastly, we compute our residue by multiplying by $z-z_0$ and computing the limit $z \to z_0$ and we obtain $\Res(-1) = \lim_{z \to e^{\pi i}} \frac{(z+1)z^{m-1}}{z+1} = \left( e^{\pi i} \right)^{m-1} = -e^{m\pi i}$, where we are careful to use $e^{\pi i} = 1$ to stay within our branch cut. Finally, letting $\epsilon \to 0, R \to \infty$ and plugging things back into our integrand, we get
+\begin{align*}
+    \displaystyle\int\limits_{\epsilon}^{R}\frac{r^{m-1}}{r+1}\;dr + \int_{C_R} f(z)\; dz + \displaystyle\int\limits_{R}^{\epsilon}\frac{(re^{2\pi i})^{m-1}}{re^{2\pi i} + 1}\;e^{2\pi i} dr + \int_{C_\epsilon} f(z)\; dz &= 2\pi i \Res(-1)\\
+    \displaystyle\int\limits_{\epsilon}^{R}\frac{r^{m-1}}{r+1}\;dr -\displaystyle\int\limits_{\epsilon}^{R}\frac{r^{m-1}(e^{2\pi i})^{m-1}}{r + 1}\; dr &= 2\pi i e^{m\pi i}\\
+    \left( 1-e^{2m\pi i} \right)\left(\displaystyle\int\limits_{\epsilon}^{R}\frac{r^{m-1}}{r+1}\;dr \right)&= \\
+    \displaystyle\int\limits_{\epsilon}^{R}\frac{r^{m-1}}{r+1}\;dr &= \frac{2\pi i}{e^{m\pi i} - e^{-m\pi i}}\\
+    &= \frac{\pi}{\sin m\pi}
+\end{align*}
+
+The justification for the fact that we take our Residue theorem at the non-analytic boundary is because we can cut the integral into two parts that avoid our branch cuts entirely. Proof is on handout, screw this.
+
+\chapter{11/25 - Winding number, Argument principle}
+
+We only have four lectures left (NOOOOOOOO, Niles DDD:). We'll leave the residue calculus buildup that has sustained us for the entire course. We'll instead go back to Reimann surfaces. Let's examine the Winding number. Consider $\int_{C}\frac{dz}{z-z_0}$ where $C$ is an arc does not pass through $z_0$. We will admit the possibility that we are on a multivalued/multi-sheeted Reimann surface.
+
+We start by parameterizing $C$ as an arc $z=z(t), a \in [a,b]$. Our contour integral then becomes $\displaystyle\int\limits_{a}^{b}\frac{z'(t)}{z(t) - z_0}\;dt$. We note cleverly that this is equivalent to $\displaystyle\int\limits_{a}^{b}\rd{}{t}\log \left[ z(t) - z_0 \right]\;dt$ where the log is defined not on a branch but to vary continuously over all $t \in [a,b]$. We thus can apply fundamental theorem of something (antiderivatives) to write our integral $\log \left[ z(t) - z_0 \right]\Big|_a^b$ or in alternative notation $\log(z-z_0)\Big|_C$. We can write this in terms of real and imaginary parts $\Log\abs{z-z_0}\Big|_C + i\arg(z-z_0)\Big|_C$.
+
+Let's then stipulate that the contour is closed. We note then that the modulus of the starting point is the same as the endpoint, so the real part vanishes, so we're left with
+$$\int_C \frac{dz}{z-z_0} = i\arg(z-z_0)\Big|_C$$
+
+for a closed contour $C$. Thus, if the contour includes $z_0$ then the integral goes to $2\pi i$ times the number of times the contour circles $z_0$ while if the integral does not it goes to $0$. Thus, the integral ``counts'' the number of times that the contour circles $z_0$. We can thus define the winding number of a contour to be
+$$N(C,z_0) = \frac{1}{2\pi i}\int_C \frac{dz}{z-z_0} = \frac{1}{2\pi}\arg (z-z_0)\Big|_C$$
+
+Let's next define the concept of a meromorphic function to be a function that is continuous with the only exception of poles (i.e. if it has removable singularities we remove them and if we have essential singularities then we curse it out). Note to include multiplicity when counting zeroes and poles. 
+
+Consider a meromorphic function $f(z) = \frac{(z-1)^3(z+5)^2}{z^8(z-7i)(z+1)^2}$ and a contour $\abs{z} = 2$. Let's define the number $Z$ to be the number of orders of zeroes inside $C$, so in our case $Z = 3$ (since $-5$ is not inside our contour. Similarly, defin $P$ to be the number of orders of poles, so in our case we have $P=10$. 
+
+We then come to the argument principle. If $f(z)$ is meromorphic on and inside a positive simple closed contour $C$ with no poles and zeroes on $C$, then 
+$$\frac{1}{2\pi i} \int_{C}\frac{f'(z)}{f(z)}dz = Z-P = \frac{1}{2\pi}\arg f(z) \Big|_C$$
+
+We will spend the rest of class proving and exampling this. We will first examine the contour integral on the left. We note that the integrand is only singular at zeroes and poles of $f$. If $z_0$ is a zero of order $m$ then $f(z) = (z-z_0)^mg(z)$ where $g(z) \neq 0$. We can take this form and compute
+$$\frac{f'(z)}{f(z)} = \frac{m}{z-z_0} + \frac{g'(z)}{ g(z)}$$
+
+We know that the second term is analytic and therefore benign, so $\Res\left( \frac{f'}{f};z_0 \right) = m$. If we perform the same algebra for poles $z_1$ of order $p$, we find $\Res\left( \frac{f'}{f}; z_1 \right) = -p$. Therefore, we have proven the first part of our claim (upon applying residue theorem)
+$$\frac{1}{2\pi i}\int_C \frac{f'}{f}dz = Z-P$$
+
+We then strive to prove the second half. We will look at the $w$ plane, the image of $f(z)$. In the $z$ plane, we have $C: z=z(t)$, while in the $w$ plane we have $w = f(z(t))$. We note that $f(z(t)) \neq 0$ because $f$ has no zeroes on the contour. Thus, at every point on our image in the $w$ plane our $\arg w = \arg f(z)$ is well defined. We then note that $\log f(z(t))$ is thus also well defined. We note that this is very much like our winding number definition again. We can then construct and note modulus term vanishes
+\begin{align*}
+    \int_{C} \frac{f'(z)}{f(z)}dz &= \displaystyle\int\limits_{a}^{b}\frac{f'(z(t))z'(t)}{f(z(t))} \;dt\\
+    &= \log f(z(t))\Big|_b^a\\
+    &= i\arg f(z)\Big|_C
+\end{align*}
+and so we combine our two results and we prove the argument principle.
+
+This is obviously all related to the winding number, and we note that $\frac{1}{2\pi}\arg f(z)\Big|_C$ is just $\frac{1}{2\pi}\arg w\Big|_{C^*}$ where $C*$ is the image of $C$ in the $w$ plane, and so $Z-P$ is just the winding number of $C^*$ in the $w$ plane with respect to the origin in the $w$ plane.
+
+Example time! Let's consider meromorphic function $f(z) = \frac{z^3 + 2}{z}$. We want to compute the winding number $N(C^*,0)$ of $C:\abs{z} = \frac{1}{2}$ under $f(z): C \to C^*$. We can then compute easily that $P = 1, Z = 0$. Thus, we know that the image of the contour must have winding number $N(C^*,0) = -1$ and so it wraps around the origin exactly once in the negative direction. 
+
+If our contour is now instead $\abs{z} = 2$, then $Z - P = 3-1 = 2$ and so $C^*$ wraps twice around the origin in the positive direction instead! Wow! 
+\chapter{11/27 - Analytic continuations}
+
+We attempt to extend domain of analyticity beyond validity of function definition. Because analytic functions are unique, there are obviously some rules, but we'll start with an example to see what analytic continuation can buy us. Suppose that we have
+$$f(z) = \sum_{k=0}^{\infty}z^k$$
+defines an analytic function for $\abs{z} < 1$. However, we note that $g(z) = \frac{1}{1-z}$ equals $f(z)$ within the region where $f(z)$ is defined and only has a singularity at $z=1$! We thus say that $g(z)$ \emph{analytically continues} $f(z)$ into the complex plane except at $z=1$. 
+
+We then ask if this continuation is unique? Suppose we have a function $f_1$ is analytic on $D_1 \cup D$. We then claim that there is at most one function $f_2$ analytic in some domain $D_2 \cup D$ such that $f_1 = f_2$ in $D$. This is an easy proof; assume some $f_3 = f_2$ in $D$ and anayltic in $D_2$. Then construct $f_3 - f_2$ and note that it must be zero everywhere in the analyticity of $f_2, f_3$, and so $f_2 = f_3$ in $D_2$. Note however that this is not commutative: If $f_2$ analytically continues $f_1$ and $f_3$ analytically continues $f_2$, it is not necessarily true that $f_3$ analytically continues $f_1$. More powerfully, as long as there is a hole in the middle of the domains they functions may not be perfectly equal everywhere they intersect.
+
+An example of this is the $\log z$ function. If we choose our domains to go around (but not enclose) the origin, we find eventually that once the domains start overlapping (after we extend $f_i$ times) we see that we've gone onto a different Reimann sheet! So obviously we have to start being careful.
+
+We now concretize this. Suppose we have some Taylor series at $z_1$ inside $D$. Expand at $z_2$ inside the circle of convergence (producing function $f_2$) of the Taylor series about $z_1$, and repeat until $z^*$ falls in the circle of convergence of some $f_n$. Then $f_1, f_2\dots f_n$ is the analytic continuation of $f(z)$ to $z^*$ along some contour $C$ (along which the $z_i$ lie)
+
+We then have the Monodromy Theorem: let $f(z)$ be analytic in a disc $D_0$ contained in a simply connected domain $D$. If $f(z)$ can be continued analytically along every polygonal line in $D$ then the continuation leads to a single-valued function in $D$.
+
+The most famous example of analytic continuation is the gamma function 
+$$\Gamma(z) = \displaystyle\int\limits_{0}^{\infty}e^{-t}t^{z-1}\;dt$$
+where $\Re(z) > 0$. Note this to be the generalization of the factorial function from natural numbers to all complex numbers with positive real part. We can show the function to be analytic. We can easily see that the integral diverges $\Re(z) \leq 0$, because recalling ye old calculus $\displaystyle\int\limits_{0}^{1}\frac{1}{t^p}\;dt$ diverges $p \geq 1$.
+
+Naturally, we'd like to analytically continue the gamma function! We want to continue it to a meromorphic form. It turns out that $\Gamma(z)$ satisfies the functional equation $\Gamma(z+1) = z\Gamma(z)$ (looks like a factorial! can integrate by parts). If we then compute $\Gamma(1) = 1$ (trivially), then we reproduce factorials. But we're not interested in that! Let's try to extend the integral definition into the left-half plane.
+
+First, we can ``iteratively apply the functional crank'' to produce $\Gamma(z) = \frac{\Gamma(z+n)}{(z)(z+1)\dots(z+n-1)}$. This allows us to extend to arbitrary $n$, and due to uniqueness we know that our function is the unique continuation onto the left-half plane! And we can encompass any contour, or even go to $n=-\infty$ if we want.
+
+We can examine this representation and note that there are simple poles at all $z = -n, n \in\mathbb{R}_{\geq 0}$. This is what caused our function to go wrong, but now we've extended it to the entire complex plane as a meromorphic function! This is awesome.
+
+Afterwards, we'll revisit analytic functions as mappings and do wizardry. 
+
+\chapter{12/2 - Conformal mapping}
+
+Consider a smooth arc $C: z = z(t), t \in [a,b]$ with nonvanishing $z'(t)$. Note that $z'(t)$ is everywhere tangent to $C$. Then if $f(z)$ is analytic in a domain $D$ containing $C$, the image of $C$ is $C^*: w=f(z(t))$ with $w'(t) = f'(z(t))z'(t)$, namely the vector tangent to $C^*$. Then for $t_0\in[a,b]$ and $z_0 = z(t_0)$ suppose $f'(z_0) \neq 0$. Then $w'(t_0) \neq 0$ and
+$$\arg w'(t_0) = \arg f'(z_0) + \arg(z'(t_0))$$
+
+This is super powerful! Consider then two contours $C_1, C_2$ that intersect at angle $\alpha$. Then this means that under any $z \to w$ transformation the contours will still intersect in the $w$ plane at angle $\alpha$ (since the $f'(z_0)$ term cancels out). Angle-preserving mappings are termed \emph{conformal}. This then gives rise to our theorem
+\begin{center}
+    The mapping $w=f(z)$ is conformal at a point $z_0$ if $f$ is analytic at $z_0$ and $f'(z_0) \neq 0$.
+\end{center}
+
+We next examine the how mappings scale the complex plane. Consider $\abs{z-z_0}$ the length of a segment in the $z$ plane. Then $\abs{f(z) - f(z_0)}$ is the length of a segment in the $w$ plane. We then note that the scaling is then just $\lim_{z \to z_0}\frac{\abs{f(z) - f(z_0)}}{\abs{z-z_0}} = \abs{f'(z_0)}$. Then the local scale of the mapping is $\abs{f'(z_0)}$ independent of direction.We note that for a derivative $> 1$ we have expansion at the point $z_0$ and vice versa.
+
+Let's look at $w = f(z) = z^2$, which is conformal everywhere except at $z=0$. Let's scurry away from the origin since we don't know how to handle points that are not conformal. Let's define three arcs in the $z$ plane such that we have a triangle with internal angles $\alpha_i$. Let this triangle have one vertex on the real axis, one on imaginary, and the triangle be a right triangle (with the third vertex not at the origin). We then find in the $w$ plane that it maps to a slightly warped shape that I'm too incapable to draw. However, the key points are that the angles get preserved. We also note that the local scaling is $\abs{f'(z)} = 2\abs{z}$ and since we have everywhere $\abs{z} > \frac{1}{2}$ we have expansion everywhere.
+
+We note that the analytic mapping $f(z)$ is not conformal at criticial points where $f'(z) = 0$. We note that these critical points are zeroes of $f$ and so have an order, and we find that the angles at these zeroes are magnified by exactly the order of the zero of $f$. We omit the proof out of laziness.
+
+Let's then examine $w=f(z) = z^2$ again. We note that the critical point $z=0$ is a zero of order $2$. We now draw the same right triangle but with the $90^\circ$ angle at the origin. We note then that the angle at the critical point is doubled and there are only two edges to the figure (damn, I wish I could draw these things) as the doubled angle doubles to $180^\circ$.
+
+Next class we will solve for the flow over an airfoil, but first we need to figure out how to construct the airfoil. We use the \emph{Joukowski mapping} $w = \frac{1}{2}\left( z + \frac{1}{z} \right)$. We note critical points at $z = \pm 1$ of order $2$. Then extracting our real and imaginary parts
+\begin{align*}
+    u&=\frac{1}{2}\left( r+\frac{1}{r} \right)\cos\theta\\
+    v &= \frac{1}{2}\left( r - \frac{1}{r} \right)\sin\theta
+\end{align*}
+
+We then find that the unit circle in the $z$ plane maps to the line between $-1,1$ on the $w$ plane. We note that the angles at $-1,1$ do indeed double from $180^\circ$ to $360^\circ$, so we're good. 
+
+If we then consider not $r=1$ but $r=\rho$ then rearranging $\sin^2 + \cos^2 = 1$ we find
+$$\frac{u^2}{\left[\frac{1}{2}\left( \rho + \frac{1}{\rho} \right)\right]^2} + \frac{v^2}{\left[ \frac{1}{2}\left( \rho - \frac{1}{\rho} \right) \right]^2} = 1$$
+
+We then see that in general circles map to ellipses. Note that $r = \rho$ and $r = \frac{1}{\rho}$ map to the same ellipse. We want then to find the contour in $z$ that maps to an airfoil in $w$. Homework! Goodbye.
+
+\chapter{12/4 - Solving Laplace equation via conformal mappings}
+
+Suppose we have a function $f(z)$ analytic on an open connected set $D^z$. Then the image $D^w$ is also an open connected set. Moreover, if $f(z)$ is conformal then a unique analytic inverse $F(w)$ exists at all points in $D^w$. Then, since $\rd{f}{z} \neq 0$, we note that $\rd{z}{f} = \rd{F}{w}$ also doesn't vanish so the analytic inverse is also analytic and conformal.
+
+Let's now examine how to map harmonic functions. Suppose we have some function $w = f(z) = u(x,y) + iv(x,y)$ a conformal mapping $D^z \to D^w$. We know then from our prior argument that $z=F(w) = x(u,v) + iy(u,v)$ exists and is nice in all ways (analytic, conformal). 
+
+Suppose now that we know some function $\phi^z(x,y)$ is harmonic in $D^z$. We know then that inverses exist, so $\phi^w(u,v) = \phi^z(x(u,v),y(u,v))$ is defined in $D^w$ and we suspect it to be harmonic. We can sort this out easily though. We know that $\phi^z$ is harmonic, so
+$$0 = \ptd{}{x} \phi^z(x,y) + \ptd{}{y}\phi^z(x,y)$$
+
+After some totally uncalled for (end sarcasm) Cauchy Reimann equations and chain rule, we find
+$$0 = \ptd{}{u} \phi^w(u,v) + \ptd{}{v}\phi^w(u,v)\abs{f'(z)}^2$$
+
+Since $f(z)$ is nonvanishing and stuff, we note that this implies $\phi^w(u,v)$ is also harmonic. 
+
+We then want to solve the Laplace equation subject to some boundary conditions. The most common case of this is the Dirichlet problem, namely defining the value of the function on the boundary. We will attack this by conformally mapping region $R^z$ (including the boundary since we care about it now) to a simpler region $R^w$ in the $w$ plane via $w = f(z)$. We will then solve the Dirichlet problem in $R^w$ and then transform the solution back to $z$ plane via the function $f(z)$.
+
+A second way to solve the problem is to select a harmonic function $\phi^z(z)$ that satisfies the comparatively straightforward region $R^z$ and conformally map the region to a more interesting region $R^c$ (in another plane the $C$ plane). We then seek the problem that matches our solution! We then conformally map the solution to $R^c$ with inverse mapping $z = G(c)$.
+
+Let's return to the problem at the end of class yesterday as an example. We exploit the Joukowski mapping to study flow over an airfoil. The answer to the problem of finding an airfoil between a blimp and a plate was to map a slightly off-center circle of course! But then, since we already know the potential flow over a unit circle from the lecture years ago, we can just map it conformally (under the Joukowski mapping) to find the potential flow over an airfoil!
+
+We recall that the stream function for potential flow over unit circle centered at the origin is $\psi = \frac{r^2-1}{r}\sin\theta$ with boundary condition $\psi = 0$ on the cylinder. To get to an airfoil, we need first to map our unit cylinder to an expanded, shifted circle (centered at $-\epsilon$ with radius $1+\epsilon$). Suppose our unit cylinder is on the $w$ plane and the $z$ plane is the desired cylinder. We then want to find the mapping that takes us from $R^z$ to $R^w$ (which will give us the reverse mapping as well). A quick moments' reflection gives the mapping to be $w = f(z) = \frac{z+\epsilon}{1+\epsilon}$. We then recall the solution on $R^w$ to be $\psi^w(w) = \frac{u^2 + v^2 - 1}{u^2+v^2}v$ written in Cartesian coordinates. To then get the solution in the $z$ plane, we just have to compute $\psi^z = \psi^w(f(z))$. 
+
+We then want to map this $\psi^z$ onto some region we can call $R^C$ which is our airfoil, and we map via the Joukowski mapping $g(z) = \frac{1}{2}\left( z + \frac{1}{z} \right)$. We thus have the stream function $\psi^c(c) = \psi^z(G(c)) = \psi^w(f(G(c)))$.
+
+However, there is a not-so-small issue! $g(z)$ has a multivalued inverse! This isn't too much of a problem, in fact harkening back to the Dark Ages of pset 2. We pick $\theta_1,\theta_2 \in [-\pi,\pi]$ ($\theta_1,\theta_2$ are arguments about branch points $-1,1$). So in theory, since we have $f(z)$, we have $G(c)$, and we have $\psi^w(w)$, so we can just plug everything through now. By shifting our circle around in the $z$ plane we can actually study angled airfoils too. Cool!
+
+\chapter{12/6 - Review}
+
+Our review will cover power series expansions, singularities/residues, and contour integration via residues.
+
+Taylor series $f(z) = \sum_{n} c_n (z-z_0)^n$ converges for $\abs{z-z_0} < R$ with $R$ distance to nearest singularity. Laurent series has general form $f(z) = \sum_{n=-\infty}^\infty c_n (z-z_0)^n$ which converges in $R_1 < \abs{z-z_0} < R_2$ depending on the locations of the nearest singularities.
+
+We know the coefficients of generalized Laurent series are given
+$$c_n = \frac{1}{2\pi i}\oint \frac{f(z)}{(z-z_0)^{n+1}}dz$$
+over $C$ lying in the region of convergence. For a Taylor series, $f(z)$ is analytic on and inside $C$ which means we can use generalized Cauchy Integral Formula. Applying, we find $c_n = \frac{1}{n!}\frac{d^n}{dz^n} f(z_0)$ which are the familiar Taylor coefficients.
+
+For the Laurent series the formula is very difficult to apply. We instead use tricks to compute coefficients for Laurent series and avoid the formula. The most common trick is to use $\frac{1}{1-z} = \sum_n z^n$. Ratio test shows that this formula works when $\abs{z} < 1$. If we write $z = \frac{1}{t}$ we also have a simple form for Laurent series that converges $\abs{z} > 1$. 
+
+Let's do an example, $f(z) = \frac{1}{z(z-i)} = \frac{i}{z} - \frac{i}{z-i}$ and find the Laurent series about $z_0 = 1$. Observing singularities, we expect three Laurent series for each of the three annulus. Blah blah, this isn't hard to do, I'll just jot down the result (refer to almost identical lecture from Laurent series lecture or one of the HW problems). 
+
+I lied, I'll jot this down for posterity. We want to expand in the annulus $1 \leq \abs{z-1} \leq \sqrt{2}$. We will use the standard trick $\frac{i}{(z-1)-(-1)}$ which dividing through by $z-1$ gives the $\frac{1}{1-z}$ trick and solution $\frac{i}{z} = \sum_{n=-\infty}^{-1}i(-1)^{n+1}(z-1)^n$. Similar protocol for the second term produces yawns and $-\frac{i}{z-i} = \frac{i}{i-1}\sum_n \left( \frac{z-1}{i-1} \right)^n$ which is valid for $\abs{z-1} < \sqrt{2}$. Thus in our annulus
+$$f(z) = \sum_{n=-\infty}^{-1}i(-1)^{n+1} (z-1)^n + \sum_{n=0}^\infty \frac{i}{(i-1)^{n+1}}(z-1)^n$$
+
+which has region of convergence intersection of the two individual regions of convergence so $1 < \abs{z-1}<\sqrt{2}$. 
+
+We then examine isolated singularities at $z=z_0$ and classify by behavior as we take limit $z \to z_0$. Charts!
+\begin{table}
+    \centering
+    \begin{tabular}{c | c | c}
+        & Behavior as $z \to \infty$ & Laurent Expansion at $z_0$\\
+        Removable & bounded & no negative terms\\
+        Pole & unbounded & finitely many negative powers\\
+        Essential & Neither (limit depends on path; cue Picard's) & INFINITE NEGATIVE!
+    \end{tabular}
+    \caption{Types of singularities}
+\end{table}
+
+The residue at some $z_0$ is then the coefficient of $z^{-1}$ in the power series about $z_0$. This is disgusting (TA isn't as sexy as Niles when he says residue :sadface:) because $\oint f(z)\; dz = 2\pi i \Res(z_0)$ (assuming $z_0$ only singularity in the contour).
+
+We then know that poles of order $n$ have residue $\Res(z_0) = \lim_{z \to z_0}\frac{d^{n-1}}{dz^{n-1}} \left[ f(z)(z-z_0)^n \right]$. For the simple pole case we can write $f(z) = \frac{p(z)}{q(z)}$ and the residue is given by $\Res(z_0) = \lim_{z \to z_0}\frac{p(z)}{q'(z)}$ (he didn't list all preconditions, he doesn't get all his points on his exam! Bad head TA).
+
+We then discuss contour integration (relating to real integration) via residue theorem. We can create some closed contour $C$ enclosing isolated singularities and we can residues to compute the contour integral and then get contibutions to either get to real integral or vanish.
+
+Let's look at an interesting example $I = \displaystyle\int\limits_{0}^{\infty}\frac{1}{(x+2)(x+3)}\;dx$. We note that there's no quick and dirty way to do this disappointingly (except by real calculus\dots) in the contour plane thingy, so let's take him up on his hint offer. Hint: Consider $\int_C \frac{\log z}{z^2 + 5z + 6}\; dz$ for appropriate choice of $C$. Note branch cut. We will define our branch cut to be $-\frac{\pi}{2} < \Arg z < \frac{3\pi}{2}$. We then have $C_1$ along positive real axis and $C_2$ indented contour about negative real axis and $C_R$ semicircle above real axis. We note that $C_1$ is just the real integral.
+
+We examine $C_2$ and parameterize $z = e^{i\pi}x$ which then gives integral $\displaystyle\int\limits_{R}^{0}\frac{\log xe^{i\pi}}{x^2e^{2\pi i} + 5xe^{i\pi} + 6}\;(e^{i\pi})dx$. Oh wait, this doesn't work. Troll TA is troll, this isn't the correct ``appropriate choice of $C$.''
+
+Let's try keyhole integration instead! Let $C_1$ lie above the positive real axis and $C_2$ lie just below the positive real axis and $C_R$ along the circular arc and $C_\epsilon$ about the branch point. We now define branch cut to be $0 < \Arg z \leq 2\pi$. We can then parameterize $z=xe^{2\pi i}$ and then working carefully we find
+\begin{align*}
+    \int_{C_2}dz &= \displaystyle\int\limits_{R}^{0}\frac{\log x + i2\pi}{x^2 + 5x + 6}\;dx\\
+    &= -\int_{C_1} - 2\pi i I
+\end{align*}
+
+This is a super clever construction! Then we note that $\oint_C = \int_{C_1} + \int_{C_2} + \int_{C_R} + \int_{C_\epsilon} = -2\pi i I$ in anticipation that $C_R, C_\epsilon$ both go to $0$ (ML bound respectively). We can then apply residues to compute $\oint_C$ and this gives us $I$. He's going to walk us through the thousandth triangle inequality, reminding us to be careful of details. But actually, we run into a curious issue; the ML bound about $C_\epsilon$ depends on $z\log z, z \to 0$. We can obviously just L'Hopital's this though, and we can apply both for $\frac{0}{0}$ and $\frac{\infty}{\infty}$.
+
+We can't apply Jordan's Lemma to $C_R$!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! IT ONLY APPLIES WHEN THE INTEGRAND HAS $e^{i\alpha }$. So we have to ML bound. It vanishes doe, real talk.
+
+We then compute our residues and blah and finally we can compute that $I = \Log(\frac{3}{2})$ because $2\pi i$ cancels.
+
+We realize that we could have just partial fractions and real calculus (called it boy), but we have a harder example to contemplate while we go home: compute $\displaystyle\int\limits_{0}^{\infty}\frac{\log x}{x^2 + 5x + 6}\;dx$. Obviously the same approach doesn't quite work, so we will take our hint and go. The hint is to try $\log^2 z$ term in the numerator. We will then end up with three terms in the expansion, one term depending on $\log^2z, \log z, 1$ respectively. The first term cancels just like our above example, the second one we want, and the third we just solved. Woohoo!
+
+\end{document}

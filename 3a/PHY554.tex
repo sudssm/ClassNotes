@@ -1,0 +1,984 @@
+\documentclass[10pt]{report}
+\usepackage{amsmath, amsthm, amssymb, tikz, hyperref,enumerate}
+\usepackage[margin=0.5in]{geometry}
+\newcommand{\scinot}[2]{#1\times 10^{#2}}
+\newcommand{\bra}[1]{\left<#1\right|}
+\newcommand{\ket}[1]{\left|#1\right>}
+\newcommand{\dotp}[2]{\left<#1\left.\right|#2\right>}
+\newcommand{\rd}[2]{\frac{d#1}{d#2}}
+\newcommand{\pd}[2]{\frac{\partial #1}{\partial#2}}
+\newcommand{\norm}[1]{\left|\left|#1\right|\right|}
+\newcommand{\abs}[1]{\left|#1\right|}
+\newcommand{\expvalue}[1]{\left<#1\right>}
+\newcommand{\rtd}[2]{\frac{d^2#1}{d#2^2}}
+\newcommand{\pvec}[1]{\vec{#1}^{\,\prime}}
+\let\Re\undefined
+\let\Im\undefined
+\DeclareMathOperator{\Re}{Re}
+\DeclareMathOperator{\Tr}{Tr}
+\DeclareMathOperator{\Im}{Im}
+\newcommand{\ptd}[2]{\frac{\partial^2 #1}{\partial#2^2}}
+\usepackage[labelfont=bf, font=scriptsize]{caption}
+\everymath{\displaystyle}
+
+\begin{document}
+
+\title{Physique des Particules Elementaires\\ Amphi Lagarrigue W 1030-1200, 1530-1700}
+\author{Yubo Su}
+\date{}
+
+\maketitle
+\tableofcontents
+
+\chapter{10/09/14 --- Lecture 1 --- Introduction, Notions de base}
+
+Ce cours sera enseign\'ee en fran\c{c}ais. Il nous pr\'esent les concept fondamentaux, les observations exp\'erimentales et la th\'eorie des particules \'el\'ementaires.
+
+Les Grecs anciens ont cru qu'il y a quatre \'el\'ements fondamentaux. Maintenant, nous croyons \c{c}a aussi, mais il s'agit des different \'el\'ements. Nous savons qu'il y a quatre force fondamentaux, qui ont transmit par les quatres particules, les gluons (force fort), les ``intermediate vector bosons'' (force faible), les photons (force electromagnetique), les gravitons (force de gravit\'e). \emph{Je ne prends plus des notes sur l'introduction parce que \c{c}a ne m'interesse pas, desol\'ee.}
+
+On dit qu'une particule \'el\'ementaire n'est pas li\'ee d'autres objects et qu'elle est caracteris\'ee par une masse, une charge et autres nombres quantiques. Une antiparticule \'el\'ementaire est la solution d'energie n\'egative dans l'equation
+\begin{align}
+    E^2 &= p^2c^2 + m^2c^4\\
+    E &= \pm \sqrt{p^2 c^2 + m^2c^4}
+\end{align}
+et son fonction d'onde est la ``conjugate'' de celui des particules, $\psi_{ap} = \psi^*$. Donc, les charges et nombres quantiques des antiparticules sont oppos\'es \`a ceux des particules, mais leurs masses restent la m\^eme.
+
+Le mod\`ele standard a trois familles de constituants fondamentaux:
+\begin{table}[!h]
+    \centering
+    \begin{tabular}{c|c|c|c|c}
+        &Lepton & Lepton & Quark & Quark\\\hline
+        Plus stable&$\nu_e$& electron& up & down \\
+        $\vdots$&$\nu_\mu$& muon& charm & strange \\
+        Moins stable&$\nu_\tau$& taon& top & bottom 
+    \end{tabular}
+\end{table}
+
+Il y a aussi trois particules qui sont responsable pour la force faible et le photon; les quatres sont responsable pour la force electrofaible. Finalement il y a huit gluons. Ces trois categories sont le mod\`ele standard.
+
+Les hadrons sont constitu\'es par les quarks; le proton et le neutron sont des hadrons. Toutes les particules libres sont instables sauf le proton, l'\'electron, les neutrinos et le photon. Le taux de d\'esint\'egration et determin\'e par l'amplitude de probabilit\'e $A$. Soit $H$ le hamiltonien responsable de la transition entre les deux \'etats $\ket{i}$ initial et $\ket{f}$ final, $A$ est au premier ordre $\bra{f}H\ket{i}$. Par exemple, la d\'esint\'egration de neutron est
+\begin{align}
+    n \to p + e^- + \bar{\nu}_e
+\end{align}
+
+Notez que la masse des particules n'est pas conserv\'ee, a cause de relativit\'e $\Delta m = \Delta(E/\gamma) c^2$.
+
+Les trois force fondamentales (sans la gravitation) ob\'eissent aussi un autre tableau
+\begin{table}[!h]
+    \centering
+    \begin{tabular}{c|c|c|c}
+        &Fable & Electromagnetique & Forte\\\hline
+        La puissance qui influe l'intensit\'e de force &Saveur & Charge \'electriqe & ``Charge'' de couleur\\
+        Qui interagit par ce force &Quark, Leptons & particule charg\'ee (toutes sauf neutrino) & Quark\\
+        Porteur de force & W$^+$, W$^-$, Z$^0$ & Photon $\gamma$ & Gluons\\
+    \end{tabular}
+\end{table}
+
+Pour comprendre les interactions fondamentales, on utilise toujours les diagrammes de Feynman. \footnote{Je ne peux pas dessiner \c{c}a maintenant, mais je l'apprendrai. Maintenant, je vais d\'ecrire tout ce que je peux.} Selon la th\'eorie classique, un champs est produit instantan\'ement par une particule, mais d'apr\`es la mod\`ele standard l'interaction entre deux particules est produit par l'\'echange d'un particule. Les fontions d'onde deviennent des op\'erateurs qui cr\'ee et d\'etruit les particules appel\'es champs quantiques. 
+
+\chapter{10/09/14 --- PC 1 --- Additions de moments cin\'etiques}
+
+Apparament les PC sont enseign\'ees en anglais, mais je vais essayer de prendre des notes en fran\c{c}ais d\`es que c'est possible, pour la pratique. J'esp\`ere bien que mon orthographe ne sera pas trop mal\dots
+
+C'est la th\`eor\`eme de Noether qu'une symmetrie continue se produit une loie de conservation. Des exemples suivent
+\begin{table}[!h]
+    \centering
+    \begin{tabular}{c|c}
+        Symmetrie & Conservation\\\hline
+        L'espace & Le moment du movement\\
+        Le temps & L'energie\\
+        Le rotation & Le moment cin\'etique\\
+        La charge \'el\'ectrique red\'efinit dans l'espace phase & La charge \'el\'ectrique\\
+        La charge baryonique(orth?) red\'efinit dans l'espace phase & La nombre Baryonique \\
+        La charge leptonique(orth?) red\'efinit dans l'espace phase & La nombre Leptonique
+    \end{tabular}
+    \caption{Des symmetries et leurs loies de conservation correspondantes.}
+\end{table}
+
+Les premier trois sont des symmetries de espace-temps et les dernier quatres sont des symmetries internals.
+
+Nous faisons maintenant quelques rappelsl sur le moment cin\'etique.
+\begin{enumerate}[1)]
+    \item Rappels sur le moment cin\'etique. Soit un espace de Hilbert $S$
+        \begin{enumerate}[a)]
+            \item \emph{Quelles sont les r\`egles de commutation des op\'erateurs $\hat{J}_{x,y,z}, \hat{J}^2$?} --- $\left[ \hat{J}_{i},\hat{J}_j \right] = i\hbar \epsilon_{ijk}J_k$ et $\left[ \hat{J}_{x,y,z},\hat{J}^2 \right] = 0$.
+
+                Rappeler que nous pouvons construire les \'etats $\ket{jm}: J^2\ket{jm} = j(j+1)\hbar^2\ket{jm}, J_z\ket{jm} = m\hbar\ket{jm}$.
+            \item \emph{Soit $\ket{\psi}$ un \'etat propre commun \`a $\hat{J}^2, \hat{J}_z$ et $S_\psi$ le plus petit sous-espace de $S$ qui est stable par $\vec{J}$. Quelle est la dimension de $S_\psi$, quelles sont les valeurs propres de $\hat{J}_z$ dans $S_\psi$ et \`a quoi correspond physiquement cet espace?}
+
+                Parce que $\ket{\psi}$ est un \'etat propre de $J^2, J_z$ nous pouvons l'\'ecrire comme $\ket{\psi} = \ket{jm}$ (valeur propre de $m$). Aussi, nous construisons l'espace $S_\psi = \left\{ \ket{\phi_i} = J_i \ket{\psi} \right\}, J_i = \left\{ J_{\pm},J_z \right\}$. Finalement rappeler qu'on a les op\'erateurs $J_{\pm}: J_+\ket{jm} = \hbar\sqrt{j(j+1) - m(m\pm 1)}\ket{j, m+1}$, et donc sur l'espace $(j,m)$ nous avons toutes les points du reseau (lattice points?) qui satisfait $(\abs{m} \leq j)$, et donc la dimension $\dim S_\psi = 2j + 1$. 
+
+            \item \emph{Montrer que l'orthogonal d'un sous-espace $S_1$ par $\vec{J}$ est aussi stable par $\vec{J}$} --- Nous choissons le sous-espace $S_1 = \left\{ J_i\ket{\psi} \right\}$ avec $j = j_0$ ($j_0$ est arbitraire). Donc l'orthogonal de $S_1$ est defini par $\ket{\phi} \in S_1^{\perp} \Leftrightarrow \dotp{\psi}{\phi} = 0$, ou $j \neq j_0$.
+
+                Donc il suffit de montrer que $J_i \ket{\phi} \Rightarrow \bra{\psi}_i\ket{\phi} = 0$. Nous le montrons comme ($J_i = J_i^\dagger$ parce qu'il correspond \`a un observable)
+                \begin{align}
+                    \bra{\psi}J_i\ket{\phi} &= \bra{\phi}J_i^\dagger\ket{\psi}^*\\
+                    &= \bra{\phi}J_i\ket{\psi}^* = 0
+                \end{align}
+                parce que $J_i\ket{\psi} \in S_1$. Autrement dit, $J_i$ ne change pas $j$ et tous les \'etats avec $j$ different sont orthogonals.
+        \end{enumerate}
+    \item Deux moments cin\'etiques --- Nous avons deux moments cin\'etiques $\vec{J}_1, \vec{J}_2$
+        \begin{enumerate}[a)]
+            \item \emph{Quelles sont les relations de commutations des divers op\'erateurs?} --- $\left[ J_{1i}, J_{1j} \right] = i\hbar \varepsilon_{ijk}J_{1k}$, $\left[ J_{2i}, J_{2j} \right] = i\hbar \varepsilon_{ijk}J_{2k}$, $\left[ J_{1i}, J_{2j} \right] = 0$. 
+            \item \emph{Soit un espace $S=\left\{ \ket{j_1m_1}\otimes\ket{j_2m_2}: S_1\otimes S_2\right\}$. Quelle est la dimension de $S$?} --- Nous savons que les dimensions de $S_1, S_2$ sont $2j_1 + 1, 2j_2 + 2$ et donc $\dim S = \left( 2j_1 + 1 \right)\left( 2j_2 + 2 \right)$. 
+            \item \emph{On d\'efinit le moment cin\'etique total par $\vec{J} = \vec{J}_1 + \vec{J}_2$. V\'erifier que $\vec{J}$ est bien un op\'erateur de moment cin\'etique et les relations de commutation de $J^2$ avec $J_1^2, J_{1z}, J_z$.} --- Nous pouvons confirmer tout facilement que $\left[ J_i, J_j \right] = i\hbar \varepsilon_{ijk}J_k$ et alors nous avons un op\'erateur de moment cin\'etique apr\`es.
+
+                Nous devons donc maintenant verifier que $\left[ J^2, J_1^2 \right] = \left[ J_1^2 + J_2^2 + 2\vec{J}_1\cdot \vec{J}_2 ,J_1^2\right] = 0$ et que 
+                \begin{align}
+                    \left[ J^2,J_{1z} \right] &= \left[  J_1^2 + J_2^2 + 2\vec{J}_1\cdot \vec{J}_2, J_{1z}\right]\\
+                    &= 2\left[ J_{1x}J_{2x} + J_{1y}J_{2y},J_{1z} \right]\\
+                    &= 2i\hbar\left( -J_{1y}J_{2x} + J_{1x}J_{2y} \right) \neq 0
+                \end{align}
+                et donc $\left[ J^2, J_{1z} \right] \neq 0$.
+        \end{enumerate}
+    \item Additions des moments cin\'etiques
+        \begin{enumerate}[a)]
+            \item On a d\'ej\`a montr\'e que $\ket{j_1, m_1} \otimes \ket{j_2, m_2}$ forment une base de $S$. On veut aussi montrer que $\ket{jm}$ forment une base compl\`ete. Par exemple, soit un espace $S$ dans lequel $j_1 = \frac{3}{2}, j_2 = 1$. Alors $\dim S = 12$.
+
+                Aussi, nous savons que $m = m_1 + m_2$, et donc $m \in \left[ -\frac{5}{2}, \frac{5}{2} \right]$ avec ses d\'eg\'en\'erescence. Graphiquement, nous pouvons le dessiner comme
+                \begin{figure}[!h]
+                    \centering
+                    \begin{tikzpicture}
+                        \draw[<->] (-4,0) -- (4,0);
+                        \node[right] at (4,0) {$m_1$};
+                        \draw[<->] (0,-4) -- (0,4);
+                        \node[above] at (0,4) {$m_2$};
+                        \filldraw (1,2) circle(0.08);
+                        \filldraw (3,2) circle(0.08);
+                        \filldraw (-1,2) circle(0.08);
+                        \filldraw (-3,2) circle(0.08);
+                        \filldraw (1,0) circle(0.08);
+                        \filldraw (3,0) circle(0.08);
+                        \filldraw (-1,0) circle(0.08);
+                        \filldraw (-3,0) circle(0.08);
+                        \filldraw (1,-2) circle(0.08);
+                        \filldraw (3,-2) circle(0.08);
+                        \filldraw (-1,-2) circle(0.08);
+                        \filldraw (-3,-2) circle(0.08);
+                        \draw[blue, dashed] (2,3) -- (4,1);
+                        \draw[blue, dashed] (0,3) -- (4,-1);
+                        \draw[blue, dashed] (-2,3) -- (4,-3);
+                        \draw[blue, dashed] (-4,3) -- (2,-3);
+                        \draw[blue, dashed] (-4,1) -- (0,-3);
+                        \draw[blue, dashed] (-4,-1) -- (-2,-3);
+                        \draw (0.2,0) -- (-0.2,0);
+                        \draw (0.2,2) -- (-0.2,2);
+                        \draw (0.2,-2) -- (-0.2,-2);
+                        \draw (1,0.2) -- (1,-0.2);
+                        \draw (3,0.2) -- (3,-0.2);
+                        \draw (-1,0.2) -- (-1,-0.2);
+                        \draw (-3,0.2) -- (-3,-0.2);
+                        \node[below left] at (1,0) {$\tfrac{1}{2}$};
+                        \node[below left] at (3,0) {$\tfrac{3}{2}$};
+                        \node[below left] at (-1,0) {$-\tfrac{1}{2}$};
+                        \node[below left] at (-3,0) {$-\tfrac{3}{2}$};
+                        \node[above left] at (0,2) {{\small 1}};
+                        \node[above left] at (0,0) {{\small 0}};
+                        \node[above left] at (0,-2) {{\small -1}};
+                    \end{tikzpicture}
+                    \caption{Les points sont des points $(m_1, m_2)$ et les lignes sont les lignes de constant $m = m_1 + m_2$.}
+                \end{figure}
+
+                Donc la d\'eg\'en\'erescence maximum est $3 = 2j_2 + 1$.
+            \item \emph{Soit $\ket{\psi}$ un \'etat correspondant \`a la valeur maximale de $J_z$. Montrer que $\ket{\psi}$ est \'egalement \'etat propre de $J^2$, determiner la valeur correspondante de $j$, et determiner la dimension de $S_\psi$, le sous-espace engendr\'e par $\vec{J}$ sur $\ket{\psi}$.} --- On sait qu'il n'y a qu'un \'etat avec la valeur propre $(j_1 + j_2)\hbar$. Si on \'ecrit alors 
+                \begin{align}
+                    J_z J^2\ket{\psi}  &= J^2J_z \ket{\psi} = (j_1 + j_2)\hbar J^2\ket{\psi}
+                \end{align}
+                et donc on sait que $\ket{\psi} = \ket{j_1 + j_2, j_1 + j_2}$ (sinon, $J_+\ket{j, j_1 + j_2} \sim \ket{j, j_1 + j_2 + 1}$ qui n'\'exist pas parce que on a d\'ej\`a dit que $j_1 + j_2$ est l'\'etat avec la valeur $j$ maximum. Alors $j = j_1 + j_2$).
+
+                Apr\`es \c{c}a on sait que $\dim S = 2(j_1 + j_2) + 1$.
+        \end{enumerate}
+\end{enumerate}
+
+\chapter{17/09/14 --- Lecture 2 --- Les neutrinos}
+
+Les neutrinos interagit seulement par la force faible, et c'est tr\`es rare. Ils changent leur \'etats spontan\'ement. Les leptons (l'\'electron et le neutrino) n'interagit pas par force fortes.
+
+Les neutrinos n'ont pas de charge \'electrique ou baryonique, et ils ont de spin $-\frac{1}{2}$ (donc il est un fermion); ils ne peuvent pas avoir un spin $+\frac{1}{2}$. Ils sont stables.
+
+Les neutrinos sont produit par les supernovaes (ils peuvent venir de tr\`es loin parce qu'il n'interagit pas beaucoup!) et artificiellement.
+
+Il y a trois saveurs de neutrons, $e, \mu, \tau$. Chaqu'un n'interagit que avec les \'electrons, les muons, et les taons. Il y a aussi trois \'etats propres de propagation d'Hamiltonien $H_0$ de propagation des neutrinos, $\ket{v_{1,2,3}}$, et $\ket{v_{1,2,3}} \neq \ket{\nu_{e,\mu,\tau}}$ parce que $\left[H_{faible}, H_0\right] \neq 0$. La signification de \c{c}a c'est que quand on produit et d\'etecte un neutrino c'est par $H_{faible}$ mais quand le neutrino propage c'est par $H_0$; c'est \c{c}a l'oscillation de saveurs! Les oscillations suivent la r\`egle du matrice de m\'elange de Pontecorvo Maki Nakagawa Sakata
+\begin{align}
+    \ket{\nu_e(t)} &= C_{11} e^{-iE_1t/\hbar}\ket{\nu_1} + C_{12} e^{-iE_2t/\hbar}\ket{\nu_2} + C_{13} e^{-iE_3t/\hbar}\ket{\nu_3}\\
+    \ket{\nu_\mu(t)} &= C_{21} e^{-iE_1t/\hbar}\ket{\nu_1} + C_{22} e^{-iE_2t/\hbar}\ket{\nu_2} + C_{23} e^{-iE_3t/\hbar}\ket{\nu_3}\\
+    \ket{\nu_\tau(t)} &= C_{31} e^{-iE_1t/\hbar}\ket{\nu_1} + C_{32} e^{-iE_2t/\hbar}\ket{\nu_2} + C_{.3} e^{-iE_3t/\hbar}\ket{\nu_3}
+\end{align}
+
+Nous savons que $E_i = c\sqrt{p^2 + m_i^2c^2} \approx cp + \frac{m_i^2c^3}{2p}$ ou on pr\'esume que la masse du neutrino est quasiment nulle. On peut faire la calculation \`a $2$ saveurs (les calcus avec $3$ sont pr\`esque la m\^eme chose), et donc
+\begin{align}
+    \ket{\nu_\mu} &= \cos\theta \ket{\nu_1} + \sin\theta \ket{\nu_2}&
+    \ket{\nu_\tau} &= \cos\theta \ket{\nu_1} + \sin\theta \ket{\nu_2}\\
+    \ket{\psi(t=0)} &= \ket{\nu_\mu} & \ket{\psi(t)} &= \cos\theta e^{-i\frac{E_1t}{\hbar}}\ket{\nu_1} + \sin\theta e^{-i\frac{E_2t}{\hbar}}\ket{\nu_2}\\
+    P_{\nu_\tau} &= \abs{\dotp{\nu_\tau}{\psi(t)}}^2 = \sin^2 2\theta \sin^2 \frac{(E_2 - E_1)t}{2\hbar} & P_{\nu_\mu} &= 1 - P_{\nu_\tau}
+\end{align}
+
+$\theta$ est l'angle de m\'elange. Si $\theta = 0$ ou $m_i = 0$ alors aucune oscillation ne sera observ\'ee, mais on les a observ\'ees. 
+
+Le soleil produit beaucoup des neutrinos \`a l'\'echelle d'\'energie de $0.1 - 10 \mathrm{MeV}$ (c'est la m\^eme \'echelle que les r\'eacteurs nucl\'eaires). Il y a aussi des interactions des rayons cosmmiques dans l'atmosph\`ere a l'\'echelle de $1-20 \mathrm{GeV}$ (un peu plus que les acc\'el\'erateurs). 
+
+\chapter{17/09/14 --- PC 2 --- D\'etection des neutrino solaires}
+
+\section{Revue de taux des oscillations}
+
+Dans le soleil les neutrinos $\nu_e, \nu_\mu$ sont produits. Mais on sait que les \'etats propres de la propagations ne sont pas $\ket{\nu_{e, \mu, \tau}}$; les \'etats de la propagations sont reli\'es auquelles de productions par
+\begin{align}
+    \begin{bmatrix} \nu_e \\ \nu_\mu \end{bmatrix}  &= \begin{bmatrix} \cos\theta & -\sin\theta \\ \sin\theta & \cos\theta \end{bmatrix} \begin{bmatrix} \nu_1 \\ \nu_2 \end{bmatrix} 
+\end{align}
+
+Donc si un neutrino est produit $\ket{\psi(t=0)} = \ket{\nu_e}$, quel est $\ket{\psi(t)}$? Nous savons que la propagation agit sur les neutrinos comme
+\begin{align}
+    \ket{\nu_1(t)} &= e^{-\frac{i}{\hbar}E_1t}\ket{\nu_1(0)}\\
+    \ket{\nu_2(t)} &= e^{-\frac{i}{\hbar}E_2t}\ket{\nu_2(0)}
+\end{align}
+o\`u nous pr\'esumons que $E_i = pc + \frac{m_i^2c^3}{2p}$ avec $p_1 = p_2 = p$. Donc
+\begin{align}
+    \ket{\nu_e} &= \cos\theta\ket{\nu_1} - \sin\theta\ket{\nu_2}\\
+    \ket{\psi(t)} &= \cos\theta e^{-\frac{i}{\hbar}E_1 t}\ket{\nu_1} - \sin\theta e^{-\frac{i}{\hbar}E_2t}\ket{\nu_2}\\
+    P_{e \to e} = \abs{\dotp{\nu_e}{\nu_e(t)}}^2 &= \abs{\cos^2\theta e^{-\frac{i}{\hbar}E_1t} + \sin^2\theta e^{-\frac{i}{\hbar}E_2t}}^2\\
+    &= \cos^4\theta + \sin^4\theta + 2\sin^2\cos^2\theta\cos\frac{E_1 - E_2}{\hbar}t\\
+    \frac{E_1 - E_2}{\hbar}t &= \frac{(m_1^2 - m_2^2)c^3t}{2\hbar p}
+\end{align}
+
+Etant que les neutrinos ont une velocit\'e quasiment \'egal \`a $c$, on peut \'ecrire $L = ct$ la distance que le neutrino bouge pendant $t$. Et donc on a
+\begin{align}
+    \frac{E_1 - E_2}{\hbar}t &= \frac{\Delta m^2 c^2L}{2\hbar p} \\
+    &\equiv \frac{2\pi L}{L_0}, L_0 = \frac{4\pi\hbar p}{c^2 \Delta m^2}\\
+    P_{e \to e} &= \frac{1 + \cos^2 2\theta}{2} + \frac{1}{2}\sin^2 2\theta \cos \frac{2\pi L}{L_0} = 1 - \frac{\sin^2 2\theta}{2} \left( 1 - \cos \frac{2\pi L}{L_0} \right)\\
+    P_{e \to \mu} &= \frac{\sin^2 2\theta}{2}\left( 1 - \cos \frac{2\pi L}{L_0} \right)
+\end{align}
+
+On appelle $L_0$ la longueur d'oscillation. Si on le calcule, on trouve que $L_0 \approx \scinot{2.5}{6}\mathrm{km}$.
+
+\section{Cin\'ematique de la r\'eaction}
+
+\begin{enumerate}[1.]
+    \item Dans le r\'ef\'erentiel du centre de mass,
+        \begin{align}
+            s &= \left( \sum\limits_{i=1}^{n}E_i \right)^2 - \left( \sum\limits_{i=1}^{n}\vec{p}_i c \right)^2\label{17.9.energy}\\
+            &= \left(\sum\limits_{i=1}^{n}E_i\right)^2
+        \end{align}
+        parce que dans le r\'ef\'erentiel du centre de mass la somme des moments est $0$.
+        
+        Pour chaque particule on a le $4$-moment $p_i^\mu = \left( \frac{E_i}{c}, \vec{p}_i \right)$ et la somme $P^\mu = \left( \frac{E}{c}, \vec{P} \right)$ et parce que c'est un $4$-vector $P^\mu P_\mu$ est ind\'ependante du r\'ef\'erentiel.
+    \item On peut supposer que l'\'electron incident est au repos dans le r\'ef\'erentiel du laboratoire parce que l'\'energie cin\'etique de l'\'electron est $\sim 13.6 \mathrm{eV}$, beaucoup moins que $m_ec^2 \sim 0.5\mathrm{MeV}$,
+
+        Pour trouver l'\'energie dans le r\'ef\'erentiel du centre de masse, on calcule $s$ selon \eqref{17.9.energy}. 
+        \begin{align}
+            s &= \left( E_\nu + E_e \right)^2 - c^2 \left( \vec{p}_\nu + \vec{p}_e \right)^2\\
+            &= \left( p_\nu c + m_ec^2 \right)^2 - p_\nu^2c^2\\
+            &= m_ec^2\left( m_ec^2 + 2E_{\nu} \right)\\
+            E^* &= \sqrt{s} = \sqrt{m_ec^2\left( m_ec^2 + 2E_\nu \right)} \approx 2.9\mathrm{MeV}
+        \end{align}
+        avec $E^*$ l'\'energie dans le referentiel du centre de masse.
+    \item Avec une particule, $p^\mu = \left( \frac{E}{c}, \vec{p} \right) = \left( \gamma mc, \gamma m\vec{v} \right)$ et donc on trouve $\vec{v} = \frac{\vec{p}}{E}c^2 \underset{v \ll c}{\approx} \frac{\vec{p}}{m}$. Et donc la vitesse du centre de masse est
+        \begin{align}
+            \vec{v}^{\, *} = \frac{\sum\limits_{i}^{}\vec{p}_i}{\sum\limits_{i}^{}\frac{E_i}{c^2}}
+        \end{align}
+    \item Pour la collision $\nu e$ on a
+        \begin{align}
+            \vec{v}^{\, *} &= \frac{\vec{p_\nu} + \vec{p}_e}{\frac{E_\nu}{c^2 + \frac{E_e}{c^2}}}\\
+            &= \frac{\vec{p_\nu} \left(=\!\!\frac{E_\nu}{c}\right)}{\frac{E_\nu}{c^2 + m_e}}\\
+            \frac{\vec{v}^{\,*}}{c} &= \frac{E_\nu}{E_\nu + m_ec^2} \approx 0.94
+        \end{align}
+
+        La vitesse du neutrino est vraiment proche de la vitesse de la lumi\`ere. Donc dans le r\'ef\'erentiel du centre de masse, $\vec{v}^{\,*}_e = -\vec{v}^{\,*}, v_\nu = c$. 
+    \item Maintenant soit un \'electron \'emit avec un angle $\theta^*$ par raapport au neutrino incident dans le centre de masse. Quel est l'angle $\theta$ dans le r\'ef\'erentiel du laboratoire?
+
+        On fait un boost pour aller au r\'ef\'erentiel du laboratoire du r\'ef\'erentiel CM, $P_e^\mu = \Lambda_\nu^\mu P_e^{*\mu}$. Le boost est avec velocit\'e $-v^*$, alors
+        \begin{align}
+            P_e &= \begin{bmatrix} \frac{E}{c}\\ p\cos\theta\\ p\sin\theta\\0 \end{bmatrix}&
+            \Lambda_\nu^\mu &= \begin{bmatrix} \gamma & \gamma\frac{v^*}{c} & 0 & 0\\
+                \gamma \frac{v^*}{c} & \gamma & 0 & 0\\
+                0 & 0 & 1 & 0\\
+                0 & 0 & 0 & 1\end{bmatrix} &
+            P_e^{*\mu} &= \begin{bmatrix} \frac{E^*}{c}\\ p^*\cos\theta^*\\ p^*\sin\theta^*\\ 0 \end{bmatrix}\\
+            &&P_e &= \begin{bmatrix} \gamma\left( \frac{E^*}{c} + \frac{v^*p^*}{c} \cos\theta^* \right) \\ \gamma \left( \frac{v^*E^*}{c^2}+p^*\cos\theta^* \right)\\p^*\sin\theta^* \\ 0 \end{bmatrix} \\
+            E &= \gamma E^*\left( 1 + \frac{v^{*2}}{c^2}\cos\theta^* \right) & \begin{bmatrix} p_x \\ p_y \end{bmatrix} &= \begin{bmatrix} \gamma p^*\left( 1 + \cos\theta^* \right) \\ p^*\sin\theta^* \end{bmatrix} \\
+            &&\tan\theta &= \frac{1}{\gamma} \frac{\sin\theta^*}{1 + \cos\theta^*}\\
+            &&&= \sqrt{1 - \frac{v^{*2}}{c^2}}\tan \frac{\theta^*}{2}
+        \end{align}
+        
+        Note que $\frac{1}{\gamma} \ll 1$ et donc m\^eme si $\theta^*$ suit une distribution al\'eatoire $\theta$ est tr\`es contract\'e.
+\end{enumerate}
+\section{Analyse des vrais donn\'ees}
+
+\begin{enumerate}[1.]
+    \item Il y a une variation saisonni\`ere des neutrinos parce que la distance entre le Soleil et la Terre change, et $\Phi \sim L^{-2}$. 
+    \item Les barres d'erreur s'arrivent parce que l'interaction est mecanique quantique, et donc c'est une probabilit\'e; on peut baisser les barres d'erreur en prenant plus des m\'esures mais on ne peut pas l'eliminer.
+    \item Soit $p$ la probabilit\'e par unit\'e de temps de d\'etecter un neutrino. Donc, la probabilit\'e de detecter un neutrino pendant un temps $dt$ est
+        \begin{align}
+            n(dt) &= 
+            \begin{cases}
+                1 & \mbox{Prob } p\;dt\\
+                0 & \mbox{Prob } 1 - p\;dt\\
+            \end{cases}
+        \end{align}
+
+        Donc $\expvalue{n}(dt) = p\;dt$ et $\expvalue{n^2}(dt) = p\;dt = \expvalue{n}$ et donc $\sigma^2 = \expvalue{n^2} - \expvalue{n}^2 = p\;dt + O(p^2) \approx \expvalue{n}$. 
+
+
+        Pendant un temps fini, on peut le diviser en deux parties, alors $\expvalue{n} = \expvalue{n_1} + \expvalue{n_2}$ et $\Delta n^2 = \Delta n_1^2 + \Delta n_2^2$. Enfin $\delta = \frac{\Delta n}{\expvalue{n}} = \frac{1}{\sqrt{\expvalue{n}}}$, et la seule manni\`ere qu'on peut baisser les barres d'erreurs est de augmenter la probabilit\'e de detection.
+\end{enumerate}
+\chapter{01/10/14 --- Lecture 3 --- Production et d\'esint\'egration des particules}
+
+Les quarks ne s'apparaissent jamais libre, seulement en paires (quark + antiquark) ou en groupes de trois (proton, neutron). 
+
+On introduit des nombres leptoniques et baryoniques qui sont toujours conserv\'ees. Toutes les quarks ont une nombre baryoniques $\frac{1}{3}$, et les antiquarks ont $B = -\frac{1}{3}$. Les baryons ont $B=1$ (e.g. $uud$ ou quelque chose comme \c{c}a) et les m\'esons ont $B=0$ (e.g. $u\bar{d}$). Les bayons et les m\'esons sont des hadrons.
+
+On observe apr\`es beaucoup d'\'experiences que les quantit\'es de mati\`ere et de l'anti-mati\`ere produites sont toujours \'egal, mais on ne voit pas les ``anti-Terres'' ou des ``anti-galaxies.'' C'est bizzare pour nous.
+
+\section{La r\`egle d'or de Fermi}
+
+Rappeler la th\'eorie des perturbations du premier ordre $A_{if} = \bra{f}\Omega\ket{i}$ et du deuxi\`eme ordre $A_{if} = \sum\limits_{k \neq i}^{}\frac{\bra{f}\Omega\ket{k}\bra{k}W\ket{i}}{E_i - E_k}$. Noter que dans la th\'eorie quantique des champs les \'etats interm\'ediates $\ket{k}$ sont les bosons interm\'ediates; ils sont des vrais \'etats, et pas seulement des id\'ees math\'ematiques!
+
+La regle d'or de Fermi est donn\'ee par $\delta P_{i \to f} = \frac{2\pi}{\hbar}\abs{\bra{f}\Omega\ket{i}}^2 \rho\left( E_f \right)$ ou $\rho$ est la densit\'e d'\'etats o\`u $E_i = E_f$.
+
+On peut maintenant d\`efinir une section efficace $\sigma$ qui r\`egle la probabilit\'e de l'interaction. Si on a une projectile et une cible avec la taille de cible $S$, on definit $P_{i \to f} = \frac{\sigma}{S}$, donc $\sigma$ et li\'ee est li\'ee avec la probabilit\'e de l'interaction comme $P_{i \to f} = \delta P_{i \to f} \times \Delta t$. On voit que le flux et donn\'e par $\Phi = \frac{v_i}{V_0}$, $v_i$ la velocit\'e et $V_0$ la volume, et donc $\delta P_{i \to f} = \sigma \Phi$. 
+
+On examine souvent la section efficace diff\'erentielle, comme $\rd{\sigma}{\Omega}$ ou $\rd{\sigma}{\theta}$. Noter que $\sigma$ et vraiment une surface; l'unit\'e qu'on utilise pour l'aire dans la physique d'haute energie est le \emph{barn}: $1 \mathrm{barn} = 10^{-24}\mathrm{cm^2}$. 
+
+On fait un exemple de calcul de la section efficace diff\'erentielle dans une diffusion \'elastique (pas de production/d\'esint\'egration des particules) par un potentiel $V$. Par exemple, on tire un proton vers un noyau. Ils vont s'interagir par la force electrique; on a la formule
+\begin{align}
+    d\sigma &= \frac{2\pi}{\Phi_i}\abs{\bra{f}V\ket{i}}^2\rho(E_f)\\
+    \tilde{V} &= \int e^{-i\left( \vec{p}_i - \vec{p}_f \right)\cdot \vec{r}}V(\vec{r})\; d\vec{r}^{\,3}\\
+    \rho(E) &= \frac{E^2d\Omega L^3}{\left( 2\pi \right)^3}\\
+    \rd{\sigma}{\Omega} &= \frac{E^2 \abs{\tilde{V}}^2}{\left( 2\pi \right)^2}
+\end{align}
+
+Si on examine la diffusion de Rutherford, le potentiel coulombien $V(\vec{r}) = -\frac{\alpha}{r}$, on trouve que $\abs{\vec{p}_i - \vec{p}_f} = \abs{\vec{p}} = 2E\sin\frac{\theta}{2}$ et on peut calculer que $\tilde{V} = -\frac{4\pi \alpha}{\vec{p}^2}$ et alors on trouve la resultat de Rutherford
+\begin{align}
+    \rd{\sigma}{\Omega} = \frac{\alpha^2}{4E^2\sin^4\frac{\theta}{2}}
+\end{align}
+
+Selon la r\`egle d'or de Fermi on a le taux de d\'esint\'egration $\lambda = \frac{2\pi}{\hbar}\abs{\bra{f}\Omega\ket{i}}^2\rho(E_f)$ et la nombr des particules d\'ecro\^itre comme $N(t) = N_0e^{-\lambda t}$ et la moyenne dur\'ee de vie est $\tau = \lambda^{-1}$.
+
+On peut calculer la distribution de la probabilit\'e d'\'energie, et c'est un Lorentzion, ou la loi de Breit-Wigner.
+
+\chapter{01/10/14 --- PC3 --- Th\'eorie des perturbations d\'epandant du temps}
+
+On commence en discutant l'op\'erateur d'\'evolution $\ket{\psi(t)} = \hat{U}(t,t_0)\ket{\psi(t_0)}$. On note $\bra{x}\hat{U}(t,t_0)\ket{x_0} = U\left( t,x,t_0,x_0 \right)$. \c{C}a veut dire quoi? On le voit par
+\begin{align}
+    \dotp{x}{\psi(t)} &= \int\limits_{}^{}dx_0\;\underbrace{\bra{x}\hat{U}(t,t_0)\ket{x_0}}_{U(t,x,t_0,x_0)}\dotp{x_0}{\psi(t_0)}\\
+    \psi(t,x) &= \int\limits_{}^{}dx_0\;\hat{U}(t,x,t_0,x_0 )\psi(t_0,x_0)
+\end{align}
+et donc on voit que mettre $\hat{U}(t,x,t_0,x_0)$ sous l'int\'egrale on obtient l'\'evolution du temps de $\psi(t_0,x_0)$. 
+
+On suppose qu'il s'agit d'une periode de temps $\left[ \pm \frac{T}{2} \right]$. Soit notre hamiltonien
+\begin{align}
+    \hat{H} &= 
+    \begin{cases}
+        \hat{H}_0 & t < -\frac{T}{2} , t > \frac{T}{2}\\
+        \hat{H}_0 + \lambda \hat{V}(t) & t \in \left[ -\frac{T}{2}, \frac{T}{2} \right]
+    \end{cases}
+\end{align}
+avec $\hat{H}_0$ le hamiltonien pour une particule libre. Soit $\psi_{i}$ une onde plane (fonction propre de $\hat{H}_0$), et soit $\psi_{f,k}$ une autre onde plane arbitraire sortant. Apr\`es $t > \frac{T}{2}$, $\psi_i$ devient une superposition des ondes planes, et on veut calculer $A_{fi} = \dotp{\psi_f}{\psi\left( \frac{T}{2} \right)}$. 
+
+\begin{enumerate}[1)]
+    \item \emph{Montrer que $\ket{\psi(t)} = \hat{U}(t,t_0) \ket{\psi(t_0)}$ o\`u $\hat{U} = \sum\limits_{k}^{}\ket{\psi_k(t)}\bra{\psi_k(t_0)}$. Qu'est-ce qui se passe si $\hat{H}_0$ est ind\'ependant du temps?}
+
+        On commence en ecrivant $\ket{\psi(t_0)} = a_k\ket{\psi_k(t_0)}$ ou $a_k = \dotp{\psi_k(t_0)}{\psi(t_0)}$. Et donc on sait aussi que $\ket{\psi(t)} = a_k\ket{\psi_k(t)}$ par lin\'earit\'e, et donc
+        \begin{align}
+            \ket{\psi(t)} &= \sum\limits_{k}^{}\dotp{\psi_k(t_0)}{\psi(t_0)}\ket{\psi_k(t)}\\
+            &= \sum\limits_{k}^{}(\ket{\psi_k(t)}\bra{\psi_k(t_0)})\ket{\psi(t_0)}\\
+            &= U(t,t_0)\ket{\psi(t_0)}
+        \end{align}
+        ou on peut r\'eorganiser parce que $\dotp{\psi_k(t_0)}{\psi(t_0)}$ est une constante.
+
+        Si $\hat{H}_0$ est ind\'ependant du temps on regarde l'\'equation de Schrodinger $-i\hbar \pd{}{t}\psi_k = E_k\psi_k$ et pance que $H$ est ind\'epandent du temps on trouve $\psi_k(t) = e^{i\frac{E_k}{\hbar}(t-t_0)}\psi_k(t_0)$, et donc
+        \begin{align}
+            \hat{U}(t,t_0) &= \sum\limits_{k}^{}\ket{\psi_k(t)}\bra{\psi_k(t_0)} = \sum\limits_{k}^{}\ket{\psi_k(t_0)}e^{-\frac{i}{\hbar}E_k(t-t_0)}\bra{\psi_k(t_0)}\\
+            &= e^{-\frac{i}{\hbar}\hat{H}_0(t-t_0)}
+        \end{align}
+    \item \emph{Soit une particule libre avec des conditions aux limites p\'eriodiques sur $\left[ 0,L \right]$. Trouver $U(t,x,t_0,x_0)$ en choisissant la base des ondes planes.}
+
+        La base qu'on va utiliser est $\psi_n(x) = \frac{1}{\sqrt{L}}e^{\frac{i}{\hbar}\left( \frac{2n\pi \hbar}{L}x - Et \right)}$. On peut donc calculer $U(t,x,t_0,x_0) = \bra{x}U(t,t_0) \ket{x_0}$ par
+        \begin{align}
+            U(t,x,t_0,x_0) &= \sum\limits_{k}^{}\dotp{x}{\psi_k(t)}\dotp{\psi_k(t_0)}{x_0} = \sum\limits_{k}^{}\psi_k(t,x)\psi_k^*(t_0,x_0)\\
+            &= \frac{1}{L}\sum\limits_{n}^{}e^{\frac{i}{\hbar}\left[ \frac{2n\pi\hbar}{L}\left( x-x_0 \right) - \frac{p_n^2}{2m}(t-t_0) \right]}
+        \end{align}
+
+        Quand $L \to \infty$ on remplace $\frac{1}{L}\sum\limits_{n}^{} \to \frac{1}{2\pi\hbar}\int\limits_{-\infty}^{\infty}dp$. Si on note $\Delta p = \frac{2\pi \hbar}{L}$, alors la nombre des $\Delta p$ entre $(p, p + dp)$ est donn\'ee par $dn = \frac{L}{2\pi\hbar}dp$. La somme est en effet une int\'egrale de $dn$, et donc on a la resultat qu'on voulait. Finalement
+        \begin{align}
+            U(t,x,t_0,x_0) &= \frac{1}{2\pi\hbar}\int\limits_{-\infty}^{\infty}dp\;\exp\left[ \frac{i}{\hbar}\left( \frac{2n\pi\hbar}{L}(x-x_0) - \frac{p^2}{2m}(t-t_0) \right) \right]
+        \end{align}
+
+    \item \emph{On revient au cas g\'en\'eral. Soit $\hat{H}(t) = \hat{H}_0 + \lambda \hat{V}(t)$, une perturbation. Trouver $\ket{\psi(t)}$.}
+
+        On commence avec la solution (ouais, c'est bizzare\dots)
+        \begin{align}
+            \ket{\psi(t)} = \ket{\psi_{i}(t)} + \frac{1}{i\hbar}\int\limits_{-\infty}^{t}U(t,t')\lambda V(t')\ket{\psi(t')}\;dt'\label{01.10.sol}
+        \end{align}
+
+        On diff\'erencier les deux c\^ot'es
+        \begin{align}
+            i\hbar \rd{}{t}\ket{\psi(t)} &= i\hbar \rd{}{t}\ket{\psi_{i}(t)} + U(t,t)\lambda V(t)\ket{\psi(t)} + \frac{1}{i\hbar}\int\limits_{-\infty}^{t}\rd{U(t,t')}{t}\lambda V(t')\ket{\psi(t')}\;dt' \\
+            &= \hat{H}_0 \ket{\psi_{i}(t)} + \lambda V(t)\ket{\psi(t)} + \int\limits_{-\infty}^{t}dt'\;\left( \frac{1}{i\hbar}H_0U(t,t') \right)\lambda V(t')\ket{\psi(t')}\\
+            &= \hat{H}_0 \ket{\psi_{i}(t)} + \lambda V(t)\ket{\psi(t)} + H_0\left( \ket{\psi(t)} - \ket{\psi_i(t)} \right)\\
+            &= \left( H_0 + \lambda V(t) \right)\ket{\psi(t)}
+        \end{align}
+        et on a donc l'\'equation de Schrodinger et on est fini.
+    \item \emph{On d\'efinit le propagateur retard\'e par $G(t,t') = \Theta(t-t') U(t,t')$ o\'u $\Theta(t-t')$ est la fonction de Heaviside. V\'erifier que le r\'esultat dans l'\'equation au-dessous.}
+        \begin{align}
+            \ket{\psi(t)} = \ket{\psi_{i}(t)} + \frac{1}{i\hbar}\int\limits_{-\infty}^{\infty}G(t,t')\lambda V(t')\ket{\psi(t')}\;dt'
+        \end{align}
+
+        On utilise la th\'eorie des perturbations et on obtient
+        \begin{align}
+            \ket{\psi(t)} &= \ket{\psi_{i}(t)} + \frac{1}{i\hbar}\int\limits_{-\infty}^{\infty}G(t,t')\lambda V(t')\ket{\psi_i(t')}\;dt' + \frac{1}{\left( i\hbar \right)^2}\int\limits_{-\infty}^{\infty}dt_1\int\limits_{-\infty}^{\infty}dt_2\;G(t,t_1)\lambda V(t_1) G(t_1, t_2) \lambda V(t_2) \ket{\psi_i(t_2)} +\dots\label{01.10.merde}
+        \end{align}
+
+    \item \emph{On veut d\'ecrire le propagateur en s\'erie Fourier. Comme la transform\'ee de Fourier n'est pas d\'efinie pour les fonctions oscillantes, on d\'efinit au-dessous. Calculer $\bra{x}\tilde{G}(\omega)\ket{0}$ pour une particule libre \`a une dimension.}
+        \begin{align}
+            \tilde{G}(\omega) &= \int\limits_{-\infty}^{\infty}G(t,0)e^{i\omega t - \epsilon t}\;dt
+        \end{align}
+
+        On rappelle que $G(t,0) = \Theta(t)U(t,0)$ et donc on a
+        \begin{align}
+            \bra{x}\tilde{G}(\omega)\ket{0} &= \int\limits_{0}^{\infty}dt\;\bra{x}U(x,t,0,0)\ket{0}e^{i\omega t - \epsilon t}\\
+            &= \frac{1}{L}\sum\limits_{n}^{}e^{\frac{2n i \pi x}{L}}\int\limits_{0}^{\infty}dt\;e^{-\frac{ip_n^2t}{2m\hbar} + i\Omega t - \epsilon t}
+        \end{align}
+
+        L'int\'egrale est \'el\'ementaire, $\int\limits_{0}^{\infty}dt\;e^{-\alpha t} = \frac{1}{\alpha}$ et donc
+        \begin{align}
+            \bra{x}\tilde{G}(\omega)\ket{0} &= \frac{1}{L}\sum\limits_{n}^{}e^{\frac{2ni\pi x}{L}}\frac{i}{\omega - \frac{p_n^2}{2m\hbar} + i\epsilon}
+        \end{align}
+
+    \item \emph{Calculer $\dotp{\psi_{f,n}(t)}{\psi(t)}$, $\psi_f \neq \psi_i$.}
+
+        On commence avec l'\'equation de Schrodinger
+        \begin{align}
+            i\hbar \pd{}{t}\ket{\psi(t)} &= \left[ H_0 + \lambda V(t) \right]\\
+            \pd{}{t}\dotp{\psi_{f,n}(t)}{\psi(t)} &= \frac{1}{i\hbar}\bra{\psi_{out}(t)}\lambda V(t)\ket{\psi(t)}\\
+            \dotp{\psi_{f,n}(t)}{\psi(t)} &= \frac{1}{i\hbar}\int\limits_{-\infty}^{\infty}dt\;\bra{\psi_{f,n}(t)}\lambda V(t)\ket{\psi(t)}
+        \end{align}
+
+        La premi\`ere terme dispara\^it parce que $\psi_f \neq \psi_i$ et a la fin on peut remplacer les limites de l'int\'egrale par $\left[ -\infty,\infty \right]$ parce que $V(t) = 0$ pour $\abs{t} > \frac{T}{2}$ et on a $t > T/2$ parce que on est d\'eja pass\'e la perturbation.
+    \item \emph{Calculer l'implitude de transition \`a l'ordre $1$ (approximation de Born) et \`a l'ordre $2$ en $\lambda$.}
+
+        On peut simplement utiliser ses resultats de l'\'equation \eqref{01.10.merde} et obtient
+        \begin{align}
+            A_{fi} &= \underbrace{\frac{1}{i\hbar}\int dt\; \bra{\psi_{f,n}(t)}\lambda V(t) \ket{\psi_{i}(t)}}_{\text{L'approximation de Born}} + \frac{1}{\left( i\hbar \right)^2}\int\limits_{-\infty}^{\infty}\int\limits_{-\infty}^{\infty}\bra{\psi_{f,n}(t)}\lambda V(t_1)G(t_1, t_2)\lambda V(t_2)\ket{\psi_i(t_2)} + O(\lambda^3)
+        \end{align}
+    \item \emph{Dans l'approximation de Born, quelles sont les valeurs possible de $E_f$ dans la limite $T \to \infty$?}
+
+        On a dans l'approximation de Born
+        \begin{align}
+            A_{fi}^{(1)} &= \frac{1}{i\hbar}\int\limits_{-\frac{T}{2}}^{\frac{T}{2}}dt\;\bra{\psi_{f,n}(t)}\lambda V(t)\ket{\psi_i(t)}
+        \end{align}
+
+        Si on a $V(t) = V_0\cos \omega t = \frac{e^{i\omega t} + e^{-i \omega t}}{2}$ et aussi on a $\ket{\psi_i(t)} = e^{-\frac{i}{\hbar}E_i t}\ket{\psi_i(0)}, \ket{\psi_{f,n}(t)} = e^{-\frac{i}{\hbar}E_ft}\ket{\psi_{f,n}(0)}$, alors
+        \begin{align}
+            A_{fi}^{(1)} &= \frac{1}{2i\hbar}\int\limits_{-\frac{T}{2}}^{\frac{T}{2}}dt\;e^{\frac{i}{\hbar}\left( E_f - E_i \right)t} \bra{\psi_{f,n}(0)}\left( e^{i\omega t} + e^{-i \omega t} \right)\lambda V_0\ket{\psi_i(0)}\\
+            &= \frac{1}{2i\hbar}\bra{\psi_{f,n}(0)}\lambda V_0\ket{\psi_i(0)}\int\limits_{-\frac{T}{2}}^{\frac{T}{2}}dt\;e^{\frac{i}{\hbar}\left( E_f - E_i \right)t} \left( e^{i\omega t} + e^{-i \omega t} \right)\\
+            &= -i\left[ \frac{\sin\left( E_f - E_i + \hbar \omega \right)\frac{T}{2\hbar}}{E_f - E_i + \hbar \omega}  + \frac{\sin\left( E_f - E_i - \hbar \omega \right)\frac{T}{2\hbar}}{E_f - E_i - \hbar \omega}\right] \bra{\psi_{f,n}(0)}\lambda V_0\ket{\psi_i(0)}
+        \end{align}
+
+        Dans la limite $T \to \infty$ on a que la merde dans les crochets reduit \`a $\delta\left( E_f + E_i + \hbar \omega \right)$. 
+\end{enumerate}
+
+
+\chapter{08/10/14 --- PC4 --- Th\'eor\`eme de Landau-Yang}
+
+La parit\'e sera tr\`es importante aujourd'hui. La parit\'e est la transformation $\vec{r} \to -\vec{r}$. L'op\'erateur $\hat{P}^2 = 1$ est laquelle de la parit\'e. Notons que $\hat{P}^2 = \hat{I}$. Aussi, $\hat{P}$ a des valeurs propres $\pm 1$. 
+
+Aussi, il faut rappeler les rotations, comme par exemple $R_Z(\alpha)$; dans les coordonn\'ees sph\'eriques, $R_z(\alpha): (r,\theta,\phi) \to (r,\theta,\phi - \alpha)$. En developpant cette difference comme s\'eries de Taylor, on trouve que
+\begin{align}
+    f(\phi-\alpha) &= \sum\limits_{n=0}^{\infty} \frac{(-\alpha)^n}{n!}\frac{\partial^n}{\partial \phi^n} f(\phi)
+\end{align}
+et par \c{c}a on voit que $L_z = -i\hbar \pd{}{\phi}$ engendre les rotations par l'axe $z$. En MQ on \'ecrit en g\'en\'erale $\hat{R}_{\vec{n}}(\alpha) = e^{-\frac{i\alpha}{\hbar}\vec{n} \cdot \vec{J}}$ avec $\vec{J}$ la vecteur des op\'erateurs qui engendrent les rotations.
+
+Finalement, on parle de l'h\'elicit\'e, la projection du spin sur la direction de l'impulsion $\hat{h} = \frac{\vec{J} \cdot \vec{p}}{\abs{\vec{p}}}$. Les valeurs propres sont dans l'intervale $\left[ -s\hbar,s\hbar \right]$ avec $2s+1$ valeurs possibles. Notons que l'h\'elicit\'e est invariant par la rotation mais change la valeur par la parit\'e.
+
+\section{Spin d'un photon}
+
+Une onde electromagnetique qui se propage dans la direction $z$ en g\'en\'eral a la forme
+\begin{align}
+    \vec{A}(\vec{x},t) &= \Re\left( \vec{\epsilon}e^{i(kz- \omega t)} \right)
+\end{align}
+avec $\vec{\epsilon}$ la polarization.
+
+\begin{enumerate}[a)]
+    \item \emph{Lier la relation entre $\omega,k$ et aussi la condition sur $\vec{\epsilon}$.}
+
+        On rappele que $\omega = ck$ et aussi que $\vec{\epsilon} \perp \hat{z}$ la direction de propagation.
+    \item \emph{Determiner $\vec{\epsilon}$ pour les polarizations circulaire droite et gauche.}
+
+        Pour les polarizations circulaire droite et gauche respectivement
+        \begin{align}
+            \epsilon_{D,G} &= \begin{bmatrix} 1 \\ \mp i \end{bmatrix} 
+        \end{align}
+        pour les axes $(x,y)$ respectivement.
+
+    \item \emph{Si on a la fonction d'onde d'un photon comme $\psi(\vec{x},t) = \vec{\epsilon}e^{i(kz - \omega t)}$, alors quelles sont l'impulsion et l'\'energie du photon?}
+
+        On trouve l'impulsion $p = \hbar k$ et l'\'energie $E = \hbar \omega$.
+
+    \item \emph{Montrer que les \'etats de polarisation circulaire sont \'etats propres de $J_z$ et trouver les valeurs propres.}
+
+        On commence avec la g\'en\'eralisation de $J_z$ pour les fonctions d'ondes $\vec{\psi}' - \vec{\psi} = -\frac{i\phi}{\hbar}J_z\vec{\psi}$. Pour notre fonction d'onde donc on trouve
+        \begin{align}
+            \left( R_z(\phi) - 1 \right)\vec{\psi} &= -\frac{i\phi}{\hbar}J_z\vec{\psi}\label{08.10.eq}
+        \end{align}
+
+        Pour les rotations infinit\'esmales on \'ecrit
+        \begin{align}
+            \left( R_z(\phi) - 1 \right) &= \begin{bmatrix} 1 & -\phi\\ \phi & 1 \end{bmatrix}  - I\\
+            &= \begin{bmatrix} 0 & -\phi\\ \phi & 1 \end{bmatrix} 
+        \end{align}
+        
+        Donc pour les rotations infinit\'esmales on trouve (en mettant sa matrice dans \eqref{08.10.eq})
+        \begin{align}
+            J_z &= \begin{bmatrix} 0 & -i\hbar & 0\\i\hbar & 0 & 0\\0 & 0 & 0 \end{bmatrix} 
+        \end{align}
+
+        Les valeurs propres sont donc $\pm \hbar, 0$. Les fonctions propres sont respectivement les polarizations circulaire gauche et droite. La derni\`ere fonction propre est $\vec{\epsilon} \propto \hat{z}$ mais \c{c}a ne satisfait pas les \'equations de Maxwell.
+
+        La consequence de tout \c{c}a c'est que pour les particules avec masse nulle n'ont jamais spin nulle; c'est interdit dans les \'equations de Maxwell. Donc, m\^eme s'il y a en g\'en\'erale trois degr\'es de libert\'e pour une particule avec spin $1$, c'est seulement deux pour les particules avec masse nulle.
+
+    \item \emph{Quels sonts pour le photon le moment orbital $L_z$ et le spin?}
+
+        $L_z = 0$, comme on peut d\'eduire simplement par $L_z = xp_y - yp_x = 0$, et donc $S_z = J_z = \pm 1$. 
+
+    \item \emph{Montrer que ces polarizations circulaires sont aussi les \'etats propres de l'op\'erateur de l'h\'elicit\'e et trouver les valeurs propres.}
+
+        Parce que le spin est toujours dans la direction de l'impulse, on trouve que les valeurs propres sont les m\^eme que lesquelles de $J_z$. 
+\end{enumerate}
+
+\section{D\'esint\'egration d'une particule en deux photons}
+
+Soit la base pour cette d\'esint\'egration $\ket{GG},\ket{DD},\ket{GD},\ket{DG}$. 
+
+\begin{enumerate}[a)]
+    \item \emph{On suppose que la particule initiale a un spin $J=0,1$. Selon la conservation du moment cin\'etique, qu'est-ce qu'on peut dire?}
+
+        Les \'etats $\ket{GD}, \ket{DG}$ sont int\'erdites parce que leur spins totales (et moments cin\'etique totales) sont $\pm 2$. Il faut noter que les photons propagent dans les directions inverses et donc $\ket{GG}, \ket{DD}$ ont les moments cin\'etique totales nulles. 
+    \item \emph{Comment est-ce que la base transforme dans une rotation $\pi$ autour l'axe $x$? Par parit\'e?}
+
+        En tournant autour l'axe $x$ on trouve que les \'etats \'echangent: $\ket{\_D} \to \ket{D\_}$. Alors $\ket{GG}, \ket{DD}$ ne changent pas mais $\ket{GD}, \ket{DG}$ s'\'echangent.
+
+        Par parit\'e on envoie $\ket{\_G}$ vers $\ket{D\_}$ et donc $\ket{DD} \leftrightarrow \ket{GG}$ et $\ket{DG}, \ket{GD}$ restent.
+
+    \item \emph{Comment est-ce qu'un \'etat $J_z = 0$ se transforme dans une rotation $R_x$ suivant le moment cin\'etique total $J$?}
+
+        On commence en examinant l'\'etat $\ket{1,0}$ (l'\'etat propre avec $J=1, J_z = 0$). On sait que $\ket{1,0} \propto Y_{1,0}\propto\cos\theta$ le harmonique sph\'erique. Comme \c{c}a on trouve que $R_x(\pi) Y_{1,0} \to -Y_{1,0}$ et en g\'en\'eral $R_x(\pi)\ket{J,0} = (-1)^J\ket{J,0}$. 
+
+        Mais on a trouv\'e que les seules \'etats permis, $\ket{GG}, \ket{DD}$ sont les fonctions propres de $R_x(\pi)$ avec valeur propre $1$! Donc $\ket{1,0}$ ne peut pas \^etre \'exprimer dans notre base et alors c'est interdit. C'es la th\'eor\`eme de Landau-Yang.
+
+    \item \emph{Sujet suppl\'ementaire: le meson $\pi^0$ peut d\'esint\'egrer dans deux photons.}
+
+        Le meson $\pi^0 \to \gamma + \gamma$ a une parit\'e intrins\`eque n\'egative, donc la fonction d'onde devrait \^etre \'ecrit comme
+        \begin{align}
+            \ket{\gamma\gamma} &= \frac{1}{\sqrt{2}}\left( \ket{GG} - \ket{DD} \right)
+        \end{align}
+
+        On se rapelle que $\ket{GG} = \frac{1}{2}\left( \ket{x_1} + i\ket{y_1} \right)\otimes\left( \ket{x_2} + i\ket{y}_2 \right)$, et donc on peut simplement calculer
+        \begin{align}
+            \ket{\gamma\gamma} &= \frac{i}{\sqrt{2}}\left( \ket{x_1y_2} + \ket{y_1x_2} \right)
+        \end{align}
+
+        Ca nous montre que les photons ont des polarisations perpendiculaires. Si on avait commenc\'e avec une particule avec une parit\'e intrins\`eque positive, on trouverait que les photons aient les polarisations paralleles. 
+\end{enumerate}
+\chapter{08/10/14 --- Amphi 4 --- Makeup: Lois de conservation en physique}
+
+\section{Transformations continues}
+
+\subsection{Th\'eor\`eme de Noether, R\`egles de s\'election}
+
+Un op\'erateur en MQ est invariant par une transformation unitaire $U$ si $U\Omega U^\dagger = \Omega$, ou \'egalement $\left[ \Omega, U \right] = 0$. Une classe des transformations unitaire est lesquelles commes $e^{i\alpha \Omega}$ parametris\'e par $\alpha$ continue avec $\Omega$ un op\'erateur hermitien. Quelques exemples:
+\begin{itemize}
+    \item L'op\'erateur de translation dans l'espace est $e^{i \frac{a}{\hbar} P_x}$ 
+    \item L'op\'erateur de rotation autour l'axe $z$ est $e^{i\frac{\theta}{\hbar}L_z}$
+    \item L'op\'erateur de translation temporelle est $e^{i\frac{t}{\hbar}H}$
+\end{itemize}
+
+Si $H$ est invariant par la transformation de g\'en\'erateur $g$, \c{c}a veut dire que $\left[ H, e^{-i\epsilon g} \right] = \left[ H,g \right] = 0$, alors
+\begin{align}
+    \left[ H,g \right] &= 0\\
+    \left[ e^{-i\frac{tH}{\hbar}},g \right] &= 0
+\end{align}
+est les valeurs propres de $g$ sont conserv\'ees dans le temps. C'est le \emph{th\'eor\`eme de Noether}.
+
+Les r\`egles de s\'election dit simplement que si $g$ commute avec $H$, les \'etats propres de valeurs propres differentes ne transitionnent pas l'un \`a l'autre.
+
+\subsection{Transformation de jauge}
+
+On commence avec le nombre baryonique. Soit $B$ l'op\'erateur nombre baryonique. Alors $B$ est le g\'en\'erateur de la transformation de jauge $e^{-i\alpha B}$, et si $\left[ B,H \right] = 0$ alors le nombre baryonique est conserv\'e. C'est pareil pour la charge \'electrique et le nombre leptonique.
+
+\section{Transformations discr\`etes}
+
+L'op\'erateur parit\`e, l'op\'erateur conjugaison de charge et l'op\'erateur renversement du temps sont des transformations discr\`etes. Le th\'eor\`eme de Noether applique quand m\^eme: si l'op\'erateur commute avec $H$, les valeurs propres sont des quantit\`es conserv\'ees. 
+
+On note que $\left[ H_{em},P \right] = 0$ avec $P$ l'op\'erateur de la parit\'e, et alors dans les interactions EM la parit\'e est conserv\'ee.
+
+Meme si le le photon est de spin $1$ les seules deux \'etats permis sont $\lambda_\gamma = \pm 1$, pas $\lambda_\gamma = 0$ par l'invariance de Lorentz. Comme \c{c}a, on peut d\'eduire par exemple que la d\'esint\'egration $\pi^0 \to \gamma + \gamma$ force la parit\'e de $\pi^0 = -1$ (sujet du PC). 
+
+La parit\'e totale d'une particule est la somme de laquelle du moment cin\'etique $l$ (qui est $(-1)^l$) et la parit\'e intrins\`eque d'une particule. La parit\'e totale de plusieurs particules est simplement la produit.
+\chapter{15/10/14 --- PC5 --- Parit\'e en Physique des Particules}
+
+On parle d'abord de l'op\'erateur de la parit\'e. C'est conserv\'ee dans les interactions fortes et les interactions EM, mais c'est viol\'ee dans les interactions faibles. C'est un op\'erateur hermitien avec des valeurs propres $\pm 1$. Si la parit\'e est conserv\'ee $\left[ H,P \right] = 0$. On parle aussi de la parit\'e intrins\`eque comme $P\psi(\vec{r}) = \eta\psi(-\vec{r}) = \epsilon \psi(\vec{r})$ o\`u $\eta$ est la parit\'e intrins\`eque et $\epsilon$ est la parit\'e totale.
+
+La parit\'e est une valeur multiplicative, comme $\epsilon = \prod_i \epsilon_i$. Donc avec plus d'une particule la parit\'e totale c'est la produit des parit\'es de chaque particule. En particulier, si on a des particules de moment cin\'etique connu $l$ on trouve la parit\'e totale $\epsilon_{ab} = \eta_a\eta_b(-1)^l$.
+
+\section{Violation de la parit\'e dans les interactions faibles}
+
+\begin{enumerate}[1.]
+    \item \emph{Montrer qu'une charge $e$ de masse $m$ en mouvement circulaire uniforme obeit la relation $L \propto M$.}
+
+        Notons que $\vec{L} = m\vec{r} \times \vec{v}$ et pour le mouvement circulaire $L = rmv$. On rappele que $M = IA$ avec $I = \frac{q}{T}$ l'intensit\'e ($T$ est la p\'eriode) et $A = \pi r^2$ et donc
+        \begin{align}
+            M &= IA = \frac{qv}{2\pi r}\pi r^2\\
+            &= \frac{1}{2}qrv = \frac{q}{2m}L\\
+            \vec{M} &= \frac{q}{2m}\left( \vec{L} + \gamma\vec{S} \right)
+        \end{align}
+
+        Pour un \'electron $\gamma = 2$ c'est le rapport gyromagnetique.
+    \item \emph{Trouver la proportionnalit'e entre $M$ est le spin d'une particule charg\'ee.}
+
+        On rappele que $\vec{\mu} = \frac{q}{2m_p}\vec{S}$. 
+        
+        On veut aligner les spin nucl\'eaires \`a un champ magn\'etique fort. Rappeler que $E = -\vec{\mu} \cdot \vec{B}$ et alors il y a deux \'energies $E_{\pm} = \mp \mu B$. Alors la probabilit\'e apr\`es la distribution Boltzmann c'est
+        \begin{align}
+            p_+ &\propto e^{-\beta E_+} & p_- &\propto e^{-\beta E_-}\\
+            &= \frac{e^{\mu B/kT}}{e^{\mu B/kT} + e^{-\mu B/kT}} & &= \frac{e^{-\mu B/kT}}{e^{\mu B/kT} + e^{-\mu B/kT}}
+        \end{align}
+
+        Si on veut aligner les spins alors, il faut que $p_+ \gg p_-$ et alors il faut que $kT \ll \mu B$ et alors $T \lesssim \frac{\mu B}{k} \simeq 2\mathrm{mK}$. 
+
+    \item L'exp\'erience de la violation de la parit\'e commence avec un \'etat invariant par la parit\'e. Alors si la parit\'e est conserv\'ee il faut que l\'etat final reste aussi invariant par la parit\'e. L'exp\'erience qu'on va examiner c'est $^{60}_{27}$Co$\to ^{60}_{28}$Ni$ + e^{-} + \overline{\nu}_e$. Alors par la conservation de la parit\'e il faut que la nombre des \'electrons qui sont \'emits par $(\theta,\phi)$ soit \'egales \`a laquelle qui sont \'emits par $(\pi-\theta, \phi + \pi)$. Mais aussi par la symm\'etrie autour l'axe $z$ on voit que la nombre des \'electrons qui sont \'emits par $(\theta,\phi)$ doit \^etre \'egales \`a laquelle qui sont \'emits par $(\theta,\phi + \alpha)$ pour quelconque $\alpha$. Mais l'exp\'erience n'est pas en d'accord avec \c{c}a!
+\end{enumerate}
+
+\section{Conservation de la parit\'e dans les interactions fortes et EM}
+\begin{enumerate}[1.]
+    \item \emph{Quelles sont les valeurs propres et vecteurs propres de la parit\'e dans l'espace $(x,y,z)$? Dans les \'etats de moment cin\'etique $l$?}
+
+        On a d\'ej\`a parl\'e de \c{c}a, valeurs propres $\epsilon = \pm 1$ et $\epsilon = \left( -1 \right)^l$. 
+
+    \item \emph{Soit la r\'eaction $\pi^- + d \to 2n$.}
+        \begin{enumerate}[a)]
+            \item \emph{Le pion n'a pas de spin, le deut\'eron a un spin $1$ et les deux neutrons ont des spin $\frac{1}{2}$. Quels sont les couples $(l,s)$ possibles?}
+
+                La conservation du moment cin\'etique dit que $\abs{l-s} \leq 1 \leq l+s$ et alors les quatres couples possibles sont les suivants: $(1,0), (0,1), (1,1), (2,1)$. 
+
+            \item \emph{Quelle restriction est-ce que le principe de Pauli impose?}
+
+                Le principle de Pauli dit que $P\ket{\psi} = -\ket{\psi}$ pour les Fermions. Alors $P\ket{nn} = \left( -1 \right)^{l + s + 1}$; rappelons que les \'etats $s=1$ sont symmetriques mais l'\'etat $s=0$ est anti-symmetrique. Alors le principe de Pauli \'elimine les \'etats dont $l+s$ est impair, $(1,0),(0,1), (2,1)$. Donc le seul \'etat qu'on peut avoir c'est $(1,1)$. 
+
+            \item \emph{En comparaisant les parit\'es des \'etats initials et finals trouver la parit\'e intrins\`eque de $\pi^-$.}
+
+                On se rappele que $P = \eta_\pi \eta_d \left( -1 \right)^l$. On sait que pour le deut\'eron ($pn$) l'\'etat avec $l \geq 1$ n'est pas stable et donc le deut\'eron a $l=0$. Donc $P_d = \eta_p\eta_n$, et on sait que $\eta_p \eta_n = 1$ parce que les \'etats de parit\'e differente ne s'agissent pas par l'interaction forte, et $P_i = \eta_\pi$. Enfin $P_f = \eta_n^2 \left( -1 \right)^{1}= -1$ car on a trouver ci-dessus que $l=1$ pour la syst\`eme en totale et alors $\eta_\pi = -1$.
+        \end{enumerate}
+
+    \item \emph{Le m\'eson neutre $\eta$ ne d\'esint\`egre jamais en deux pions, seulement en trois $50\%$ des cas. On veut montrer que $\eta_\eta = -1$ la parit\'e intrins\`eque peut l'expliquer.}
+
+        On sait que $S, J$ initials sont nulles (par le referentiel du centre de masse) et donc $S,J$ sont nulles dans l'\'etat final aussi par la conservation du moment cin\'etique. Si le m\'eson d\'esint\`egre dans deux pions la parit\'e finale est $+1$ mais la parit\'e initiale est $-1$ et donc cette d\'esint\`egration est interdit.
+
+    Pour trois pions on sait par la conservation de l'impulsion $\sum\limits_{i}^{}\vec{p}_i = 0$. On construit l'op\'erateur $\hat{S} = P e^{-i\frac{\pi J_z}{\hbar}}$ (``mirror symmetry'') la rotation avec la parit\'e. On trouve que l'\'etat initial a une valeur propre de $-1$ par cet op\'erateur parce que la parit\'e intrins\`eque est $-1$ et la parit\'e orbitale est $1$ parce que dans le referentiel du centre de masse l'\'etat initial est nulle c'est trivialement invariant. Pour l'\'etat final on peut calculer que la parit\'e intrins\`eque est $\eta_\pi^3$ et la parit\'e orbitale est invariant, et parce qu'on sait d\'ej\`a que $\eta_\pi = -1$ on truove que l'action du $\hat{S}$ est conserv\'ee.
+\end{enumerate}
+\chapter{22/10/14 --- Amphi 5 --- Lois de non-conservation dans les interactions faibles}
+
+On se rappele que les trois forces forte, EM et faible obeissent les lois de conservation de l'\'energie-impulsion, le moment cin\'etique, la charge \'electrique, et les nombres leptonique et baryonique. On examine maintenant la conservation de la saveur, la conjugaison de charge, et la parit\'e pour chacun des trois forces.
+
+On definit maintenant la saveur des quarks: l'etranget\'e, la charme, et la beaut\'e, tel que les quarks \'etrange ont $S = -1$, les quarks charmant ont $C = +1$ et les quarks beau ont $B = -1$ et $0$ pour tout les autres. Il faut noter que les d\'esint\'egrations faibles ne conservent pas toujours la saveur, mais les autres deux la conserve.
+
+Aussi, il y a la conjugaison de charge qu'on peut examiner, qui envoie les particules vers ses propres antiparticules. On voit encore que la interaction faible ne respect pas l'invariance par la conjugaison de charge. 
+
+Finalement, la parit\'e, Toutes les force respectent la parit\'e, sauf encore l'interaction faible.
+\chapter{22/10/14 --- PC6 --- Introduction \`a l'interaction faible}
+
+Les d\'esint\'egrations classiques pour \'etudier les des interaction faibles sont $n \to p + e^{-} + \overline{\nu}_e, \mu^- \to \nu_\mu  + e^-  + \overline{\nu}_e$ et $\tau^- \to \nu_ + \tau e^-  + \overline{\nu}_e$. On va discuter la premi\`ere \'equation. 
+
+Fermi a pos\'e que l'amplitude de probabilit\'e de la d\'esint\'egration pour toutes interactions est donn\'e par
+\begin{align}
+    A_{fi} &= -\frac{i}{\hbar}\int d^3x \int\limits_{-T/2}^{T/2}dt\;\psi_1\psi_2^*\psi_3^*\psi_4^*\label{22.10.Fermi}
+\end{align}
+o\'u $G$ est une constant, la constante de Fermi, et $T$ et l'intervale de temps de l'interaction. On sait maintenant que cet universalit\'e est li\'e \`a la transformation des quarks. La force faible n'est pas vraiment faible, mais p.q. il suit le potentiel $V(r) \sim \frac{1}{r}e^{-r/\lambda}$ avec $\lambda = \frac{\hbar}{m}$ tres petit et alors le potentiel d\'ecro\^it tres rapidement. 
+
+\begin{enumerate}[1.]
+    \item \emph{Quelle est la dimension de $G$?}
+
+        On note que $A_{fi}$ est sans dimension et les fonctions d'onde sont de dimension $m^{-3/2}$. On commence dans les unit\'es SI et on trouve la dimension de $G$ est $ML^5T^{-2}$.
+
+        On introduit un autre syst\`eme des unit\'es, le syst\`eme naturel: l'\'energie, $\hbar$, et $c$. 
+    \item \emph{Si les particules $2,3,4$ sont de masse nulle, montrer que la taux de d\'esint\'egration est de la forme $\Gamma = aG^2 M^n\hbar^pc^q$ ou $a$ est une constant sans dimension.}
+
+        On sait que $\Gamma$, li\'e \`a la probabilit\'e de d\'esint\'egration, doit suivant $\Gamma \sim \frac{\abs{A_{fi}}^2}{T}$. On peut simplement comparer donc les deux quantit\'es et on obtient $\Gamma = aG^2M^5\hbar^{-7}c^4$.
+    \item \emph{Le muon $\mu^-$ se d\'esint\`egre suivant $\mu^- \to \nu_\mu + e^- + \overline{\nu}_e$ et le taon $\tau^- \to \nu_\tau +e^- +\overline{\nu_e}$ avec un taux de brachement de $17,8\%$. D\'eduire une relation entre les dur\'ees de vie et les masses.}
+
+        On peut simplement diviser les taux $\frac{T_\mu}{T_\tau} = \frac{\Gamma_\mu}{0.178 \Gamma_\tau} = \frac{1}{0.178}\left( \frac{M_\tau}{M_\mu} \right)^5$. C'est en bon accord avec les \'experiences. 
+
+    \item \emph{Notons $\vec{p}_i, Ei$ les impulsions et les \'energies des particules, $i = 1,2,3,4$. Calculer $A_{fi}$, verifier que l'impulsion est conserv\'ee et que l'\'energie est conserv\'ee dans la limite $T \to \infty$.}
+
+        On met les particules dans une bo\^ite de $L^3$. Les conditions limites forcent $\vec{p} = \frac{2\pi \hbar}{L}\vec{n}$. On le calcule alors
+        \begin{align}
+            A_{fi} &= -\frac{iG}{\hbar L^6}\int\limits_{-T/2}^{T/2}dt\;e^{\frac{i}{\hbar}\Delta Et} \int\limits_{0}^{L}dx\;e^{-\frac{i}{\hbar}\Delta p_xx}\int\limits_{0}^{L}dy\;e^{-\frac{i}{\hbar}\Delta p_yy}\int\limits_{0}^{L}dz\;e^{-\frac{i}{\hbar}\Delta p_zz}\\
+            \int\limits_{0}^{L}dx\;e^{-\frac{i}{\hbar}\Delta p_xx} &= \int\limits_{0}^{L}dx\;e^{-2\pi i \frac{x}{L}\Delta n_x} = L\delta_{\Delta n_x, 0}\\
+            A_{fi} &= -\frac{iG}{\hbar L^6}\int\limits_{-T/2}^{T/2}dt\;e^{\frac{i}{\hbar}\Delta Et} L^3\delta_{\Delta \vec{n},0}
+        \end{align}
+
+        Ce $\delta$ de Kronecker montre que l'impulsion est conserv\'ee, car $\Delta \vec{n} = 0$ dans toutes d\'esint\'egration. On continue
+        \begin{align}
+            A_{fi} &= -\frac{iG}{\hbar L^3}\delta_{\Delta \vec{n},0}T\frac{\sin \frac{T\Delta E}{2\hbar}}{\frac{T\Delta E}{2\hbar}}
+        \end{align}
+
+        La derni\`ere terme est un function sinc, avec une taille $\sim \frac{\hbar}{T}$. On voit donc que l'\'energie n'est pas n\'ecessairement conserv\'ee sauf si $T \to \infty$. C'est la principe d'incertitude d'Heisenberg.
+
+    \item \emph{Calculer la probabilit\'e de d\'esint\'egration par unit\'e de temps, $\Gamma$, dans la limite $T \to \infty$.}
+
+        On calcule
+        \begin{align}
+            p_{fi} = \abs{A_{fi}}^2 &= \frac{G^2}{\hbar^2 L^6}\delta_{\Delta \vec{p},0} T^2 \left( \frac{\sin \frac{T \Delta E}{2\hbar}}{\frac{T\Delta E}{2\hbar}} \right)^2
+        \end{align}
+
+        On s'interesse par la derni\`ere partie. On sait que dans la limite $T \to \infty$ l'expression $\frac{\sin^2 x}{x^2} \propto \delta\left( \Delta E \right)$. On le calcule pr\'ecisement
+        \begin{align}
+            \int\limits_{-\infty}^{\infty}\left( \frac{\sin \frac{T \Delta E}{2\hbar}}{\frac{T\Delta E}{2\hbar}} \right)^2\;d \Delta E &= \frac{2\hbar}{T} \int\limits_{-\infty}^{\infty}\frac{\sin^2 x}{x^2}\;dx\\
+            &= \frac{2\pi \hbar}{T}\label{22.10.dubious}\\
+            \left( \frac{\sin \frac{T \Delta E}{2\hbar}}{\frac{T\Delta E}{2\hbar}} \right)^2 &= \frac{2\pi \hbar}{T}\delta(\Delta E)
+        \end{align}
+        o\`u l'int\'egrale dans l'\'equation \eqref{22.10.dubious} est donn\'e. Alors on trouve que
+        \begin{align}
+            p_{fi} &= \frac{G^2}{\hbar^2L^6}\delta_{\delta \vec{p},0} T^2 \frac{2\pi \hbar}{T}\delta\left( \Delta E \right)\\
+            \frac{p_{fi}}{T} &= \frac{2\pi G^2}{\hbar L^6}\delta_{\delta \vec{p},0}\delta\left( \Delta E \right)
+        \end{align}
+        et comme \c{c}a on trouve la conservation de l'\'energie dans la limite $T \to \infty$. 
+
+        Mais pour l'instant on a une d\'ependence sur $L^6$. La r\'esolution de cette dilemme est qu'il faut prendre la somme de toutes les $\vec{p}_{2,3,4}$, comme $\Gamma = \sum\limits_{\vec{p}_{2,3,4}}^{}\frac{p_{fi}}{T}$. Rappelons qu'on a un delta de Kronecker dans l'expression $p_{fi}$ et alors on peut faire $\sum\limits_{\vec{p}_{2,3,4}}^{}\delta_{\vec{p},0} \to \sum\limits_{\vec{p}_{2,3}}^{}$ car la somme est fix\'ee par le delta.
+
+        Car on veut prendre la limite $L \to \infty$ on remplace la somme par l'integrale $\sum\limits_{\vec{p}_{2,3}}^{} \to \left( \frac{L}{2\pi \hbar} \right)^6 \int\limits d^3\vec{p}_{2,3}$ et finalement onobtient
+        \begin{align}
+            \Gamma &= \frac{2\pi G^2}{\hbar} \int \frac{d^3\vec{p}_2d^3\vec{p}_3}{\left( 2\pi \hbar \right)^6}\delta\left( E_2 + E_3 + E_4 - E_1 \right)
+        \end{align}
+
+    \item \emph{On s'interesse maintenant des collisions \'elastiques. Qu'est-ce qu'il faut changer dans l'\'equation \eqref{22.10.Fermi}?}
+
+        Il faut tout simplement changer $\psi_2^* \to \psi_2$. 
+
+    \item \emph{On s'agit de la collision $\nu_e + e^- \to \nu_e + e^-$ dans le centre de masse dans la limite ou l'\'energie de la collision est tr\`es sup\'erieure \`a la masse de l'\'electron. Montrer la forme de $\sigma = aG^2E^n\hbar^pc^q$.}
+
+        On trouve par l'analyse des dimensions que $\sigma = a \left( \hbar c \right)^{-4} G^2 E^2$. On peut l'\'ecrire dans le r\'ef\'erentiel du laboratoire et on trouve que
+        \begin{align}
+            S &= \left( E_\nu + E_e \right)^2 - c^2\left( \vec{p}_\nu + \vec{p}_e \right)^2
+        \end{align}
+
+        Car $\vec{p}_\nu = \vec{p}_e = E_\nu = 0$ on voit que $S \approx 2E_e$. C'est ce qu'on observe par les \'experiences, $\sigma \sim E_e$. 
+\end{enumerate}
+\chapter{05/11/14 --- Amphi 6 --- Asym\'etrie mati\`ere-antimati\`ere}
+
+Les deux kaons neutres sont $K^0$ et $\overline{K^0}$; les deux autres sont les $K^{\pm}$. Les premiers sont produits lorsqu'on cible des protons avec des des pions, et les derniers sont plus absorb\'es dans cette mati\`ere. Ils ont la meme masse et le meme spin.
+
+Ils se m\'elangent aussi: $K_0 \leftrightarrow \pi \pi \leftrightarrow \overline{K^0}$ sont possibles. Mais car $\abs{\Delta S} = 2$ c'est \`a cause de l'interaction faible. Car les m\'elanges sont possibles, les \'etats propres devraient \^etre les m\'elanges aussi, comme $K_{L,S} = 1/\sqrt{2}\left( K^0 \pm \overline{K^0} \right)$. Remarquons que ces deux \'etats ont les masses differentes et alors ne sont plus des antiparticules comme le $K^0, \overline{K^0}$.
+
+On note que l'interaction faible ne commute ni avec la parit\'e ni avec la conjugaison de la charge, mais si elle commute avec les deux il faut que le $K_L, K_s$ sont toujours observ\'ee ensemble. Ce n'est pas le cas; la sym\'etrie CP est viol\'ee, tr\`es l\'eg\`erement, dans les desint\'egrations faibles.
+\chapter{05/11/14 --- PC7 --- L'isospin}
+
+L'isospin est une nouvelle nombre quantique qui est conserv\'ee dans les interactions fortes. On note que les neutrons et les protons ont les interactions fortes tr\`es similaires. Heisenberg en $1932$ a propos\'e qu'on consid\`ere le proton et le neutron comme deux \'etats de la m\^eme particule. 
+
+On examine un espace 2D avec le proton et le neutron comme la base, et on prend $\vec{I} = \vec{\sigma}$ les matrices Pauli. On peut alors construire une base des \'etats avec $I^2, I_z$ (qui ont les valeurs propres $I(I+1), I_3$) comme on faisait pour l'instant cin\'etique. Donc $I = 1/2$ correspond aux nucl\'eons et $I=1$ correspond aux pions. La symmetrie des interactions fortes dit que $[H,I] = 0$ et donc les \'etats avec la m\^eme nombre isospin ont la m\^eme masse et la m\^eme \'energie. En r\'ealit\'e, les protons et les neutrons ont des masses l\'eg\`erement differentes, mais c'est une bonne approximation.
+
+On a encore les op\'erateurs d'echelle $I_{\pm} = I_x \pm iI_y$. La formalisme de l'isospin dit donc qu'une system peut \^etre d\'ecrire comme $\ket{\psi}_{orb} \otimes \ket{\psi_{spin}} \otimes \ket{\psi_{isospin}}$.
+
+\section{Syst\`eme de deux nucl\'eons, le deuton}
+
+\begin{enumerate}[a)]
+    \item \emph{Pour un syst\'eme proton-neutron, pourquoi peut-on choisir des \'etats propres du hamiltonien qui soient sym\'etriques ou anti-sym\'etriques?}
+
+        Car $[H, P_{12}] = 0$ pour l'interaction forte, les \'etats propres de le hamiltonien sont aussi les \'etats propres de $P_{12}$ l'op\'erateur de la parit\'e. Alors les fonctions d'onde sym\'etriques et anti-sym\'etriques sont les \'etats propres de $P_{12}$ et on est fini.
+
+    \item \emph{Quelle est la sym\'etrie de la fonction d'onde du deuton (noyau de deut\'erium)?}
+
+        On note que seulement le deuton est permis car $\ket{pp}, \ket{nn}$ ne sont pas des \'etats li\'es. Car $I_{\pm}$ ne change pas la valeur propre de $I^2$ il ne change pas l'\'energie de l'\'etat. Alors $I_+\ket{nn} \sim \ket{np} + \ket{pn}$, mais $\ket{nn}$ n'existe pas! Donc $\ket{np} + \ket{pn}$n'est \emph{pas} le deuton, parce que le deuton existe.
+
+        Aussi, car $\ket{nn}$ est anti-symm\'etrique dans l'espace sans isospin (principe de Pauli, le neutron est un fermion), on voit que $\ket{np} + \ket{pn}$ devrait \^etre symm\'etrique dans l'espace sans isospin, tel que si on applique $I_+$ on produit un \'etat $\ket{nn}$ interdit par la principe de Pauli. Ca resout le probl\`eme parce que cet \'etat $\ket{np} + \ket{pn}$ a une \'energie pas \'egale \`a laquelle de $\ket{nn}$ qui est un \'etat pas li\'e.
+
+    \item \emph{Quel est alors le spin du deuton?}
+
+        Car $S=0$ correspond \`a $\ket{\pm} - \ket{\mp}$ un fonction d'onde anti-symm\'etrique et $S=1$ correspond aux fonctions d'onde symm\'etriques, on voit que le spin du deuton est forc\'ement $1$. 
+\end{enumerate}
+
+Si on veut savoir le moment magn\'etique du deuton, on a tout simplement $\vec{\mu}_d = \vec{\mu}_p + \vec{\mu}_n = \mu_N\left( \gamma_p \vec{\sigma}_p + \gamma_n\vec{\sigma}_n \right)$ la somme des moments magnetiques du proton et du neutron. 
+
+\section{Le formalisme de l'isospin pour deux nucl\'eons}
+
+On est dans la base $\ket{p}, \ket{n}$, et $I_+\ket{n} = \ket{p}$. Soit $H$ un hamiltonien tel que $[H, I] = 0$.
+
+\begin{enumerate}[a)]
+    \item \emph{Quels sont les \'etats d'isospin total $I=0,1$?}
+
+        Les quatres \'etats sont alors $\ket{nn}, \ket{pp}, \ket{np} \pm \ket{pn}$. Comme ci-dessus, il y a trois \'etats symm\'etriques qui ont $I=1$, c'est \`a dire $\ket{pp}, \ket{nn}, \ket{pn} + \ket{np}$ et un \'etat $\ket{np} - \ket{pn}$ tel que $I=0$.
+
+    \item \emph{Quels sont les symm\'etries pour les syst\`emes de deux nucl\'eons?}
+
+        Les \'etats $\ket{nn}, \ket{pp}$ sont symm\'etriques par la parit\'e de l'isospin, mais car $n,p$ sont des fermions les fonctions d'onde dans l'espace sans l'isospin pour les deux est anti-symm\'etriques.
+
+        Les autres deux \'etats $\ket{np} \pm \ket{pn}$ sont similaires. $\ket{np} + \ket{pn}$ est symm\'etrique par l'isospin et alors il est anti-symm\'etrique et la fonction d'onde dans l'espace est anti-symm\'etrique. Vice vers\^a pour $\ket{np} - \ket{pn}$.
+
+    \item \emph{Quel est l'isospin du deuton?}
+
+        On a trouv\'e que le fonction d'onde du deuton est symm\'etrique dans l'espace sans isospin, et alors le deuton doit \^etre $\ket{np} - \ket{pn}$ et donc l'isospin du deuton est $I = 0$. Alors on comprends pourquoi le deuton est le seul \'etat li\'e de deux nucl\'eons; les autres \'etats ont $I=1$ et ont alors les m\^eme \'energies.
+
+    \item \emph{Comment se traduit l'\'equivalence entre proton et neutron dans les interactions fortes dans ce formalisme?}
+
+        $\left[ H,I \right] = 0$ et donc $H$ n'agit pas sur le sous-espace de $I$. Donc le proton et le neutron sont \'equivalent aux interactions fortes.
+\end{enumerate}
+
+\section{G\'en\'eralisation}
+
+\begin{enumerate}[a)]
+    \item \emph{Les op\'erateurs d'isospin total commute avec le hamiltonien et l'op\'erateur d'\'echange de deux paricules. Quelle d\'eg\'en\'erescence a-t-il un syst\`eme d'isospin total $I$?}
+
+        On a $2I+1$ \'etats d'isospin total $I$.
+
+    \item \emph{Les seuls \'etats li\'e de trois nucl\'eons sont le triton et l'h\'elium $3$. Quel est leur isospin?}
+
+        On note que les \'etats $\ket{pnn}, \ket{npp}$ sont les \'etats li\'es permis, mais $\ket{ppp}, \ket{nnn}$ sont interdits. Avec trois nucl\'eons, les seules isospins totals permis sont $1/2, 3/2$. On note que $\ket{ppp}, \ket{nnn} = \ket{\frac{3}{2}, \frac{3}{2}}, \ket{\frac{3}{2}, -\frac{3}{2}}$. 
+        Alors, car si on prend $I_- \ket{ppp} = \frac{1}{\sqrt{3}}\left( \ket{npp} + \ket{pnp} + \ket{ppn} \right)$ on note que ceci devrait ne pas \^etre l'h\'elium $3$ comme avant (ceci ne peut pas correspondre \`a un \'etat li\'e), et alors l'h\'elium $3$ doit correspondre \`a $\ket{\frac{1}{2}, \frac{1}{2}}$. Similairement, le triton correspond \`a $\ket{\frac{1}{2}, -\frac{1}{2}}$. Alors les deux ont le meme isospin total.
+
+        On veut maintenant \'ecrire le fonction d'onde pour le triton. On n'utilise pas pour l'instant le formalisme d'isospin, mais $\ket{\psi} = \ket{\psi_{orb}} \otimes \ket{\psi_{spin}}$. On sait que $\ket{\psi_{orb}}$ doit \^etre symm\'etrique car c'est l'\'etat au moment cin\'etique minimum. Aussi, par la principe de Pauli on peut \'echanger les deux neutrons et on trouve que $\ket{\psi_{spin}}$ est anti-symm\'etrique. Et alors car le spin des deux neutrons doit \^etre $0$ (l\'etat anti-symm\'etrique a un spin $0$), le spin du triton a un spin $\frac{1}{2}$ le spin du proton. Alors le fonction d'ondu triton est forc\`ement
+        \begin{align}
+            \ket{\psi} &= \frac{1}{2}\left( \ket{++-} - \ket{+- +} \right)
+        \end{align}
+
+        On peut aussi munir le proton avec un $\ket{-}$ mais on utilise le $\ket{+}$ pour l'instant. On veut maintenant calculer le moment magn\'etique du triton, qui est simplement la somme des trois moments magn\'etiques. Mais car les deux neutrons sont dans un \'etat anti-symm\'etrique leur contribution est nulle. Alors le moment magn\'etique total est seulement le moment magn\'etique du proton. En r\'ealit\`e, le moment magn\'etique du triton est $2.98\mu_N$ et le momen magn\'etique du proton est $2.79\mu_N$ ($\mu_N$ est le moment magn\'etique d'un nucl\'eon), et alors c'est pas mal! C'est pareil pour l'h\'elium $3$.
+\end{enumerate}
+
+\chapter{19/11/14 --- PC8 --- Le modele des quarks}
+
+Dans les ann\'ees 1960 on a trouv\'e beaucoup des particules nouvelles, et on a essay\'e de les categoriser selon les quantit\'es conserv\'ees $Q,I,B,S$. On a trouv\'e que $Q = I_3 + \frac{1}{2}\left( B + S \right)$ o\`u $Y = B + S$ est l'hypercharge.
+
+A 1964, Gell-Mann a d\'ecouvert qu'il y a encore plus de sym\'etrie que laquelle de $SU(2)$ sur les quarks $u,d$. Il a introduit une troisi\`eme quark, le quark \'etrange. Selon \c{c}a, il a expliqu\'e toutes les baryons ($qqq$) et les mesons $q\overline{q}$. L'espace des mesons est alors de dimension $3 \times 3$, mais cet espace n'est pas irr\'eductible. On a trouv\'e qu'il y a un espace de $8$ dimensions qui est irr\'eductible et un espace d'une seule dimension. Les huites particules sont les $(K^0, K^+), (\pi^-, \pi^0 + \eta, \pi^+),( K^0, \overline{K}^0)$ avec les \'etranget\'es $1,0,-1$ respectivement. La neuvi\`eme particule existe aussi, c'est le $\eta'$.
+
+Les baryons produit un espace de dimension $27$. On peut le decomposer en repr\'esentations irr\'eductible comme $10 \oplus 8 \oplus 8 \oplus 1$. Les huites particules sont $(n,p), (\Sigma^-, \Sigma^0 + \Lambda, \Sigma^+),(\Xi^-, \Xi^0)$ avec les \'etranget\'es $0,-1,-2$ respectivement. Et pour le groupe de dimension $10$ Gell-Mann a pr\'edit qu'il y a une dixi\`eme particule qu'on ne l'avait pas encore vu \`a ce moment-l\`a, et c'\'etait decouvert. Les autres repr\'esentations irr\'eductible, $8 \oplus 1$ n'existent pas.
+
+\section{Lois de conservation des interactions fortes}
+
+Les interactions fortes conservent le nombre baryonique $B$ et l'\'etranget\'e $S$.
+\begin{enumerate}[a)]
+    \item \emph{Quels sont les modes de d\'esint\'egrations possibles pour chaque particule?}
+
+        Supposons qu'on a une particule de masse $M$ qui d\'esint\`egre aux particules de masse $m_i$. C'est clair que $M \geq \sum\limits_{i}^{}m_i$.
+
+        Alors, les modes possibles pour la d\'esint\'egration de $\Delta^+$ sont $\Delta^+ \to p \pi^0[\pi^0], n\pi^+[\pi^0],p\pi^+\pi^-$. Les deux premi\`eres ont une rapport de branchement beaucoup plus grande que les autres trois car ils s'agissent seulement de deux particules. On peut le faire pour toutes les autres particules de $\Delta$.
+
+        Les autres particules ne d\'esint\`egrent pas par les interactions fortes, mais par les interactions faibles ou EM; par exemple, $n \to pe^-\overline{\nu}_e$ est une d\'esint\'egration faible et $\pi_0 \to \gamma\gamma$ est une d\'esint\'egration \'electromagnetique. Les d\'esint\'egrations fortes a lieu beaucoup plus vite que les autres ($10^{-24}$s en comparaision avec $10^{-8}$s).
+
+    \item \emph{Quelle \'energie minimale faut-il pour produire un $\pi^0, \pi^-, K^+, K^-, \overline{p}$ de deux protons?}
+
+        C'est clair que, soit $T$ l'\'energie cin\'etique, $T \geq \left( \sum\limits_{n}^{}m_n - 2M \right)c^2$.
+
+        Avec $\pi^0$, la r\'eaction est $pp \to pp \pi^0$ et l'\'energie cin\'etique minimum est $138$MeV. Pour $\pi^-$ la r\'eaction est $pp \to pp \pi^+ \pi^-$ avec le seuil \'energ\'etique $278$MeV et de m\^eme pour toutes les autres.
+\end{enumerate}
+
+\section{Baryons de spin $\frac{3}{2}$}
+
+\begin{enumerate}[a)]
+    \item \emph{Quelle est la sym\'etrie de la fonction d'onde de spin pour un baryon de spin $\frac{3}{2}$?}
+
+        On trouve que $\ket{\frac{3}{2}, \frac{3}{2}} = \ket{+++}, \ket{\frac{3}{2}, \frac{1}{2}} \propto \ket{-++} + \ket{+ - +} + \ket{++ -}$. Les deux sont sym\'etriques.
+
+    \item \emph{Pourquoi le baryon de spin $\frac{3}{2}$ le plus l\'eger devrait avoir la composition $uds$? Suppose qu'il n'y avait que les degr\'es de libert\'e d'espace et de spin.}
+
+        L'\'etat le plus l\'eger devrait \^etre sym\'etrique car c'est de moins d'\'energie. Alors apr\`es la principe de Pauli les saveurs devrait \^etre $uds$; sinon il faut avoir un fonction d'onde antisym\'etrique.
+
+
+    \item \emph{Quels baryons de spin $\frac{3}{2}$ sont possibles si on introduit un degr\'e de libert\'e nomm\'e ``couleur''?}
+
+        Le probl\`eme c'est qu'il y a plusieurs particules de spin $\frac{3}{2}$! La plus difficile est $\Delta^{++} = uuu$ qui est directement contre la principe de Pauli. Gell-Mann notait \c{c}a et il a introduit la couleur. Alors pour $\Delta^{+++}$ qui est compl\`etement sym\'etrique en l'espace et selon ce qu'on a dit ci-dessus est aussi sym\'etrique dans l'espace de spin, il faut qu'il est compl\`etement anti-sym\'etrique en couleur. En faites, toutes particules, m\^eme les particules de spin $\frac{1}{2}$ sont compl\`etement anti-sym\'etrique en couleur; c'est la principe d'accouchement.
+
+        Alors maintenant toutes combinaisons des quarks sont possibles, et alors on peut appliquer l'op\'erateur d'isospin et reconstruire toutes les $10$ \'etats $uuu \to uud \to udd \to ddd$, $uus \to uds \to dds$, $uss \to dss$, $sss$, les familles $\Delta, \Sigma^*, \Xi^*, \Omega$. 
+
+    \item \emph{Car $u,d$ ont quasiment la m\^eme masse, quelles sont les masses de ces baryons?}
+
+        Chaque famille a la m\^eme masse.
+\end{enumerate}
+
+\section{Baryons de spin $\frac{1}{2}$}
+
+\begin{enumerate}[a)]
+    \item \emph{Pourquoi les baryons de spin $\frac{1}{2}$ les plus l\'egers ne peuvent pas avoir trois quarks identiques selons les hypoth\`eses plus haut?}
+
+        Si c'est totalement sym\'etrique dans l'espace et totalement antisym\'etrique dans le couleur, il devrait \^etre totalement sym\'etrique dans le spin aussi apr\`es la principe de Pauli. Mais si la partie du fonction d'onde du spin est sym\'etrique, c'est un des \'etats dont on a d\'ej\`a parl\'e, soit $\ket{+++}$ soit $\ket{-++} + \ket{+ - +} + \ket{+ + -}$ qui sont de spin $\frac{3}{2}$.
+
+    \item \emph{Quelle condition doivent v\'erifier les $\lambda_i$ ci-dessous?}
+        
+        \begin{align}
+            \ket{\frac{1}{2}, \frac{1}{2}} &= \lambda_1 \ket{ - + +} + \lambda_2\ket{+ - +} + \lambda_3\ket{+ + -}
+        \end{align}
+
+        $\lambda_1 + \lambda_2 + \lambda_3 = 0$. 
+    \item \emph{D\'eterminer les \'etats de spin possible pour un baryon contenant deux quarks identiques.}
+        
+        Ca devrait \^etre sym\'etriques dans le spin car c'est d\'ej\`a antisym\'etrique dans le couleur, alors 
+        $$\ket{\psi_{uud}} = \frac{1}{\sqrt{6}}\left( \ket{+ - +} + \ket{- + +} - 2\ket{+ + -} \right)$$
+
+    \item \emph{D\'eterminer les \'etats de spin possible pour un baryon contenant trois quarks differentes.}
+
+        Il y a deux \'etats qui satisfait ce demande, $\Sigma^0 = uds, \Lambda = uds$. On peut obtenir $\Sigma^0$ en appliquant l'op\'erateur d'isopin sur $\Sigma^{\pm}$ qui sont $uus, dds$ respectivement. Ceci ne change pas le spin, et donc le fonction d'onde pour $\Sigma^0$ devrait \^etre $\ket{+ - +} + \ket{- + +} - 2\ket{+ + -}$ comme plus haut.
+
+        $\Lambda$ est dans son propre groupe, alors il devrait \^etre orthogonal aux toutes autres particules. C'est simplement 
+        $$\frac{1}{\sqrt{2}}\left( \ket{+ - +} - \ket{- + +} \right)$$
+
+    \item \emph{Quelles d\'eg\'en\'eresces r\'esultent de la sym\'etrie d'isospin?}
+
+        Tout eux ont la m\^eme masse s'ils ont le m\^eme spin et le m\^eme isospin.
+        
+    \item \emph{Calculer les moments magn\'etiques de ces baryons.}
+
+        Le moment magn\'etique d'une particule est la somme des moments magn\'etiques de ces constituant. On appelle $\mu_0 = \frac{q\hbar}{2M_p}$, alors on trouve que les moments magn\'etiques des quarks $u,d$ sont $2\mu_0, -\mu_0$ respectivement.
+
+        On examine d'abord le proton. Donc (car $\mu_u^{(1)} = \mu_u^{(2)}$ parce que le fonction d'onde est sym\'etrique, on peut le simplifier comme ci-dessous)
+        \begin{align}
+            \tfrac{\left(\bra{+ - +} + \bra{- + +} - 2\bra{+ + -}\right) \left( 2\mu_u^{(1)} + \mu_d^{(3)} \right) \left(\ket{+ - +} + \ket{- + +} - 2\ket{+ + -}\right)}{6} &= \frac{\left( 2\mu_u + \mu_d \right) + \left( -2\mu_u + \mu_d \right) + 4\left( 2\mu_u - \mu_d \right)}{6}\\
+            &= \frac{4\mu_u - \mu_d}{3} = 3\mu_0
+        \end{align}
+
+        Le neutron est seulement l\'eg\`erement diff\'erent; on \'echange $u \leftrightarrow d$ et on trouve $\mu_n = \frac{4\mu_d - \mu_u}{3}= -2\mu_0$.En r\'ealit\'e, les moments magn\'etiques sont $2.79, -1.91$.
+\end{enumerate}
+
+\chapter{26/11/14 --- Moment magn\'etique du $\Lambda$}
+
+Doing this one in English for a change!
+
+\section{Moment magn\'etique dans le mod\`ele des quarks}
+
+We start with the magnetic moment of $\Lambda = uds$, which we got last PC had spin wavefunction depending on its own spin
+\begin{align}
+    \ket{\Lambda,+} &= \frac{1}{\sqrt{2}}\left( \ket{- + +} - \ket{+ - +} \right)\\
+    \ket{\Lambda,-} &= \frac{1}{\sqrt{2}}\left( \ket{- + -} - \ket{+ - -} \right)
+\end{align}
+
+We recall that the Hamiltonian is given $H = -\vec{M}\cdot\vec{B} = -B\left( \mu_u S_{1,z} + \mu_d S_{2,z} + \mu_s S_{3,z} \right)$, the $\mu$ the magnetic moments. We then ask what the matrix elements of $H$ are in the above basis, so we bash (for example)
+\begin{align}
+    \bra{\Lambda,+} H\ket{\Lambda,+} &= -\frac{B}{2}\left( \bra{- + +} - \bra{+ - +} \right)\left( \mu_u S_{1,z} + \mu_d S_{2,z} + \mu_s S_{3,z} \right)\left( \ket{- + +} - \ket{+ - +} \right)\\
+    &= -\frac{B}{2}\left( \bra{- + +} - \bra{+ - +} \right)\frac{\hbar}{2}\left[\left( \mu_d - \mu_u \right)\left( \ket{- + +} + \ket{+ - +} \right) + \mu_s\left( \ket{- + +} - \ket{+ - +} \right)\right]\\
+    &= -\frac{B\hbar}{2}\mu_s\\
+    \bra{\Lambda,-} H\ket{\Lambda,+} &= 0
+\end{align}
+
+This second one we can skip the calculation since we already calculated $H \ket{\Lambda,+}$ and we can easily examine and find that stuff is orthogonal. We can do similarly to take care of the rest of the matrix elements.
+
+\section{Production de $\Lambda$ polaris\'es}
+
+$\Lambda$ particles are produced by bombarding a Beryllium target with protons, such that $p + Be \to \Lambda + ??$.  
+
+\begin{enumerate}[a)]
+    \item \emph{We observe a very narrow cross section. Why?}
+
+        Relativity, because stuff is ultra-relativistic, so what would have looked like a uniform distribution gets contracted into a small cone.
+
+    \item \emph{Show that $\Lambda$ produced has a non-zero average polarization.}
+
+        Recall that parity is conserved by strong interactions, and this definitely completely obviously trivially shows that $\expvalue{S_x} \neq 0$\dots Basically, polarization is nonzero only in the $x$ direction because parity about $x$ axis interchanges $y,z$, and so all non-zero polarization must be carried by the $x$.
+        
+    \item \emph{Put $\Lambda$ through a magnetic field $\vec{B} = B\hat{y}$. How does the polarization evolve with time?}
+
+        Recall $\rd{\vec{S}}{t}= \mu \vec{S} \times \vec{B} = \left( -\mu BS_z, 0, \mu BS_x \right)$. We go to complex notation $S = S_z + iS_x$ and we find
+        \begin{align}
+            S(t) = S(0) \exp\left[ -i \mu \int\limits_{0}^{t}B\;dt' \right]
+        \end{align}
+
+        We can then put this into IVP general solution form but I'm too lazy. 
+\end{enumerate}
+
+
+\end{document}

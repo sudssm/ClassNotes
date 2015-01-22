@@ -1,0 +1,35 @@
+\contentsline {chapter}{\numberline {1}10/09/14 --- Lecture 1 --- Introduction, Notions de base}{3}{chapter.1}
+\contentsline {chapter}{\numberline {2}10/09/14 --- PC 1 --- Additions de moments cin\'etiques}{4}{chapter.2}
+\contentsline {chapter}{\numberline {3}17/09/14 --- Lecture 2 --- Les neutrinos}{6}{chapter.3}
+\contentsline {chapter}{\numberline {4}17/09/14 --- PC 2 --- D\'etection des neutrino solaires}{7}{chapter.4}
+\contentsline {section}{\numberline {4.1}Revue de taux des oscillations}{7}{section.4.1}
+\contentsline {section}{\numberline {4.2}Cin\'ematique de la r\'eaction}{8}{section.4.2}
+\contentsline {section}{\numberline {4.3}Analyse des vrais donn\'ees}{9}{section.4.3}
+\contentsline {chapter}{\numberline {5}01/10/14 --- Lecture 3 --- Production et d\'esint\'egration des particules}{10}{chapter.5}
+\contentsline {section}{\numberline {5.1}La r\`egle d'or de Fermi}{10}{section.5.1}
+\contentsline {chapter}{\numberline {6}01/10/14 --- PC3 --- Th\'eorie des perturbations d\'epandant du temps}{12}{chapter.6}
+\contentsline {chapter}{\numberline {7}08/10/14 --- PC4 --- Th\'eor\`eme de Landau-Yang}{15}{chapter.7}
+\contentsline {section}{\numberline {7.1}Spin d'un photon}{15}{section.7.1}
+\contentsline {section}{\numberline {7.2}D\'esint\'egration d'une particule en deux photons}{16}{section.7.2}
+\contentsline {chapter}{\numberline {8}08/10/14 --- Amphi 4 --- Makeup: Lois de conservation en physique}{17}{chapter.8}
+\contentsline {section}{\numberline {8.1}Transformations continues}{17}{section.8.1}
+\contentsline {subsection}{\numberline {8.1.1}Th\'eor\`eme de Noether, R\`egles de s\'election}{17}{subsection.8.1.1}
+\contentsline {subsection}{\numberline {8.1.2}Transformation de jauge}{17}{subsection.8.1.2}
+\contentsline {section}{\numberline {8.2}Transformations discr\`etes}{17}{section.8.2}
+\contentsline {chapter}{\numberline {9}15/10/14 --- PC5 --- Parit\'e en Physique des Particules}{18}{chapter.9}
+\contentsline {section}{\numberline {9.1}Violation de la parit\'e dans les interactions faibles}{18}{section.9.1}
+\contentsline {section}{\numberline {9.2}Conservation de la parit\'e dans les interactions fortes et EM}{19}{section.9.2}
+\contentsline {chapter}{\numberline {10}22/10/14 --- Amphi 5 --- Lois de non-conservation dans les interactions faibles}{20}{chapter.10}
+\contentsline {chapter}{\numberline {11}22/10/14 --- PC6 --- Introduction \`a l'interaction faible}{21}{chapter.11}
+\contentsline {chapter}{\numberline {12}05/11/14 --- Amphi 6 --- Asym\'etrie mati\`ere-antimati\`ere}{23}{chapter.12}
+\contentsline {chapter}{\numberline {13}05/11/14 --- PC7 --- L'isospin}{24}{chapter.13}
+\contentsline {section}{\numberline {13.1}Syst\`eme de deux nucl\'eons, le deuton}{24}{section.13.1}
+\contentsline {section}{\numberline {13.2}Le formalisme de l'isospin pour deux nucl\'eons}{24}{section.13.2}
+\contentsline {section}{\numberline {13.3}G\'en\'eralisation}{25}{section.13.3}
+\contentsline {chapter}{\numberline {14}19/11/14 --- PC8 --- Le modele des quarks}{26}{chapter.14}
+\contentsline {section}{\numberline {14.1}Lois de conservation des interactions fortes}{26}{section.14.1}
+\contentsline {section}{\numberline {14.2}Baryons de spin $\frac {3}{2}$}{26}{section.14.2}
+\contentsline {section}{\numberline {14.3}Baryons de spin $\frac {1}{2}$}{27}{section.14.3}
+\contentsline {chapter}{\numberline {15}26/11/14 --- Moment magn\'etique du $\Lambda $}{29}{chapter.15}
+\contentsline {section}{\numberline {15.1}Moment magn\'etique dans le mod\`ele des quarks}{29}{section.15.1}
+\contentsline {section}{\numberline {15.2}Production de $\Lambda $ polaris\'es}{29}{section.15.2}

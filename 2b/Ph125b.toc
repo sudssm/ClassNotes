@@ -1,0 +1,24 @@
+\contentsline {chapter}{\numberline {1}Formula/Key Concepts}{2}
+\contentsline {chapter}{\numberline {2}1/6/14 - Time-independent perturbation theory}{4}
+\contentsline {chapter}{\numberline {3}1.8/14 - Examples, Degenerate + higher-order perturbation theory}{6}
+\contentsline {chapter}{\numberline {4}1/10/14 - Selection rules, examples Time-independent}{8}
+\contentsline {chapter}{\numberline {5}1/13/14 - Fine Structure Hydrogen}{10}
+\contentsline {chapter}{\numberline {6}1/15/14 - Hydrogen atom example}{12}
+\contentsline {chapter}{\numberline {7}1/17/14 - Finite nuclear size, time independent perturbation theory}{13}
+\contentsline {chapter}{\numberline {8}1/24/14 - Time Dependent Perturbation Theory}{15}
+\contentsline {chapter}{\numberline {9}1/27/14 - Adiabatic theorem, Fermi's golden rule}{17}
+\contentsline {chapter}{\numberline {10}1/29/14 - Application fermi's golden rule (photoelectric effect)}{19}
+\contentsline {chapter}{\numberline {11}1/31/14 - Scattering}{21}
+\contentsline {chapter}{\numberline {12}2/3/14 - Higher order time dependent perturbation theory}{23}
+\contentsline {chapter}{\numberline {13}2/5/14 - Interaction/Heisenberg picture}{25}
+\contentsline {chapter}{\numberline {14}A few days\dots - Scattering Theory}{27}
+\contentsline {chapter}{\numberline {15}2/14/14 - Valentine's day scattering}{29}
+\contentsline {chapter}{\numberline {16}Makeup: Hard Sphere scattering, Dirac Equation}{31}
+\contentsline {chapter}{\numberline {17}2/24/14 - Fully relatistic hydrogen atom}{33}
+\contentsline {chapter}{\numberline {18}2/26/14 - Second Quantization}{35}
+\contentsline {chapter}{\numberline {19}2/28/14 - Finishing occupation state basis}{37}
+\contentsline {chapter}{\numberline {20}3/3/14 - Bisu day! 3D Quantum Fields}{39}
+\contentsline {chapter}{\numberline {21}3/5/14 - Finish QFT}{42}
+\contentsline {chapter}{\numberline {22}3/7/14 - QFT Example}{44}
+\contentsline {chapter}{\numberline {23}3/10/14 - QFT finish example, Wigner-Eckhard Theorem}{46}
+\contentsline {chapter}{\numberline {24}3/12/14 - Total derivatives in QM, Bohm-Aharnov effect}{48}

@@ -1,0 +1,8 @@
+\contentsline {chapter}{\numberline {1}Introduction/Quantum Beginnings - January 8}{2}{chapter.1}
+\contentsline {chapter}{\numberline {2}Schroedinger Equation - January 10}{3}{chapter.2}
+\contentsline {chapter}{\numberline {3}Probability Densities with Schr\"odinger Equation - January 15}{5}{chapter.3}
+\contentsline {chapter}{\numberline {4}Wavefunction Collapse - January 22}{7}{chapter.4}
+\contentsline {chapter}{\numberline {5}WELCOME BACK YOU LAZY ASS Harmonic Oscillators - February 12}{9}{chapter.5}
+\contentsline {chapter}{\numberline {6}Harmonic Oscillator, the easy way - February 14th}{11}{chapter.6}
+\contentsline {chapter}{\numberline {7}Delta function potentials - February 19}{13}{chapter.7}
+\contentsline {chapter}{\numberline {8}Two well potentials - February 26}{15}{chapter.8}

@@ -1,0 +1,423 @@
+\documentclass[10pt,twocolumn]{article}
+\usepackage{fancyhdr, amsmath, amsthm, amssymb, mathtools, lastpage}
+\usepackage[margin=0.5in, top=0.8in,bottom=0.8in]{geometry}
+\newcommand{\scinot}[2]{#1\times10^{#2}}
+\newcommand{\bra}[1]{\left<#1\right|}
+\newcommand{\ket}[1]{\left|#1\right>}
+\newcommand{\dotp}[2]{\left<\left.#1\right|#2\right>}
+\newcommand{\rd}[2]{\frac{d#1}{d#2}}
+\newcommand{\pd}[2]{\frac{\partial#1}{\partial#2}}
+\newcommand{\rtd}[2]{\frac{d^2#1}{d#2^2}}
+\newcommand{\ptd}[2]{\frac{\partial^2 #1}{\partial#2^2}}
+\newcommand{\norm}[1]{\left|\left|#1\right|\right|}
+\newcommand{\abs}[1]{\left|#1\right|}
+\newcommand{\pvec}[1]{\vec{#1}^{\,\prime}}
+\newcommand{\tensor}[1]{\overleftrightarrow{#1}}
+\let\Re\undefined
+\let\Im\undefined
+\DeclareMathOperator{\Re}{Re}
+\DeclareMathOperator{\Tr}{Tr}
+\DeclareMathOperator{\Im}{Im}
+\newcommand{\expvalue}[1]{\left<#1\right>}
+% \usepackage[labelfont=bf, font=scriptsize]{caption}\usepackage{tikz}
+% \usepackage[version=3]{mhchem}
+\usepackage{hyperref}
+\usepackage{enumerate}
+% \usepackage{graphicx}
+% \usepackage{setspace}
+\everymath{\displaystyle}
+
+\begin{document}
+
+\pagestyle{fancy}
+\rhead{Yubo Su --- Ph106c Final Summary}
+\cfoot{\thepage/\pageref{LastPage}}
+
+\tableofcontents
+\newpage
+
+\section{Introduction}
+
+\subsection{Foreword}
+
+This is going to be a document that I will use to distill my lecture notes as I study for the final, which covers from EM waves up until the end. This is gmostly for personal use, but if somebody actually clicks on this wondering what it is, now you know!
+
+Thankfully the fact that it starts from EM waves means that we get to not study the conservation laws, which if anybody knows anything about that stuff is some of the most royally ugly stuff out there.
+
+Note: It is not impossible that the quality of the notes falls down in the later half (as we hit radiation) because the algebra becomes disproportionately bad compraed to the intuition/meaning/utility of the equations. 
+
+\subsection{Super-summary}
+
+Mostly just want to give a summary of problem-solving techniques we covered in each major section.
+\begin{itemize}
+    \item To solve interfaces we just decompose the incoming wave into parallel and perpendicular incidence (with respect to the plane formed by $\vec{k}, \hat{n}$) and then plug through the formulae derived in class for both of these cases.
+    \item Inside a conductor $\sigma$ comes into Maxwell Equations as a $\vec{J}$ term, producing a complex wavevector $\vec{k}$, the only time we deal with a complex wavevector. This then means that when we hit a conductor we can acquire a phase shift upon either reflection or transmission.
+    \item Transmission lines are just waveguides with the only allowed modes being fully transverse. They have impedance $Z = \sqrt{\mathcal{L}/\mathcal{C}}$.
+    \item Waveguides, not counting TEM modes (transmission lines), have two complete solutions, TE and TM modes. To solve the general allowed propagation down a waveguide, we find the allowed $B_{0,z}, E_{0,z}$ based on the BCs and the geometry, and then we work backwards through the Maxwell Equations to get back the transverse components. Note that once we have either of $E_{0,z}, B_{0,z}$ in TM, TE modes respectively we've solved the full field for that mode. We can then build up the general solution from these modes.
+    \item For waveguides surrounded by imperfect but good conductors we assume the perfect conductor solution and compute the resulting Joule dissipation (dissipation due to resistivity) coming from the penetration of the perfect solution into the conductor. 
+    \item Point charges radiate upon acceleration, so we can compute their accelerations and plug through formulae to figure out the particle's energy loss over time.
+    \item We can build up the fields of arbitrary sources with arbitrary time dependences via Fourier transform in time and multipole expansion in space, because the fields of a harmonic multipole are comparatively reasonable to compute. The power radiated then follows via Poynting vector
+\end{itemize}
+
+\section{EM waves in vacuum}
+
+\subsection{EM wave equation}
+
+Start with Maxwell's equations (MEs) in the absence of source terms. If we then curl both of the inhomogeneous equations ($\vec{\nabla} \times \vec{E} = -\pd{\vec{B}}{t}, \vec{\nabla} \times \vec{B} = \epsilon_0\mu_0\pd{\vec{E}}{t}$) then we arrive at
+\begin{align}
+    \nabla^2 \vec{E} &= \epsilon_0 \mu_0 \ptd{\vec{E}}{t} & \nabla^2 \vec{B} &= \epsilon_0 \mu_0 \ptd{\vec{B}}{t}
+\end{align}
+which are wave equations with propagating velocity $\frac{1}{\sqrt{\epsilon_0 \mu_0}} = c^2$. We know that solutions to the wave equation must have form $f(\vec{r},t) = f(\vec{k} \cdot \vec{r} - \omega t)$ with $k = \omega/v$.
+
+\subsection{Properties of EM waves}
+
+If we then assume a sinusoidal $\vec{E} = \vec{E}_0 \cos (\vec{k} \cdot \vec{r} - \omega t + \delta)$ and similarly for $\vec{B}$, we can work out the following properties (we will notate using $\vec{E}$ but the same obviously holds for $\vec{B}$)
+\begin{itemize}
+    \item Waves are transverse: $\vec{E} \cdot \vec{k} = 0$.
+    \item Waves are perpendicular: $\vec{E} \perp \vec{B}$
+    \item Waves are related: $\vec{B} = \frac{1}{c}\hat{k} \times \vec{E}$.
+\end{itemize}
+and we can characterize their energy (and the respective time-averages that have $1/2$ thrown in because $\expvalue{\cos^2 x} = 1/2$)
+\begin{itemize}
+    \item Energy: $U = \epsilon_0 E_0^2, \expvalue{U} = \frac{1}{2}\epsilon_0 E_0^2$
+    \item Poynting vector $\frac{1}{\mu_0}\vec{E} \times \vec{B}$: $\vec{S} = \epsilon_0cE^2\hat{k}, \expvalue{\vec{S}} = \frac{1}{2}\epsilon_0 cE_0^2\hat{k}$
+\end{itemize}
+
+If we are in complex $e^{i(\vec{k} \cdot \vec{r} - \omega t)}$ then we make the logical substitution $E_0^2 \to \expvalue{\vec{E}^* \cdot \vec{E}}$ and analogously.
+
+\subsection{Polarization}
+
+Since we said EM waves are transverse, we can decompose the plane orthogonal to $\vec{k}$ into two orthogonal basis vectors $\hat{n}_1, \hat{n}_2$ along which $\vec{E}$ can lie (and corresponding components of $\vec{B}$ as well). In general then, we have
+\begin{align}
+    \vec{E} &= \frac{\tilde{E_0}}{\sqrt{2}}\left( \alpha\hat{n}_1 + \beta\hat{n_2}e^{i\delta} \right)e^{i(\vec{k} \cdot \vec{r} - \omega t)}
+\end{align}
+where we absorb an overall phase into $\tilde{E}_0$ complex amplitude and we require $\alpha^2 + \beta^2 = 1$ normalization ($\alpha, \beta \in \mathbb{R}$). There are then three cases that we study
+\begin{itemize}
+    \item Linear polarization $\delta = 0, \pi$: we can then choose a new basis vector $\alpha \hat{n}_1 \pm \beta \hat{n_2}$ and the wave is then just an oscillation along this basis vector.
+    \item Circular polarization $\alpha = \beta, \delta = \pm \pi/2$: we can't choose a new \emph{real} basis vector because the phases are offset. The wave then just rotates around the $\hat{n}_{1,2}$ plane with constant magnitude, in a circle. We call $\delta = +(-)\frac{\pi}{2}$ \emph{left (right)} circularly polarized and \emph{positive (negative)} helicity.
+    \item Elliptical polarization $\alpha \neq \beta, \delta = \pm \pi/2$: this looks just like circular polarization but the magnitude of $\vec{E}$ varies in time because the components along the basis vectors is unequal. 
+\end{itemize}
+
+\section{EM waves in linear media}
+
+\subsection{Characteristics}
+
+In linear media the only change to EM waves is that $v \neq c \to \frac{c}{n}$ with $n = \sqrt{\frac{\epsilon \mu}{\epsilon_0 \mu_0}}$ We can still characterize energy
+\begin{itemize}
+    \item Energy: $U = \epsilon_0 E_0^2, \expvalue{U} = \frac{1}{2}\epsilon_0 E_0^2$
+    \item Poynting vector $\frac{1}{\mu_0}\vec{E} \times \vec{B}$: $\vec{S} = \epsilon_0cE^2\hat{k}, \expvalue{\vec{S}} = \frac{1}{2}\epsilon_0 cE_0^2\hat{k}$
+\end{itemize}
+
+\subsection{Interfaces}
+
+Recall the BCs for linear media
+\begin{align}
+    \hat{n} \cdot \vec{D}_1 &= \hat{n} \cdot \vec{D}_2 & \hat{n} \cdot \vec{B}_1 &= \hat{n} \cdot \vec{B}_2\\
+    \hat{s} \cdot \vec{E}_1 &= \hat{s} \cdot \vec{E}_2 & \hat{s} \cdot \vec{H}_1 &= \hat{s} \cdot \vec{H}_2
+\end{align}
+with $\vec{D} = \epsilon \vec{E}, \vec{H} = \frac{\vec{B}}{\mu}$. 
+
+If we then write down general forms for the incident, reflected, transmitted components of $\vec{E}$ we have
+\begin{align}
+    \vec{E}_i(\vec{r},t) &= \vec{E}_{0,i}e^{i(\vec{k}_i \cdot \vec{r} - \omega t)}& \vec{B}_i &= \frac{1}{v_1}\hat{k}_i \times \vec{E}_i\\
+    \vec{E}_r(\vec{r},t) &= \vec{E}_{0,r}e^{i(\vec{k}_r \cdot \vec{r} - \omega t)}& \vec{B}_r &= \frac{1}{v_1}\hat{k}_r \times \vec{E}_r\\
+    \vec{E}_t(\vec{r},t) &= \vec{E}_{0,t}e^{i(\vec{k}_t \cdot \vec{r} - \omega t)}& \vec{B}_t &= \frac{1}{v_2}\hat{k}_t \times \vec{E}_t
+\end{align}
+
+We note that the BCs must be obeyed at all points on the interface at all times\footnote{Otherwise the phases of the waves would change differently which can't work with BCs.}, so if we define $\hat{n} = \hat{z}$ then we note the following two conditions
+\begin{itemize}
+    \item All $\omega$ are equal: $kv = \omega, k_i = k_r = \frac{n_1}{n_2}k_t$.
+    \item $\hat{x}, \hat{y} \cdot \vec{k}$ are equal: Snell's Law $\frac{\sin \theta_t}{\sin \theta_i} = \frac{n_1}{n_2}$ and $k_i = k_r$.
+\end{itemize}
+
+We are now ready to apply BCs. It's still somewhat tricky to deal with in generality, so we can decompose $\vec{E}$ into components \emph{parallel} to the plane of incidence (formed by $\hat{k}, \hat{n}$) and perpendicular. We can work the algebra for these two cases individually and obtain
+\begin{itemize}
+    \item Define $\alpha = \frac{\cos \theta_t}{\cos \theta_i}, \beta = \frac{\mu_1n_2}{\mu_2n_1}$.
+    \item Parallel incidence: $\frac{\tilde{E_{0,r}}}{\tilde{E}_{0,i}} = \frac{\alpha - \beta}{\alpha + \beta}, \frac{\tilde{E_{0,t}}}{\tilde{E}_{0,i}} = \frac{2}{\alpha + \beta}$.
+    \item Perp incidence: $\frac{\tilde{E_{0,r}}}{\tilde{E}_{0,i}} = \frac{1 - \alpha \beta}{1 + \alpha \beta}, \frac{\tilde{E_{0,t}}}{\tilde{E}_{0,i}} = \frac{2}{1 + \alpha \beta}$.
+\end{itemize}
+and of course the power reflection/transmission coefficients go like $R = r^2, T = \alpha \beta t^2$ with $r,t$ what we computed above for the fields.
+
+We can make a brief analysis and note that in the parallel incidence case it is possible for $\alpha = \beta$, in which case no reflected component; this angle is called \emph{Brewster's angle}. Above and below this angle we observe phase change in the reflected component. This is not possible in the perpendicular case because if we math hard enough $\alpha \beta < 1$. 
+
+Another phenomenon is total internal reflection, which arises when there are no solutions for $\theta_t$ in $\frac{\sin \theta_t}{\sin \theta_i} = \frac{n_1}{n_2}$ Snell's law. {\em \small Note: We can make a brief analysis here and note that for $\sin \theta_t > 1, \cos \theta_t \in \mathbb{I}$ which produces $\alpha \in \mathbb{I}, \beta \in \mathbb{R}$. This gives some pretty weird results for $r,t$ but does indeed yield $R = 1, T \in \mathbb{I}$ which shows that all power is reflected. The imaginary $T$ is because the wave is being attenuated. This analysis is hardly rigorous if even correct but it's a way of seeing the physics by extending the mathematics.}
+
+\section{EM waves in Conducting media}
+
+\subsection{MEs, good/bad conductor}
+The MEs written down in conducting media look like
+\begin{align}
+    \vec{\nabla} \cdot \vec{E} &= \frac{\rho_f}{\epsilon} & \vec{\nabla} \cdot \vec{B} &= 0\\
+    \vec{\nabla} \times \vec{E} + \pd{\vec{B}}{t} &= 0 & \vec{\nabla} \times \vec{B} &= \mu \sigma \vec{E} + \epsilon \mu \pd{\vec{E}}{t}
+\end{align}
+because of Ohm's law $\vec{J}_f = \sigma \vec{E}$.
+
+If we then write down continuity equation we find $\dot{\rho_f} = -\frac{\sigma}{\epsilon}\rho_f$ so notating $\tau = \frac{\epsilon}{\sigma}$ we can characterise the conductor as \emph{good} if $\tau \ll T$ with $T$ the period of any waves we are examining, and $\emph{poor}$ if $\omega \tau \gg 1$ ($\omega \sim T^{-1}$).
+
+If we then slap the MEs together we find the wave equation
+\begin{align}
+    \nabla^2 \vec{E} = \epsilon \mu \ptd{\vec{E}}{t} + \sigma \mu \pd{\vec{E}}{t}\label{CondME}
+\end{align}
+
+\subsection{Solution to MEs: $E$ field}
+
+Assume planar solutions as usual $\vec{E} = \vec{E}_0 e^{i(\vec{k} \cdot \vec{r} - \omega t)}$. Then plugging through \eqref{CondME} we find
+\begin{align}
+    \vec{k} \cdot \vec{k} &= \epsilon \mu \omega^2 + i\sigma \mu \omega
+\end{align}
+which means our wavevector has complex magnitude. We will define $\sqrt{\vec{k} \cdot \vec{k}} = k + i\kappa$. Then if we define $v_{\epsilon \mu} = \frac{1}{\sqrt{\epsilon \mu}}, k_{\epsilon \mu} = \frac{\omega}{v_{\epsilon \mu}}, \lambda = \frac{2\pi}{k_{\epsilon \mu}}$ (all pretty reasonable definitions) then we find that
+\begin{align}
+    k &= k_{\epsilon \mu}\sqrt{\frac{\sqrt{1 + \frac{1}{\omega^2\tau^2}}+ 1}{2}} & \kappa &= k_{\epsilon \mu} \sqrt{\frac{\sqrt{1 + \frac{1}{\omega^2 \tau^2}}-1}{2}}
+\end{align}
+
+We note that $\frac{1}{\kappa} \equiv \delta$ is the characteristic decay length, called the \emph{skin depth}, of fields inside a conductor. We can then take a few good/poor conductor limits respectively
+\begin{itemize}
+    \item $k$ --- $k \to \sqrt{\frac{\mu \sigma \omega}{2}}$ whereas $k \to k_{\epsilon \mu}$.
+    \item $\kappa$ --- $\kappa \to k = \sqrt{\frac{\mu \sigma \omega}{2}}$ whereas $\kappa \to \frac{k_{\epsilon \mu}}{2 \omega \tau}$.
+    \item $\delta$ --- $\delta \to \frac{\lambda}{2\pi}$ whereas $\delta \to \frac{2 \omega \tau}{k_{\epsilon \mu}}$
+\end{itemize}
+
+The result $\delta = \frac{\lambda}{2\pi}$ is called the \emph{classical skin depth} for a good conducto, which lets us say that currents/fields inside a conductor are effectively on the surface layer with height $\delta$. 
+
+\subsection{Solution to MEs: $B$ field}
+
+If we then plug in our $\vec{E}$ in through the $\vec{\nabla} \times \vec{E}$ equation we find that $\frac{\tilde{B}_0}{\tilde{E}_0} = \frac{k+i\kappa}{\omega}$ for which we can plug in our earlier results. We again take the good/poor conductor limits
+\begin{itemize}
+    \item Poor conductor --- $\frac{\tilde{B}_0}{\tilde{E}_0} \to \frac{1}{v_{\epsilon \mu}}$ the usual result
+    \item Good conductor --- $\frac{\tilde{B}_0}{\tilde{E}_0} \to \frac{e^{i\pi/4}}{v_{\epsilon \mu}}\sqrt{\frac{\sigma}{\epsilon \mu}} \gg \frac{1}{v_{\epsilon \mu}}$.
+\end{itemize}
+
+Note that the $\tilde{B}_0$ is phase shifted by $\pi/4$ in the good conductor and is enhanced in strength by $\sqrt{\frac{\sigma}{\epsilon \mu}}$ compared to poor/nonconducting case.
+
+\subsection{Energy in conductor}
+
+We then have enough information to compute our usual $\expvalue{U}, \expvalue{\vec{S}}$. I won't reproduce them in full here, but the results in poor/good conductor limits are respectively
+\begin{itemize}
+    \item $\expvalue{U} \to \frac{1}{2}\epsilon \abs{\tilde{E}_0}^2 e^{-2\hat{k} \cdot \vec{r}/\delta}$ and $\expvalue{U} \to \frac{1}{4}\epsilon \abs{\tilde{E}_0}^2 \frac{\sigma}{\epsilon \omega}e^{-2\hat{k} \cdot \vec{r}/\delta}$.
+    \item $\expvalue{\vec{S}} \to v_{\epsilon \mu}\expvalue{U}\hat{k}$ and $\expvalue{\vec{S}}\to\omega \delta \expvalue{U}\hat{k}$.
+\end{itemize}
+
+We note that the poor conductor looks exactly like the usual case but with the exponential decay due to the poor penetration. However, in the good conductor case we can identify $\sigma \tilde{E}_0 = \tilde{J}_0$ and then we see a term that goes like the Joule dissipation $\abs{\tilde{J}_0\tilde{E}_0}/2$, the usual expression for dissipation of a current in an electric field.
+
+\subsection{Reflection at a conducting surface}
+
+We note that the BCs change a little bit compared to before due to possibilities of source terms now
+\begin{align}
+    \hat{n} \cdot \left[ \vec{D}_1 - \vec{D}_2 \right] &= \sigma_f & \hat{n} \cdot \left[ \vec{B}_1 - \vec{B}_2 \right] &= 0\\
+    \hat{s} \cdot \left[ \vec{E}_1 - \vec{E}_2 \right] &= 0 & \hat{s} \cdot \left[ \vec{H}_1 - \vec{H}_2 \right] &= (\vec{K}_f \times \hat{n})\cdot\hat{s}
+\end{align}
+
+We note that $\vec{K}_f = 0$ because surface currents look like delta functions, but since $\vec{J} = \sigma \vec{E}$ we cannot observe a delta function in $\vec{E}$ so $\vec{K}_f = 0$\footnote{We can write something like $\vec{K} = K_0 \delta(S)$ with $\delta(S)$ a delta function if the point is on the surface or not. Then it is clear that we cannot have $\vec{E} \not\propto \delta(S)$.}.
+
+We only solve the normal incidence case. We plug in the usual waveforms through our BCs above and do some bashing to find
+\begin{align}
+    \frac{\tilde{E}_{0,r}}{\tilde{E}_{0,i}} &= \frac{1 - \tilde{\beta}}{1 + \tilde{\beta}} & \frac{\tilde{E}_{0,r}}{\tilde{E}_{0,i}} &= \frac{2}{1 + \tilde{\beta}}
+\end{align}
+for $\tilde{\beta} = \frac{\mu_1}{\mu_2}\frac{v_1}{\omega}(k_t + ik_t)$. We can take again poor/good conductor limits and find
+\begin{itemize}
+    \item Poor conductor --- $\tilde{\beta} \to \beta$ and we recover the results from the interfaces section with $\theta_i = 0$.
+    \item Good conductor --- $\tilde{\beta} \to \frac{\mu_1}{\mu_2}\frac{v_1}{\omega}\frac{1+i}{\delta}$ and we find $t \ll 1, r \approx -1$.
+\end{itemize}
+
+\subsection{Drude Model, or lack thereof}
+
+I really have no idea why we covered the Drude model since it seems somewhat specific. If we model the electron as bound by a harmonic potential, give it some damping force and excite it with an electromagnetic field, then we can bash a buttload of algebra and find some results that can be found either in my notes or his lecture notes. It mostly explains some interesting dependencies of $\epsilon$ in the good/poor conductor limit, oftertimes dependent on $\omega$. 
+
+\section{Guided waves}
+
+\subsection{Transmission line}
+
+Taking some transmission line in the $z$ directionthat has two components carrying current $I$ in opposite directions and exhibits inductance/capacitance $\mathcal{L}, \mathcal{C}$, we arrive at the following coupled and decoupled equations
+{\small
+\begin{align}
+    \pd{I}{z} &= -\mathcal{C}\pd{\Delta V}{t} & \pd{\Delta V}{z} &= -\mathcal{L}\pd{I}{t} - [2I\mathcal{R}]\\
+    \ptd{I}{z} &= \mathcal{LC}\ptd{I}{t} \left[ + 2\mathcal{RC}\pd{I}{t} \right]& \ptd{\Delta V}{z} &= \mathcal{LC}\ptd{\Delta V}{t} \left[ + 2\mathcal{RC}\pd{I}{t} \right]
+\end{align}}
+where I've added in the $\mathcal{R}$ terms that we computed on the homework, where $\mathcal{R}$ is defined as the resistance \emph{per unit wire}, which is where the $2$ comes from as the current travels through two wires of r9esistance $\mathcal{R}$; the following discussion assumes $\mathcal{R} = 0$. 
+
+We can compute then that $\Delta V = IZ$ dictates that $Z = \sqrt{\frac{\mathcal{L}}{\mathcal{C}}}$ in full generality. 
+
+Next to compute is the energy/power of the transmission line. The expressions then looks like
+\begin{align}
+    \expvalue{\vec{S}} &= \frac{1}{2\mu}\Re1\expvalue{\vec{E}^ \times \vec{B}} = k\frac{1}{2\mu v_{\epsilon \mu}}\abs{E_0}^2\\
+    &= \hat{k}v_{\epsilon \mu}\expvalue{U}\\
+    P &= \frac{1}{2}v_{\epsilon \mu}C\abs{V_0}^2\\
+    &= \frac{1}{2}\Re\left( I_0^*V_0 \right)
+\end{align}
+with $v_{\epsilon \mu} = \frac{1}{\sqrt{\epsilon \mu}} = \frac{1}{\mathcal{LC}}$ (as shown in PS4) and $U = \frac{\epsilon}{2} \abs{E_0}^2$ as usual. I think that the power is much more useful than $\vec{S}$ because we deal with transmission lines in circuits, so $I,V$ are more useful than $E$.
+
+We did a short blurb on junctions of transmission lines, but this is just reflection/transmission all over again, refer to lecture notes. If we terminate a transmission line with a load $Z_L$ such that $Z_L = Z_{\epsilon \mu}$ the impedance of the line then there is no reflection; this is \emph{impedance matching}.
+
+\subsection{Waveguides}
+
+The algebra is consistently terrifying for this topic so it probably won't show up on the final (Sunil pointed out in class that it's impossible to make us do on the exam the algebra we do on the sets, so I assume the exam won't be algebra heavy). Nonetheless, the concepts are good to review.
+
+Waveguides are translationally symmetric hunks of metal surrounded by conductor. So we will assume waveforms $\vec{E} = \vec{E}_0(\vec{r}_{\perp}) e^{i(kz - \omega t)}$ and similarly for $\vec{B}$, and if we plug through Maxwell's equations we find
+\begin{align}
+    \vec{B}_{0,\perp} &= \frac{1}{k_{\epsilon \mu}^2 - k^2}\left[ ik\vec{\nabla}_{\perp}B_{0,z} + i\frac{k_{\epsilon\mu}}{v_{\epsilon \mu}}\hat{z}\times \vec{\nabla}_{\perp}E_{0,z} \right]\\
+    \vec{E}_{0,\perp} &= \frac{1}{k_{\epsilon \mu}^2 - k^2}\left[ ik\vec{\nabla}_{\perp}E_{0,z} - ik_{\epsilon\mu}v_{\epsilon \mu}\hat{z}\times \vec{\nabla}_{\perp}B_{0,z} \right]\label{MEWG}
+\end{align}
+
+What's important to note here is that the solutions are no longer fully transverse, and the longitudinal components are determined by the transverse components. We can separate the above equations \eqref{MEWG} into
+\begin{align}
+    \nabla^2_{\perp}E_{0,z} + \left( k_{\epsilon \mu}^2 - k^2 \right)E_{0,z} &= 0 \\
+    \nabla^2_{\perp}B_{0,z} + \left( k_{\epsilon \mu}^2 - k^2 \right)B_{0,z} &= 0\label{sepMEWG}
+\end{align}
+for $k_{\epsilon \mu} = \frac{\omega}{v_{\epsilon \mu}}$. 
+
+There are then three cases of solutions
+\begin{itemize}
+    \item Transverse Electric (TE) modes --- $E_{0,z} = 0$, solve \eqref{sepMEWG} for $B_{0,z}$ and plug through \eqref{MEWG}.
+    \item Transverse Magnetic (TM) modes --- $B_{0,z} = 0$, solve \eqref{sepMEWG} for $E_{0,z}$ and plug through \eqref{MEWG}.
+    \item TEM modes --- We cannot apply \eqref{MEWG} but instead must go back to the MEs and set $z$ components to $0$. This then results in the transmission line equations.
+\end{itemize}
+
+The association of TEM modes with transmission lines is further solidified when we note a little theorem that shows TEM modes cannot exist in hollow waveguides, hence there must be at least electrodes which is in transmission line land.
+
+Furthermore we can comment on the fact that TE/TM modes form a complete basis of the allowed solutions in a waveguide. This should be intuitively clear (decompose a solution's transverse components into electric/magnetic components, linearity permits us to solve each one individually) but will also become evident when we show that each obeys complementary BCs.
+
+\subsection{Waveguide Solutions}
+
+Since we have \eqref{sepMEWG} we must establish a set of BCs under which to solve these eigenvalue equations. The BCs turn out to be (define $\hat{n} \perp \mathcal{C}$)
+\begin{align}
+    E_{0,z}\Big|_\mathcal{C} &= 0 & \hat{n} \cdot \vec{\nabla}_{\perp}B_{0,z}\Big|_{\mathcal{C}} &= 0
+\end{align}
+
+Obviously we will only be able to use one at a time for our respective modes, e.g. in TM modes $B_{0,z} = 0$ so the second BC doesn't help us.
+
+Let's then specialize to TM modes, for which the discussion is nearly identical for TE modes, so that \eqref{sepMEWG} becomes
+\begin{align}
+    \nabla_\perp^2E_{0,z} + \gamma^2 E_{0,z} &= 0
+\end{align}
+with $\gamma^2 = k_{\epsilon \mu}^2 - k^2$ and $E_{0,z}|_{\mathcal{C}} = 0$. This is then a straightforward eigenvalue problem, the solution to which we can then plug back through \eqref{MEWG} to obtain the full $\vec{E}, \vec{B}$ solutions. We know that the solutions must be discrete by BVP theory, so let's label $\gamma_n$ the eigenvalues.
+
+What's interesting though is that we can rearrange $\omega^2 = v_{\epsilon \mu}^2 k_{\epsilon \mu}^2 = v_{\epsilon \mu}^2 \left( \gamma_n^2 + k^2 \right)$ and observe a cutoff frequency at $\omega_{\epsilon \mu} = v_{\epsilon \mu}\gamma_n$. Moreover, each mode obeys its own dispersion relation depending on $\gamma$.
+
+We can of course compute the power and velocity of travel of each mode by starting with the Poynting vector that we obtain by crossing either one of \eqref{MEWG} with the corresponding $z$ component of the field (either TE/TM modes) and bash out some algebra; covered in lecture notes.
+
+\subsection{Imperfect conductor waveguide (nope)}
+
+Earlier we assumed that the waveguide is surrounded by perfect conductor; what if it's surrounded by imperfect (though good) conductor? The BCs change a little bit because there will now be volume instead of surface currents and there will be Joule dissipation, so it's really hard! We will solve good conductor case by assuming our perfect conductor solutions hold and computing the dissipation that these solutions would produce.
+
+\section{Potential formulation} 
+
+\subsection{Modifications to MEs}
+
+Our Maxwell equations undergo the following changes
+\begin{itemize}
+    \item $\vec{\nabla} \cdot \vec{B} = 0$ nothing.
+    \item $\vec{\nabla} \times \vec{E} = -\pd{\vec{B}}{t}$ so we cannot write $\vec{E} = -\vec{\nabla} \phi$ for some $\phi$ electrostatic potential. Nonetheless because $\vec{\nabla} \times \left( \vec{E} + \pd{\vec{A}}{t} \right) = 0$ (rearranging above equation) we know that $\vec{E} + \pd{\vec{A}}{t} = -\vec{\nabla}V$ for some scalar potential $V$.
+    \item Gauss's law --- $\frac{\rho}{\epsilon_0} = -\nabla^2 V - \pd{}{t}\left( \vec{\nabla} \cdot \vec{A} \right)$ for $V$ defined above.
+    \item Ampere's law --- 
+        \begin{align}
+            -\mu_0 \vec{J} &= \vec{\nabla} \times \vec{\nabla} \times \vec{A}\\
+            &= \nabla^2 \vec{A} - \epsilon_0 \mu_0 \ptd{\vec{A}}{t} - \vec{\nabla}\left( \vec{\nabla} \cdot \vec{A} + \epsilon_0 \mu_0 \pd{V}{t} \right)
+        \end{align}
+\end{itemize}
+
+We can next define $\Box^2 = \epsilon_0 \mu_0 \ptd{}{t} - \nabla^2$ the \emph{d'Alembertian} (note the sign) and $L = \vec{\nabla} \cdot \vec{A} + \epsilon_0 \mu_0 \pd{V}{t}$ to rewrite our two inhomogeneous MEs as
+\begin{align}
+    \Box^2V - \pd{L}{t} &= \frac{\rho}{\epsilon_0} & \nabla^2 \vec{A} + \vec{\nabla}L &= \mu_0 \vec{J}
+\end{align}
+
+Then by gauge freedom we are allowed to take $V' = V - \pd{\lambda}{t}, \pvec{A} = \vec{A} + \vec{\nabla}\lambda$. Coulomb gauge was one example of gauge, but now it is obviously the \emph{Lorentz gauge} we should choose, $L=0$. This produces wave equations (still technically MEs)
+\begin{align}
+    \Box^2 V = \frac{\rho}{\epsilon_0} & \Box^2 \vec{A} = \mu_0 \vec{J}\label{WEs}
+\end{align}
+
+\subsection{Solutions to the ME wave equations}
+
+The solutions to the wave equations \eqref{WEs} are for some $t_r = t - \frac{\abs{\vec{r} - \pvec{r}}}{c}$ given below
+\begin{align}
+    V(\vec{r},t) &= \frac{1}{4\pi\epsilon_0}\int d\tau'\; \frac{\rho(\pvec{r},t_r)}{\abs{\vec{r} - \pvec{r}}} \\
+    \vec{A}(\vec{r},t) &= \frac{\mu_0}{4\pi}\int d\tau'\; \frac{\vec{J}(\pvec{r},t_r)}{\abs{\vec{r} - \pvec{r}}}
+\end{align}
+
+The resulting fields $\vec{E} = -\vec{\nabla}V - \pd{\vec{A}}{t}, \vec{B} = \vec{\nabla} \times \vec{A}$ can be computed and yield \emph{Jefimeko's Equations}.
+
+\section{Radiation}
+
+Our basic goal will be to trudge through the potential terms above until we have an expression usable for energy dissipation through radiation of an accelerating point charge and eventually any time-variance in a charge distribution.
+
+\subsection{Potentials/fields of moving charges}
+
+The algebra is brutal as usual, but we can find two expressions for the potential of a charge moving at constant velocity (the first pair are called the \emph{Li\'enard-Wiechert potentials})
+\begin{align}
+    V(\vec{r},t) &= \frac{1}{4\pi\epsilon_0}\frac{q}{R_r(\vec{r},t)}\frac{1}{1 - \vec{\beta}(t_r) \cdot \hat{R}_r(\vec{r},t)}\\
+    \vec{A}(\vec{r},t) &= \frac{\mu_0}{4\pi}\frac{qc\vec{\beta}(t_r)}{R_r(\vec{r},t)}\frac{1}{1 - \vec{\beta}(t_r) \cdot \hat{R}_r(\vec{r},t)}\label{LW}
+\end{align}
+and
+\begin{align}
+    V(\vec{r},t) &= \frac{1}{4\pi\epsilon_0}\frac{q}{R(\vec{r},t)}\frac{1}{\sqrt{1 - \beta^2 \sin^2\theta}}\\
+    \vec{A}(\vec{r},t) &= \frac{\mu_0}{4\pi}\frac{qc\vec{\beta}(t)}{R(\vec{r},t)}\frac{1}{\sqrt{1 - \beta^2 \sin^2\theta}}
+\end{align}
+with $\vec{R}_r = \vec{r} - \vec{w}(t_r), \vec{R} = \vec{r} - \vec{w}(t)$, and $\theta$ the angle formed by $\vec{w}(t), \vec{R}$.
+
+At constant velocity this produces fields
+\begin{align}
+    \vec{E}(\vec{r},t) &= \frac{1}{4\pi\epsilon_0}\frac{q\vec{R}}{R(\vec{r},t)^3}\frac{1 - \beta^2}{\left(1 - \beta^2 \sin^2\theta\right)^{3/2}}\\
+    \vec{B}(\vec{r},t) &= \frac{\mu_0}{4\pi}\frac{qc\vec{\beta}\times \vec{R}}{R(\vec{r},t)^3}\frac{1-\beta^2}{\left(1 - \beta^2 \sin^2\theta\right)^{3/2}}
+\end{align}
+
+Here we find that $\vec{B} = \frac{1}{c}\vec{\beta} \times \vec{E} = \frac{1}{c}\vec{R}_r \times \vec{E}$.
+
+In the accelerating case we get a super-ugly correction term, and we find that $\vec{B} = \frac{1}{c}\vec{R}_r \times \vec{E} \neq \frac{1}{c}\vec{\beta} \times \vec{E}$. 
+
+\subsection{Radiation fields of a point charge}
+
+It turns out that it's monstrously easier to compute $\vec{E}$ in this parallel case, and we get
+\begin{align}
+    \vec{E} &= \frac{q}{4\pi\epsilon_0}\frac{1}{cR_r}\frac{\dot{\vec{\beta}}_{\perp}}{\left[ 1 - \vec{\beta} \cdot \hat{R}_r \right]^3}
+\end{align}
+with $\dot{\vec{\beta}}_{\perp}$ the perpendicular component of the acceleration to $\hat{R}_r$.
+
+We next compute Poynting vector, recalling that $\vec{B} = \frac{1}{c}\vec{R}_r \times \vec{E}$. Define $\vec{a}$ to be the $z$ axis, so that $\hat{R}_r \cdot \vec{\beta} = \beta \cos \theta$ and we obtain
+\begin{align}
+    \vec{S} &= \frac{\mu_0 q^2}{16 \pi^2}\frac{1}{cR_r^2}\frac{a^2\sin^2\theta}{\left[ 1 - \beta \cos\theta \right]^6}\hat{R}_r
+\end{align}
+and if we want $\rd{P}{\Omega}$ the power radiated per solid angle we just write $\vec{S} = \rd{P}{A}\hat{R}_r = \frac{1}{R_r^2}\rd{P}{\Omega}\hat{R}_r$ with $dA$ the cross sectional area. However, we are neglecting one last thing; we usually care about the power the particle radiates in its own time, not our time. In other words, we are missing a factor of $\rd{t_r}{t} = 1 - \vec{\beta} \cdot \hat{R}_r$ and this finally gives us
+\begin{align}
+    \rd{P}{\Omega} &= \frac{\mu_0 q^2}{16 \pi^2}\frac{a^2}{c}\frac{\sin^2\theta}{\left[ 1 - \beta \cos\theta \right]^5}
+\end{align}
+and we can integrate $d\Omega$ to find the total power radiated $P = \frac{\mu_0 q^2}{6\pi}\frac{a^2}{c}\gamma^6$.
+
+We do the general case in a very hand-wavy way; the formulae are in the lecture notes, and once again they aren't particularly enlightening. The one useful result is the non-relativistic limit, and since $\vec{\beta} = 0$ we can take the limit directly from the parallel case and obtain $P = \frac{\mu_0 q^2}{6\pi}\frac{a^2}{c}$. 
+
+\subsection{Radiation of a dipole}
+We can also compute the power radiated for a nonrelativistic time-varying dipole. We do this by taking the accelerated point charge results, taking $\beta \to 0$ and probably a few other limits (idk, he just wrote this down) and compute
+\begin{align}
+    \vec{E} &= \frac{1}{4\pi\epsilon_0}\frac{\hat{r} \times \hat{r} \times \ddot{\vec{p}}}{c^2r} & \vec{B} &= \frac{1}{c}\hat{r} \times \vec{E}
+\end{align}
+from which we can compute the Poynting vector and the power radiation as
+\begin{align}
+    \rd{P}{\Omega} &= \frac{\mu_0}{16\pi^2}\frac{\ddot{p}^2\sin^2\theta}{c} & P &= \frac{\mu_0}{6\pi}\frac{\ddot{p}^2}{c}
+\end{align}
+
+\subsection{General source distributions}
+
+This is not a very enlightening discussion either, very algebra heavy (trend with this class?).
+
+First we start with harmonic time variation of the currents/charges (we can Fourier transform later to get arbitrary currents/charges). First this allows us to write $\vec{E} = c^2 \frac{i}{\omega}\vec{\nabla} \times \vec{B}$ so that we only have to worry about $\vec{B}$ and so we only have to compute $\vec{A}$ and not $v$. Then $\vec{A}$ takes on a useful form that can be Taylor expanded into its multipole moments assuming small source compared to both observation distance and wavelength.
+
+It then turns out that if we place the distribution at the origin (small distribution) then the overall look of the expansion will be plane waves radiating outwards at $\omega$ and that fall off like $r^{-1}$\footnote{I think that the $r^{-1}$ behavior is exactly why the particle loses energy right?}. We can also find some explicit expressions in the notes\dots
+
+\section{Relativity in EM}
+
+We spent some time reviewing the tenets of relativity and showing that a bunch of stuff just falls out of a relativistic formulation. Obviously know how to Lorentz transform, and otherwise we exhibit a list of 4-vectors
+\begin{itemize}
+    \item $\left( \frac{t}{c}, \vec{r} \right)$
+    \item $\left(\frac{1}{c}\pd{}{t}, -\vec{\nabla}\right)$
+    \item $(\rho, \vec{J})$
+    \item $\left( \frac{V}{c}, \vec{A} \right)$
+    \item $(m\gamma c, m\gamma\vec{v})$ and likewise $\left( \frac{1}{c}\rd{E}{t}, \vec{F} \right)$
+\end{itemize}
+
+Fields transform as
+\begin{align}
+    \tilde{\vec{E}}_{\perp} = \gamma\left[ \vec{E}_{\perp} - \vec{v} \times \vec{B}_{\perp} \right]\\
+    \tilde{\vec{B}}_{\perp} = \gamma\left[ \vec{B}_{\perp} +\frac{1}{c^2} \vec{v} \times \vec{E}_{\perp} \right]
+\end{align}
+and of course parallel components don't transform. 
+
+\end{document}
+

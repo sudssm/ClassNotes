@@ -1,0 +1,19 @@
+stable/attracting points for autonomous diffeqs
+uniqueness theorem
+Euler/Picard
+Cobweb diagrams
+
+diffeqs
+separable
+exact (Mdx + Ndy = 0, equality partials)
+integrating factor (for above)
+change variables (u=y/x)
+y'+g(x)y = f(x) is linear, use integrating factor (11.1)
+bernoulli equation 
+variation af parameters (non-homo -> homo)
+	nonhomo uses C(t) or gen homo + nonhomo
+
+2 diffeq
+linear
+reduction order
+var coeff

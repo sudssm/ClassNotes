@@ -1,0 +1,22 @@
+\documentclass{article}
+\usepackage{amsmath, amssymb}
+
+\begin{document}
+
+\section{Data Analysis Lab - January 15}
+
+Prelabs will be due at Recitation sections, while the following Tuesdays will be the corresponding labs. All lab reports will be due Fridays at midnight. We will be given 2 weeks per experiment. TA: Dustin Anderson - djanders@caltech.edu. First lab will be turned in on paper, place data analysis questions directly into TA's mailbox (into East Bridge, first right). The remainder of reports will be submitted electronically. 
+
+For me, experiments will be in order ``Maxwell Top'', ``DC Circuit'', ``Inverted Pendulum'', and ``AC Circuit.'' First week will consist of a data collection lab. Collaboration policy will basically be anything short of hands-on assistance. All experiments are on the website, and the prelabs are in their posted experiment documents. 
+
+All quantities should be reported in scientific notation with uncertainty, e.g. $(1.24 \pm 0.62) \times 10^6 m/s$. Accuracy is a measurement of systematic error while precision is a measurement of random error, systematic error skewing the average and random error skewing the variation. Propogation of errors equation will give you the rigorous way to find how errors interact. Note that weighted averages are given as $\bar{x} = \omega^2\sum{\frac{x_i}{\sigma_i^2}}$, where $\omega^2 = \sum\frac{1}{1/\sigma_i^2}$, which when $\sigma_i = \sigma_j$ reduces to the unweighted average $\bar{x} = \frac{1}{n}\sum x_i$.
+
+Lab reports should have approximately five sections: introduction (goal of the lab), summary of procedure, data, analysis (fit, report uncertainties, comments), conclusion (summarize findings).
+
+\section{Lecture Maxwell Top - January 17}
+
+We know that $I\ddot{theta} = \kappa\theta$ where $\kappa$ is the torsional spring constant. We thus know that $\omega = \frac{\kappa}{I}$. But then, because $\kappa$ is hard to measure, we can add some mass with known moment of inertia $I_0$ to produce $\omega' = \frac{\kappa}{I + I_0}$, which circumvents the measurement of $\kappa$. This allows us to measure the $I$ of any object.
+
+We now apply our calculations to the top we will be worknig with in the next lab. We know that we will exert a force and therefore a torque of magnitude $I\ddot{\theta} = rF$. Thus, we can construct $\theta(t) = \frac{rF}{2I}t^2 + \dot{\theta}_0t + \theta_0$, which will go as a quadratic in $t$. The experimental apparatus will consist of air jets both to suspend the top and to apply a constant torque. It is advisable to adjust air flow to a minimum. We can calculate the force being exerted by the air flow by using a pulley to match the torque of the force. 
+
+\end{document}

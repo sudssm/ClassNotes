@@ -1,0 +1,31 @@
+\contentsline {section}{\numberline {1}Introduction}{1}{section.1}
+\contentsline {subsection}{\numberline {1.1}Foreword}{1}{subsection.1.1}
+\contentsline {subsection}{\numberline {1.2}Super-summary}{1}{subsection.1.2}
+\contentsline {section}{\numberline {2}EM waves in vacuum}{2}{section.2}
+\contentsline {subsection}{\numberline {2.1}EM wave equation}{2}{subsection.2.1}
+\contentsline {subsection}{\numberline {2.2}Properties of EM waves}{2}{subsection.2.2}
+\contentsline {subsection}{\numberline {2.3}Polarization}{2}{subsection.2.3}
+\contentsline {section}{\numberline {3}EM waves in linear media}{2}{section.3}
+\contentsline {subsection}{\numberline {3.1}Characteristics}{2}{subsection.3.1}
+\contentsline {subsection}{\numberline {3.2}Interfaces}{2}{subsection.3.2}
+\contentsline {section}{\numberline {4}EM waves in Conducting media}{3}{section.4}
+\contentsline {subsection}{\numberline {4.1}MEs, good/bad conductor}{3}{subsection.4.1}
+\contentsline {subsection}{\numberline {4.2}Solution to MEs: $E$ field}{3}{subsection.4.2}
+\contentsline {subsection}{\numberline {4.3}Solution to MEs: $B$ field}{3}{subsection.4.3}
+\contentsline {subsection}{\numberline {4.4}Energy in conductor}{3}{subsection.4.4}
+\contentsline {subsection}{\numberline {4.5}Reflection at a conducting surface}{4}{subsection.4.5}
+\contentsline {subsection}{\numberline {4.6}Drude Model, or lack thereof}{4}{subsection.4.6}
+\contentsline {section}{\numberline {5}Guided waves}{4}{section.5}
+\contentsline {subsection}{\numberline {5.1}Transmission line}{4}{subsection.5.1}
+\contentsline {subsection}{\numberline {5.2}Waveguides}{4}{subsection.5.2}
+\contentsline {subsection}{\numberline {5.3}Waveguide Solutions}{5}{subsection.5.3}
+\contentsline {subsection}{\numberline {5.4}Imperfect conductor waveguide (nope)}{5}{subsection.5.4}
+\contentsline {section}{\numberline {6}Potential formulation}{5}{section.6}
+\contentsline {subsection}{\numberline {6.1}Modifications to MEs}{5}{subsection.6.1}
+\contentsline {subsection}{\numberline {6.2}Solutions to the ME wave equations}{6}{subsection.6.2}
+\contentsline {section}{\numberline {7}Radiation}{6}{section.7}
+\contentsline {subsection}{\numberline {7.1}Potentials/fields of moving charges}{6}{subsection.7.1}
+\contentsline {subsection}{\numberline {7.2}Radiation fields of a point charge}{6}{subsection.7.2}
+\contentsline {subsection}{\numberline {7.3}Radiation of a dipole}{6}{subsection.7.3}
+\contentsline {subsection}{\numberline {7.4}General source distributions}{7}{subsection.7.4}
+\contentsline {section}{\numberline {8}Relativity in EM}{7}{section.8}

@@ -1,0 +1,111 @@
+\documentclass{report}
+\usepackage{amssymb, amsmath, amsthm, hyperref, paracol}
+\usepackage[version=3]{mhchem}
+
+\begin{document}
+
+\title{Math 1b - Notes}
+\author{Yubo Su}
+\date{ }
+
+\maketitle
+
+\tableofcontents
+
+\chapter{Introduction/Vector Spaces - January 7}
+
+Getting over 90\% on all homework sets and on the midterm gives exemption from the final. The grade will be split evenly between midterm, final, and eight homework sets. 
+
+Know notation and terminology:
+
+\begin{itemize}
+\item Sets - Part 2 of Intro to Vol I of Apostol
+\item $\forall$ - For all
+\item $\exists$ - There exists
+\item Functions - A function $f$ mapping a set $X$ to a set $Y$ such that $f$ maps $\forall x \in X$ to exactly one element of $Y$ called the image of $x$ under $f$.
+\item $f: X \to Y$ - Denotes a function mapping $X$ to $Y$
+\item $f(x) = y, f: x \mapsto y$ - Denotes the image of $x$ as $y$ under $f$.
+\item $X \times Y$ - Set product: $\{(x,y):x\in X, y \in Y\}$.
+\item $(x,y)$ - Ordered pair characterised by $(x_1, y_1) = (x_2, y_2)$ if and only if $x_1 = x_2, y_1 = y_2$.
+\end{itemize}
+
+A vector space is a set $V$ with some operations on $V$ both of which satisfy axioms given in the text. We first discuss binary operations, which is a mapping $A \times A \to A$. Given $a,b \in A$, call $a*b$ the ``product'' or ``sum'' of $a$ and $b$. An example then of a vector space is $\mathbb{R}$, over which addition is a binary operation, or $\mathbb{Z}$ over which multiplication is a binary operator.
+
+If we then let $X$ be a set and $A$ be the set of all functions $X \to X$, then note that $f \circ g$ is also a function that maps $X \to X$ and thus $\circ \in A$.
+
+We then give the field $F = \mathbb{R}$ or $F = \mathbb{C}$. Let $m,n$ be positive integers. We can then create an $m \times n$ matrix over $F$, where elements are indexed by ordered pair $(i,j)$ where $1 \leq i \leq m$ and $1 \leq j \leq n$. This yields a rectangular array for our matrix! Yay. The rows and columns are indexed by $i$ and $j$ respectively. We can then define $M_{m,n}$ as the set of all $m\times n$ matricies. We can then add two matricies from $M_{m,n}$ by adding element-wise.
+
+We then look at matrix products, where we examine square matricies $m=n$ and so $M_n = M_{n,n}$. We then define the product of $a_{ij} \cdot b_{ij} = \sum{a_{ik}b_{kj}}$. 
+
+We can then construe the following axioms for binary operations for some operation $*$ on $A$. We then define:
+
+\begin{itemize}
+\item Associativity - $a*(b*c) = (a*b)*c$. All examples thusfar are associative. Note that associativity is critical for expressions like $a*b*c$ to make sense, because while $*$ is only defined as a binary operator, we can write $(a*b)*c$.
+\end{itemize}
+
+\chapter{ - January 11}
+
+Let $F = \mathbb{R}$ or $F = \mathbb{C}$. Let $m,n \in \mathbb{N}$, and $M_{m,n}$ to be the set of all $m \times n$ matricies. Matrix addition and scalar multiplication follow intuitively, and $M_{m,n}$ is thus a vector space over $F$.
+
+We know that for any vector space $V$ that the $0$ vector is unique, as is the inverse $-v$ of any element $v\in V$. We then discuss another theorem:
+
+\begin{center}
+\textbf{Theorem 1.3:} Let $a,b \in F$ and $u,v \in V$. Then:
+\begin{enumerate}
+\item $av = 0$ if and only if $a=0$ or $v=0$. 
+\item $(-a)b = -(ab)$.
+\item If $v \neq 0$ and $av = bv$ then $a = b$.
+\item If $a \neq 0$ and $av = au$ then $v = u$.
+\item For $n > 0$ we have $nv = v + v +... + v$ where the sum is carried on $n$ times.
+\end{enumerate}
+\end{center}
+
+We now discuss subspaces. A subspace $U$ of any vector space $V$ is a nonempty subset of $V$ that is closed under addition and multiplication. We then have the following theorem:
+
+\begin{center}
+\textbf{Theorem 1.4:} If $U$ is a subspace of $V$ then the restriction of the addition and scalar multiplication on $V$ to $U$ makes $U$ a vector space, that is, $U$ and $V$ are closed under the same operations.
+\end{center}
+
+We then note that for some $u\in U$, then by Theorem 1.3 $0\cdot u = 0$, and so $0 \in U$, because $U$ must be closed under multiplication by scalars. 
+
+We now discuss linear span. Let $S \leq V$ (note just subset, not necessarily space). The \textbf{linear span} of $S$ is $L(S)$ which is the set of all linear combinations of all  vectors in $S$. By convention, $L(\emptyset) = 0$, which is a subspace. As an example, we note that for $u, v \in V$ that $L(v) = Fv$ where $F = \mathbb{R}$ OR $\mathbb{C}$, and $L(u,v) = au + bv, a,b \in F$. We now arrive at a lemma:
+
+\begin{center}
+\textbf{Lemma 1D:} For $S \leq V$, $L(S)$ is the smallest subspace of $V$ containing $S$.
+\end{center}
+
+Note that this lemma cannot be directly cited when asked to prove said lemma, because this will be a future homework problem. We now discuss linear independence; a subset $S$ of $V$ is \textbf{linearly dependent} if there exists a nonempty finite subset $\{S_1,...S_n\} \in S$ and scalars $a_1,...a_n \in F$ such that not all scalars are $0$ and $a_1S_1 +...+ a_nS_n = 0$. A set is linearly independent if it is not dependent. For example, the empty set is linearly independent (note definition specifies nonempty). On the other hand, $\{0\}$ is linearly dependent. Lastly, $\{x\}, x \in V_{\neq 0}$ is linearly independent. 
+
+\chapter{A very long hiatus later...matricies - January 28}
+
+We have a typical setup, $F = \mathbb{R}, \mathbb{C}$, either. We have a vector space $V$ of $n$ dimensions, $F$-space with ordered basis $X = x_i$. We have $L = L(V)$ which is the spaceof linear maps, and $M_n$. Lastly, for $f \in L, m_x(f)\in M_n$ is the matrix of $f$ with respect to $x$.
+
+We introduce (okay, maybe they've been introduced already, but they're new to me) two small theorems. Th 2.15 - $m_x: L \to M_n$ is an isomorphism. Th 2.16: For $f,g \in L, m_x(f \circ g) = m_x(f) \cdot m_x(g)$.
+
+We then discuss Th 2H: Let $m = m_x: L \to M_n, f\in L, A = m(f)$. We then have $m(id_v) = I$ the identity matrix, $f$ has an inverse iff A has an inverse, and if $f$ has an inverse then $m(f^{-1}) = m(f)^{-1} = A^{-1}$, and $m^{-1}$ is a linear operator. We then discuss a few unnoteworthy proofs of these theorems. 
+
+Note that 2.15 tells us that $m$ is an isomorphism and a 1-1 correspondence, and so there must exist an inverse $m^{-1}: M_n \to L$, which still obeys $m^{-1}(A) \cdot m^{-1}(B) = m^{-1}(AB)$.
+
+We now discuss a change of coordinates. Since $m_x$ was a map in $X$ coordinates, what happenes if we use a second basis $Y$ in $V$? What is the relationship between $m_x(f), m_y(f)$. This is given by Th 4.6: Let $g$ be the unique member of $L$ such that $g(x_i) = y_i$. Then $g: V \to V$ is an isomorphism, so $B = m_x(g)$ has a unique inverse $B^{-1}$, and $m_y(f) = B^{-1}m_x(f)B$. More proofs come, but one noteworthy aspect is that Th 2.12 tells us that $g$ is unique.
+
+We call matricies $A,C \in M_n$ similar if there exists an invertible matrix $B \in M_n$ such that $A = B^{-1}CB$. Th 4.8 then says that the two statements $A,C$ are similar and that there exist $X,Y,f$ such that $m_x(f) = A, m_y(f) = C$. More proofs follow. Zzz...
+
+We now discuss non-square matricies. Define the transpose of $A = a_{i,j} \in M_{m,n}$ to be $A^T = a^t_{i,j} = a_{j,i}$, e.g. transpose of a row vector is a column vector and vice versa. Notationally, define $A_i$ to be the $i$-th row vector and $A^{(j)}$ to be the transpose of the $j$-th column vector. The column space of $A$ is then $L(A^{(1)},...A^{(n)})$. The rank is then defined as the dimension of the column space, denoted as $\mathrm{rk}(A)$. 
+
+\chapter{ - February 4}
+
+Gauss algorithm ends at triangular, not diagonal, with 1s. We then claim that, given some augemented matrix corresponding to a system of equations of dimension $m \times (n+1)$, we contend that $\mathrm{rk}(a) = m$, giving that the dimension of the solution space $\dim(S) = n - \mathrm{rk}(a) = n-m$. If we examine the special case $n=m$, we see that the dimension of the solution space is $0$, giving a unique solution. In this case also, we see that the square coefficient matrix is necessarily invertible (because it can be made triangular by the claim), so that's also a line of reasoning that there exists a unique solution. 
+
+Midterm! Review Chapter 1.1-1,9, including subspaces, linear independence, linear spans, bases, dimensions, etc. Know and be able to apply.
+
+Recall Problems 2/3 in HW2, problem 4 in HW1 (which matricies are invertible/have determinant $0$)
+
+Chapter 2, section 1-5, 9-18: Linear maps, matricies, isomorphisms. Recall the space $L(U,V)$ of linear maps from $U$ to $V$, the space $M_{m,n}$ is the space of $m\times n$ matricies. Note change of coordinates Theorem 4.6, similarity of matricies, systems of linear equations, and the transpose of a matrix.
+
+Recitation stuff about polynomials(??), intersection/sum dimension theorem.
+
+Given a system of equations $5x+2y-6z+2u = -1, x-y+z-u=-2$, the first solution is to use Gauss algorithm. We will end up of course with a solution space with dimension 2, so we will find three solutions $r_1, r_2, r_3$ and then just write $r_1 + Ar_2 + Br_3$. 
+
+A second solution is to simply solve algebraiclly for two variables such that we have $x,y(z,u)$. Which is what I do :)
+ 
+\end{document}

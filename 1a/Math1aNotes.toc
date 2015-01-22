@@ -1,0 +1,19 @@
+\contentsline {chapter}{\numberline {1}October 1 - Intro, Sets, Induction, Well Ordering}{2}{chapter.1}
+\contentsline {chapter}{\numberline {2}October 3 - Various proofs}{4}{chapter.2}
+\contentsline {chapter}{\numberline {3}October 4 - Notes from TA section (strictly non-overlapping)}{6}{chapter.3}
+\contentsline {chapter}{\numberline {4}October 5 - Fields and Orders}{7}{chapter.4}
+\contentsline {chapter}{\numberline {5}October 8 - Order axioms, Continuity, Supremums}{9}{chapter.5}
+\contentsline {chapter}{\numberline {6}October 10 - Sequences}{10}{chapter.6}
+\contentsline {chapter}{\numberline {7}October 12 - Sequence limits}{11}{chapter.7}
+\contentsline {chapter}{\numberline {8}October 15 - Sequence/series convergences, Cauchy Sequences}{12}{chapter.8}
+\contentsline {chapter}{\numberline {9}October 17 - Various Series}{13}{chapter.9}
+\contentsline {chapter}{\numberline {10}October 22 - Relationships between sets}{14}{chapter.10}
+\contentsline {chapter}{\numberline {11}October 24/26 - Overslept/continuous functions}{15}{chapter.11}
+\contentsline {chapter}{\numberline {12}October 29 - Derivatives! The first bit of calculus.}{16}{chapter.12}
+\contentsline {chapter}{\numberline {13}October 31 - Hallowween math, differentiable functions}{17}{chapter.13}
+\contentsline {chapter}{\numberline {14}November 5 - Integration!!}{18}{chapter.14}
+\contentsline {chapter}{\numberline {15}October 7 - Riemann Integration}{19}{chapter.15}
+\contentsline {chapter}{\numberline {16}November 12 - Fundamental Theorems of Calculus}{20}{chapter.16}
+\contentsline {section}{\numberline {16.1}November 19 - Derivatives of inverses}{20}{section.16.1}
+\contentsline {chapter}{\numberline {17}November 26 - Taylor Polynomials}{22}{chapter.17}
+\contentsline {section}{\numberline {17.1}December 3 - Complex Functions}{23}{section.17.1}

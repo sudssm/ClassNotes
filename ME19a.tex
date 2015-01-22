@@ -1,0 +1,285 @@
+\documentclass[10pt]{report}
+\usepackage{amsmath, amsthm, amssymb, tikz, mathtools, hyperref, enumerate}
+\usepackage{geometry}
+\newcommand{\scinot}[2]{#1\times 10^{#2}}
+\newcommand{\bra}[1]{\left<#1\right|}
+\newcommand{\ket}[1]{\left|#1\right>}
+\newcommand{\dotp}[2]{\left<#1\left.\right|#2\right>}
+\newcommand{\rd}[2]{\frac{\mathrm{d}#1}{\mathrm{d}#2}}
+\newcommand{\pd}[2]{\frac{\partial #1}{\partial#2}}
+\newcommand{\norm}[1]{\left|\left|#1\right|\right|}
+\newcommand{\abs}[1]{\left|#1\right|}
+\newcommand{\expvalue}[1]{\left<#1\right>}
+\newcommand{\rtd}[2]{\frac{\mathrm{d}^2#1}{\mathrm{d}#2^2}}
+\newcommand{\pvec}[1]{\vec{#1}^{\,\prime}}
+\let\Re\undefined
+\let\Im\undefined
+\DeclareMathOperator{\Re}{Re}
+\DeclareMathOperator{\Tr}{Tr}
+\DeclareMathOperator{\Im}{Im}
+\newcommand{\ptd}[2]{\frac{\partial^2 #1}{\partial#2^2}}
+\usepackage[labelfont=bf, font=scriptsize]{caption}
+\everymath{\displaystyle}
+
+\begin{document}
+
+\title{Me19a --- Fluid Mechanics\\ Tim Colonius}
+\author{Yubo Su}
+\date{}
+
+\maketitle
+\tableofcontents
+
+\chapter{Key Concepts}
+
+\begin{itemize}
+    \item Shear forces are tangent to an interface. Stress is a force over an area and is defined as a 9-component tensor in 3D space.
+    \item Viscosity $\mu$ proportionally relates spatial changes in fluid flow rate to shear. Kinematic viscosity $\nu = \frac{\mu}{\rho}$ is the viscosity divided by the density.
+    \item We now define a Newtonian fluid to be a fluid where viscosity is independent of magnitude, direction and duration of motion.
+    \item Reynolds number gives viscousness, is $\mathrm{Re} = \frac{UD}{\nu}$. Two configurations with the same Reynolds number in a Newtonian fluid yield identical solutions.
+    \item Knudsen number gives how continuous a fluid is, $\mathrm{Kn} = \frac{\lambda}{L}$.
+    \item Mach number gives compressibility, $M = \frac{U}{a}$.
+\end{itemize}
+
+\chapter{05/01/15 --- Introduction}
+
+Closed book/note exams, one cheat sheet for midterm, two for final. Website is Moodle.
+
+\section{What is a fluid?}
+
+Solids are \emph{elastic} in that materials spring back to their original configuration upon being perturbed. Fluids are \emph{fluid} (duh) because they deform continuously and permanently under an applied shear force; there is no restoring force. As a consequence, fluids take the shape of their container, or they adopt the equilibrium where there is no shearing force.
+
+We will discuss ``properties'' of a fluid frequnetly. Thermodynamic state variables such as pressure, temperature, density, etc. are independent of externally imposed conditions; note that two state variables uniquely specifies thermodynamic state of a pure substance. Other kinds of properties (viscosity, thermal conductivity, mass diffusivity) are associated with how a material responds to externalities.
+
+Consider if we have a fluid in a tank and we blow wind over this fluid, introducing this shear force, then the fluid deforms a lot; there is no static equilibrium. This illustrates the different response of a fluid and a solid to a shear force, as the solid wouldn't move. However, if we suddenly remove the wind from fluid picture, the fluid eventually comes to a rest; this is precisely \emph{viscosity}.
+
+\section{Viscosity}
+
+Viscosity is a resistance to deformation, resulting in a force/stress from high velocity to low. In general, viscosity acts to minimize the difference in fluid flow rate between adjacent streams and parcels. Specifically, with $U$ velocity and $y$ a coordinate tangential to the fluid flow
+\begin{align}
+    \tau &= \mu \rd{U}{y}
+\end{align}
+a special case of a general formula we will derive later, $\mu$ being the viscosity. Viscosity has units of kg/m/s, alternatively in cgs the \emph{Poise} (which is $0.1$ kg/m/s). We can also refer to the kinematic velocity $\nu = \frac{\mu}{\rho}$.
+
+In general viscosity depends on the thermodynamic state $\mu = \mu(T,p)$ (or any two state variables). Viscosity generally does not change with pressure, but increases with $T$ for gas and decreases with $T$ for liquids.
+
+We now define a Newtonian fluid to be a fluid where viscosity is independent of magnitude, direction and duration of motion. Non-Newtonian fluids are generally materials with complex microscopic structure. By plotting the shearing strain versus the shearing stress (for which Newtonian is linear) we find non-Newtonian fluids either go above linear or below, called shear thinning and thickening.
+
+Consider a non-Newtonian fluid, toothpaste. It doesn't flow on its own easily (hang it upside down and it doesn't fall out) which makes it non-Newtonian. However, when we squeeze toothpaste really hard, it flows more easily. This means with a greater strain the viscosity decreases, which is shear thinning. Paint as well is sheer thinning. On the other hand, corn starch and water forms a shear thickening material, where the viscosity increases with higher applied strain.
+
+We next introduce the \emph{Reynolds number}, a number that is unitless and captures the behavior of a viscous fluid relative to another one. We do this by imagining how long a fluid takes to equilibriate upon removing a strain. Let's return to our example above with wind blowing over a tank with dimensions $DLB$ and $D$ being the direction of the wind. We find by Newton's Law that
+\begin{align}
+    \rho DLB \frac{\Delta U}{\Delta t} &\sim \tau LB\\
+    \tau &\sim \mu \frac{\Delta U}{\Delta t}\\
+    \tau \frac{U}{D} &\sim \frac{\rho UD}{\mu}\sim \frac{UD}{\nu}  = \mathrm{Re}
+\end{align}
+the Reynolds number. In general we use $\mathrm{Re} = \frac{UD}{\nu}$. Two configurations with the same Reynolds number are the same Newtonian fluid problem regardless of the actual configuration; this is very powerful!
+
+\chapter{07/01/15 --- The continuum and more ways to characterize fluids}
+
+Recall that last class we discussed viscosity, the resistance of a fluid to internal variations in flow velocity, and the Reynolds Number, a dimensionless way of characterizing viscosity.
+
+\section{The Continuum approximation, the Knudsen number}
+
+We introduce now the continuum. The consider a fluid to be both infinitively divisible (continuous) such that all properties may be defined pointwise and contiguous, filling up all space. In other words, if we average over successively smaller volumes we find complete homogeneity within the fluid (ignoring macroscopic variations such as variable density). Realistically, this is obviously not the case because of statistical molecular variations, but there is a large regime between macroscopic variations and microscopic fluctuations over which our approximation holds true. Defining this macroscopic average allows us to define properties such as temperature, pressure, and viscous stress (RMS velocity, average normal force due to collisions, and average force due to average velocity gradients respectively) which have no microscopic analog.
+
+We speak of a regime over which this approximation is valid, but we must be able to quantify \emph{when} this regime exists. The intermolecular collisions are what define this regime; we want the average distance between molecules to be much smaller than the mean free path, such that the fluid is roughly continuous (contrast this with the much \emph{larger} regime, which gives ideal gas approximation). For liquids, the mean free path is approximately $\sigma$, while for gasses we have
+\begin{align}
+    \lambda &= \frac{m}{\pi \rho \sigma^2 \sqrt{2}}
+\end{align}
+from kinetic theory for ideal gas.
+
+We quantify this by the \emph{Knudsen number} which is $\mathrm{Kn} = \frac{\lambda}{L}$. If $\mathrm{Kn} \ll 1$ we have continuum flow, $\mathrm{Kn} \sim 1$ gives transition/slip flow, and $\mathrm{Kn} \gg 1$ gives free molecule flow.
+
+\section{Compressibility, the Mach number}
+
+Recall the following compressibilities from thermo
+\begin{align}
+    \beta_T &= -\frac{1}{V} \pd{V}{P}\Bigg|_T & \beta_s &= -\frac{1}{V} \pd{V}{P}\Bigg|_S
+\end{align}
+being the isothermal and isentropic compressibility respectively. It turns out that $\beta_S$ has a simple form for a perfect gas, $\beta_S = -\frac{1}{V}\pd{V}{P}\Bigg|_S = \frac{1}{\gamma P}$. 
+
+Compression and expansion waves are important in equilibriating in fluid motion; we hear them as acoustic waves. They flow with a finite speed $a$, the positive root of 
+\begin{align}
+    a^2 &= \pd{P}{\rho}\Bigg|_S = \frac{1}{\rho \beta_S}
+\end{align}
+
+For a perfect gas then $a = \sqrt{\frac{\gamma P}{\rho}}$. 
+
+To determine compressibility, we need another non-dimensional number, which is given by the \emph{Mach number}, $M = \frac{U}{a}$ with $U$ the RMS velocity. For $M \ll 1$ we have incompressibility, and for $M \gg 1$ hypersonic (intermediate regimes are subsonic, transonic, supersonic lol). 
+
+It turns out by kinetic theory that our three numbers are well related:
+\begin{align}
+    \mathrm{Kn} &= \frac{M}{\mathrm{Re}}\sqrt{\frac{\gamma\pi}{2}}
+\end{align}
+
+\section{Interfaces with fluids, surface tension}
+
+How does the continuum approximation look like at the interface of an immerged solid? So long as the continuum approximation holds, the average velocities along the interface must match. This amounts to the no-penetration condition and the no-slip condition for the normal and tangential components respectively. Note that if a fluid is inviscid, frictionless, we neglect the no-slip condition!
+
+A fluid-fluid interface interface is very different. Since fluids have attractive intermolecular forces (particularly liquids), immiscible fluids retain a sharp interface. Then due to this attractive force, liquids tend to contract to minimize the surface area of the interface, so surface tension! We can imagine this interface as an imposing of a force tangent to the surface, surface tension. This has units of force per distance.
+
+Surface tension is principally a function of temperature, but is also a property of both fluids. It is also easily affected by the accumulation of contaminant molecules (surfactants).
+
+We can also examine triple-junctions between a solid, a liquid, and a gas. If we examine a drop of liquid on a solid surface, we can examine the tangent of the liquid drop at the interface; if this angle is less than $90^\circ$ we know the solid is hydrophilic, otherwise it is hydrophobic.
+
+\section{Fluid statics}
+
+We are getting ahead on lecture material, yay! Consider a solid immersed in a still fluid; what keeps it afloat? Buoyancy! Let's get into the math now. Define $B$ the solid body, $\partial B$ the boundary, $\vec{F}_g$ the force due to gravity. We place the center of gravity of $B$ at position $\vec{R}$. Mathematically, we have
+\begin{align}
+    \vec{F}_g &= \int_B \rho_b(x,y,z) \vec{g} dV\\
+    &= M\vec{g}\\
+    \vec{R} &= \frac{1}{M}\int_B \rho_b(x,y,z) \vec{x} dV
+\end{align}
+
+This is the object the fluid must support, with a force of $\vec{F}_g$. Let's examine now some forces related to fluids.
+
+Pressure --- Scalar because we only care about the normal force. Suppose we have a pressure field that is known everywhere within a fluid $P = P(x,y,z)$. The force acting over any surface is $P$, so if we want a force over some interface $\partial B$ we have
+\begin{align}
+    \vec{F}_P &= -\int_{\partial B} P\hat{n}dA
+\end{align}
+with $\hat{n}$ the outward pointing normal; the minus sign tells us this is the pressure being exhibited inwards, on the solid by the fluid (also just a convention). 
+
+\chapter{13/01/15 --- Fluid Statics}
+
+The motivating problem is the problem of the buoyant force, as we discussed last class. We showed the force on a body is $M\vec{g}$ and acts on position center of mass. We next make the distinction between body and surface forces, forces that act on the entire body (gravity) and forces that act only on the surface (pressure). Recall that fluids are easier to analyse than solids because they do not support shearing forces at rest. The pressure force on a surface again is given by 
+\begin{align}
+    \vec{F}_p &= -\int_{\partial B}p\vec{n}\;dA
+\end{align}
+
+Returning then to the problem of the iceberg, we know the sum of forces on the iceberg must be $0$, so $\vec{F}_g + \vec{F}_p = 0$. Give the coordinate system of the iceberg primes and of the fluid unprimed, and let's work in $2D$. Change now the body to be comprised of a small element of still fluid, $\Delta x \times \Delta y$. Then
+\begin{align}
+    \vec{F}_g &= \int\limits_{x}^{x + \Delta x}\int\limits_{y}^{y + \Delta y}\rho(x',y')\;\vec{g}dx'dy'
+\end{align}
+
+Expand $\rho$ about $x,y$ as 
+\begin{align}
+    \rho(x',y') = \rho(x,y) + (x'-x) \pd{\rho}{x}\Bigg|_{x,y} + \left( y' - y \right)\pd{\rho}{y}\Bigg|_{x,y}
+\end{align}
+such that we obtain
+\begin{align}
+    \vec{F}_g &= \vec{g} \left[\rho(x,y) \Delta x \Delta y + \frac{1}{2}\Delta x \Delta y\left( \Delta x\pd{\rho}{x}\Bigg|_{x,y} + \Delta y \pd{\rho}{y}\Bigg|_{x,y}\right)\right]
+\end{align}
+
+We examine the force per unit volume, and we can drop higher order terms to find the very trivial $\vec{F}_g = \vec{g}\rho(x,y) V$. This of course generalises to $3D$.
+
+Now, if we do a similar process carefully on the pressure force we find $\frac{\vec{F}_p}{V} = -\pd{P}{x}\hat{i} - \pd{P}{y}\hat{y}$. Finally, we obtain $-\vec{\nabla}P + \rho \vec{g} = 0$ after the usual generalization. Applying a bit of vector calculus we find
+
+Pascal's Law then tells us that pressure is equal at equal elevation in the same contiguous fluid. We then examine some examples, refer to lecture slides.
+
+\chapter{15/01/15 --- More fluid statics}
+
+Recall we arrived at the fact that $0 = -\vec{\nabla}P + \rho \vec{g}$, which also shows that we must be able to turn any surface force (pressure defined on the boundary) into a volume force by taking the gradient. Working on the consequence we find
+\begin{align}
+    0 &= -\pd{P}{x} & 0 &= -\pd{P}{y} & 0 &= -\pd{P}{z} + \rho(x,y,z)g
+\end{align}
+we thus find that $\rho$ can only be a function of $z$, since $P$ is constant in $x,y$, so we obtain $0 = -\rd{P}{z} + \rho(z)g$. 
+
+For liquids, $\rho$ is approximately constant, so $P = -\rho gz + C$, where $C$ is just the initial value, the atmospheric pressure. This is helpful for manometry, which allows us to determine the difference in pressure of two immiscible fluids by measuring their height difference when connecting them with a tube. In this configuration, surface tension makes fluids develop a meniscus and so we must be careful of this when working.
+
+\section{Immersed planes}
+
+Let's examine the case where we put a dam on a body of water. The pressure distribution of the fluid goes
+\begin{align}
+    \vec{F}_f &= -\int p\vec{n} dA\\
+    &= -\int\limits_{-h}^{0}(p_a - \rho gz)\;\vec{n}dz
+\end{align}
+with $p_a$ the atmospheric pressure. However, on the dam, there is more atmospheric pressure being exerted on the other side, so we find
+\begin{align}
+    \vec{F}_s &= -\vec{F}_f - p_a A\vec{n}\\
+    &= \int\limits_{-h}^{0}\rho gz\;\vec{n}dz\\
+    &= \frac{1}{2}\rho gh^2\vec{n}
+\end{align}
+
+We can work out a similar problem for an inclined, submerged plane. We thus obtain the following principles for an immerged surface
+\begin{itemize}
+    \item Horizontal force is the same on a vertical surface with same projected area.
+    \item Vertical force is just the weight of the fluid above the horizontal component.
+\end{itemize}
+which hold for an immersed surface of any shape!
+
+\section{Buoyancy}
+
+We then derive Archimedes's principle, which is that the buoyancy force exerted on an object is exactly the weight of the displaced fluid. We can prove this by simply replacing the object with an equivalent weight of fluid, which would be in static equilibrium, and if the two configurations are both in static equilibrium then the forces acting on both problems must be the same. We already know from the latter that the buoyant force is enough to support this weight, so we are done. Alternatively, if we follow through with the algebra
+\begin{align}
+    \vec{F}_b &= -\int_{\partial B} p\vec{n} dA\\
+    &= -\int_B \vec{\nabla} P \;dA\\
+    &= -\int_B \rho \vec{g}\; dV
+\end{align}
+via the divergence theorem and the hydrostatic equilibrium condition, we prove Archimedes's principle.
+
+We can then compute the immersion of an iceberg, which is simply given by $\frac{V_{sub}}{V_{iceberg}} = \frac{\rho_{ice}}{\rho_{water}} = \frac{934}{1020}$.
+
+We can also note that a taller body tends to have an unstable equliibrium by buoyancy (why one should not stand up in a rowboat). This is also why icebergs flip over periodically as they melt.
+
+\section{Rigid body motion of a fluid}
+
+What does it mean for a fluid to move as a rigid body? All points within the fluid have no relative motion to one another. This also implies the distance between any two parcels of material remains constant, and the body can only translate and rotate. Since then the motion can be determined by the motion of a single particle and the angular positions of other particles relative to this single particle, we usually attach a coordinate system to the CM and describe the motion of all other particles angularly with respect to it. However, since Newton's laws can only be applied in an inertial reference frame which may not necessarily hold here, our trick is to describe the motion of the CM with a fictitious force, such as the centrifugal. Thus, our new equilibrium condition becomes
+\begin{align}
+    -\vec{\nabla} P + \rho \vec{g} + \vec{f}_{fict} = 0
+\end{align}
+with $\vec{f}_{fict}$ the fictitious forces.
+\chapter{20/01/15 --- Rigid fluid motion, surface tension}
+
+In rigid body fall we assume the reference frame of the center of mass and introduce fictitious forces. We first assume the case of linear acceleration
+
+\section{Linear acceleration}
+
+Assume we have a tank moving sideways under linear acceleration $a$ with width $L$ and average height $h_a$. Then we find the components of our pressure to satisfy
+\begin{align}
+    \pd{P}{x} &= -\rho a_x\\
+    \pd{P}{y} &= 0\\
+    \pd{P}{z} &= -\rho g
+\end{align}
+
+This is a super easily integrable PDE, we find that
+\begin{align}
+    P &= -\rho a_xx + f(y,z) = -\rho g z f(x,y) = f(x,z)\\
+    &= -\rho a_xx - \rho gz + C
+\end{align}
+with $h(x)$ the height of the tank as a function of $x$, which is equivalently the height $z$, satisfying $\int\limits_{0}^{L}h(x)\;dx$. We then solve out that $h(x)  = h_0 + \frac{a_x}{g}\left( \frac{L}{2} - x \right)$, so then we can solve in terms of this pressure at the surface of the fluid
+\begin{align}
+    -\rho\left( gh(x) + a_xx \right) + C &= P_a\\
+    P_a + \rho\left[ a_x\left( \frac{L}{2} - x \right) + g (h_0 - z) \right] &= P(x,z)
+\end{align}
+
+We can check that this yields for $P(x,h(x)) = P_a$, so we have the distribution of pressure as well.
+
+We can next examine the problem of a cylindrical spinning cup; what is the pressure distribution . We obviously go to cylindrical coordinates. Keep in mind that the fluid surface must always be normal to the force at that surface. We first write down
+\begin{align}
+    \vec{\nabla} P &= \pd{P}{r}\hat{r} + \frac{1}{r}\pd{P}{\theta}\hat{\theta} + \pd{P}{z}\hat{z}
+\end{align}
+
+The equilibrium condition assumes a fictitious force
+\begin{align}
+    0 &= -\vec{\nabla}P + \rho\vec{g} - \rho\left( -\Omega^2 r\hat{r} \right)\\
+    \pd{P}{r} &= 0 + \rho \Omega^2 r\\
+    \frac{1}{r}\pd{P}{r} &= 0\\
+    \pd{P}{z} &= -\rho g
+\end{align}
+
+We can integrate carefully and solve for constants in terms of $h_{min}$ to find $P(r,z) = P_a + \frac{\rho \Omega^2 r^2}{2} - \rho g (z - h_{min})$ with $P_a = P(0,h_{min})$ the lowest height of the surface of the fluid. We can then solve for a surface of $P_a$ to find the shape of the surface $h(r) = h_{min} + \frac{\Omega^2 r^2}{2g}$. 
+
+\section{Surface Tension}
+
+Stronger intermolecular forces on liquid side of an interface causes interface to contract. At a continuum level, we can represent this as an infinitely thin membrane with a tension that resists stretching; surface tension $\sigma$ thus has units of force per unit length. 
+
+Let's examine first some simple geometries, ignoring gravity. If the exterior of a cylinder of fluid has atmospheric pressure $P_a$ and the pressure inside has pressure $P_i$ then their difference happens to obey (for this geometry) $P_i - P_a = \frac{\sigma}{R}$ with $R$ the radius of curvature. For a sphere likewise, $P_i - P_a = \frac{2\sigma}{R}$. 
+
+Consider a soap bubble then. We note actually there are \emph{two} interfaces across which pressure changes, and so assuming the soap bubble is substantial enough that the fluid actually can have a meaningful pressure defined we find the total pressure difference to be $\frac{4\sigma}{R}$!
+
+Let's look at a meniscus. Consider an initially-flat surface of water in contact on the side with a hydrophilic surface; this results in some additional height at the edges. We can analyze this qualitatitively and note that there must be a pressure difference across this interface, and we can do it more precisely if we examine the radii of curvature as a function of the position along the surface. Examine Lecture 5 notes for detailed calculation.
+
+\section{Intro to fluid flow}
+
+Again we're ahead on schedule so we will start Lecture 6. First, we will define a fluid particle as a parcel of fluid that is
+\begin{itemize}
+    \item Small enough such that there are no macroscopic variations in velocity, pressure etc.
+    \item No definite shape, it is pointlike
+    \item Contiguous (putting them together builds up space) even as they are deformed.
+    \item defined by its unchanging yet infinitisemal mass and its position in space at some time
+\end{itemize}
+
+We then distinguish the \emph{Lagrangian} description (each fluid particle is tracked, mass-based observation) while the \emph{Eulerian} description defines a region of space and a velocity-field (velocity is tracked, velocity-based observation).
+
+\end{document}

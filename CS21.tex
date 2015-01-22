@@ -1,0 +1,295 @@
+\documentclass[10pt]{report}
+\usepackage{amsmath, amsthm, amssymb, tikz, mathtools, hyperref, enumerate}
+\usepackage{geometry}
+\newcommand{\scinot}[2]{#1\times 10^{#2}}
+\newcommand{\bra}[1]{\left<#1\right|}
+\newcommand{\ket}[1]{\left|#1\right>}
+\newcommand{\dotp}[2]{\left<#1\left.\right|#2\right>}
+\newcommand{\rd}[2]{\frac{d#1}{d#2}}
+\newcommand{\pd}[2]{\frac{\partial #1}{\partial#2}}
+\newcommand{\norm}[1]{\left|\left|#1\right|\right|}
+\newcommand{\abs}[1]{\left|#1\right|}
+\newcommand{\expvalue}[1]{\left<#1\right>}
+\newcommand{\rtd}[2]{\frac{d^2#1}{d#2^2}}
+\newcommand{\pvec}[1]{\vec{#1}^{\,\prime}}
+\let\Re\undefined
+\let\Im\undefined
+\DeclareMathOperator{\Re}{Re}
+\DeclareMathOperator{\Tr}{Tr}
+\DeclareMathOperator{\Im}{Im}
+\newcommand{\ptd}[2]{\frac{\partial^2 #1}{\partial#2^2}}
+\usepackage[labelfont=bf, font=scriptsize]{caption}
+\everymath{\displaystyle}
+
+\begin{document}
+
+\title{CS21 --- Decidability and Tractability\\ Umans}
+\author{Yubo Su}
+\date{}
+
+\maketitle
+\tableofcontents
+
+\chapter{Key Concepts}
+
+\begin{itemize}
+    \item A language $L$ is regular = $L$ is recognized by an FA = $L$ is described by a regular expression.
+    \item Pumping lemma $w = xyz \in L \to xy^iz\in L$? always holds for regular languages.
+\end{itemize}
+\chapter{05/01/15 --- Introduction}
+
+Website is \url{http://www.cs.caltech.edu/~umans/cs21}.
+
+This course forms an introduction to the \emph{theory of computation}. Computability/complexibility sits atop algorithms on the heirarchy of computer science, algorithms which sit on top of software design/implementation. To speak about algorithms, the heart of programs, we must be able to talk \emph{mathematically} about problems, computers and algorithms. 
+
+Imagine a perfect world, where every problem would have a corresponding provably optimal algorithm. Then any problem would become a simple lookup problem, and CS would be very dull. Thankfully, that's not our world! In fact, we can prove that problems exist without algorithmic solutions, such as the halting problem. Even more interestingly, for many simple problems with algorithmic solutions we know nothing about their optimality, such as multiplying two integers or factoring integers.
+
+Part one of the class comprises models of computation and characterizations of their solvability; part two discusses Turing machines, limits on their power and reductions between problems; and part three talks about complexity classes P and NP. Main points of the class comprise decidability (whether algorithms exist) and tractability (whether \emph{efficient} algorithms exist).
+
+\section{What are problems/computations?}
+
+We define a problem as a \emph{function that maps an input to an output, where the input and output are strings over a finite alphabet $\Sigma$}, or $f: \Sigma** \to \Sigma**$. Let's make our problems simpler and examine only \emph{decision problems}, which map an input to an \emph{accept} or \emph{reject} problem. It turns out that all problems are equivalent to decision problems; we prove this on the homework. If we are examining only decision problems, we can consider a \emph{language} $L$ for $L \subseteq \Sigma^*$ such that all of $L$ maps to \emph{accept} under $f$. 
+
+A computation is then taking an input and mapping it either to \emph{accept} or \emph{reject} or, crucially, \emph{looping forever}. We say that the language \emph{recognized} by the machine is the set of inputs that map to \emph{accept}, and if every other input leads to reject we say that the language is \emph{decided} by the machine. This should make sense; recognize means we can only \emph{accept} if accept, but \emph{decide} means we can definitively reject if reject.
+
+We consider a finite automaton, which reads input only sequentially and maintains a finitely large state (memory of what has been seen). We can represent these by diagrams such as
+\begin{figure}[!h]
+    \centering
+    \begin{tikzpicture}[scale=0.5]
+        \draw (6,3) circle(1);
+        \draw[->] (-5,3) -- (-1,3);
+        \node at (6,3) {$0$};
+        \node at (8,1) { {\tiny $0,1$}};
+        \draw (0,3) circle(1);
+        \draw[->] (1,3) -- (5,3);
+        \draw (0,-3) circle(1);
+        \node at (0,-3) {$1$};
+        \node[above] at (3,3) {$0$};
+        \node[right] at (0,0) {$1$};
+        \draw[->] (6,2) arc(-180:90:1);
+        \draw[->] (0,2) -- (0,-2);
+        \draw[->] (0,-4) arc(-180:90:1);
+        \node at (2,-5) { {\tiny $0,1$}};
+    \end{tikzpicture}
+    \caption{An example of a finite automaton; its language is the set of strings starting with a $1$.}
+\end{figure}
+
+\chapter{07/01/15 --- Finite Automata}
+
+Recall that a machine accepts an input in a finite alphabet $\Sigma$. A subset of strings over $\Sigma$ is called the language \emph{recognized} or \emph{decided} (recall the difference) of the machine if the machine accepts this subset of strings. Recall also that a finite automaton reads left to right, one symbol at a time, and maintains a finite state.
+
+\section{Characterising FA}
+
+We hereby formally define a finite automaton. An FA is a 5-tuple $M = (Q,\Sigma,\delta,q_0,F)$ such that
+\begin{itemize}
+    \item $Q$ is a finite set called the \emph{states}.
+    \item $\Sigma$ is a finite set called the \emph{alphabet}.
+    \item $\delta: Q \times \Sigma \to Q$ is a function called the \emph{transition function}.
+    \item $q_0$ is an element of $Q$ called the \emph{start state}.
+    \item $F$ is a subset of $Q$ called the \emph{accept states}.
+\end{itemize}
+
+The FA's operation can then be described as $M = (Q, \Sigma, \delta, q_0, F)$ accepting a string $w = w_1 w_2\dots w_n \in \Sigma^*$ if $\exists$ a sequence $\left\{ r_i \right\}$ of states such that
+\begin{itemize}
+    \item $r_0 = q_0$
+    \item $\delta(r_i, w_{i+1}) = r_{i+1}$
+    \item $r_n \in F$
+\end{itemize}
+
+We note that the set of languages recognized by an FA is closed under union, concatenation and star. Star is the operation defined on $A$ by
+\begin{align}
+    A^* = \left\{ x_1 x_2\dots x_k, x_i \in A \right\}
+\end{align}
+
+\section{Nondeterministic FA}
+
+A deterministic FA updates a single state for every character of input read. A non-deterministic FA labels some transitions with $\varepsilon$ such that the next state going over one of these transitions is an ensemble of two or more possible states. An input is then accepted if the final ensemble of states contains an accept, or equivalently if there exists a set of not-necessarily-deterministic transitions that takes the initial state to the accept under the input.
+
+Formally, a nondeterministic FA is the same 5-tuple as an FA, but the $\delta$ transition function changes. It is a mapping $\delta: Q \times \left( \Sigma \cup \left\{ \varepsilon \right\} \right) \to \wp(Q)$ called the ``powerset of $Q$,'' the set of all subsets of $Q$. 
+
+\section{NFA-FA equivalence}
+
+We claim that a language $L$ is recognized by an FA if and only if $L$ is recognized by an NFA. This entails a proof in both directions. One is trivial; every language recognized by an FA is also recognized by an NFA because FA are NFA without $\varepsilon$-transitions. The other direction proves a bit more tricky.
+
+We strive to build an FA that simulates an NFA (and recognizes the same language). Given an NFA $M = (Q,\Sigma, \delta, q_0, F)$, we construct an FA $M' = (Q', \Sigma, \delta', q_0', F')$ with $Q' = \wp(Q)$ the powerset. Then if we are in a state $R \in Q'$ and we read symbol $a \in \Sigma$, what is the new state? 
+
+First we define $E(S) = \left\{ q \in Q \right\}$ such that $q$ is reachable from $S$ by traveling along $0$ or more $\varepsilon$-transitions. Then we define a new transition function $\delta'(R,a) = \bigcup_{r \in R} E(\delta(r,a))$. We also use start state $q_0' = E(q_0)$. This new FA then accepts the same states as does $M$ by construction, and we complete our equivalence proof. 
+
+\chapter{09/01/15 --- Regular Expressions}
+
+Currently we have two big theorems regarding finite automata and their languages
+\begin{itemize}
+    \item The two sets of languages recognized by NFAs and FAs respectively are closed under union, concatenation and star.
+    \item A language $L$ is recognized by an FA iff L is recognized by an NFA.
+\end{itemize}
+
+We next want to describe the set of languages that can be built up from union, concatenation and stars; these are called ``patterns'' or \emph{regular expressions}. A theorem goes then that
+\begin{center}
+    A language $L$ is recognized by an FA iff $L$ is described by a regular expression.
+\end{center}
+
+First, we must define a regular expression. A regular expression is either an element of the alphabet, the empty string, the empty set or a combination of these aforementioned regular expressions by union, concatenation and star. We will then omit the proof because I am lazy.
+
+Thus then a language recognized by an FA is called a \emph{regular language}. These thus have three properties
+\begin{itemize}
+    \item Closed under the 3 operations.
+    \item Recognized exactly by NFA/FA.
+    \item Described exactly by regular expressions.
+\end{itemize}
+
+\chapter{12/01/15 --- Pumping Lemma}
+
+We want now to examine limits on the power of FAs; is every language describable by a sufficiently complex regular expression? For example, is the language
+\begin{center}
+    $\left\{ w: w \text{has an equal number of ``01'' and ``10'' substrings} \right\}$
+\end{center}
+
+At first we suspect that FAs cannot count, so there is a good probability that we cannot do this. However, it turns out we can write it as $=0\Sigma^*0 \cup 1 \Sigma^* 1$, because the fundamental equality of number of substrings doesn't require counting. The point stands though; how do we prove a language is not regular?
+
+\section{Pumping Lemma}
+
+Enter the pumping lemma, applying for \emph{all} regular languages
+\begin{center}
+    Let $L$ be a regular language. There exists an integer $p$ (``pumping length'') for which every $w \in L$ with $\abs{w} \geq p$ can be written as $w = xyz$ such that
+    \begin{enumerate}[(1)]
+        \item For every $i \geq 0, xy^i z \in L$
+        \item $\abs{y} > 0$
+        \item $\abs{xy} \leq p$
+    \end{enumerate}
+\end{center}
+
+Using the pumping lemma to prove that $L$ is not regular is done by first assuming $L$ is regular. This implies a pumping length $p$ exists. We then select a string $w \in L$ of length at least $p$ and then argue that for every way of writing $w=xyz$ that satisfies (2), (3) of the lemma, pumping on $y$ yields a string not in $L$ which provides a contradiction.
+
+As an example, prove $L = 0^n1^n$ is not regular. Let $p$ be the pumping length for $L$, so we choose $w = 0^p 1^p$. We then examine all the ways we can write $w = xyz$ with $\abs{y}> 0$ and $\abs{xy}\leq p$. As one example, choose $x,y$ both still in the $0$s (first half) of $w$, then repeating $y$ produces a string with more $0$s than $1$s which is no longer in $L$, so $L$ is not regular. A similar language provably irregular is $L = \left\{ w: \text{equal number of $0$s, $1$s} \right\}$, for which we can use the same $w$ in fact. 
+
+Let's prove the pumping Lemma. Let $M$ be the machine that recognizes $L$, and call $p$ the number of states of $M$. Consider $w \in L, \abs{w} \geq p$. Then $M$ must go through at least $p+1$ states, which means there must be a repeated state. Given that this state is repeated, we can takee the segment of $w$ between this repeat and cycle it; this string is still recognized by $M$. Thus $xy^iz \in L$. 
+
+\section{Pushdown automata}
+
+We can see an FA as an input tape and a finite control $q_0$ that is changed as it reads over the input. A limitation of FA is because it can only ``remember'' a bounded amount of information. To recognize a language such as $0^n1^n$ though, we need memory that can \emph{count}. We seek a simple modification that unbounds the accessible memory; this is accomplished precisely by introducing a stack of memory. This is called a \emph{pushdown automaton}, one that in addition to the control $q_0$ can also push nd pop memory onto an infinite stack.
+
+To represent the nondeterministic pushdown automaton (NPDA), we introduce a dollar sign \$ symbol that can be pushed and popped off the stack; notation such as $\varepsilon \to \$$ means to nondeterministically push a \$ to the stack, while something like $0 \to \varepsilon$ means to pop. We then exhibit an NPDA that accepts exactly input strings of form $0^n1^n$ by pushing $0$s and accepting $1$s only while $0$s can be popped, refer to lecture slides.
+
+The formal definition of an NPDA is given by the tuple
+\begin{itemize}
+    \item $Q$ is a finite set called the \emph{states}.
+    \item $\Sigma$ is a finite set called the \emph{alphabet}.
+    \item $\Gamma$ is a finite set called the \emph{stack alphabet}.
+    \item $\delta: Q \times (\Sigma \cup \{\varepsilon\}) \times (\Gamma \cup \{\varepsilon\}) \to \wp(Q \times (\Gamma \cup \{\varepsilon\}))$ is a function called the \emph{transition function}.
+    \item $q_0$ is an element of $Q$ called the \emph{start state}.
+    \item $F$ is a subset of $Q$ called the \emph{accept states}.
+\end{itemize}
+
+We omit the formal definition of acceptance because I'm lazy; it's in Lecture 4. 
+
+\chapter{14/01/15 --- Context-free grammar}
+
+Let's begin with an exercise; design an NPDA to recognize the language 
+$$\left\{ a^ib^jc^k; i,j,k \geq 0 \text{ and } i=j \text{ or } i=k \right\}$$
+
+We already know how to check whether $i=j$ \emph{or} $i=k$, so we can just add an epsilon transition out front of two machines, one to recognize each of $i=j, i=k$.
+
+Just as we called the languages recognized by NFAs \emph{regular}, we call the languages recognized by NPDAs \emph{context-free grammars}. What then is a context-free grammar? Define a non-terminal symbol to be simply a symbol that cannot exist in the final output string, and define a set of substitution rules of non-terminal symbols to terminal and non-terminal symbols (the left-hand-side of these rules must be a single non-terminal symbol). We follow the steps
+\begin{itemize}
+    \item Start with a start symbol (non-terminal)
+    \item Replace a non-terminal with the right-hand-side of a rule that has non-terminal as its left-hand-side
+    \item Repeat until there are no more non-terminals.
+\end{itemize}
+
+For example, we can build a context-free grammar with the following rules $A \to 0A1, A \to B, B \to \#$. We then start with $A$ and can eventually build the output string such as $000\#111$, a string of terminal symbols that is in the language of the context-free grammar. The set of all strings that can be generated this way is the \emph{language of the grammar}. 
+
+The official definition of a context-free grammar is a $4$-tuple
+\begin{itemize}
+    \item $V$ is a finite set called the \emph{non-terminals}.
+    \item $\Sigma$ is a finite set called the \emph{terminals}.
+    \item $R$ is a set of substitution rules from non-terminals to terminals/non-terminals called \emph{productions}.
+    \item $S \in V$ is the single \emph{start variable}.
+\end{itemize}
+
+The notation goes then that $uAv$ \emph{yields} $uwv$, or notated $u \Rightarrow v$. If it is a multiple step process, $u \Rightarrow^k v$, and if $u \Rightarrow^* v$ then we say the particular procedure is called a \emph{derivation} of $v$. 
+
+Let's do an example of a CFG, balanced parentheses. We first specify that \emph{balancing} means that number of open = number of closed, but also that no parentheses is ended before it is begun. Let's try to build a CFG for this. We use the rules
+\begin{itemize}
+    \item $A \to (A)|AA$
+    \item $A \to \epsilon$
+\end{itemize}
+
+We next need to show that this set of rules generates the context-free grammar bidirectionally. We first work that every string derived by this grammar is balanced; this is easy to do by induction on the number of steps of the derivation. 
+
+Suppose $A \Rightarrow^k s$, and we want to prove that $s$ is balanced. We induct over $k$; for $k=1$, we end up with only the empty string, which is balanced. We then induct on $k$; the two cases we want to examine are
+\begin{itemize}
+    \item $A \Rightarrow (A) \Rightarrow^{k-1}(s') = s$ where we define $s'$. But by the strong inductive hypothesis $s'$ is balanced, and so must then be $s$.
+    \item $A \Rightarrow AA \Rightarrow^{k-1} s's'' = s$, where each of the $A$s derives one of $s', s''$. By the strong inductive hypothesis these are balanced and thus so must be $s$. 
+\end{itemize}
+
+We then want to prove the other direction, that all balanced parentheses are derived by this context-free grammar. We will instead induct on the length of the string. Base case is length $0$, which we can derive with our CFG. The inductive step comprises showing a string of length $n$ is derivable; we begin by identifying the shortest prefix of the string that is balanced. There are again two cases
+\begin{itemize}
+    \item This comprises the whole string --- $s = (s')$. We assume that $A$ derives $s'$, which is of length shorter than $n$, and so since we can do $A \Rightarrow (A) \Rightarrow^* (s')$ we show that $A$ also derives $s$.
+    \item This does not comprise the whole string --- $s = s's''$. We assume again that $A$ derives $s',s''$ which are of length shorter than $n$, and since we can do $A \Rightarrow AA \Rightarrow^* s's''$ we show that $A$ also derives $s$. 
+\end{itemize}
+
+QED!
+
+\chapter{16/01/15 --- Wworking with CFGs}
+
+\section{Ambiguity and CFGs, Chomsky Normal Form}
+
+Recall the definition of a CFG. An example of a CFG is the set of arithmetic expressions, over the alphabet $\left\{ +, *, (,),a \right\}$. Let's describe this via a CFG. We exhibit the production rules $S \to (S) | S + S | S * S | a$, which seems to work, yay!
+
+An easy way to visualise CFGs is to see a parse tree, where expressions expand down a tree into a parse tree. In this particular case, this isn't the best CFG, if we examine the corresponding parse tree. Order of operations isn't necessarily respected in going up our parse tree. Instead, we can make a much more complicated CFG, given by
+\begin{itemize}
+    \item $E \to E + T | T$
+    \item $T --E T * F | F$
+    \item $F \to T * F$
+    \item $F \to (E) | a$
+\end{itemize}
+with $E, T, F$ representing expressions, terms, and factors respectively. This way, the parse tree is completely unambiguous; there is always exactly a single \emph{left-most derivation} (where we always replace the left-most non-terminal first at any given step). We can sometimes rewrite a CFG to have a non-ambiguous parse tree, but some CFGs cannot be dis-ambigu-ified.
+
+It would be helpful if we could discuss all CFGs in a simple normal form; the most common one we use is the \emph{Chomsky Normal Form}. This denotes that all production rules are of form $A \to BC, S \to \varepsilon, A\to a$, so no $\varepsilon$ are produced except for the starting non-terminal, and RHS's contain either one terminal or two non-terminals. We present an algorithm to turn any CFG into CNF
+\begin{itemize}
+    \item Add a new start symbol --- Add production $S_0 \to S$.
+    \item Remove $\varepsilon$-productions --- Say that $A \to \varepsilon$ is something we removed, then whenever $A$ is on RHS, we just delete it e.g we take $R \to uAV \Rightarrow R \to uv$.
+    \item Eliminate unit productions --- $A \to B$ with two non-terminals is illegal-ified. If we have a further rule $B \to u$ then simply $A \to u$.
+    \item Convert remaining rules into proper form --- Replace productions of form $A \to u_1 U_2 u_3\dots u_k$ to $A \to U_1A_1, A_1 \to U_2A_2 \dots$ and then $U_{k-1} \to u_{k-1}, U_{k} \to u_k$ edge cases.
+\end{itemize}
+
+\section{Properties of CFGs}
+
+Now that we have Chomsky Normal Form, we can try to prove some more properties about CFGs.
+\begin{itemize}
+    \item Union --- We introduce a new start symbol $S_0 \to S_1 | S_2$.
+    \item Concatnation --- We need a new start symbol $S_0 \to S_1S_2$ the start symbols of the two constituent CFGs.
+    \item Star --- We introduce the rule $S_0 \to \varepsilon | S | S_0S_0$.
+\end{itemize}
+
+We then want to show that every regular language is a CFL. Recall the definition of the regular languages, the union, concatnation, and star of $\varepsilon, a, \emptyset$. Since CFGs are closed as well, we simply need a start symbol that can map to these three and then by closure by the above properties we are equivalent to a regular language.
+
+\section{NPDA and CFG Equivalence}
+
+This is a very important part of this lecture. We first prove that $L$ described by a CFG implies $L$ is recognized by an NPDA. A slight trickiness is in that we can only access the top of the stack. The rough algorithm we will use for this proof is
+\begin{itemize}
+    \item Place \$ then a start symbol $S$ on the stack. Repeat then the following
+    \item If the top is a non-terminal, pick productions with $A$ on LHS and substitute onto the stack non-deterministically.
+    \item If it is a terminal, read from the tape and pop from the stack.
+    \item If at the end of the tape a \$ is on the stack, then we accept.
+\end{itemize}
+
+We can draw the NPDA for this but I'm too incompetend to do so, refer to lecture6 for this if you must. 
+
+We now examine the reverse direction, that a language accepted by an NPDA is described by a CFG. First, let's convert the NPDA to a normal form as well, so that
+\begin{itemize}
+    \item Single accept states.
+    \item Empties stack before accepting.
+    \item Each transition either pushes or pops a symbol.
+\end{itemize}
+
+The main idea of the proof then hinges on the fact that a non-terminal $A_{p,q}$ generates exactly the strings that take the NPDA from state $p$ to state $q$, both with empty stacks. If we can get this to work, then the existence of $A_{start, end}$ generates all of the strings in the language recognized by the NPDA. Then a string taking the NPDA from $p$ to $q$ either empties the stack in between at some point $r$ (i.e. $A_{p,q} = A_{p,r} + A_{r,q}$ in some sense) or it never empties the stack. So then it becomes clear we want to examine the latter case; we must define our CFG now.
+\begin{itemize}
+    \item Non-terminals $V = \left\{ A_{p,q} \right\}$.
+    \item Start variable $A_{start, accept}$.
+    \item Production rule $A_{p,q} \to A_{p,r}A_{r,q}$.
+\end{itemize}
+
+Now let's examine that latter case; clearly the first and last operations push and pop the same string. Thus, the first and last intermediate states (call them $A_{r,s}$) between $p,q$ must also have a start symbol that takes from empty stack to empty stack. We are out of time, but the approach should already be clear; we add another production rule $A_{p,q} \to a A_{r,s}b, a,b \in \Sigma^*$ with $a,b$ on the input tape. We'll flesh this out formally next class. 
+
+\end{document}

@@ -1,0 +1,16 @@
+\BOOKMARK [0][-]{chapter.1}{Key Concepts}{}% 1
+\BOOKMARK [0][-]{chapter.2}{05/01/15 \204 Introduction}{}% 2
+\BOOKMARK [1][-]{section.2.1}{What are problems/computations?}{chapter.2}% 3
+\BOOKMARK [0][-]{chapter.3}{07/01/15 \204 Finite Automata}{}% 4
+\BOOKMARK [1][-]{section.3.1}{Characterising FA}{chapter.3}% 5
+\BOOKMARK [1][-]{section.3.2}{Nondeterministic FA}{chapter.3}% 6
+\BOOKMARK [1][-]{section.3.3}{NFA-FA equivalence}{chapter.3}% 7
+\BOOKMARK [0][-]{chapter.4}{09/01/15 \204 Regular Expressions}{}% 8
+\BOOKMARK [0][-]{chapter.5}{12/01/15 \204 Pumping Lemma}{}% 9
+\BOOKMARK [1][-]{section.5.1}{Pumping Lemma}{chapter.5}% 10
+\BOOKMARK [1][-]{section.5.2}{Pushdown automata}{chapter.5}% 11
+\BOOKMARK [0][-]{chapter.6}{14/01/15 \204 Context-free grammar}{}% 12
+\BOOKMARK [0][-]{chapter.7}{16/01/15 \204 Wworking with CFGs}{}% 13
+\BOOKMARK [1][-]{section.7.1}{Ambiguity and CFGs, Chomsky Normal Form}{chapter.7}% 14
+\BOOKMARK [1][-]{section.7.2}{Properties of CFGs}{chapter.7}% 15
+\BOOKMARK [1][-]{section.7.3}{NPDA and CFG Equivalence}{chapter.7}% 16

@@ -1,0 +1,88 @@
+\documentclass{report}
+\usepackage{amsmath, amssymb, hyperref}
+
+\begin{document}
+
+\title{Frontiers in Physics}
+\author{Yubo Su}
+\date{ }
+
+\maketitle
+
+\tableofcontents
+
+\url{http://www.pma.caltech.edu/~physlab/2012_Ph10.html}
+
+\section{October 5 - Alan Weinstein - LIGO}
+
+Pre Questions:
+\begin{itemize}
+\item How does one arrive at the $10^{-21} \mathrm{RMS}$ order of magnitude in the abstract? i.e. How does the math work through general relativity?
+\item Given the orders of magnitudes of difference, would there not be far far too much noise? e.g. if a bird lands on top of the LIGO, would it not trigger an equivalently strong gravitational wave due to the orders of magnitude difference in distance? Or is LIGO's sole purpose to prove gravitational waves regardless of mechanism and not just astrophysical gravitational waves?
+\item Is outgassing gas flowing out of the tubes? Or is it flowing in? I feel like the inside of the tube should be a perfect vacumn, so shouldn't we be trying to force a full vacumn and prevent gasses from flowing in?
+\item How does a Fabry-Perot cavity work? (\emph{answered} - beam splitters + resonance gives stronger signals that are each only affected in perpendicular axes, so sensors will only detect effects that affect one arm at a time; anything that affects both will be cancelled out!)
+\item What is shot noise and how is it generated?
+\item What is Newtonian gravity noise? How does it contribute to the LIGO noise problems?
+\item How does light recycling work? I can understand the resonance principle, but...is it a semitransparent mirror that lets light through but still lets light bounce around?
+\item Similarly to the earlier question, how does LISA account for space debris affecting measurements or even instruments?
+\end{itemize}
+
+Gravitational waves are currently undetected. Gravitational waves are a merging of general relativity, astrophysics of black holes, extreme precision measurements, and data analysis extraction from noisy sources.
+
+$$G_{\mu \nu} = 8 \pi T_{\mu \nu}$$
+
+Einstein's idea of warped spacetime generates the truly correct mechanics, better than newton, for weak gravity. However, in strong gravity, such as black hole or big bang, Einstein remains untested. We hope to test general relativity in situations such as orbiting suns, because there will be changes in gravity that travel outwards at the speed of light, or so Einstein says. These waves will warp spacetime, or so theories predict. LIGO will try to predict it. 
+
+People know that general relativity breaks down inside black holes or some other places, where quantum effects are much stronger. These are places of extreme gravity. Regardless of whether we find gravitational waves, Nobel prizes will be awarded, as soon as we hit a sensitivity at which point gravitational waves cannot exist, because that would overthrow Einstein.
+
+We postulate the existence of a graviton (spin = 2, a tensor particle), which is a particle that carries gravity. This is the result of quantizing general relativity.
+
+Theoretically, because dipoles generate EM waves but because there's only one type of mass (so can't be dipole; can't be monopole by energy conservation) so we use quadrupole rotation, rotating masses at high enough velocities should generate significant gravitational waves.
+
+The formula is:
+
+$$h_{\mu \nu} = \frac{2G}{c^4r} \ddot{I_{\mu \nu}} \Rightarrow h = \frac{4pi^2GMR f_orb^2}{c^4r}$$
+
+We use neutron stars, which is literally just a huge nucleus. We want two neutron stars to orbit. 2 stars with the mass of the sun orbiting each other $20$km apart will rotate at 400hz, or $0.2c$. If they're approximately the distance to andromeda, $h$ is on the order of $10^{-21}$. $h$ is the stress constant, $\frac{\Delta h}{h}$. 
+
+Noises are definitely on that $h$ order of magnitude though, so we use something similar to the cocktail party effect to dig deeply into the noise and search for such waveforms. We are predicting such waveforms, but we don't know for sure, so data mining is hard.
+
+Gravitational waves mean orbits lose energy, so the stars come closer together and the stars actually produce more gravitational waves as time goes by. We discovered a pulsar that pulsed at approximately $17$Hz, but it wasn't stable at that frequency because it orbited another star that dopplershifted the signal in $8$ hour periods. But over the course of twenty five years, this $8$ hour period began to decrease. A general relativity prediction then came along and predicted the data to within $0.1\%$ over the course of $35$ years, which is why we suspect gravitational waves to exist. The predicted timescale for its decay is $300$ million years, so we know that these events occur around us, because it takes less time than age of universe. Probabilities then dictate that LIGO will see ten or fifteen per year.
+
+We have seen new things in the universe upon shifting frequencies before, such as switching into infrared, microwaves, gamma, etc. Gravity Waves are completely unpredictable though, because these are waves of spacetime rather than in spacetime, so we're very excited! :> 
+
+Mirrors in inteferometers are hanging on pendulums because they are mechanical filters. But also, since the mirrors have heat, they vibrate naturally. To touch the mirrors with minimal amounts of contact, which screws with the bells because they resonate too well.
+
+\section{October 12 - Jamie Bock - Microwave background}
+
+Note that the farther the light is coming from the more ancient the light is. So James Webb space teloscope can see more ancient history than the Hubble could. The farthest back we can then see is the first light, which came around 380,000 years into the history of the universe. Going back in history, it is clear that the smaller/hotter universe had free protons and free electrons (Hydrogen is ionized). There was a predominance of photons due to matter-antimatter collisions, which were contained within the universe due to the dense electron cloud. The photons then, because of the ridiculous number of bounces, take on the standard localized temperature. The photons are also screwing with the formation of atoms. However, as soon as the universe cools to 3000k, the mass no longer absorb photons, and the universe suddenly becomes transparent to radiation. We can then try to study this background radiation via its interactions with what we can see (i.e. stars, etc.). 
+
+The cosmic background radiation actually fits pretty much perfectly with black body radiation. Additionally, if we plot the energy of all photons we receive with respect to wavelength, CMB accounts for over half of the radiation we receive. Even more fascinatingly, the CMB is almost perfectly uniform across the sky (while the visible spectrum obviously has points where it is concentrated). In fact, the universe's expansion means that most parts of the sky could never have causally influenced one another, so how does it have the same temperature?
+
+We answer this by applying Newton's law for a homogenous and isotropic universe and then applying General relativity too to find equations of motion. We will notice that in general relativity a dependency on pressure exists (because pressure is energy and thus contributes to the "`mass"' of the universe), which showed that the universe was unstatic. Einstein wasn't happy with this, and tried to force the universe to be static and non-expanding, which was disproved by Hubble.
+
+It turns out that if one can create negative pressure, exponential expansion holds. This then gives rise to an idea that space-time grows faster than the speed of light (!) which allows for the universe to have causal relationships even outside of the event horizons. So if we then examine the CMB again, we can cut out the monopole factor, correct for dopplershift and we will find variances in temperature on the order of microKelvins. Inflation is then attributed to be able to blow up quantum fluctuations to the scale of galaxies. We then put forth the proposition that the early universe (plasma-like) has resonant frequencies in time. If we examine these waves, we will see that plasma accumulates and un-accumulates over time in time with these resonant frequencies.
+
+If we want to observe CMB, we need to find high, dry place because atmospheric water absorbs microwaves. Also, by inflation, the universe should be flat, so we can investigate sound waves from the CMB through the "`lens"' of the universe to see whether universe is flat or curved in some way. It turns out to be flat, Euclidean. In fact, we will see from data that atoms comprise only 4.6\% of the universe, while dark matter has 23 and dark energy 72. Dark energy means that the universe is expanding. Satellites generate data that corresponds very well to the earlier resonant frequencies in time.
+
+We can find dark matter by checking the rotations of galaxies, where because densities of stars falls off with distance rotation speeds should decrease. It doesn't. Hence dark matter!
+
+We are currently inspecting the polarization of CMB, which arises from the scattering of CMB by electrons. This is much harder to detect, but a local quadrupole will generate polarizations. This can occur either from density or gravitational waves. Gravitational waves will produce different oscillations and polarizations. 
+
+\section{October 19 - NuSTAR}
+
+NuSTAR is the first instrument that can measure in high end of x-ray spectrum. X-rays are very hot bodies to emit radiation at such wavelengths. They are also very penetrating through nebula clouds etc., but the atmosphere blocks x-rays a lot by merit of its composition. We can answer the question of why black holes radiate by x-rays. Black holes live at the middle of every galaxy, which means that material is heated and accelerated to release high-energy radiation such as x-ray. Because many galaxies are obscured by debris, x-ray gives better vision of these galaxies. Black holes that are at centers of galaxies actually correlate with size of galaxy, which is weird because black holes are far too unmassive to affect such a large distance. Current theories suggest that black holes form first and then galaxies form around them. 
+
+x-rays have indicies of refraction extremely close to $1$, meaning that refractive indicies are too difficult to build. Wasn't paying attention...lecture was mostly boring and had essay to write.
+
+
+\section{November 2 - Condensed Matter Physics}
+When people examine Higgs Boson, energies are on scale of $10^{11}\mathrm{eV}$ and $10^{-18}$m. Then astrophysics is $10^{-30}$eV and $10^{23}$m. Condensed matter physics is on energy scales of $10^-3$eV and $10^-9$m.
+
+Groups of bodies self-organize to create different phases, such as schools of fish, which can either be random or swirl into a vortex when around predators. Different phases of condensed matter are distinguished by their ``order.'' Landau then figured out how to quantify order in a system. ``Order'' is defined by broken symmetry and the emergence of an order parameter. The order parameter in the case of the water $\to$ ice transformation is the degree of correlation between positions of H2O molecules. There are many methods to measure order parameter of a system. There are such a thing called quasi-crystals (Penrose tilings are an example) have local crystallization but are mostly broken translational symmetry. 
+
+Then, within a solid, electrons can assume phases that cause gaseous, liquid, and solid phases. There are many examples of broken symmetry electronic phases, such as charge order, spin order, orbital order
+
+\section{I give up}
+I give up taking notes. Physics 10, screw note-taking. I'll only be back if a lecture is interesting. ttfn!
+\end{document}

@@ -1,0 +1,275 @@
+\documentclass[10pt,landscape, twocolumn]{article}
+\usepackage{fancyhdr, amsmath, amsthm, amssymb, hyperref, paracol, graphicx, setspace, lmodern, tikz}
+\usepackage[T1]{fontenc}
+\usepackage[margin=0.5in, top=0.8in,bottom=0.8in]{geometry}
+\usepackage[version=3]{mhchem}
+\newcommand{\scinot}[2]{#1\times10^{#2}}
+\newcommand{\bra}[1]{\left<#1\right|}
+\newcommand{\ket}[1]{\left|#1\right>}
+\newcommand{\dotp}[2]{\left<\left.#1\right|#2\right>}
+\newcommand{\rd}[2]{\frac{d#1}{d#2}}
+\newcommand{\pd}[2]{\frac{\partial#1}{\partial#2}}
+\newcommand{\rtd}[2]{\frac{d^2#1}{d#2^2}}
+\newcommand{\ptd}[2]{\frac{\partial^2 #1}{\partial#2^2}}
+\newcommand{\norm}[1]{\left|\left|#1\right|\right|}
+\newcommand{\abs}[1]{\left|#1\right|}
+\newcommand{\Log}[0]{\mathrm{Log}}
+\newcommand{\tensor}[1]{\overset{\leftrightarrow}{#1}}
+\newcommand{\Arg}[0]{\mathrm{Arg}}
+\newcommand{\Res}[0]{\mathrm{Res} }
+\newcommand{\expvalue}[1]{\left<#1\right>}
+\usepackage[labelfont=bf, font=scriptsize]{caption}
+\everymath{\displaystyle}
+
+\begin{document}
+
+%\doublespace
+\pagestyle{fancy}
+\rhead{Yubo Su --- CS11, C track}
+%\setlength{\headheight}{15pt}
+
+\section*{Day 1}
+
+Course website is \url{http://courses.cms.caltech.edu/cs11/material/c/mike/index.html}. Assignments are due Monday night, midnight. K\&R is the bible.
+
+C was made to be a very thin level above machine code, making it very fast/memory efficient. Hello World program is below
+\begin{verbatim}
+#include <stdio.h>
+int main(void)
+{
+    printf(``hello, world!\n'');
+    return 0;
+}
+\end{verbatim}
+
+Assume the above code is in \texttt{hello.c}, then to compile we use \texttt{\$ gcc hello.c -o hello} and then run the executable.
+
+Two kinds of source code files, code \texttt{.c} and header \texttt{.h} files. Compiler turns source code into object code \texttt{.o} which is ``linked'' to executable. \texttt{gcc} is both a compiler and linker. Then what we did above has three steps, compiles to object code, links it together to an executable, and deletes the object file (can be kept via an arg to \texttt{gcc}).
+
+We can do them individually via \texttt{gcc -c hello.c} to generate \texttt{hello.o}, then we can link via \texttt{gcc hello.o -o hello}. Next lecture when we talk about make files we will see how the object file can be useful.
+
+C is not object-oriented, and programs are built up of \emph{functions}. The \texttt{main()} function is the big daddy of functions, where execution starts/ends.
+
+C has data types \texttt{int, char, float, double}. Variable names can have numbers as long as they don't start with a number. Booleans are $0$ is false, $1$ is true. Strings are arrays of characters, so \texttt{char some\_string[9] = "woo hoo!";} (note that the last character of the string is implicit \texttt{\textbackslash 0}). C has operators, surprise surprise, all the usual shabang.o
+
+If no parameters accepted, define function using \texttt{void}. Declare local variables at top of function. Global variables suck unless constants. \texttt{printf()} function to print things. \texttt{\#include <stdio.h>} is a preprocessor directive. Conditionals are like Java.
+
+\section*{Day 2}
+
+More preprocessor commands, \texttt{\#define} is an \emph{absurdly} common one. It performs a purely textual substitution, no typing. \emph{Magic numbers} are terrible! Ternary operators are commonly coupled with \texttt{\#define} for simple functions, i.e. \texttt{\#define MAX(a, b) (((a) > (b)) ? (a) : (b)}. 
+
+Functions must be defined before use; if call function1 in function2 and function1 source is later in source than function2 then bug compiler! We use function prototypes to get around this, just prototype is enough. 
+
+\texttt{break} exits nearest enclosing loop, \texttt{goto} can exit more loops labelled \texttt{<label>:}.
+
+IO. \texttt{printf()} outputs to \texttt{stdout}. \texttt{fprintf(stderr, <message>)} is the ``correct'' way to write error messages. Note that \texttt{printf()} and \texttt{fprintf(stdout,)} are equivalent. Recall \texttt{scanf()} which rceads from \texttt{stdin}. Note that \texttt{scanf()} returns whether successful, \emph{not} what was actually read; \texttt{EOF} will be returned by \texttt{scanf()} on invalid read.
+
+Write comments! Function of function, args, return value. \texttt{make} is a program that takes care of compiling/everything management. \texttt{Makefile} has compile info. Example makefile
+\begin{verbatim}
+program: program.o
+    gcc program.o -o program
+program.o: program.c program.h
+    gcc -c program.c
+clean:
+    rm program.o program
+<target>: <dependencies>
+    <commands>
+\end{verbatim}
+
+Only will compile changed files!
+\section*{Day 3}
+
+Arrays! And Command line args. And assertions. Today. Yes.
+
+Arrays are linear sequences of data objects, can be different types! Uninitialized array space contains junk! Arrays can be initialized
+\begin{verbatim}
+int my_array[10];
+int my_array[5]; = {1, 2, 3, 4, 5};
+int my_array[] = {1, 2, 3, 4, 5};
+/* OKAY! */
+int my_array[10] = {1, 3, 5};
+/* partially initialized, rest of array is ZEROED! */
+\end{verbatim}
+
+Note that \texttt{int my\_array[10] = {0};} zeroes the array! So clever. If we try to access outside array bounds, C doesn't check array bounds, so works just fine, no errors. Note that the curly brace syntax is only used during declarations, cannot be used on a separate initialization line.
+
+2D arrays are okay, but are laid out in memory just like extra long 1D array. Initializing 2D array, can be written
+\begin{verbatim}
+int my_array[2][3];
+/* not initialized */
+int my_array[2][3] = { { 1, 2, 3 }, { 4, 5, 6 } };
+/* initialized */
+int my_array[2][] = { { 1, 2, 3 }, { 4, 5, 6 } }; /* okay */
+int my_array[][3] = { { 1, 2, 3 }, { 4, 5, 6 } }; /* okay */
+int my_array[][] = { { 1, 2, 3 }, { 4, 5, 6 } }; /* NOT OKAY */
+/* initialized */
+\end{verbatim}
+
+C passes by value, not by reference.
+
+Command line args! Recall that \texttt{main} function includes \texttt{argc, argv} in header! \texttt{argc} is number of arguments, \texttt{argv} are the actual arguments, as an array. As expected, \texttt{argv[0]} is program name. \texttt{atoi(), atof()} converts string to \texttt{int, float} respectively, in \texttt{<stdlib.h>}. Then \texttt{strcmp()} returns integer, $0$ if equal, in \texttt{<string.h>}. Do not use \texttt{==} because compares pointers!
+
+Assertions can be used easily! Make sure to include \texttt{<assert.h>}. Assert very useful to check whether elements are sorted. Use via \texttt{assert(<value>)}, will halt if \texttt{<value> == 0}. We will have \texttt{sorted(int arr[], int nelems)} to check whether our sorted array is sorted, for our assignment.
+
+Assertions should only be used for logical correctness of code, debugging purposes. Next week pointers!
+\section*{Day 4}
+
+Keep in mind that C was written to eliminate machine code, but needs to be low level too. Has low-level access to addresses/pointers. Address of variable is written \texttt{\&x} and pointers are variables that hold addresses. Consider then when we write the following code
+\begin{verbatim}
+int i = 10;
+int *j = &i
+\end{verbatim}
+then there will be an address with name \texttt{i} and some address pointing to a location in memory containing $10$. Then therewill also be an address with name \texttt{j} with some address pointing to a location in memory containing contents equivalent to the address of \texttt{i}! Also dereferencing operator \texttt{*}.
+
+Correct way to print hex numbers in \texttt{printf()} is using \texttt{\%x}.
+
+Pointers allow us to call by reference. Short lecture! Next is pointers/arrays untold story.
+
+\section*{Day 5}
+
+Pointer arithmetic exists and works and can be used! Keep in mind though that the pointer increments/decrements based on its typing; can be dangerous if we're out of scope! Wwe can get the size of a type using \texttt{sizeof()}; note that this is an operator not function b/c it takes a type not an argument.
+
+Arrays are actually just syntactic sugar for pointers; there exist only memory chunks and pointers to memory chunks in C! Note that pointer addition is pretty slow compared to pointer increments; can get speedups by keeping track of pointers manually and incrementing rather than looking for the 900th element of an array.
+
+DAM! Dynamic memory allocation. If we want dynamically sized arrays we have to use DAM. Three library functions
+\begin{verbatim}
+void *malloc(int size)
+void *calloc(int nitems, int size)
+void free(void *ptr)
+\end{verbatim}
+which we have to include \texttt{stdlib.h} to use. \texttt{malloc} will just return the pointer to the address in memory, and it will reserve as many bytes as passed as argument. IT CAN FAIL; we will talk about this in a second. \texttt{calloc} takes two arguments, number of ``things'' to be allocated and number of bytes per ``thing.'' It will zero the momory, so it's slightly slower.
+
+Sometimes these will fail! Maybe no memory or something. If so they will return \texttt{NULL}; ALWAYS ALWAYS \textbf{ALWAYS} check for this! For example
+\begin{verbatim}
+if(arr == NULL)
+/* can also do "if(!arr)" since NULL=0 */
+{
+    fprintf(stderr, "out of memory!\n");
+    exit(1);
+}
+\end{verbatim}
+
+Lastly comes \texttt{free}, which frees the DAM'd memory. Curious note: when \texttt{free()} is called it doesn't instantly erase the memory, only marked for removal by the OS, so sometimes program can still access \texttt{free}'d memory! Note that only memory on the heap can be returned; memory on the stack is marked for removal as soon as out of scope.
+
+Memory leaks suck poop, but don't free memory on the stack either! Blah stuff on statically vs dynamically allocated memory; Brian makes just as much sense, he should be a lecturer. Memory leaks are one of the \emph{worst} kinds of bugs because no harm is done! Hard to track down and can slow down program. \texttt{valgrind} is the holy grail of memory leak checking, but Mike will supply us with a cheap version. TOO BAD I'M A VALGRIND USER ALREADY \textbf{YES}.
+\section*{Day 7}
+
+Last lecture we covered structs, \texttt{typedef} and linked lists. I missed it by accident sorry.
+
+This week we will talk about hash tables, more on the C preprocessor, \texttt{extern} and \texttt{const}. 
+
+Hash tables are a new data structure that conceptually is just an array indexed  with strings. This yields $O(1)$ constant time. What we want is associate a string (key) with a \emph{value}. We generate what is called a \emph{hash value} from the key, such that different keys generate different hash value. Hash value is an index to an array of linked lists (array of pointers to \texttt{Node}s); the array starts with \texttt{NULL} pointers. Note that no linked list should ever get large in the hash table else hash table is ineffective.
+
+Let's do a hashing example, turning a string into a key for the hash table. Take the string as a list of \texttt{char} which are each integers $0-127$ (C allows us to treat chars directly as integers) and we can just sum over the string. Note that strings are terminated with \texttt{NUL} as opposed to \texttt{NULL} the null pointer (They are numerically equivalent but conceptually different so please be careful else Mike be sad). We can take this sum to be our index into the array.
+
+Obviously there will be many hash collisions, so an easy extension is to multiply each character by some constant; subject of much research!
+
+To find a value in a hash table then we generate the value with the key and lookup; if the location is \texttt{NULL} return ``not found'', else we iterate through the linked list and compare directly to our value. To add a value we just append it to the correct LL! \textbf{Note: It is probably easiest to append to LL at the beginning.}
+
+Lab 7 will be just a routine application of hash tables; one particular memory leak will abound! Be careful.
+
+Let's now discuss the C preprocessor. Sometimes want to \emph{conditionally compile code}, decide whether to compile code while compiling! An example of debugging code is
+\begin{verbatim}
+#define DEBUG
+    \dots
+#ifndef DEBUG
+    do stuff
+#endif
+\end{verbatim}
+
+Note that while \texttt{DEBUG} isn't defined to be anything, it is defined! This is easy when debugging code pops up in a lot of places. An alternative way to do this is \texttt{gcc -DDEBUG} to define DEBUG (useful for things like \texttt{Makefile}!). We can also use \texttt{ifndef}.
+
+We can actually use \texttt{\#if} and \texttt{\#elif} and not just for definitions! For example \texttt{\#if REVISION == 1}, though this is now obselete with version control systems.
+
+We can also talk about include guards! Multiple inclusion of header files \emph{can} cause problems; defining a struct twice is an error. Include guard
+\begin{verbatim}
+#ifndef FOO_H
+#define FOO_H
+/* code */
+#endif
+\end{verbatim}
+
+Clever right? Oftentimes people will use underscores on either side of the filename, not necessary. 
+
+Last feature, \texttt{extern}. Global variables \texttt{extern int a} such that value is shared between files that include it!
+
+Last-er feature, \texttt{const}, newer way to define constants \texttt{const int C = 100;} gives typechecking! 
+
+Next week is the last lecture; we will not cover certain things (function pointers), but we will discuss virtual machines and more integer types \texttt{short, long, unsigned} and wrap up!
+\section*{Day 8}
+
+Last week we covered hash tables and C preprocessor. We will talk about other integral types, bitwise operators, \texttt{switch} operator, virtual machine assignment.
+
+We usually use \texttt{int} to represent integers, but there are a few more that we can use: \texttt{short, long, char} and \texttt{unsigned} varieties. Note that \texttt{char} is always $8$-bit number (ASCII).
+
+This raises two questions: why use \texttt{unsigned} or shorter/longer integer types? Using shorter type is to save memory, and unsigned types get an extra bit. \texttt{unsigned} types can also be used as an array of bits. Shorter integer type just saves space. Guaranteed is char < short < int < long in terms of bit length, and in general they are $8,16,32,32$ bits. \texttt{unsigned} assumes \texttt{int}.
+
+A cool application is to use bitwise operators for bit arrays in \texttt{unsigned}'s! There are bitwise operators OR, AND, XOR, NOT being \texttt{|, \&, \^{} , ~}. Don't use short-circuiting like logical \texttt{||, \&\&}, but if want no short circuiting then can use these.
+
+XOR has an interesting property; XOR-ing with $0001000$ will flip that bit; this is called a \emph{mask}. Two more bitwise operators, left/right shift \texttt{< <. > >}, faster way to multiply/divide by two.
+
+Then \texttt{switch} statements. Syntax
+\begin{verbatim}
+switch (i)
+{
+    case 0:
+        do;
+        break;
+    case 1:
+        do;
+        break;
+    default:
+        do;
+        break;
+}
+\end{verbatim}
+
+Looks much nicer than \texttt{else if}s! Can only be used on an integer types. Sometimes we will want to omit the \texttt{break} to \emph{fallthrough} the switch statement cases. In general we want to comment the \texttt{/* FALLTHROUGH */}; some compilers will recognize this and not warn about the lack of break statement!
+
+We now discuss virtual machines. The biggest example of VM is J(ava)VM. We will implement such a sort of virtual machine for a mythical computer's assembly programming language. Our machine will have only \texttt{int}s and instructions will act on \texttt{int}s. Each instruction memory contains 65536 memory locations, each location being a single byte (\texttt{unsigned char}). We will then use an \texttt{unsigned short} to refer to memory. We will have 16 registers, so we only need 4 bits to determine location; we will use 8, i.e. \texttt{unsigned char}.
+
+We then have a stack which is 256 deep, so we need 8 bits to represent all locations in the stack. We have a \emph{stack pointer} to keep track of where we are in the stack (for our VM, it will be just an index). Stacks have only two operations, \texttt{push, pop}. Push will add to stack pointer and repoint, pop will pop from stack pointer etc. The stack pointer points to the first unused location and the \emph{TOS} (top of stack) refers to the first used location. Note that when we pop, we can either choose to erase or not the old stack element; we will overwrite it anyways. 
+
+VM instructions are often referred to ``bytecode'' because all instructions can be indexed by a byte (8 bits, 256 operators). Our VM will have only 14 operands. These are
+\begin{itemize}
+    \item \texttt{NOP} (0x00) - does nothing
+    \item \texttt{PUSH} (0x01) - \texttt{PUSH <n>} pushes integer ont stack
+    \item \texttt{POP} (0x02) - removes top element from stack
+    \item \texttt{LOAD} (0x03) - \texttt{LOAD <r>} pushes contents of register onto stack
+    \item \texttt{STORE} (0x04) - \texttt{STORE <r>} pops top of stack and stores it onto register
+    \item \texttt{JMP} (0x05) - \texttt{JMP <i>} sets instruction pointer to <i>
+    \item \texttt{JZ} (0x06) - JMP only if TOS is zero (also pops stack).
+    \item \texttt{JNZ} (0x07) - JMP only if TOS is nonzero (pops stack).
+    \item \texttt{ADD} (0x08) - pops top two elements and pushes back their sum
+    \item \texttt{SUB} (0x09) - pops top two elements and pushes back their difference
+    \item \texttt{MUL} (0x0a) - pops top two elements and pushes back their product
+    \item \texttt{DIV} (0x0b) - pops top two elements and pushes back their quotient
+    \item \texttt{PRINT} (0x0c) - pops stack and prints it
+    \item \texttt{STOP} (0x0d) - halts program
+\end{itemize}
+
+We will write the program in our assembly language (actually, he gives us this) and we write the interpreter. We will only use two  registers; register $0$ starts at $10$ and register $1$ starts at $1$, and at each step register $1$ multiplies by register $0$ and decrement $0$. The assembly is
+\begin{verbatim}
+1 load 0
+jz 2
+/* multiply them */ 
+load 1
+load 0
+mul
+store 1
+/* subtract register 0 */
+load 0
+push 1
+sub
+store 0
+jmp 1
+2 load 1
+print
+stop
+\end{verbatim}
+
+We must pull off the byte-code interpreter; can do in about 70 lines of code. Error checking: popping empty stack, stack overflow. 
+
+Natural next-steps are CS11 tracks, CS11 project track, CS24. 
+
+\end{document}

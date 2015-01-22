@@ -1,0 +1,204 @@
+\documentclass[10pt]{article}
+\usepackage{fancyhdr, amsmath, amsthm, amssymb}
+\usepackage[margin=0.5in, top=0.8in, bottom=0.8in]{geometry}
+\newcommand{\rtd}[2]{\frac{d^2#1}{d#2^2}}
+\newcommand{\ptd}[2]{\frac{\partial^2 #1}{\partial#2^2}}
+\newcommand{\rd}[2]{\frac{d#1}{d#2}}
+\newcommand{\pd}[2]{\frac{\partial #1}{\partial#2}}
+\everymath{\displaystyle}
+
+\usepackage{tikz}
+\newcommand{\abs}[1]{\left|#1\right|}
+\let\Re\undefined
+\let\Im\undefined
+\DeclareMathOperator{\Re}{Re}
+\DeclareMathOperator{\Im}{Im}
+
+\begin{document}
+
+\pagestyle{fancy}
+\rhead{ACM95c --- Review Session Notes}
+
+List of topics
+\begin{itemize}
+    \item Series solutions/separation of variables
+        \begin{itemize}
+            \item with nonhomogeneous BCs
+            \item with source terms
+            \item in extra dimensions
+            \item using various other eigenexpansions such as Bessel functions
+        \end{itemize}
+    \item Transforms: fourier, laplace, sine, cosine
+    \item Problems will be mostly about the heat equation
+\end{itemize}
+
+It is difficult to tell what method to use for what problems some times. Let's do some practice problems
+\begin{itemize}
+    \item $u_t = u_{xx}$ over $0 < x < \infty$ for $u(0,t) = g(t)$ and $u(x,0) = f(x)$: valid solutions include
+        \begin{itemize}
+            \item Laplace transform in time, solve ODE for $U(x,s)$ and inverse transform.
+            \item Sine transform, because Dirichlet BC ($u(0,t) = g(t)$ as opposed to $u'(0,t)$).
+            \item If we tried to Laplace transform in space, we recall that the Laplace transform acts on the second derivative $dx^2$ while producing both $u(x=0)$ and $u'(x=0)$ terms, which is problematic! Therefore, since we don't have conditions on $u'$ we cannot Laplace transform in space.
+            \item If our problem were over $-\infty < x < \infty$ then obviously a full Fourier transform is more natural, because nothing else has BC dependences that work well with the $\infty$s.
+        \end{itemize}
+    \item What about $u_t = u_{xx} + u_{yy} + u_x + q(x,y,t)$ with $u(0,y,t) = u(1,y,t) = u(x,0,t) = u(x,1,t) = 0$ and $u(x,y,0) = f(x,y)$?
+        \begin{itemize}
+            \item A sine transform (or any transform for that matter) might not work well (as was suggested by a classmate) because it doesn't play well over the finite domain.
+            \item A sine series expansion seems to get a little closer, but there will still be some random terms floating around that don't quite cancel well, it seems.
+            \item A separation of variables approach seems best, so that we will obtain some S-L problem whose eigenfunctions are the natural expansion for the problem. 
+        \end{itemize}
+\end{itemize}
+
+Let's go ahead and work out this second example first before we discuss anything further. We begin of course by ignoring the source term and solving for the general solution (so also ignore ICs). This means that we make ansatz $u = T(t)X(x)Y(y)$, which plugged through our PDE gives
+\begin{align}
+    T'XY &= TX''Y + TXY'' + TX'Y\\
+    \frac{T'}{T} &= \frac{X''}{X} + \frac{Y''}{Y} + \frac{X'}{X}
+\end{align}
+
+We then generally want to separate this into a spatial coordinate on one side and everything else on the other. It is then natural that we should want to isolate $Y(y)$ first because it obeys a less complicated ODE, and we obtain
+\begin{align}
+    \frac{T'}{T} - \frac{X''}{X} - \frac{X'}{X} &= \frac{Y''}{Y} = \lambda
+\end{align}
+which obviously yields solutions $Y'' = \lambda Y$. We then know obviously that $\lambda$ will be negative, so we solve and obtain $Y_n(y) = \sin(n\pi y)$ with $\lambda = -n^2\pi^2$. Then we have
+\begin{equation}
+    \frac{T'}{T} - \frac{X''}{X} - \frac{X'}{X} = -n^2\pi^2
+\end{equation}
+and then we write again
+\begin{equation}
+    \frac{T'}{T} = \frac{X''}{X} = \frac{X'}{X}  -n^2\pi^2 = \mu
+\end{equation}
+with $\mu$ a new constant, and we solve for $X$ which obeys ODE
+\begin{equation}
+    X'' + X' - (n^2\pi^2 + \mu)X = 0\label{5.16.reviewODE}
+\end{equation}
+subject to $X(0) = X(1) = 0$. Let's take this to S-L form $\left(\rd{}{x} - q(x)y + \lambda r(x)y = 0\right)$ so that we can understand the nature of the solutions (it doesn't help us solve for $\mu$ eigenvalues though), and we obtain form
+\begin{equation}
+    \rd{}{x}\left( e^xX' \right) - (n\pi)^2e^xX - \mu e^xX = 0
+\end{equation}
+with $\mu$ our eigenvalue. Note that $r(x) = e^x$ our integrating factor! This will be important in the orthogonality relations that we must use later. But to actually solve the ODE we return to form \eqref{5.16.reviewODE}, which is a second order ODE with constant coefficients, which solves out easily (via ansatz $X = e^{mx}$)to
+\begin{align}
+    0 &= m^2 + m - \left( (n\pi)^2 + \mu \right)\\
+    m_\pm &= -\frac{1}{2} \pm \sqrt{\frac{1}{4} + (n\pi)^2 + \mu}\\
+    X(x) &= c_1e^{m_x+} + c_2e^{m_-x}
+\end{align}
+
+We then apply BCs to this, $X(0) = X(1) = 0$. Then it is first evident that $m_{\pm} \in \mathbb{R}$ cannot satisfy this, so the square root must be imaginary. This means our full solution looks like sines and cosines
+\begin{equation}
+    X(x) = e^{-\frac{x}{2}}\left[ c_3\sin\left( x\frac{\sqrt{\frac{1}{4} + (n\pi)^2 + \mu}}{i} \right) + c_4\cos\left(x\frac{\sqrt{\frac{1}{4} + (n\pi)^2}+\mu}{i}\right) \right]
+\end{equation}
+
+Wow that's a mouthful! But secretly, the cosines fall out because $X(0) = 0$, and $X(1) = 0$ bounds the sine term and we find (obviously we should have chosen $\mu \to -\mu$)
+\begin{align}
+    m\pi &= \sqrt{-\frac{1}{4} - (n\pi)^2 - \mu}\\
+    X_m(x) &= e^{-\frac{x}{2}}\sin mx
+\end{align}
+
+Then finally,we know that these $X_m$ are orthogonal such that $\int\limits_{0}^{1}X_mX_{m'}e^x\;dx = \delta_{mm'}\int\limits_{0}^{1}X_m^2e^x\;dx$. ${3 \over 2} \frac{3}{2}$.
+
+Finally we can execute the series expansion. We write
+\begin{align}
+    u(x,y,t) &= \sum\limits_{n,m=1}^{\infty}a_{nm}(t)X_m(x)Y_n(y) & q(x,y,t) &=\sum\limits_{n,m=1}^{\infty}q_{nm}(t)X_m(x)Y_n(y) & f(x,y) &= \sum\limits_{n,m=1}^{\infty}f_{nm}X_m(x)Y_n(y)
+\end{align}
+with the coefficients $f_{mn}, q_{mn}$ determined by
+\begin{align}
+    f_{n,m} &= \frac{\int\limits_{0}^{1}\int\limits_{0}^{1}f(x,y)e^xX_m(x)Y_n(y)\;dx\;dy}{\int\limits_{0}^{1}\int\limits_{0}^{1}\sin^2(n\pi x)\sin^2(m\pi y)\;dx\;dy}
+\end{align}
+and similarly for $q$. Note the integrating factor goes away because of the $e^{-\frac{x}{2}}$ in the $X_m$. Our equation then looks like (entire equation is summed over $n,m$)
+\begin{equation}
+    a_{nm}'(t)X_m(x)Y_n(y) = a_nm(t)\left(X_m''(x) + X'(x)\right)Y_n(y) + a_nm(t)X_m(x)Y_n'(y) + q_nm(t)X_m(x)Y_n(y)
+\end{equation}
+
+But then recall that $X_m'' + X_m' = (n\pi)^2 + \mu)X_m = \left(-\frac{1}{4} - (m\pi)^2\right)X_m$ so (we can make a further simplification by $Y_n''(y) = -n^2\pi^2 Y_n(y)$) we get
+\begin{align}
+    a_{nm}'(t)X_m(x)Y_n(y) &= a_{nm}(t)\left(-\frac{1}{4} - (m\pi)^2\right)X_m(x)Y_n(y) - n^2\pi^2 a_{nm}(t)X_m(x)Y_n(y) + q_{nm}(t)X_m(x)Y_n(y)\\
+    a_{nm}'(t) &= a_{nm}(t)\left(-\frac{1}{4} - (m\pi)^2\right) - n^2\pi^2 a_{nm}(t) + q_{nm}(t)\\
+\end{align}
+
+This gives us enough information to determine $a_{nm}(t)$ and thus determine $u(x,y,t)$.
+
+Let's solve a new example now, using Fourier transforms. We will exhibit PDE $u_t = ku_{xx} + cu_x$ over $-\infty < x < \infty$ and $u(x,0) = f(x)$. We transform the PDE and obtain (denote $\mathcal{F}(u) = U$ the Fourier transform of $u$)
+\begin{align}
+    U_t = -\lambda^2 kU + ic\lambda U\label{5.16.ODE2}
+\end{align}
+recalling the Fourier transform acting on derivative $\mathcal{F}(u_x) = i\lambda \mathcal{F}(u)$. This is seen through the following derivation (integration by parts carry hard)
+\begin{align}
+    \mathcal{F}(f'(x)) &= \frac{1}{\sqrt{2\pi}}\int\limits_{-\infty}^{\infty}f'(x)e^{-i\lambda x}\;dx\\
+    &= \frac{1}{\sqrt{2\pi}}\left[ f(x)e^{-i\lambda x}\Bigg|_{-\infty}^\infty - (-i\lambda)\int\limits_{-\infty}^{\infty}f(x)e^{-i\lambda x}\;dx \right]\\
+    &= \frac{1}{\sqrt{2\pi}}\int\limits_{-\infty}^{\infty}i\lambda f(x)e^{-i\lambda x}\;dx
+\end{align}
+where the boundary term vanishes because implicit BCs $f(\pm \infty)$ doesn't explode. 
+
+Let's go back now to the ODE after having taken the Fourier transform, \eqref{5.16.ODE2}. This is an ezpz ODE, with solution
+\begin{equation}
+    U(t,\lambda) = A(\lambda)e^{(-\lambda^2k + ic\lambda)t}
+\end{equation}
+
+We then must constrain $A(\lambda)$, via our ICs! We take the Fourier transform of the IC $u(x,0) = f(x) \Rightarrow U(x,\lambda = 0) = F(\lambda)$. Then clearly
+\begin{equation}
+    U(t,\lambda) = F(\lambda)e^{(-\lambda^2k + ic\lambda)t}
+\end{equation}
+
+We must then take the inverse Fourier transform. It is then natural that we convolve for $u(t,x)$, and since we know that Gaussians Fourier transform to Gaussians (specifically, we will use $\mathcal{F}(e^{-ax^2}) = \sqrt{\pi/a}e^{-\lambda^2/4m}$ though maybe this is wrong(I think it's wrong by a factor of $1/\sqrt{2\pi}$ but w/e)) we are almost there. But first, we prove cursorily that $\mathcal{F}(f(\alpha - \beta)) = e^{-i\lambda \beta}\mathcal{F}(f(\alpha))$. 
+
+We are finally ready then to convolve. Let $g(x,t)$ be the inverse Fourier transform of $e^{-\lambda^2 kt}$ (which she tried to write down earlier but I think is incorrect), then (note $*$ denotes convolution)
+\begin{align}
+    u = f(x + ct)*g(x,t) = \frac{1}{\sqrt{2\pi}}\int\limits_{-\infty}^{\infty}f(w + ct) g(x-w,t)\;dw
+\end{align}
+
+Good luck!
+
+{\em \small We look into the Fourier transform of a Gaussian. Consider $u(x) = e^{-ax^2}$, then we wish to compute its Fourier transform
+\begin{align}
+    \mathcal{F}[u(x)] &= \frac{1}{\sqrt{2\pi}}\int\limits_{-\infty}^{\infty}e^{-ax^2}e^{-i\lambda x}\;dx\\
+    &= \int\limits_{-\infty}^{\infty}e^{-ax^2 - i\lambda x}\;dx\\
+    &= \frac{1}{\sqrt{2\pi}}e^{-\frac{\lambda^2}{4a^2}}\int\limits_{-\infty}^{\infty}e^{-a\left(x^2 + \frac{i\lambda x}{a} - \frac{\lambda^2}{4a^2}\right)}\;dx\\
+    &= \frac{1}{\sqrt{2\pi}}e^{-\frac{\lambda^2}{4a^2}}\int\limits_{-\infty}^{\infty}e^{-a\left(x + \frac{i\lambda}{2}\right)^2}\;dx
+\end{align}
+where we have completed the square in the exponent and pulled the term out of the exponent as it is not $x$-dependent. Then we want to evaluate the integral. We make change of variables $y = x + \frac{i\lambda}{2}$, which gives us
+\begin{align}
+    U(\lambda) &= \frac{1}{\sqrt{2\pi}}e^{-\frac{\lambda^2}{4a^2}}\int\limits_{-\infty - \frac{i\lambda}{2}}^{\infty - \frac{i\lambda}{2}}e^{-ay^2}\;dy
+\end{align}
+
+It then looks a bit tricky how to resolve this integral with complex bounds! Thankfully complex analysis gives us this answer pretty easily. Consider the following contour $\mathcal{C}$ in \ref{Contour}
+\begin{figure}[!h]
+    \centering
+    \begin{tikzpicture}[scale=0.2]
+        \draw[<->] (-10,0) -- (10,0);
+        \node[right] at (10,0) {$x$};
+        \draw[<->] (0,-10) -- (0,10);
+        \node[above] at (0,10) {$y$};
+        \draw[dashed,-<] (-8,4) -- (1,4);
+        \draw[dashed] (8,4) -- (1,4);
+        \draw[dashed] (-8,4) -- (-8,0);
+        \draw[dashed] (8,4) -- (8,0);
+        \draw[dashed, ->] (-8,0) -- (-1,0);
+        \draw[dashed] (8,0) -- (-1,0);
+        \draw[thick] (8,-.3) -- (8,.3);
+        \draw[thick] (-8,-.3) -- (-8,.3);
+        \node[below] at (8,-0.3) {$R$};
+        \node[below] at (-8,-0.3) {$R$};
+        \node[right] at (8,4) {$(R,h)$};
+    \end{tikzpicture}
+    \caption{Contour $\mathcal{C}$ in question}
+    \label{Contour}
+\end{figure}
+
+We obviously take the limit as $R \to \infty$. Since the integrand $e^{-az^2}$ is entire over the inside of $\mathcal{C}$, it is clear that the contour integral along $\mathcal{C}$ vanishes (Cauchy-Goursat from 95a). There are then four segments to examine
+\begin{itemize}
+    \item We note that the contour integral vanishes on both ends of height $h$, because $\abs{e^{-az^2}} = e^{-a(\Re z)^2 + a(\Im z)^2}$ and since $\Im z < h$ while $\Re z = R \to \infty$, so by the ML bound ($L = h$) the contributions at the end vanish.
+    \item The horizontal segments are just equal to $\int\limits_{-\infty}^{\infty}e^{-az^2}\;dz - \int\limits_{-\infty + ih}^{\infty+ ih}e^{-az^2}\;dz$ and since everything else vanishes the contribution by the horizontal components must also vanish.
+\end{itemize}
+
+Therefore we find that $\int\limits_{-\infty}^{\infty}e^{-az^2}\;dz = \int\limits_{-\infty + ih}^{\infty+ ih}e^{-az^2}\;dz$. (Optional: The astute reader might wonter why, since the Gaussian is entire, the integral along the real line doesn't vanish if we try closing the real line by a semicircular arc. This is because the contribution along the arc can't be made to vanish by the ML bound because the maximum value on the arc goes with $e^{a(\Im z)^2}$ which is not bounded as $R \to \infty$)
+
+Let's get back to business now. We've shown that we can translate the bounds of our integral by some arbitrary imaginary constant. Thus, we proceed
+\begin{align}
+    U(\lambda) &= \frac{1}{\sqrt{2\pi}}e^{-\frac{\lambda^2}{4a^2}}\int\limits_{-\infty}^{\infty}e^{-ay^2}\;dy
+\end{align}
+
+Then any table of integrals will tell us that the Gaussian integral above is $\sqrt{\frac{\pi}{a}}$, so we finally obtain
+\begin{align}
+    U(\lambda) &= \frac{1}{\sqrt{2a}}e^{-\frac{\lambda^2}{4a^2}}
+\end{align}
+}
+\end{document}
