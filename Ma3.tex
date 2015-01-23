@@ -236,4 +236,46 @@ We go about this by
     P\left( \bigcup_{i=1}^n A_i \right) &= 1 - P\left( \left( \bigcup_{i=1}^n A_i \right)^c \right)\\
     &= 1 - P\left( \bigcap_{i=1}^n A_i^c \right)
 \end{align}
+
+Because the expectation value operator is just the probability for an indicator function, we can rewrite this as
+\begin{align}
+    \mathbf{E}\left(\mathbf{1}\left[\left( \bigcup_{i=1}^n A_i \right)\right]\right) &= 1 - \mathbf{E}\left( \mathbf{1}\left[ P\left( \bigcap_{i=1}^n A_i^c \right) \right] \right)\\
+    &= 1 - \mathbf{E}\prod_{i=1}^n\left( 1 - \mathbf{1}_{A_i} \right)
+\end{align}
+
+Then expanding out using the multinomial identity we can eventually arrive at a proof.
+
+\section{Variances, standardized random variables}
+
+Note that since variance is linear, the variance of a sum is just the sum of the variances, while the variance of an average is the sum of the variances divided by the number of summands \emph{squared}. 
+
+We then define the \emph{standardization} of $X$ a random variable to be $X^* = \frac{X - \mu}{\sigma}$ so that $\mathbf{E}(X^*) = 0, \mathbf{Var}(X^*) = 1$.
+
+Note that for the binomial distribution, we can now discuss the expectation and variance of it; $\mathbf{E}(X) = np, \mathbf{Var}(X) = np(1-p)$, recalling the binomial distribution to be the distribution of $n$ Bernoulli trials. 
+
+\section{The Normal Distribution}
+
+The \emph{normal distribution} or the Gaussian distribution sits atop all statistical distributions because of the Central Limit Theorem. It is parameterized by two parameters $\mu, \sigma$, the mean and standard deviation respectively. There is no closed form expression for the cdf, but the probability density is given
+\begin{align}
+    f(x) = \frac{1}{\sigma\sqrt{2\pi}} e^{-\frac{(x-\mu)^2}{2\sigma^2}}
+\end{align}
+
+Note that this is properly normalized as $\int\limits_{-\infty}^{\infty}e^{-\frac{x^2}{2}}\;dx = \sqrt{2\pi}$. The cdf of the standard normal is denoted by $\Phi(t)$, given below
+\begin{align}
+    \Phi(t) = \frac{1}{\sqrt{2\pi}}\int\limits_{-\infty}^{t}e^{-\frac{x^2}{2}}\;dx
+\end{align}
+
+The celebrated and closely related \emph{error function} denoted $\mathrm{erf}(t)$ is actually given by
+\begin{align}
+    \mathrm{erf}(t) &= \frac{2}{\sqrt{\pi}}\int\limits_{0}^{t}e^{-x^2}\;dx\\
+    \Phi(t) &= \frac{1}{2} + \frac{1}{2}\mathrm{erf}\left( \frac{t}{\sqrt{2}} \right)
+\end{align}
+
+It is tradition to denote a standard noraml random variable by $Z \sim N(0,1)$. Note that any two normal distributions differ only by \emph{scale} or \emph{location}, because $N(\mu, \sigma^2) \sim \sigma Z + \mu$. It is worthy to note that the binomial distribution approximates the normal for large $n$. 
+
+\section{Using the Normal approximation}
+
+We can use the normal approximation to determine whether the outcome of a binomial distribution experiment is ``close'' to the expected value. For example, in the case of our coin toss experiment, we can simply integrate under the normal distribution after standardizing the results to see what the probability of obtaining a result such as ours was.
+
+We can also discuss the DeMoivre-Laplace theorem as to when we are well approximated by the normal distribution, but I won't do that here out of laziness (and because we almost certainly didn't talk about it in class, which I didn't go to). Refer to Lecture07 for the full discussion.
 \end{document}

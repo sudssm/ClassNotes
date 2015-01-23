@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014/Arch Linux) (preloaded format=pdflatex 2014.11.12)  21 JAN 2015 22:45
+This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014/Arch Linux) (preloaded format=pdflatex 2015.1.21)  22 JAN 2015 19:13
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -722,12 +722,12 @@ Chapter 5.
 Chapter 6.
 [8
 
-]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 239.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 239.
+] [9]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 281.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 281.
  (./Ma3.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 239.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 239.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 281.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 281.
 
 
 Package rerunfilecheck Warning: File `Ma3.out' has changed.
@@ -735,15 +735,15 @@ Package rerunfilecheck Warning: File `Ma3.out' has changed.
 (rerunfilecheck)                or use package `bookmark'.
 
 Package rerunfilecheck Info: Checksums for `Ma3.out':
-(rerunfilecheck)             Before: 156233FC55E53A41AD404375A6F70A87;1346
-(rerunfilecheck)             After:  C81E87AF9CCD8C5104A07A4CA208E3B2;1422.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 239.
+(rerunfilecheck)             Before: C9BDA364B043B6D7C038528F316CE1B2;1509
+(rerunfilecheck)             After:  34DA2D998457E843DB2AEB1F64212739;1656.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 281.
  ) 
 Here is how much of TeX's memory you used:
- 17829 strings out of 493108
- 326961 string characters out of 6140724
+ 17841 strings out of 493108
+ 327111 string characters out of 6140725
  401630 words of memory out of 5000000
- 20949 multiletter control sequences out of 15000+600000
+ 20951 multiletter control sequences out of 15000+600000
  13541 words of font info for 52 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  55i,20n,54p,577b,349s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -757,13 +757,14 @@ st/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texmf-dist/fonts/type1/
 public/amsfonts/cm/cmr17.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts
 /cm/cmr5.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></u
 sr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texmf
--dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/share/texmf-dist/fonts/typ
-e1/public/amsfonts/cm/cmti10.pfb></usr/share/texmf-dist/fonts/type1/public/amsf
-onts/cm/cmtt10.pfb>
-Output written on Ma3.pdf (9 pages, 200033 bytes).
+-dist/fonts/type1/public/amsfonts/cm/cmsy5.pfb></usr/share/texmf-dist/fonts/typ
+e1/public/amsfonts/cm/cmsy7.pfb></usr/share/texmf-dist/fonts/type1/public/amsfo
+nts/cm/cmti10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.
+pfb>
+Output written on Ma3.pdf (10 pages, 216076 bytes).
 PDF statistics:
- 233 PDF objects out of 1000 (max. 8388607)
- 204 compressed objects within 3 object streams
- 50 named destinations out of 1000 (max. 500000)
- 149 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 259 PDF objects out of 1000 (max. 8388607)
+ 228 compressed objects within 3 object streams
+ 60 named destinations out of 1000 (max. 500000)
+ 165 words of extra memory for PDF output out of 10000 (max. 10000000)
 
